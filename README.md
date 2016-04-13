@@ -5,3 +5,6 @@ Treasure Hunt is a scavenger hunt game app which allows users to complete activi
 Team Members: Kathy Dong, Dani Gnibus, John Kotz, Yixuan He
 
 Client: Amanda Lobel
+
+Designers: Kathy Dong, Yixuan He
+Developers: Dani Gnibus, John Kotz
