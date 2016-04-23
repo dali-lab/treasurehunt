@@ -52,7 +52,7 @@ class LoginScreen extends Component {
 	}
 	onLoginPressed() {
 	  this.props.navigator.push({
-		  title: 'Home',
+		  title: 'Treasure Hunt',
 		  component: HomePage,
 	  });
 	}
