@@ -1,4 +1,5 @@
 var React = require('react-native');
+var LoginScreen = require('./src/components/LoginScreen');
 
 var styles = React.StyleSheet.create({
   text: {
@@ -12,12 +13,6 @@ var styles = React.StyleSheet.create({
   }
 });
 
-class HelloWorld extends React.Component {
-  render() {
-    return <React.Text style={styles.text}>Hello World!</React.Text>;
-  }
-}
-
 class treasurehunt extends React.Component {
   render() {
     return (
@@ -25,7 +20,7 @@ class treasurehunt extends React.Component {
         style={styles.container}
         initialRoute={{
           title: 'Treasure Hunt',
-          component: HelloWorld,
+          component: LoginScreen,
         }}/>
     );
   }
