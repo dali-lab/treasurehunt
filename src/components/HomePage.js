@@ -36,7 +36,7 @@ var HomePage = React.createClass({
 
   getInitialState: function() {
     return {
-      selectedTab: TABS.Home,
+      selectedTab: TABS.home,
     };
   },
 
