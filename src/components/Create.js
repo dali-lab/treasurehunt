@@ -28,7 +28,7 @@ class Create extends Component {
         return (
             <View style={styles.container}>
                 <Text style={styles.description}>
-                    Create page!
+                    Functionality for creating events is unsupported in version 1 of TreasureHunt. Check back soon!
                 </Text>
             </View>
         );

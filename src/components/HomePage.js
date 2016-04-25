@@ -5,7 +5,9 @@ var Search = require('./Search');
 var Home = require('./Home');
 var Profile = require('./Profile');
 
-
+const Firebase = require('firebase')
+const config = require('../../config')
+const itemsRef = new Firebase(`${ config.FIREBASE_ROOT }/items`)
 
 var {
   StyleSheet,
