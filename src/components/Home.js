@@ -1,36 +1,124 @@
+'use strict';
+
+
 var React = require('react-native');
+
 var {
     StyleSheet,
+    Image,
     View,
+    TouchableHighlight,
+    ListView,
     Text,
     Component
-} = React;
+} = React; 
 
 var styles = StyleSheet.create({
-    description: {
-        fontSize: 20,
-        textAlign: 'center',
-        color: '#FFFFFF'
+    thumb: {
+        width: 80,
+        height: 80,
+        marginRight: 10
     },
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#66ccff'
+    textContainer: {
+        flex: 1
+    }, 
+    separator: {
+        height: 1,
+        backgroundColor: '#dddddd'
+    },
+    price: {
+        fontSize: 25,
+        fontWeight: 'bold',
+        color: '#48BBEC'
+    },
+    title: {
+        fontSize: 20,
+        color: '#656565'
+    }, 
+    rowContainer: {
+        flexDirection: 'row',
+        padding: 10
     }
 });
+
+const Firebase = require('firebase')
+const config = require('../../config')
+const huntsRef = new Firebase(`${ config.FIREBASE_ROOT }/hunts`)
+
 
 class Home extends Component {
     constructor(props) {
         super(props);
+        var conDataSource = new ListView.DataSource(
+            {rowHasChanged: (r1, r2) => r1.guid != r2.guid});
+        // var newData = {
+        //    ["hunts": [
+        //         { "title": "Dartmouth",
+        //           "description": "A fun tour through Dartmouth"},
+
+        //         { "title": "Boston",
+        //           "description": "A fun tour through Boston"},
+        //           ]
+        //     ]
+        // }
+        this.state = {
+            //dataSource: dataSource.cloneWithRows(["row 1", "row 2"])
+            dataSource: conDataSource
+        };
     }
-    render() {
+
+    listenForItems(huntsRef) {
+        console.log("HUNTSREFF");
+        console.log(huntsRef);
+        huntsRef.on('value', (snap) => {
+            var hunts = [];
+            snap.forEach((child) => {
+                hunts.push({
+                    title: child.val().title
+                });
+            });
+            console.log('finalhunts');
+            console.log(hunts);
+            this.setState({
+                dataSource: this.state.dataSource.cloneWithRows(hunts)
+            });
+            console.log('datasource' + this.state.dataSource);
+        });
+    }
+
+    componentDidMount() {
+        this.listenForItems(huntsRef);
+    }
+
+    rowPressed(propertyGuid) {
+        console.log('hello');
+
+    }
+
+    renderRow(rowData, sectionID, rowID) {
+        console.log("ROWDATA" + rowData);
         return (
-            <View style={styles.container}>
-                <Text style={styles.description}>
-                    Homepage!
-                </Text>
-            </View>
+            <TouchableHighlight onPress={() => this.rowPressed(rowData.title)}
+                underlayColor='#dddddd'>
+                <View>
+                    <View style={styles.rowContainer}>
+                        <View style={styles.textContainer}>
+                            <Text style={styles.title}>{rowData.title}</Text>
+                            <Text style={styles.title}
+                                numberOfLines={1}>{rowData.title}</Text>
+                        </View>
+                    </View>
+                    <View style={styles.separator}/>
+                </View>
+            </TouchableHighlight>
+        );
+    }
+
+    render() {
+      return (
+        <ListView
+          dataSource={this.state.dataSource}
+          renderRow={this.renderRow.bind(this)}/>
         );
     }
 }
