@@ -74,7 +74,9 @@ class Home extends Component {
             var hunts = [];
             snap.forEach((child) => {
                 hunts.push({
-                    title: child.val().title
+                    title: child.val().title,
+                    description: child.val().description,
+                    image: child.val().image
                 });
             });
             console.log('finalhunts');
@@ -91,21 +93,21 @@ class Home extends Component {
     }
 
     rowPressed(propertyGuid) {
-        console.log('hello');
 
     }
 
     renderRow(rowData, sectionID, rowID) {
-        console.log("ROWDATA" + rowData);
+        console.log("ROWDATAIMAGE" + rowData.image);
         return (
             <TouchableHighlight onPress={() => this.rowPressed(rowData.title)}
                 underlayColor='#dddddd'>
                 <View>
                     <View style={styles.rowContainer}>
+                        <Image style={styles.thumb} source={{ uri: rowData.image}} />
                         <View style={styles.textContainer}>
                             <Text style={styles.title}>{rowData.title}</Text>
-                            <Text style={styles.title}
-                                numberOfLines={1}>{rowData.title}</Text>
+                            <Text style={styles.description}
+                                numberOfLines={1}>{rowData.description}</Text>
                         </View>
                     </View>
                     <View style={styles.separator}/>

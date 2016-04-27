@@ -1,9 +1,11 @@
 {
   "hunts": [
     {"title":"Dartmouth",
-    "description": "fun"},
-    {"title":"Boston",
-    "description": "fun"}
+    "description": "Discover the Dartmouth campus in a way you never have before!", 
+    "image": "https://www.dropbox.com/s/j2lzjfh7666wzc5/dart.jpg?raw=1"},
 
+    {"title":"Boston",
+    "description": "Explore the greater Boston area, from coffee shops to museums to parks and bars!",
+	"image": "https://www.dropbox.com/s/0keab1s7kfie8k2/boston.jpg?raw=1"}
   ]
 }
