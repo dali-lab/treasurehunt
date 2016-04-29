@@ -21,7 +21,10 @@ var styles = StyleSheet.create({
     },
     textContainer: {
         flex: 1
-    }, 
+    },
+    container:{
+        flex: 1
+    },
     separator: {
         height: 1,
         backgroundColor: '#dddddd'
@@ -38,6 +41,20 @@ var styles = StyleSheet.create({
     rowContainer: {
         flexDirection: 'row',
         padding: 10
+    },
+    header: {
+        height: 95,
+        justifyContent: 'flex-end',
+        alignItems: 'flex-start',
+        backgroundColor: 'white',
+        flexDirection: 'column',
+        paddingTop: 45,
+        paddingBottom: 0
+    },
+    headerText: {
+        fontWeight: 'bold',
+        fontSize: 20,
+        color: 'black'
     }
 });
 
@@ -118,9 +135,15 @@ class Home extends Component {
 
     render() {
       return (
-        <ListView
-          dataSource={this.state.dataSource}
-          renderRow={this.renderRow.bind(this)}/>
+        <View style= {styles.container}>
+            <View style={styles.header}>
+                <Text style={styles.headerText}>  CURRENT PUZZLES</Text>
+            </View>
+            <ListView
+              dataSource={this.state.dataSource}
+              automaticallyAdjustContentInsets={false}
+              renderRow={this.renderRow.bind(this)}/>
+        </View>
         );
     }
 }
