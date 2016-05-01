@@ -70,42 +70,32 @@ const huntsRef = new Firebase(`${ config.FIREBASE_ROOT }/hunts`)
 class Home extends Component {
     constructor(props) {
         super(props);
-        var conDataSource = new ListView.DataSource(
+        var currentHunts = new ListView.DataSource(
             {rowHasChanged: (r1, r2) => r1.guid != r2.guid});
-        // var newData = {
-        //    ["hunts": [
-        //         { "title": "Dartmouth",
-        //           "description": "A fun tour through Dartmouth"},
-
-        //         { "title": "Boston",
-        //           "description": "A fun tour through Boston"},
-        //           ]
-        //     ]
-        // }
+        var pastHunts = new ListView.DataSource(
+            {rowHasChanged: (r1, r2) => r1.guid != r2.guid});
         this.state = {
-            //dataSource: dataSource.cloneWithRows(["row 1", "row 2"])
-            dataSource: conDataSource
+            currentHunts: currentHunts,
+            pastHunts: pastHunts
         };
     }
 
     listenForItems(huntsRef) {
-        console.log("HUNTSREFF");
-        console.log(huntsRef);
         huntsRef.on('value', (snap) => {
             var hunts = [];
             snap.forEach((child) => {
+                var huntsProgress = child.val().clues.length / 5;
                 hunts.push({
                     title: child.val().title,
                     description: child.val().description,
-                    image: child.val().image
+                    image: child.val().image,
+                    progress: huntsProgress
                 });
             });
-            console.log('finalhunts');
-            console.log(hunts);
             this.setState({
-                dataSource: this.state.dataSource.cloneWithRows(hunts)
+                currentHunts: this.state.currentHunts.cloneWithRows(hunts),
+                pastHunts: this.state.pastHunts.cloneWithRows(hunts)
             });
-            console.log('datasource' + this.state.dataSource);
         });
     }
 
@@ -130,7 +120,7 @@ class Home extends Component {
                             <Text style={styles.description}
                                 numberOfLines={2}>{rowData.description}</Text>
                             <Progress.Bar style={styles.progressBar} 
-                                progress={0.3} width={150} />
+                                progress={rowData.progress} width={200} />
                         </View> 
                     </View>
                     <View style={styles.separator}/>
@@ -148,14 +138,14 @@ class Home extends Component {
                 <Text style={styles.headerText}>  CURRENT PUZZLES</Text>
             </View>
             <ListView
-              dataSource={this.state.dataSource}
+              dataSource={this.state.currentHunts}
               automaticallyAdjustContentInsets={false}
               renderRow={this.renderRow.bind(this)}/>
             <View style={styles.header}>
                 <Text style={styles.headerText}>  PAST PUZZLES</Text>
             </View>
             <ListView
-              dataSource={this.state.dataSource}
+              dataSource={this.state.pastHunts}
               automaticallyAdjustContentInsets={false}
               renderRow={this.renderRow.bind(this)}/>
         </View>

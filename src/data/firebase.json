@@ -1,11 +1,17 @@
 {
   "hunts": [
-    {"title":"Dartmouth",
+    {
+    "title":"Dartmouth",
     "description": "Discover the Dartmouth campus in a way you never have before!", 
-    "image": "https://www.dropbox.com/s/j2lzjfh7666wzc5/dart.jpg?raw=1"},
+    "image": "https://www.dropbox.com/s/j2lzjfh7666wzc5/dart.jpg?raw=1",
+    "clues": [1, 2, 3, 4]
+    },
 
-    {"title":"Boston",
+    {
+    "title":"Boston",
     "description": "Explore the greater Boston area, from coffee shops to museums to parks and bars!",
-	"image": "https://www.dropbox.com/s/0keab1s7kfie8k2/boston.jpg?raw=1"}
+	"image": "https://www.dropbox.com/s/0keab1s7kfie8k2/boston.jpg?raw=1",
+	"clues": [5, 6, 7]
+	}
   ]
 }
