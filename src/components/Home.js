@@ -2,6 +2,7 @@
 
 
 var React = require('react-native');
+var Progress = require('react-native-progress');
 
 var {
     StyleSheet,
@@ -10,7 +11,7 @@ var {
     TouchableHighlight,
     ListView,
     Text,
-    Component
+    Component,
 } = React; 
 
 var styles = StyleSheet.create({
@@ -25,19 +26,24 @@ var styles = StyleSheet.create({
     container:{
         flex: 1
     },
+    emptyContainer: {
+        backgroundColor: 'white',
+        paddingTop: 35, 
+        flexDirection: 'column',
+        height: 2
+    },
     separator: {
         height: 1,
         backgroundColor: '#dddddd'
     },
-    price: {
-        fontSize: 25,
-        fontWeight: 'bold',
-        color: '#48BBEC'
-    },
     title: {
         fontSize: 20,
-        color: '#656565'
+        color: '#656565',
     }, 
+    description: {
+        paddingTop: 3,
+        paddingBottom: 8
+    },
     rowContainer: {
         flexDirection: 'row',
         padding: 10
@@ -48,8 +54,6 @@ var styles = StyleSheet.create({
         alignItems: 'flex-start',
         backgroundColor: 'white',
         flexDirection: 'column',
-        paddingTop: 45,
-        paddingBottom: 0
     },
     headerText: {
         fontWeight: 'bold',
@@ -124,8 +128,10 @@ class Home extends Component {
                         <View style={styles.textContainer}>
                             <Text style={styles.title}>{rowData.title}</Text>
                             <Text style={styles.description}
-                                numberOfLines={1}>{rowData.description}</Text>
-                        </View>
+                                numberOfLines={2}>{rowData.description}</Text>
+                            <Progress.Bar style={styles.progressBar} 
+                                progress={0.3} width={150} />
+                        </View> 
                     </View>
                     <View style={styles.separator}/>
                 </View>
@@ -136,8 +142,17 @@ class Home extends Component {
     render() {
       return (
         <View style= {styles.container}>
+            <View style={styles.emptyContainer}>
+            </View>
             <View style={styles.header}>
                 <Text style={styles.headerText}>  CURRENT PUZZLES</Text>
+            </View>
+            <ListView
+              dataSource={this.state.dataSource}
+              automaticallyAdjustContentInsets={false}
+              renderRow={this.renderRow.bind(this)}/>
+            <View style={styles.header}>
+                <Text style={styles.headerText}>  PAST PUZZLES</Text>
             </View>
             <ListView
               dataSource={this.state.dataSource}
