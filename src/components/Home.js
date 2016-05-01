@@ -81,22 +81,33 @@ class Home extends Component {
     }
 
     listenForItems(huntsRef) {
-        huntsRef.on('value', (snap) => {
-            var hunts = [];
-            snap.forEach((child) => {
-                var huntsProgress = child.val().clues.length / 5;
-                hunts.push({
-                    title: child.val().title,
-                    description: child.val().description,
-                    image: child.val().image,
+        //TODO: replace userHuntsArray with specific list of user hunts
+        var userHuntsArray = [0,1];
+
+        var oldHunts = [];
+        var newHunts = [];
+        var arrayLength = userHuntsArray.length;
+        for (var i = 0; i < arrayLength; i++) {
+            //get that specific hunt info 
+            var huntRef = huntsRef.child(userHuntsArray[i]);
+            huntRef.on('value', (snap) => {
+                var huntsProgress = snap.val().clues.length / 5;
+                console.log("HUNTSPROG" + huntsProgress);
+                console.log("TITLE" + snap.val().title);
+                newHunts.push({
+                    title: snap.val().title,
+                    description: snap.val().description,
+                    image: snap.val().image,
                     progress: huntsProgress
                 });
+                console.log("NEWHUNTSACTION4" + newHunts[0].title);
+                this.setState({
+                    currentHunts: this.state.currentHunts.cloneWithRows(newHunts),
+                    pastHunts: this.state.pastHunts.cloneWithRows(oldHunts)
+                });
+
             });
-            this.setState({
-                currentHunts: this.state.currentHunts.cloneWithRows(hunts),
-                pastHunts: this.state.pastHunts.cloneWithRows(hunts)
-            });
-        });
+        }
     }
 
     componentDidMount() {
