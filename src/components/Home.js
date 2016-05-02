@@ -82,28 +82,30 @@ class Home extends Component {
 
     listenForItems(huntsRef) {
         //TODO: replace userHuntsArray with specific list of user hunts
-        var userHuntsArray = [0,1];
 
-        var oldHunts = [];
-        var newHunts = [];
+        var userHuntsArray = {
+            0: [1],
+            1: [5,6]
+        };
+
+        var pastHunts = [];
+        var currentHunts = [];
         var arrayLength = userHuntsArray.length;
-        for (var i = 0; i < arrayLength; i++) {
-            //get that specific hunt info 
-            var huntRef = huntsRef.child(userHuntsArray[i]);
+        
+        for (var key in userHuntsArrayNew) {
+            var huntRef = huntsRef.child(userHuntsArray[key]);
             huntRef.on('value', (snap) => {
-                var huntsProgress = snap.val().clues.length / 5;
-                console.log("HUNTSPROG" + huntsProgress);
-                console.log("TITLE" + snap.val().title);
-                newHunts.push({
+                var totalCluesInHunt = snap.val().clues.length;
+                var totalCluesCompleted = userHuntsArrayNew[key].length;
+                currentHunts.push({
                     title: snap.val().title,
                     description: snap.val().description,
                     image: snap.val().image,
-                    progress: huntsProgress
+                    progress: totalCluesCompleted/totalCluesInHunt
                 });
-                console.log("NEWHUNTSACTION4" + newHunts[0].title);
                 this.setState({
-                    currentHunts: this.state.currentHunts.cloneWithRows(newHunts),
-                    pastHunts: this.state.pastHunts.cloneWithRows(oldHunts)
+                    currentHunts: this.state.currentHunts.cloneWithRows(currentHunts),
+                    pastHunts: this.state.pastHunts.cloneWithRows(pastHunts)
                 });
 
             });
@@ -119,7 +121,6 @@ class Home extends Component {
     }
 
     renderRow(rowData, sectionID, rowID) {
-        console.log("ROWDATAIMAGE" + rowData.image);
         return (
             <TouchableHighlight onPress={() => this.rowPressed(rowData.title)}
                 underlayColor='#dddddd'>
