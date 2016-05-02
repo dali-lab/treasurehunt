@@ -92,7 +92,8 @@ class Home extends Component {
             0: [1],
             1: [5, 6],
             2: [8, 9, 10],
-            3: [11, 12, 13]
+            3: [11, 12, 13],
+            3: [1]
         };
 
         var pastHunts = [];
@@ -106,11 +107,7 @@ class Home extends Component {
             //get that hunt, calculate user progress, get hunt data
             huntRef.on('value', (snap) => {
                 var totalCluesInHunt = snap.val().clues.length;
-                console.log("TOTALCLUES" + totalCluesInHunt);
                 var totalCluesCompleted = userHuntsArray[snap.key()].length;
-                console.log("TOTALCLUESCOMPLETE" + totalCluesCompleted);
-                console.log("TOTALCLUESKEY" + key);
-                console.log("SNAPNAME" + snap.key());
                 if (totalCluesInHunt===totalCluesCompleted) {
                     pastHunts.push({
                         title: snap.val().title,

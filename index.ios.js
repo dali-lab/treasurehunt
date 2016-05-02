@@ -19,7 +19,7 @@ class treasurehunt extends React.Component {
       <React.NavigatorIOS
         style={styles.container}
         initialRoute={{
-          title: 'Treasure Hunt',
+          title: 'Login',
           component: LoginScreen,
         }}/>
     );
