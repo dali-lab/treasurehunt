@@ -30,7 +30,7 @@ var styles = StyleSheet.create({
         backgroundColor: 'white',
         paddingTop: 5, 
         flexDirection: 'column',
-        height: 2
+        height: 70
     },
     separator: {
         height: 1,
@@ -49,7 +49,7 @@ var styles = StyleSheet.create({
         padding: 10
     },
     header: {
-        height: 95,
+        height: 30,
         justifyContent: 'flex-end',
         alignItems: 'flex-start',
         backgroundColor: 'white',
@@ -76,58 +76,67 @@ const huntsRef = new Firebase(`${ config.FIREBASE_ROOT }/hunts`)
 class Home extends Component {
     constructor(props) {
         super(props);
-        var currentHunts = new ListView.DataSource(
-            {rowHasChanged: (r1, r2) => r1.guid != r2.guid});
-        var pastHunts = new ListView.DataSource(
-            {rowHasChanged: (r1, r2) => r1.guid != r2.guid});
+        var dataSource = new ListView.DataSource({
+            rowHasChanged: (r1, r2) => r1.guid != r2.guid,
+            sectionHeaderHasChanged: (s1, s2) => s1 !== s2
+        });
+        
         this.state = {
-            currentHunts: currentHunts,
-            pastHunts: pastHunts
+            dataSource: dataSource
         };
     }
 
+    convertHuntsArrayToMap(hunts) {
+        var huntsCategoryMap = {};
+        for (var i =0; i < hunts.length; i++ ) {
+            if (!huntsCategoryMap[hunts[i].category]) {
+                huntsCategoryMap[hunts[i].category] = [];
+            }
+            huntsCategoryMap[hunts[i].category].push(hunts[i]);
+        }
+        
+        return huntsCategoryMap;
+    }
+
     listenForItems(huntsRef) {
-        //TODO: replace userHuntsArray with specific list of user hunts
+        //TODO: replace userHuntsArray with specific list of user hunts/solutions
         var userHuntsArray = {
             0: [1],
             1: [5, 6],
             2: [8, 9, 10],
             3: [11, 12, 13],
-            3: [1]
         };
 
-        var pastHunts = [];
-        var currentHunts = [];
+        var hunts = [];
         
         //for each hunt the user has completed
         for (var key in userHuntsArray) {
-            console.log("KEYY " + key);
             var huntRef = huntsRef.child(key);
-            console.log("bostonhuntnew "  + " " + userHuntsArray[1].length);
             //get that hunt, calculate user progress, get hunt data
             huntRef.on('value', (snap) => {
                 var totalCluesInHunt = snap.val().clues.length;
                 var totalCluesCompleted = userHuntsArray[snap.key()].length;
                 if (totalCluesInHunt===totalCluesCompleted) {
-                    pastHunts.push({
+                    hunts.push({
                         title: snap.val().title,
                         description: snap.val().description,
                         image: snap.val().image,
-                        progress: totalCluesCompleted/totalCluesInHunt
+                        progress: totalCluesCompleted/totalCluesInHunt,
+                        category: "  PAST HUNTS"
                 });
                 }
                 else {
-                    currentHunts.push({
+                    hunts.push({
                         title: snap.val().title,
                         description: snap.val().description,
                         image: snap.val().image,
-                        progress: totalCluesCompleted/totalCluesInHunt
+                        progress: totalCluesCompleted/totalCluesInHunt,
+                        category: "  CURRENT HUNTS"
                     });
                 }
                 
                 this.setState({
-                    currentHunts: this.state.currentHunts.cloneWithRows(currentHunts),
-                    pastHunts: this.state.pastHunts.cloneWithRows(pastHunts)
+                    dataSource: this.state.dataSource.cloneWithRowsAndSections(this.convertHuntsArrayToMap(hunts))
                 });
             });
         }
@@ -141,19 +150,19 @@ class Home extends Component {
 
     }
 
-    renderRow(rowData, sectionID, rowID) {
+    renderRow(hunt) {
         return (
-            <TouchableHighlight onPress={() => this.rowPressed(rowData.title)}
+            <TouchableHighlight onPress={() => this.rowPressed(hunt.title)}
                 underlayColor='#dddddd'>
                 <View>
                     <View style={styles.rowContainer}>
-                        <Image style={styles.thumb} source={{ uri: rowData.image}} />
+                        <Image style={styles.thumb} source={{ uri: hunt.image}} />
                         <View style={styles.textContainer}>
-                            <Text style={styles.title}>{rowData.title}</Text>
+                            <Text style={styles.title}>{hunt.title}</Text>
                             <Text style={styles.description}
-                                numberOfLines={2}>{rowData.description}</Text>
+                                numberOfLines={2}>{hunt.description}</Text>
                             <Progress.Bar style={styles.progressBar} 
-                                progress={rowData.progress} width={200} />
+                                progress={hunt.progress} width={200} />
                         </View> 
                     </View>
                     <View style={styles.separator}/>
@@ -162,26 +171,25 @@ class Home extends Component {
         );
     }
 
-    render() {
-      return (
-        <View style= {styles.container}>
-            <View style={styles.emptyContainer}>
-            </View>
+    renderSectionHeader(sectionData, category) {
+        return (
             <View style={styles.header}>
-                <Text style={styles.headerText}>  CURRENT PUZZLES</Text>
+                <Text style={styles.headerText}>{category}</Text>
             </View>
-            <ListView
-              dataSource={this.state.currentHunts}
-              automaticallyAdjustContentInsets={false}
-              renderRow={this.renderRow.bind(this)}/>
-            <View style={styles.header2}>
-                <Text style={styles.headerText}>  PAST PUZZLES</Text>
+        );
+    }
+
+    render() {
+        return (
+            <View style={styles.container}>
+                <View style={styles.emptyContainer}>
+                </View>
+                <ListView
+                    dataSource={this.state.dataSource}
+                    automaticallyAdjustContentInsets={false}
+                    renderRow={this.renderRow.bind(this)}
+                    renderSectionHeader={this.renderSectionHeader}/>
             </View>
-            <ListView
-              dataSource={this.state.pastHunts}
-              automaticallyAdjustContentInsets={false}
-              renderRow={this.renderRow.bind(this)}/>
-        </View>
         );
     }
 }
