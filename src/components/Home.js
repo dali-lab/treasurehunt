@@ -82,32 +82,43 @@ class Home extends Component {
 
     listenForItems(huntsRef) {
         //TODO: replace userHuntsArray with specific list of user hunts
-
         var userHuntsArray = {
             0: [1],
-            1: [5,6]
+            1: [5,6,7]
         };
 
         var pastHunts = [];
         var currentHunts = [];
-        var arrayLength = userHuntsArray.length;
         
-        for (var key in userHuntsArrayNew) {
-            var huntRef = huntsRef.child(userHuntsArray[key]);
+        //for each hunt the user has completed
+        for (var key in userHuntsArray) {
+            var huntRef = huntsRef.child(key);
+
+            //get that hunt, calculate user progress, get hunt data
             huntRef.on('value', (snap) => {
                 var totalCluesInHunt = snap.val().clues.length;
-                var totalCluesCompleted = userHuntsArrayNew[key].length;
-                currentHunts.push({
-                    title: snap.val().title,
-                    description: snap.val().description,
-                    image: snap.val().image,
-                    progress: totalCluesCompleted/totalCluesInHunt
+                var totalCluesCompleted = userHuntsArray[key].length;
+                if (totalCluesInHunt===totalCluesCompleted) {
+                    pastHunts.push({
+                        title: snap.val().title,
+                        description: snap.val().description,
+                        image: snap.val().image,
+                        progress: totalCluesCompleted/totalCluesInHunt
                 });
+                }
+                else {
+                    currentHunts.push({
+                        title: snap.val().title,
+                        description: snap.val().description,
+                        image: snap.val().image,
+                        progress: totalCluesCompleted/totalCluesInHunt
+                    });
+                }
+                
                 this.setState({
                     currentHunts: this.state.currentHunts.cloneWithRows(currentHunts),
                     pastHunts: this.state.pastHunts.cloneWithRows(pastHunts)
                 });
-
             });
         }
     }
