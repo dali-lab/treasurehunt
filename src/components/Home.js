@@ -28,7 +28,7 @@ var styles = StyleSheet.create({
     },
     emptyContainer: {
         backgroundColor: 'white',
-        paddingTop: 35, 
+        paddingTop: 5, 
         flexDirection: 'column',
         height: 2
     },
@@ -50,6 +50,12 @@ var styles = StyleSheet.create({
     },
     header: {
         height: 95,
+        justifyContent: 'flex-end',
+        alignItems: 'flex-start',
+        backgroundColor: 'white',
+        flexDirection: 'column',
+    },
+    header2: {
         justifyContent: 'flex-end',
         alignItems: 'flex-start',
         backgroundColor: 'white',
@@ -84,7 +90,9 @@ class Home extends Component {
         //TODO: replace userHuntsArray with specific list of user hunts
         var userHuntsArray = {
             0: [1],
-            1: [5,6,7]
+            1: [5, 6],
+            2: [8, 9, 10],
+            3: [11, 12, 13]
         };
 
         var pastHunts = [];
@@ -92,12 +100,17 @@ class Home extends Component {
         
         //for each hunt the user has completed
         for (var key in userHuntsArray) {
+            console.log("KEYY " + key);
             var huntRef = huntsRef.child(key);
-
+            console.log("bostonhuntnew "  + " " + userHuntsArray[1].length);
             //get that hunt, calculate user progress, get hunt data
             huntRef.on('value', (snap) => {
                 var totalCluesInHunt = snap.val().clues.length;
-                var totalCluesCompleted = userHuntsArray[key].length;
+                console.log("TOTALCLUES" + totalCluesInHunt);
+                var totalCluesCompleted = userHuntsArray[snap.key()].length;
+                console.log("TOTALCLUESCOMPLETE" + totalCluesCompleted);
+                console.log("TOTALCLUESKEY" + key);
+                console.log("SNAPNAME" + snap.key());
                 if (totalCluesInHunt===totalCluesCompleted) {
                     pastHunts.push({
                         title: snap.val().title,
@@ -164,7 +177,7 @@ class Home extends Component {
               dataSource={this.state.currentHunts}
               automaticallyAdjustContentInsets={false}
               renderRow={this.renderRow.bind(this)}/>
-            <View style={styles.header}>
+            <View style={styles.header2}>
                 <Text style={styles.headerText}>  PAST PUZZLES</Text>
             </View>
             <ListView
