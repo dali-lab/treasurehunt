@@ -3,6 +3,7 @@
 
 var React = require('react-native');
 var Progress = require('react-native-progress');
+var HuntView = require('./HuntView');
 
 var {
     StyleSheet,
@@ -102,7 +103,6 @@ class Home extends Component {
         //TODO: replace userHuntsArray with specific list of user hunts/solutions
         var userHuntsArray = {
             0: [1],
-            1: [5, 6],
             2: [8, 9, 10],
             3: [11, 12, 13],
         };
@@ -118,6 +118,7 @@ class Home extends Component {
                 var totalCluesCompleted = userHuntsArray[snap.key()].length;
                 if (totalCluesInHunt===totalCluesCompleted) {
                     hunts.push({
+                        id: snap.key(),
                         title: snap.val().title,
                         description: snap.val().description,
                         image: snap.val().image,
@@ -127,6 +128,7 @@ class Home extends Component {
                 }
                 else {
                     hunts.push({
+                        id: snap.key(),
                         title: snap.val().title,
                         description: snap.val().description,
                         image: snap.val().image,
@@ -146,13 +148,21 @@ class Home extends Component {
         this.listenForItems(huntsRef);
     }
 
-    rowPressed(propertyGuid) {
+    rowPressed(hunt) {
 
+        this.props.navigator.push({
+            title: "Hunt",
+            component: HuntView,
+            passProps: {
+                hunt: hunt,
+            }
+
+        });
     }
 
     renderRow(hunt) {
         return (
-            <TouchableHighlight onPress={() => this.rowPressed(hunt.title)}
+            <TouchableHighlight onPress={() => this.rowPressed(hunt)}
                 underlayColor='#dddddd'>
                 <View>
                     <View style={styles.rowContainer}>
