@@ -29,6 +29,12 @@ class treasurehunt extends React.Component {
     })
   }
 
+  onLogout() {
+    this.setState({
+      loggedIn: false,
+    })
+  }
+
   render() {
     if (!this.state.loggedIn) {
       return (
@@ -41,6 +47,8 @@ class treasurehunt extends React.Component {
           initialRoute={{
             title: 'Treasure Hunt',
             component: HomePage,
+            rightButtonTitle: "Logout",
+            onRightButtonPress: this.onLogout.bind(this),
           }}/>
       );
     }
