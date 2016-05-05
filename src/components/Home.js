@@ -90,6 +90,7 @@ class Home extends Component {
     convertHuntsArrayToMap(hunts) {
         var huntsCategoryMap = {};
         for (var i =0; i < hunts.length; i++ ) {
+            console.log('huntsarray' + i);
             if (!huntsCategoryMap[hunts[i].category]) {
                 huntsCategoryMap[hunts[i].category] = [];
             }
@@ -123,7 +124,8 @@ class Home extends Component {
                         description: snap.val().description,
                         image: snap.val().image,
                         progress: totalCluesCompleted/totalCluesInHunt,
-                        category: "  PAST HUNTS"
+                        category: "  PAST HUNTS", 
+                        clues: snap.val().clues
                 });
                 }
                 else {
@@ -133,7 +135,8 @@ class Home extends Component {
                         description: snap.val().description,
                         image: snap.val().image,
                         progress: totalCluesCompleted/totalCluesInHunt,
-                        category: "  CURRENT HUNTS"
+                        category: "  CURRENT HUNTS",
+                        clues: snap.val().clues
                     });
                 }
                 

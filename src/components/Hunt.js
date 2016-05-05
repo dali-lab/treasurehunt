@@ -30,6 +30,25 @@ var styles = StyleSheet.create({
 		color: '#656565',
 		alignSelf: 'center'
 	},
+	separator: {
+        height: 1,
+        backgroundColor: '#dddddd'
+    },
+    title: {
+        fontSize: 20,
+        color: '#656565',
+    }, 
+    description: {
+        paddingTop: 3,
+        paddingBottom: 8
+    },
+    rowContainer: {
+    flexDirection: 'row',
+    padding: 10
+  },
+  textContainer: {
+    flex: 1
+  },
 });
 
 const Firebase = require('firebase')
@@ -48,21 +67,81 @@ class Hunt extends Component {
             dataSource: dataSource
         };
     }
+    //TODO: add categories,
+    convertCluesArrayToMap(clues) {
+        var cluesCategoryMap = {};
+        var category = "Incomplete";
+
+        for (var i =0; i < clues.length; i++ ) {
+            cluesCategoryMap["Incomplete"].push(clues[i]);
+        }
+        return cluesCategoryMap;
+    }
+
+    listenForItems(cluesRef) {
+        //TODO: replace userHuntsArray with specific list of user hunts/solutions
+        var cluesArray = this.props.hunt.clues;
+
+        var completeClues = [];
+        var incompleteClues = [];
+        //for each hunt the user has completed
+        for (var key in cluesArray) {
+            var clueRef = cluesRef.child(key);
+            //get that hunt, calculate user progress, get hunt data
+            clueRef.on('value', (snap) => {
+            	var title = snap.val().title;
+               	incompleteClues.push({
+               		title:snap.val().title,
+               		description: snap.val().description
+               	});
+
+            	this.setState({
+            		dataSource: this.state.dataSource.cloneWithRowsAndSections(incompleteClues)
+            	});
+           });
+    	}
+    }
+
+    componentDidMount() {
+        this.listenForItems(cluesRef);
+    }
+
+    renderRow(clue) {
+    	console.log("rowdata" + clue.title);
+        return (
+            <TouchableHighlight onPress={() => this.rowPressed(clue)}
+                underlayColor='#dddddd'>
+                <View>
+                    <View style={styles.rowContainer}>
+                        <View style={styles.textContainer}>
+                            <Text style={styles.title}>{clue}</Text>
+                            <Text style={styles.description}
+                                numberOfLines={2}>{clue}</Text>
+                        </View> 
+                    </View>
+                    <View style={styles.separator}/>
+                </View>
+            </TouchableHighlight>
+        );
+    }
 
 	render() {
 		var hunt = this.props.hunt;
-		var huntRef = new Firebase(`${ config.FIREBASE_ROOT }/hunts`)
+		var huntRef = new Firebase(`${ config.FIREBASE_ROOT }/hunts`);
 		return (
 			<View style={styles.container}>
 				<View>
 					<Text style={styles.huntTitle}>{hunt.title.toUpperCase()}</Text>
 				</View>
 				<View style={styles.separatorSmall}/>
+				<ListView
+                    dataSource={this.state.dataSource}
+                    automaticallyAdjustContentInsets={false}
+                    renderRow={this.renderRow.bind(this)}/>
 			</View>
 		);
 	}
 }
-
 
 module.exports = Hunt;
 
