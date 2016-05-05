@@ -11,28 +11,38 @@ var {
 
 var styles = StyleSheet.create({
 	container: {
-		marginTop: 65
+		marginTop: 65,
+		paddingRight:30,
+		paddingLeft: 30, 
+		flex: 1
 	},
 	heading: {
 		backgroundColor: '#F8F8F8',
 	},
-	separator: {
-		height: 1,
-		backgroundColor: '#DDDDDD'
+	separatorSmall: {
+		height: 16
+	},
+	separatorLarge: {
+		height: 26
 	},
 	image: {
 		width: 300,
 		height: 200,
-		justifyContent: 'center'
+		alignSelf: 'center'
 	},
 	description: {
         paddingTop: 3,
-        paddingBottom: 8
+        paddingBottom: 8,
+        paddingRight: 23,
+        paddingLeft: 23,
+        alignSelf: 'center'
     },
 	title: {
 		fontSize: 20,
+		fontWeight: 'bold',
 		margin: 5,
-		color: '#656565'
+		color: '#656565',
+		alignSelf: 'center'
 	},
 	buttonText: {
 	  fontSize: 18,
@@ -41,15 +51,15 @@ var styles = StyleSheet.create({
 	},
 	button: {
 	  height: 36,
-	  flex: 1,
-	  flexDirection: 'row',
+	  flexDirection: 'column',
 	  backgroundColor: '#48BBEC',
 	  borderColor: '#48BBEC',
+	  justifyContent: 'flex-end',
 	  borderWidth: 1,
 	  borderRadius: 8,
 	  marginBottom: 10,
 	  alignSelf: 'stretch',
-	  justifyContent: 'center'
+	  padding:20
 	}
 });
 
@@ -64,13 +74,14 @@ class HuntView extends Component {
 
 		return (
 			<View style={styles.container}>
-				<View style={styles.heading}>
-					<Text style={styles.title}>{hunt.title}</Text>
-					<View style={styles.separator}/>
+				<View>
+					<Text style={styles.title}>{hunt.title.toUpperCase()}</Text>
 				</View>
 				<Image style={styles.image}
 					source={{uri: hunt.image}} />
+				<View style={styles.separatorSmall}/>
 				<Text style={styles.description}>{hunt.description}</Text>
+				<View style={styles.separatorLarge}/>
 				<TouchableHighlight style = {styles.button}
 						onPress={this.onStartPressed.bind(this)}
 						underlayColor='#99d9f4'>
