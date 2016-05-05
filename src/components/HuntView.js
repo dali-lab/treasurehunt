@@ -1,5 +1,7 @@
 
 var React = require('react-native');
+var Hunt = require('./Hunt');
+
 var {
 	StyleSheet,
 	Image,
@@ -66,7 +68,14 @@ var styles = StyleSheet.create({
 
 class HuntView extends Component {
 	onStartPressed() {
-		console.log('start pressed');
+		this.props.navigator.push({
+            title: "Hunt",
+            component: Hunt,
+            passProps: {
+                hunt: this.props.hunt,
+            }
+
+        });
 	}
 
 	render() {

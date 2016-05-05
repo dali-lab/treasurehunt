@@ -95,7 +95,6 @@ class Home extends Component {
             }
             huntsCategoryMap[hunts[i].category].push(hunts[i]);
         }
-        
         return huntsCategoryMap;
     }
 
@@ -103,6 +102,7 @@ class Home extends Component {
         //TODO: replace userHuntsArray with specific list of user hunts/solutions
         var userHuntsArray = {
             0: [1],
+            1: [2,3],
             2: [8, 9, 10],
             3: [11, 12, 13],
         };
@@ -149,14 +149,12 @@ class Home extends Component {
     }
 
     rowPressed(hunt) {
-
         this.props.navigator.push({
             title: "Hunt",
             component: HuntView,
             passProps: {
                 hunt: hunt,
             }
-
         });
     }
 
