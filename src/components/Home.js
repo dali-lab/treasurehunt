@@ -4,6 +4,7 @@
 var React = require('react-native');
 var Progress = require('react-native-progress');
 var HuntView = require('./HuntView');
+var ReactFireMixin = require('reactfire');
 
 var {
     StyleSheet,
@@ -74,20 +75,22 @@ const config = require('../../config')
 const huntsRef = new Firebase(`${ config.FIREBASE_ROOT }/hunts`)
 
 
-class Home extends Component {
-    constructor(props) {
-        super(props);
+
+var Home = React.createClass({
+    mixins: [ReactFireMixin],
+
+    getInitialState: function() {
         var dataSource = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1.guid != r2.guid,
             sectionHeaderHasChanged: (s1, s2) => s1 !== s2
         });
         
-        this.state = {
+        return {
             dataSource: dataSource
         };
-    }
+    },
 
-    convertHuntsArrayToMap(hunts) {
+    convertHuntsArrayToMap: function(hunts) {
         var huntsCategoryMap = {};
         for (var i =0; i < hunts.length; i++ ) {
             console.log('huntsarray' + i);
@@ -96,10 +99,11 @@ class Home extends Component {
             }
             huntsCategoryMap[hunts[i].category].push(hunts[i]);
         }
-        return huntsCategoryMap;
-    }
 
-    listenForItems(huntsRef) {
+        return huntsCategoryMap;
+    },
+
+    listenForItems: function(huntsRef) {
         //TODO: replace userHuntsArray with specific list of user hunts/solutions
         var userHuntsArray = {
             0: [1],
@@ -108,11 +112,16 @@ class Home extends Component {
             3: [11, 12, 13],
         };
 
+        var newHuntsArray = [0,1,2,3];
         var hunts = [];
         
+        // this.bindAsArray(huntsRef, newHuntsArray);
+        // debugger;
+
         //for each hunt the user has completed
         for (var key in userHuntsArray) {
             var huntRef = huntsRef.child(key);
+            
             //get that hunt, calculate user progress, get hunt data
             huntRef.on('value', (snap) => {
                 var totalCluesInHunt = snap.val().clues.length;
@@ -145,13 +154,13 @@ class Home extends Component {
                 });
             });
         }
-    }
+    },
 
-    componentDidMount() {
+    componentDidMount: function() {
         this.listenForItems(huntsRef);
-    }
+    },
 
-    rowPressed(hunt) {
+    rowPressed: function(hunt) {
         this.props.navigator.push({
             title: "Hunt",
             component: HuntView,
@@ -159,9 +168,9 @@ class Home extends Component {
                 hunt: hunt,
             }
         });
-    }
+    },
 
-    renderRow(hunt) {
+    renderRow: function(hunt) {
         return (
             <TouchableHighlight onPress={() => this.rowPressed(hunt)}
                 underlayColor='#dddddd'>
@@ -180,17 +189,17 @@ class Home extends Component {
                 </View>
             </TouchableHighlight>
         );
-    }
+    },
 
-    renderSectionHeader(sectionData, category) {
+    renderSectionHeader: function(sectionData, category) {
         return (
             <View style={styles.header}>
                 <Text style={styles.headerText}>{category}</Text>
             </View>
         );
-    }
+    },
 
-    render() {
+    render: function() {
         return (
             <View style={styles.container}>
                 <View style={styles.emptyContainer}>
@@ -202,7 +211,7 @@ class Home extends Component {
                     renderSectionHeader={this.renderSectionHeader}/>
             </View>
         );
-    }
-}
+    },
+});
 
 module.exports = Home;

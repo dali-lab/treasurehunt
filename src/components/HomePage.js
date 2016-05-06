@@ -69,49 +69,6 @@ var HomePage = React.createClass({
     };
   },
 
-  _renderContent: function(color: string, pageText: string, num?: number) {
-    var price = "hello it's me";
-    var title = "who are you";
-    var dataSource = new ListView.DataSource(
-      {rowHasChanged: (r1, r2) => r1.guid != r2.guid});
-    return (
-      <TouchableHighlight
-        underlayColor='#dddddd'>
-        <View>
-          <View style={styles.rowContainer}>
-            <View style={styles.textContainer}>
-              <Text style={styles.price}>{price}</Text>
-              <Text style={styles.title}
-                numberOfLines={1}>{title}</Text>
-            </View>
-          </View>
-          <View style={styles.separator}/>
-        </View>
-      </TouchableHighlight>
-
-    );
-  },
-
-  renderRow() {
-    var price = "hello it's me";
-    var title = "who are you";
-    return (
-      <TouchableHighlight
-        underlayColor='#dddddd'>
-        <View>
-          <View style={styles.rowContainer}>
-            <View style={styles.textContainer}>
-              <Text style={styles.price}>{price}</Text>
-              <Text style={styles.title}
-                numberOfLines={1}>{title}</Text>
-            </View>
-          </View>
-          <View style={styles.separator}/>
-        </View>
-      </TouchableHighlight>
-      );
-  },
-
   _renderFeed: function(){
     return(
       <Feed navigator = {this.props.navigator} />

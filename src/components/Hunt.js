@@ -71,7 +71,7 @@ class Hunt extends Component {
     convertCluesArrayToMap(clues) {
         var cluesCategoryMap = {};
         var category = "Incomplete";
-
+        debugger;
         for (var i =0; i < clues.length; i++ ) {
             cluesCategoryMap["Incomplete"].push(clues[i]);
         }
@@ -94,7 +94,6 @@ class Hunt extends Component {
                		title:snap.val().title,
                		description: snap.val().description
                	});
-
             	this.setState({
             		dataSource: this.state.dataSource.cloneWithRowsAndSections(incompleteClues)
             	});
@@ -116,7 +115,7 @@ class Hunt extends Component {
                         <View style={styles.textContainer}>
                             <Text style={styles.title}>{clue}</Text>
                             <Text style={styles.description}
-                                numberOfLines={2}>{clue}</Text>
+                                numberOfLines={2}>LOCKED</Text>
                         </View> 
                     </View>
                     <View style={styles.separator}/>
