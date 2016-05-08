@@ -47,7 +47,10 @@ var styles = StyleSheet.create({
     padding: 10
   },
   textContainer: {
-    flex: 1
+    flex: 1,
+    backgroundColor: '#dddddd',
+    borderWidth: 2,
+    borderColor:'#000000'
   },
 });
 
@@ -70,50 +73,65 @@ class Hunt extends Component {
     //TODO: add categories,
     convertCluesArrayToMap(clues) {
         var cluesCategoryMap = {};
-        var category = "Incomplete";
-        debugger;
+
         for (var i =0; i < clues.length; i++ ) {
-            cluesCategoryMap["Incomplete"].push(clues[i]);
+            if (!cluesCategoryMap[clues[i].category]) {
+                cluesCategoryMap[clues[i].category] = [];
+            }
+            cluesCategoryMap[clues[i].category].push(clues[i]);
         }
         return cluesCategoryMap;
     }
 
     listenForItems(cluesRef) {
         //TODO: replace userHuntsArray with specific list of user hunts/solutions
+
+        var userCompletedClues = [0,1];
         var cluesArray = this.props.hunt.clues;
 
-        var completeClues = [];
+        var clues = [];
         var incompleteClues = [];
         //for each hunt the user has completed
         for (var key in cluesArray) {
-            var clueRef = cluesRef.child(key);
-            //get that hunt, calculate user progress, get hunt data
-            clueRef.on('value', (snap) => {
-            	var title = snap.val().title;
-               	incompleteClues.push({
-               		title:snap.val().title,
-               		description: snap.val().description
-               	});
-            	this.setState({
-            		dataSource: this.state.dataSource.cloneWithRowsAndSections(incompleteClues)
+        	var clueRef = cluesRef.child(key);
+        	clueRef.on('value', (snap) => {
+        		if (key in userCompletedClues) {
+        		clues.push({
+        			title:snap.val().title,
+        			description: snap.val().description,
+        			category: "complete"
+        		});
+        		}
+        		else {
+        			clues.push({
+	        			title:snap.val().title,
+	        			description: snap.val().description, 
+	        			category: "incomplete"
+        		});
+        		}
+        		this.setState({
+            		dataSource: this.state.dataSource.cloneWithRowsAndSections(this.convertCluesArrayToMap(clues))
             	});
-           });
-    	}
+        	});
+        }
     }
 
     componentDidMount() {
         this.listenForItems(cluesRef);
     }
 
+    rowPressed(hunt) {
+        console.log('row pressed');
+    }
+
     renderRow(clue) {
-    	console.log("rowdata" + clue.title);
         return (
             <TouchableHighlight onPress={() => this.rowPressed(clue)}
                 underlayColor='#dddddd'>
                 <View>
                     <View style={styles.rowContainer}>
                         <View style={styles.textContainer}>
-                            <Text style={styles.title}>{clue}</Text>
+                            <Text style={styles.title}>{clue.title}</Text>
                             <Text style={styles.description}
                                 numberOfLines={2}>LOCKED</Text>
                         </View> 
@@ -121,6 +139,14 @@ class Hunt extends Component {
                     <View style={styles.separator}/>
                 </View>
             </TouchableHighlight>
+        );
+    }
+
+    renderSectionHeader(sectionData, category) {
+        return (
+            <View style={styles.header}>
+                <Text style={styles.headerText}>{category}</Text>
+            </View>
         );
     }
 
@@ -136,7 +162,8 @@ class Hunt extends Component {
 				<ListView
                     dataSource={this.state.dataSource}
                     automaticallyAdjustContentInsets={false}
-                    renderRow={this.renderRow.bind(this)}/>
+                    renderRow={this.renderRow.bind(this)}
+                    renderSectionHeader={this.renderSectionHeader}/>
 			</View>
 		);
 	}

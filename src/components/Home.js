@@ -73,6 +73,7 @@ var styles = StyleSheet.create({
 const Firebase = require('firebase')
 const config = require('../../config')
 const huntsRef = new Firebase(`${ config.FIREBASE_ROOT }/hunts`)
+const rootRef = new Firebase(`${ config.FIREBASE_ROOT }`)
 
 
 
@@ -88,6 +89,7 @@ var Home = React.createClass({
         return {
             dataSource: dataSource
         };
+
     },
 
     convertHuntsArrayToMap: function(hunts) {
@@ -112,11 +114,39 @@ var Home = React.createClass({
             3: [11, 12, 13],
         };
 
-        var newHuntsArray = [0,1,2,3];
+        var newUserHuntsArray = [0,1,2,3];
         var hunts = [];
         
         // this.bindAsArray(huntsRef, newHuntsArray);
         // debugger;
+
+        var newHuntsRef = rootRef.child("hunts");
+
+
+        for (var huntID in newUserHuntsArray) {
+            let thisHuntRef = newHuntsRef.child(huntID);
+            let selectedRef = thisHuntRef.child("selected");
+            selectedRef.set("true");
+        }
+
+        var queryRef = rootRef.orderByChild("hunts/selected");
+
+        var solution1 = queryRef.equalTo("true").once('value', function(snap) {
+            console.log('selected!!', snap.val())
+        });
+        var newSelectedRef = newHuntsRef.child("selected");
+        console.log('newselected' + newSelectedRef);
+        var solution = newSelectedRef
+            .equalTo("true")
+            .once('value', function(snap) {
+                console.log('selected ones', snap.val())
+            });
+
+
+
+        // newHuntsRef.orderByChild("selected").equalTo(true).on("child_added", function(snapshot) {
+        //   console.log(snapshot.key());
+        // });
 
         //for each hunt the user has completed
         for (var key in userHuntsArray) {
