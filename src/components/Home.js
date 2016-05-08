@@ -237,7 +237,7 @@ var Home = React.createClass({
                 <ListView
                     dataSource={this.state.dataSource}
                     automaticallyAdjustContentInsets={false}
-                    renderRow={this.renderRow.bind(this)}
+                    renderRow={this.renderRow}
                     renderSectionHeader={this.renderSectionHeader}/>
             </View>
         );

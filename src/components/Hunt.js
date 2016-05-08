@@ -37,14 +37,21 @@ var styles = StyleSheet.create({
     title: {
         fontSize: 20,
         color: '#656565',
+        alignSelf: 'center'
     }, 
     description: {
         paddingTop: 3,
-        paddingBottom: 8
+        paddingBottom: 8,
+        alignSelf: 'center'
+    },
+    statusDescription: {
+    	paddingTop: 5,
+    	paddingBottom: 8,
+    	alignSelf: 'center'
     },
     rowContainer: {
-    flexDirection: 'row',
-    padding: 10
+	    flexDirection: 'row',
+	    padding: 10
   	},
     completeTextContainer: {
     	flex: 1,
@@ -63,20 +70,19 @@ const Firebase = require('firebase')
 const config = require('../../config')
 const cluesRef = new Firebase(`${ config.FIREBASE_ROOT }/clues`)
 
-class Hunt extends Component {
-	constructor(props) {
-        super(props);
+var Hunt = React.createClass({
+	getInitialState: function() {
         var dataSource = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1.guid != r2.guid,
             sectionHeaderHasChanged: (s1, s2) => s1 !== s2
         });
         
-        this.state = {
+        return {
             dataSource: dataSource
         };
-    }
+    },
     //TODO: add categories,
-    convertCluesArrayToMap(clues) {
+    convertCluesArrayToMap: function(clues) {
         var cluesCategoryMap = {};
 
         for (var i =0; i < clues.length; i++ ) {
@@ -86,9 +92,9 @@ class Hunt extends Component {
             cluesCategoryMap[clues[i].category].push(clues[i]);
         }
         return cluesCategoryMap;
-    }
+    },
 
-    listenForItems(cluesRef) {
+    listenForItems: function(cluesRef) {
         var userCompletedClues = [0,1];
         var cluesArray = this.props.hunt.clues;
 
@@ -115,27 +121,27 @@ class Hunt extends Component {
             	});
         	});
         }
-    }
+    },
 
-    componentDidMount() {
+    componentDidMount: function() {
         this.listenForItems(cluesRef);
-    }
+    },
 
-    rowPressed(hunt) {
+    rowPressed: function() {
         console.log('row pressed');
-    }
+    },
 
-    renderRow(rowData, sectionID, rowID) {
+    renderRow: function(rowData, sectionID, rowID) {
     	if (rowData.category === "complete") {
 	      	return (
-	      		<TouchableHighlight onPress={() => this.rowPressed(rowData)}
+	      		<TouchableHighlight onPress={() => this.rowPressed}
                 underlayColor='#dddddd'>
                 <View>
                     <View style={styles.rowContainer}>
                         <View style={styles.completeTextContainer}>
                             <Text style={styles.title}>{rowData.title}</Text>
-                            <Text style={styles.description}
-                                numberOfLines={2}>{rowData.description}</Text>
+                            <Text style={styles.statusDescription}
+                                >COMPLETED</Text>
                         </View> 
                     </View>
                     <View style={styles.separator}/>
@@ -144,14 +150,13 @@ class Hunt extends Component {
 	      	);
     	} else {
 	      	return (
-            <TouchableHighlight onPress={() => this.rowPressed(rowData)}
+            <TouchableHighlight onPress={() => this.rowPressed}
                 underlayColor='#dddddd'>
                 <View>
                     <View style={styles.rowContainer}>
                         <View style={styles.incompleteTextContainer}>
-                            <Text style={styles.title}>{rowData.title}</Text>
-                            <Text style={styles.description}
-                                numberOfLines={2}>LOCKED</Text>
+                            <Text style={styles.statusDescription}
+                                >LOCKED</Text>
                         </View> 
                     </View>
                     <View style={styles.separator}/>
@@ -159,7 +164,7 @@ class Hunt extends Component {
             </TouchableHighlight>
         	);
     	}
-	}
+	},
 
 	// unneccessary unless we want different sections
     // renderSectionHeader(sectionData, category) {
@@ -170,7 +175,7 @@ class Hunt extends Component {
     //     );
     // }
 
-	render() {
+	render: function() {
 		var hunt = this.props.hunt;
 		var huntRef = new Firebase(`${ config.FIREBASE_ROOT }/hunts`);
 		return (
@@ -185,8 +190,8 @@ class Hunt extends Component {
                     renderRow={this.renderRow}/>
 			</View>
 		);
-	}
-}
+	},
+});
 
 module.exports = Hunt;
 
