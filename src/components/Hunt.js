@@ -45,13 +45,18 @@ var styles = StyleSheet.create({
     rowContainer: {
     flexDirection: 'row',
     padding: 10
-  },
-  textContainer: {
-    flex: 1,
-    backgroundColor: '#dddddd',
-    borderWidth: 2,
-    borderColor:'#000000'
-  },
+  	},
+    completeTextContainer: {
+    	flex: 1,
+	    borderWidth: 2,
+	    borderColor:'#000000'
+	},
+    incompleteTextContainer: {
+	    flex: 1,
+	    backgroundColor: '#dddddd',
+	    borderWidth: 2,
+	    borderColor:'#000000'
+    }
 });
 
 const Firebase = require('firebase')
@@ -84,30 +89,26 @@ class Hunt extends Component {
     }
 
     listenForItems(cluesRef) {
-        //TODO: replace userHuntsArray with specific list of user hunts/solutions
-
         var userCompletedClues = [0,1];
         var cluesArray = this.props.hunt.clues;
 
         var clues = [];
-        var incompleteClues = [];
-        //for each hunt the user has completed
         for (var key in cluesArray) {
         	var clueRef = cluesRef.child(key);
         	clueRef.on('value', (snap) => {
-        		if (key in userCompletedClues) {
-        		clues.push({
-        			title:snap.val().title,
-        			description: snap.val().description,
-        			category: "complete"
-        		});
-        		}
+        		if (snap.key() in userCompletedClues) {
+	        		clues.push({
+	        			title:snap.val().title,
+	        			description: snap.val().description,
+	        			category: "complete"
+	        		});
+	        	}
         		else {
         			clues.push({
 	        			title:snap.val().title,
 	        			description: snap.val().description, 
 	        			category: "incomplete"
-        		});
+        			});
         		}
         		this.setState({
             		dataSource: this.state.dataSource.cloneWithRowsAndSections(this.convertCluesArrayToMap(clues))
@@ -124,14 +125,31 @@ class Hunt extends Component {
         console.log('row pressed');
     }
 
-    renderRow(clue) {
-        return (
-            <TouchableHighlight onPress={() => this.rowPressed(clue)}
+    renderRow(rowData, sectionID, rowID) {
+    	if (rowData.category === "complete") {
+	      	return (
+	      		<TouchableHighlight onPress={() => this.rowPressed(rowData)}
                 underlayColor='#dddddd'>
                 <View>
                     <View style={styles.rowContainer}>
-                        <View style={styles.textContainer}>
-                            <Text style={styles.title}>{clue.title}</Text>
+                        <View style={styles.completeTextContainer}>
+                            <Text style={styles.title}>{rowData.title}</Text>
+                            <Text style={styles.description}
+                                numberOfLines={2}>{rowData.description}</Text>
+                        </View> 
+                    </View>
+                    <View style={styles.separator}/>
+                </View>
+            </TouchableHighlight>
+	      	);
+    	} else {
+	      	return (
+            <TouchableHighlight onPress={() => this.rowPressed(rowData)}
+                underlayColor='#dddddd'>
+                <View>
+                    <View style={styles.rowContainer}>
+                        <View style={styles.incompleteTextContainer}>
+                            <Text style={styles.title}>{rowData.title}</Text>
                             <Text style={styles.description}
                                 numberOfLines={2}>LOCKED</Text>
                         </View> 
@@ -139,16 +157,18 @@ class Hunt extends Component {
                     <View style={styles.separator}/>
                 </View>
             </TouchableHighlight>
-        );
-    }
+        	);
+    	}
+	}
 
-    renderSectionHeader(sectionData, category) {
-        return (
-            <View style={styles.header}>
-                <Text style={styles.headerText}>{category}</Text>
-            </View>
-        );
-    }
+	// unneccessary unless we want different sections
+    // renderSectionHeader(sectionData, category) {
+    //     return (
+    //         <View style={styles.header}>
+    //             <Text style={styles.headerText}>{category}</Text>
+    //         </View>
+    //     );
+    // }
 
 	render() {
 		var hunt = this.props.hunt;
@@ -162,8 +182,7 @@ class Hunt extends Component {
 				<ListView
                     dataSource={this.state.dataSource}
                     automaticallyAdjustContentInsets={false}
-                    renderRow={this.renderRow.bind(this)}
-                    renderSectionHeader={this.renderSectionHeader}/>
+                    renderRow={this.renderRow}/>
 			</View>
 		);
 	}
