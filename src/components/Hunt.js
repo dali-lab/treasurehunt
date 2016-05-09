@@ -47,16 +47,18 @@ var styles = StyleSheet.create({
     statusDescription: {
     	paddingTop: 5,
     	paddingBottom: 8,
-    	alignSelf: 'center'
+    	alignSelf: 'center',
     },
     rowContainer: {
 	    flexDirection: 'row',
-	    padding: 10
+	    padding: 10,
+	    height: 75,
+	    // alignItems: 'center'
   	},
     completeTextContainer: {
     	flex: 1,
 	    borderWidth: 2,
-	    borderColor:'#000000'
+	    borderColor:'#000000', 
 	},
     incompleteTextContainer: {
 	    flex: 1,
@@ -102,7 +104,7 @@ var Hunt = React.createClass({
         for (var key in cluesArray) {
         	var clueRef = cluesRef.child(key);
         	clueRef.on('value', (snap) => {
-        		if (snap.key() in userCompletedClues) {
+        		if (snap.val() in userCompletedClues) {
 	        		clues.push({
 	        			title:snap.val().title,
 	        			description: snap.val().description,
