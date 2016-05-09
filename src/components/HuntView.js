@@ -78,6 +78,10 @@ class HuntView extends Component {
         });
 	}
 
+	onExitPressed() {
+		this.props.navigator.pop();
+	}
+
 	render() {
 		var hunt = this.props.hunt;
 
@@ -95,7 +99,12 @@ class HuntView extends Component {
 						onPress={this.onStartPressed.bind(this)}
 						underlayColor='#99d9f4'>
 						<Text style = {styles.buttonText}>GET STARTED</Text>
-					</TouchableHighlight>
+				</TouchableHighlight>
+				<TouchableHighlight style = {styles.button}
+						onPress={this.onExitPressed.bind(this)}
+						underlayColor='#99d9f4'>
+						<Text style = {styles.buttonText}>RETURN HOME</Text>
+				</TouchableHighlight>
 			</View>
 		);
 	}

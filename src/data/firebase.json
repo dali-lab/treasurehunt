@@ -1,38 +1,34 @@
 {
-  "hunts": 
-  	[
+  "hunts": {
+  	"0":
 	    {
 	    "title":"Dartmouth",
 	    "description": "Become familiar with the Dartmouth campus through this orientation hunt!", 
 	    "image": "https://www.dropbox.com/s/j2lzjfh7666wzc5/dart.jpg?raw=1",
-	    "clues": [0, 1, 2, 3, 4], 
-	    "selected": "false"
+	    "clues": [0, 1, 2, 3, 4]
 	    },
-
+	"1":
 	    {
 	    "title":"Boston",
 	    "description": "Explore the greater Boston area, from coffee shops to museums to parks and bars.",
 		"image": "https://www.dropbox.com/s/0keab1s7kfie8k2/boston.jpg?raw=1",
-		"clues": [5, 6, 7],
-		"selected": "false"
+		"clues": [5, 6, 7]
 		},
-
+	"2":
 		{
 	    "title":"Budapest Pub Hunt",
 	    "description": "This hunt will take you through all of Budapest's most famous ruin pubs. Search for clues in each pub to collect points and win a prize at Szimpla!",
 		"image": "https://www.dropbox.com/s/64ncfli9nmabfta/budapest.jpg?raw=1",
-		"clues": [6, 7, 8],
-		"selected": "false"
+		"clues": [0, 1, 2]
 		},
-
+	"3":
 		{
 	    "title":"San Francisco Food Hunt",
 	    "description": "Hunt out the best restaurant in every neighborhood in San Francisco!",
 		"image": "https://www.dropbox.com/s/zma1oauj6q8cjwo/san-francisco.jpg?raw=1",
-		"clues": [0, 1, 2],
-		"selected": "false"
+		"clues": [0, 1, 2]
 		}
-  	], 
+  	}, 
   "clues": 
   	[
 	  {	"id": 0,

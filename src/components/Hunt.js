@@ -102,12 +102,11 @@ var Hunt = React.createClass({
     },
 
     listenForItems: function(cluesRef) {
-        var userCompletedClues = [0, 1, 5];
+        var userCompletedClues = [0, 1, 2, 5];
         var cluesArray = this.props.hunt.clues;
 
         var clues = [];
         for (var i = 0; i < cluesArray.length; i++) {
-        	console.log('cluesref' + cluesArray[i]);
         	var clueRef = cluesRef.child(cluesArray[i]);
         	clueRef.on('value', (snap) => {
         		if (userCompletedClues.indexOf(snap.val().id) > -1) {
