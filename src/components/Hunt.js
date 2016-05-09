@@ -49,11 +49,16 @@ var styles = StyleSheet.create({
     	paddingBottom: 8,
     	alignSelf: 'center',
     },
+    lockedDescription: {
+    	textAlign: 'center',
+    	fontSize: 25,
+    	paddingTop: 10
+    },
     rowContainer: {
 	    flexDirection: 'row',
 	    padding: 10,
 	    height: 75,
-	    // alignItems: 'center'
+	    justifyContent: 'center'
   	},
     completeTextContainer: {
     	flex: 1,
@@ -64,7 +69,7 @@ var styles = StyleSheet.create({
 	    flex: 1,
 	    backgroundColor: '#dddddd',
 	    borderWidth: 2,
-	    borderColor:'#000000'
+	    borderColor:'#000000', 
     }
 });
 
@@ -83,7 +88,7 @@ var Hunt = React.createClass({
             dataSource: dataSource
         };
     },
-    //TODO: add categories,
+
     convertCluesArrayToMap: function(clues) {
         var cluesCategoryMap = {};
 
@@ -97,14 +102,15 @@ var Hunt = React.createClass({
     },
 
     listenForItems: function(cluesRef) {
-        var userCompletedClues = [0,1];
+        var userCompletedClues = [0, 1, 5];
         var cluesArray = this.props.hunt.clues;
 
         var clues = [];
-        for (var key in cluesArray) {
-        	var clueRef = cluesRef.child(key);
+        for (var i = 0; i < cluesArray.length; i++) {
+        	console.log('cluesref' + cluesArray[i]);
+        	var clueRef = cluesRef.child(cluesArray[i]);
         	clueRef.on('value', (snap) => {
-        		if (snap.val() in userCompletedClues) {
+        		if (userCompletedClues.indexOf(snap.val().id) > -1) {
 	        		clues.push({
 	        			title:snap.val().title,
 	        			description: snap.val().description,
@@ -143,7 +149,7 @@ var Hunt = React.createClass({
                         <View style={styles.completeTextContainer}>
                             <Text style={styles.title}>{rowData.title}</Text>
                             <Text style={styles.statusDescription}
-                                >COMPLETED</Text>
+                                >- COMPLETED -</Text>
                         </View> 
                     </View>
                     <View style={styles.separator}/>
@@ -157,8 +163,8 @@ var Hunt = React.createClass({
                 <View>
                     <View style={styles.rowContainer}>
                         <View style={styles.incompleteTextContainer}>
-                            <Text style={styles.statusDescription}
-                                >LOCKED</Text>
+                            <Text style={styles.lockedDescription}
+                                >- LOCKED -</Text>
                         </View> 
                     </View>
                     <View style={styles.separator}/>
@@ -184,6 +190,7 @@ var Hunt = React.createClass({
 			<View style={styles.container}>
 				<View>
 					<Text style={styles.huntTitle}>{hunt.title.toUpperCase()}</Text>
+					<Text style={styles.huntTitle}>CLUES LIST</Text>
 				</View>
 				<View style={styles.separatorSmall}/>
 				<ListView

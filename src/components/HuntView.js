@@ -56,7 +56,7 @@ var styles = StyleSheet.create({
 	  flexDirection: 'column',
 	  backgroundColor: '#48BBEC',
 	  borderColor: '#48BBEC',
-	  justifyContent: 'flex-end',
+	  justifyContent: 'center',
 	  borderWidth: 1,
 	  borderRadius: 8,
 	  marginBottom: 10,
