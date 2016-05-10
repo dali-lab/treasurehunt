@@ -1,6 +1,6 @@
 
 var React = require('react-native');
-var Hunt = require('./Hunt');
+var ClueList = require('./ClueList');
 
 var {
 	StyleSheet,
@@ -66,15 +66,14 @@ var styles = StyleSheet.create({
 });
 
 
-class HuntView extends Component {
+class HuntOverview extends Component {
 	onStartPressed() {
 		this.props.navigator.push({
             title: "Hunt",
-            component: Hunt,
+            component: ClueList,
             passProps: {
                 hunt: this.props.hunt,
             }
-
         });
 	}
 
@@ -111,5 +110,5 @@ class HuntView extends Component {
 }
 
 
-module.exports = HuntView;
+module.exports = HuntOverview;
 

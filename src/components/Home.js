@@ -3,7 +3,7 @@
 
 var React = require('react-native');
 var Progress = require('react-native-progress');
-var HuntView = require('./HuntView');
+var HuntOverview = require('./HuntOverview');
 var ReactFireMixin = require('reactfire');
 
 var {
@@ -161,7 +161,7 @@ var Home = React.createClass({
     rowPressed: function(hunt) {
         this.props.navigator.push({
             title: "Hunt",
-            component: HuntView,
+            component: HuntOverview,
             passProps: {
                 hunt: hunt,
             }

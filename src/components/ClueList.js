@@ -1,4 +1,5 @@
 var React = require('react-native');
+var ClueDisplay = require('./ClueDisplay');
 
 var {
 	StyleSheet,
@@ -77,7 +78,7 @@ const Firebase = require('firebase')
 const config = require('../../config')
 const cluesRef = new Firebase(`${ config.FIREBASE_ROOT }/clues`)
 
-var Hunt = React.createClass({
+var ClueList = React.createClass({
 	getInitialState: function() {
         var dataSource = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1.guid != r2.guid,
@@ -136,12 +137,16 @@ var Hunt = React.createClass({
 
     rowPressed: function() {
         console.log('row pressed');
+        this.props.navigator.push({
+            title: "Hunt",
+            component: ClueDisplay,
+        });
     },
 
     renderRow: function(rowData, sectionID, rowID) {
     	if (rowData.category === "complete") {
 	      	return (
-	      		<TouchableHighlight onPress={() => this.rowPressed}
+	      		<TouchableHighlight onPress={() => this.rowPressed()}
                 underlayColor='#dddddd'>
                 <View>
                     <View style={styles.rowContainer}>
@@ -157,7 +162,7 @@ var Hunt = React.createClass({
 	      	);
     	} else {
 	      	return (
-            <TouchableHighlight onPress={() => this.rowPressed}
+            <TouchableHighlight onPress={() => this.rowPressed()}
                 underlayColor='#dddddd'>
                 <View>
                     <View style={styles.rowContainer}>
@@ -201,5 +206,5 @@ var Hunt = React.createClass({
 	},
 });
 
-module.exports = Hunt;
+module.exports = ClueList;
 

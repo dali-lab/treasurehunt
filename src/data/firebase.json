@@ -33,19 +33,19 @@
   	[
 	  {	"id": 0,
 	  	"type":"fillIn",
-	  	"title":"Word Scramble!",
+	  	"title":"Find the Missing Piece",
 	  	"description":"What is the most famous library on campus?"
 	  },
 	  {
 	  	"id": 1,
 	  	"type":"fillIn",
-	  	"title":"Fill in the Word!",
+	  	"title":"Word on a Stone",
 	  	"description":"Where do you go for stir fry?"
 	  },
 	  {
 	  	"id": 2,
 	  	"type":"fillIn",
-	  	"title":"Fill in the Word!",
+	  	"title":"Sudikoff Search",
 	  	"description":"What is the name of the pysch building?"
 	  },
 	  {

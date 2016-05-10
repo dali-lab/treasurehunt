@@ -16,7 +16,8 @@ var styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#ff9966'
+        backgroundColor: '#ff9966',
+        padding: 1
     }
 });
 
