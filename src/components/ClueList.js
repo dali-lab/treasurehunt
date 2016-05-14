@@ -114,14 +114,16 @@ var ClueList = React.createClass({
 	        		clues.push({
 	        			title:snap.val().title,
 	        			description: snap.val().description,
-	        			category: "complete"
+	        			category: "complete", 
+                        clueId: snap.val().id
 	        		});
 	        	}
         		else {
         			clues.push({
 	        			title:snap.val().title,
 	        			description: snap.val().description, 
-	        			category: "incomplete"
+	        			category: "incomplete",
+                        clueId: snap.val().id
         			});
         		}
         		this.setState({
@@ -135,18 +137,24 @@ var ClueList = React.createClass({
         this.listenForItems(cluesRef);
     },
 
-    rowPressed: function() {
+    rowPressed: function(clueId) {
+        //TODO: if clue is completed, load solution. 
+        //if clue is in progress, load current progress
         console.log('row pressed');
         this.props.navigator.push({
             title: "Hunt",
             component: ClueDisplay,
+            passProps: {
+                hunt: this.props.hunt,
+                clueId: clueId
+            }
         });
     },
 
     renderRow: function(rowData, sectionID, rowID) {
     	if (rowData.category === "complete") {
 	      	return (
-	      		<TouchableHighlight onPress={() => this.rowPressed()}
+	      		<TouchableHighlight onPress={() => this.rowPressed(rowData.clueId)}
                 underlayColor='#dddddd'>
                 <View>
                     <View style={styles.rowContainer}>
@@ -162,7 +170,7 @@ var ClueList = React.createClass({
 	      	);
     	} else {
 	      	return (
-            <TouchableHighlight onPress={() => this.rowPressed()}
+            <TouchableHighlight
                 underlayColor='#dddddd'>
                 <View>
                     <View style={styles.rowContainer}>
