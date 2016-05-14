@@ -103,7 +103,12 @@ var ClueList = React.createClass({
     },
 
     listenForItems: function(cluesRef) {
+        //TODO: fix logic coming from completed clue
         var userCompletedClues = [0, 1, 2, 5];
+
+        //check if most recent clue is in progress or not
+        
+        
         var cluesArray = this.props.hunt.clues;
 
         var clues = [];

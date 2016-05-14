@@ -7,6 +7,7 @@ var {
 	Text,
 	Component,
 	TouchableHighlight,
+	Alert
 } = React;
 
 var styles = StyleSheet.create({
@@ -70,18 +71,35 @@ var ClueDisplay = React.createClass({
         return {
             clue: clue,
             huntId: this.props.hunt.id,
-            added: 0
+            added: 0, 
+            added2: 0
         };
 
     },
 
 	onSubmitPressed: function() {
-		this.submitClue();
-		// this.props.navigator.pop();
+		if (this.checkSolution) {
+			var solutionList = this.getSolutionListFromDatabase();
+			console.log("sollist" + solutionList);
+			this.updateDatabaseSolutionList(solutionList);
+			Alert.alert(
+				'Clue Correct',
+				"Woohoo!"
+			);
+		}
+		else {
+			Alert.alert(
+				'Incorrect Submission',
+				'Try again!'
+			);
+		}
 	},
 
-	submitClue: function() {
-		//TODO: don't hard code user
+	checkSolution: function(userSolution) {
+		return true;
+	},
+
+	getSolutionListFromDatabase: function() {
 		var userRef = usersRef.child(0);
 		var huntsListRef = userRef.child("hunts_list");
 		var thisHuntRef = huntsListRef.child(this.state.huntId);
@@ -90,34 +108,39 @@ var ClueDisplay = React.createClass({
 
 		// if so, get clues_list for specific hunt
 		thisHuntRef.once('value', (snap) => {
-			console.log('snapval' + snap.val());
 			var solutionList = snap.val();
-			this.setState({
-				solutionList: solutionList
-			});
+			this.updateDatabaseSolutionList(solutionList);
 		});
 
+	},
+
+	updateDatabaseSolutionList: function(solutionList) {
 		var newSolutionList = [];
 
 		//append newest solution to list
-		if (this.state.solutionList) {
-			if (!this.state.added) {
-				newSolutionList = this.state.solutionList;
+		if (solutionList) {
+				newSolutionList = solutionList;
 				newSolutionList.push(this.props.clueId);
 				this.state.added = 1;
-			}
+				console.log("newest solution list" + newSolutionList);
 		}
 
 		//TODO: push new list to Firebase
 		if (newSolutionList) {
+			// if (!this.state.added2) {
+			// 	var hunts_list = {};
+			// 	hunts_list[this.state.huntId] = newSolutionList;
+			// 	userRef.update({hunts_list});
+			// 	this.state.added2 = 1;
+			return true;
+
+		}
 			// var huntId = this.state.huntId;
 			// var thisHuntRef = huntsListRef.child(huntId);
 			// var newList = [0,1,2];
 			// var hunts_list = {};
 			// hunts_list[huntId] = newHuntsList;
 			// userRef.update({hunts_list});
-			return true;
-		}
 
 	},
 
@@ -132,7 +155,7 @@ var ClueDisplay = React.createClass({
 			<View style={styles.container}>
 				<Text style={styles.title}>{this.state.clue.title}</Text>
 				<TouchableHighlight style = {styles.button}
-						onPress={this.onSubmitPressed()}
+						onPress={this.onSubmitPressed}
 						underlayColor='#99d9f4'>
 						<Text style = {styles.buttonText}>SUBMIT CLUE</Text>
 				</TouchableHighlight>
