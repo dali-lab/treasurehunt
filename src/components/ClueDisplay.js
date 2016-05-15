@@ -116,6 +116,8 @@ var ClueDisplay = React.createClass({
 
 	updateDatabaseSolutionList: function(solutionList) {
 		var newSolutionList = [];
+		var userRef = usersRef.child(0);
+		var huntsListRef = userRef.child("hunts_list");
 
 		//append newest solution to list
 		if (solutionList) {
@@ -125,23 +127,12 @@ var ClueDisplay = React.createClass({
 				console.log("newest solution list" + newSolutionList);
 		}
 
-		//TODO: push new list to Firebase
+		//push new list to Firebase
 		if (newSolutionList) {
-			// if (!this.state.added2) {
-			// 	var hunts_list = {};
-			// 	hunts_list[this.state.huntId] = newSolutionList;
-			// 	userRef.update({hunts_list});
-			// 	this.state.added2 = 1;
+			var thisHuntRef = huntsListRef.child(this.state.huntId);
+			thisHuntRef.update(newSolutionList);
 			return true;
-
 		}
-			// var huntId = this.state.huntId;
-			// var thisHuntRef = huntsListRef.child(huntId);
-			// var newList = [0,1,2];
-			// var hunts_list = {};
-			// hunts_list[huntId] = newHuntsList;
-			// userRef.update({hunts_list});
-
 	},
 
 	verifySolution: function() {
