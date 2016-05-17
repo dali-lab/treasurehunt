@@ -1,5 +1,6 @@
 var React = require('react-native');
-var ClueDisplay = require('./ClueDisplay');
+var CurrentClueDisplay = require('./CurrentClueDisplay');
+var CompletedClueDisplay = require('./CompletedClueDisplay');
 
 var {
 	StyleSheet,
@@ -104,12 +105,14 @@ var ClueList = React.createClass({
     },
 
     populateArray: function(solutionsForThisHunt) {
-
+        console.log('executed');
         var cluesArray = this.props.hunt.clues;
         var clues = [];
         var solutionsToClues = [];
         var userCompletedClues = [];
         var inProgress;
+
+        console.log('solutions for this hunt ' + solutionsForThisHunt);
 
         // specify which of user's clues are in progress versus completed
         for (var i = 0; i < solutionsForThisHunt.length; i++ ) {
@@ -162,21 +165,20 @@ var ClueList = React.createClass({
         }
     },  
 
-    listenForItems: function(cluesRef) {
-        //TODO: fix logic coming from completed clue
-        var userCompletedClues = [0, 1, 2, 5];
-        
-        //todo start at end at not working
+    listenForItems: function(cluesRef) {                
+
         //get all clues for user in hunt, add them to array
         var huntID = this.props.hunt.id;
 
         var solutionsForThisHunt = [];
-        //TODO: don't hardcode hunt 
+        //TODO: don't hardcode hunt -- but startAt endAt not working
         userSolutionsRef.orderByChild('user_id').startAt(0).endAt(0).once('value', (snap) => {
             var solution = snap.val();
-            for (var i = 0; i < solution.length; i++) {
-                if (solution[i].hunt_id == 0) {
-                    solutionsForThisHunt.push(solution[i]);
+            var array = Object.keys(solution).map(key =>({ ...solution[key], id:key}));
+            for (var i = 0; i < array.length; i++) {
+                console.log('got here');
+                if (array[i].hunt_id == 0) {
+                    solutionsForThisHunt.push(array[i]);
                 }
             }
             this.populateArray(solutionsForThisHunt);
@@ -188,23 +190,35 @@ var ClueList = React.createClass({
         this.listenForItems(cluesRef);
     },
 
-    rowPressed: function(clueId) {
+    rowPressed: function(clueInfo) {
         //TODO: if clue is completed, load solution. 
         //if clue is in progress, load current progress
-        this.props.navigator.push({
-            title: "Hunt",
-            component: ClueDisplay,
-            passProps: {
-                hunt: this.props.hunt,
-                clueId: clueId
-            }
-        });
+        if (clueInfo.category === "complete") {
+            this.props.navigator.push({
+                title: "Hunt",
+                component: CompletedClueDisplay,
+                passProps: {
+                    hunt: this.props.hunt,
+                    clueId: clueInfo.clueId
+                }
+            });
+        }
+        else {
+            this.props.navigator.push({
+                title: "Hunt",
+                component: CurrentClueDisplay,
+                passProps: {
+                    hunt: this.props.hunt,
+                    clueId: clueInfo.clueId
+                }
+            });
+        }
     },
 
     renderRow: function(rowData, sectionID, rowID) {
     	if (rowData.category === "complete") {
 	      	return (
-	      		<TouchableHighlight onPress={() => this.rowPressed(rowData.clueId)}
+	      		<TouchableHighlight onPress={() => this.rowPressed(rowData)}
                 underlayColor='#dddddd'>
                 <View>
                     <View style={styles.rowContainer}>
@@ -221,7 +235,7 @@ var ClueList = React.createClass({
     	} 
         else if (rowData.category === "inProgress") {
             return (
-                <TouchableHighlight onPress={() => this.rowPressed(rowData.clueId)}
+                <TouchableHighlight onPress={() => this.rowPressed(rowData)}
                 underlayColor='#dddddd'>
                 <View>
                     <View style={styles.rowContainer}>
