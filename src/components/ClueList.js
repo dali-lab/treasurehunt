@@ -77,6 +77,7 @@ var styles = StyleSheet.create({
 const Firebase = require('firebase')
 const config = require('../../config')
 const cluesRef = new Firebase(`${ config.FIREBASE_ROOT }/clues`)
+const userSolutionsRef = new Firebase(`${ config.FIREBASE_ROOT }/user_solutions`)
 
 var ClueList = React.createClass({
 	getInitialState: function() {
@@ -102,40 +103,85 @@ var ClueList = React.createClass({
         return cluesCategoryMap;
     },
 
+    populateArray: function(solutionsForThisHunt) {
+
+        var cluesArray = this.props.hunt.clues;
+        var clues = [];
+        var solutionsToClues = [];
+        var userCompletedClues = [];
+        var inProgress;
+
+        // specify which of user's clues are in progress versus completed
+        for (var i = 0; i < solutionsForThisHunt.length; i++ ) {
+            if (solutionsForThisHunt[i].completed == 0) {
+                inProgress = solutionsForThisHunt[i].clue_id;
+            }
+            else {
+                userCompletedClues.push(solutionsForThisHunt[i].clue_id);
+            }
+        }
+
+        //for all clues in clueArray
+        for (var j = 0; j < cluesArray.length; j++) {
+            var clueRef = cluesRef.child(cluesArray[j]);
+            clueRef.on('value', (snap) => {
+
+                // if a clue is in progress, add to appropriate category
+                if (snap.val().id == inProgress) {
+                    clues.push({
+                        title:snap.val().title,
+                        description: snap.val().description,
+                        category: "inProgress", 
+                        clueId: snap.val().id
+                    });
+                }
+
+                // completed clue
+                else if (userCompletedClues.indexOf(snap.val().id) > -1) {
+                    clues.push({
+                        title:snap.val().title,
+                        description: snap.val().description,
+                        category: "complete", 
+                        clueId: snap.val().id
+                    });
+                }
+
+                //incomplete clue
+                else {
+                    clues.push({
+                        title:snap.val().title,
+                        description: snap.val().description, 
+                        category: "incomplete",
+                        clueId: snap.val().id
+                    });
+                }
+                this.setState({
+                    dataSource: this.state.dataSource.cloneWithRowsAndSections(this.convertCluesArrayToMap(clues))
+                });
+            });
+        }
+    },  
+
     listenForItems: function(cluesRef) {
         //TODO: fix logic coming from completed clue
         var userCompletedClues = [0, 1, 2, 5];
-
-        //check if most recent clue is in progress or not
         
-        
-        var cluesArray = this.props.hunt.clues;
+        //todo start at end at not working
+        //get all clues for user in hunt, add them to array
+        var huntID = this.props.hunt.id;
 
-        var clues = [];
-        for (var i = 0; i < cluesArray.length; i++) {
-        	var clueRef = cluesRef.child(cluesArray[i]);
-        	clueRef.on('value', (snap) => {
-        		if (userCompletedClues.indexOf(snap.val().id) > -1) {
-	        		clues.push({
-	        			title:snap.val().title,
-	        			description: snap.val().description,
-	        			category: "complete", 
-                        clueId: snap.val().id
-	        		});
-	        	}
-        		else {
-        			clues.push({
-	        			title:snap.val().title,
-	        			description: snap.val().description, 
-	        			category: "incomplete",
-                        clueId: snap.val().id
-        			});
-        		}
-        		this.setState({
-            		dataSource: this.state.dataSource.cloneWithRowsAndSections(this.convertCluesArrayToMap(clues))
-            	});
-        	});
-        }
+        var solutionsForThisHunt = [];
+        //TODO: don't hardcode hunt 
+        userSolutionsRef.orderByChild('user_id').startAt(0).endAt(0).once('value', (snap) => {
+            var solution = snap.val();
+            for (var i = 0; i < solution.length; i++) {
+                if (solution[i].hunt_id == 0) {
+                    solutionsForThisHunt.push(solution[i]);
+                }
+            }
+            this.populateArray(solutionsForThisHunt);
+        });
+
     },
 
     componentDidMount: function() {
@@ -145,7 +191,6 @@ var ClueList = React.createClass({
     rowPressed: function(clueId) {
         //TODO: if clue is completed, load solution. 
         //if clue is in progress, load current progress
-        console.log('row pressed');
         this.props.navigator.push({
             title: "Hunt",
             component: ClueDisplay,
@@ -173,7 +218,25 @@ var ClueList = React.createClass({
                 </View>
             </TouchableHighlight>
 	      	);
-    	} else {
+    	} 
+        else if (rowData.category === "inProgress") {
+            return (
+                <TouchableHighlight onPress={() => this.rowPressed(rowData.clueId)}
+                underlayColor='#dddddd'>
+                <View>
+                    <View style={styles.rowContainer}>
+                        <View style={styles.completeTextContainer}>
+                            <Text style={styles.title}>{rowData.title}</Text>
+                            <Text style={styles.statusDescription}
+                                >- IN PROGRESS -</Text>
+                        </View> 
+                    </View>
+                    <View style={styles.separator}/>
+                </View>
+            </TouchableHighlight>
+            );
+        } 
+        else {
 	      	return (
             <TouchableHighlight
                 underlayColor='#dddddd'>

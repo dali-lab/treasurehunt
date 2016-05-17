@@ -71,28 +71,34 @@ var ClueDisplay = React.createClass({
         return {
             clue: clue,
             huntId: this.props.hunt.id,
-            added: 0, 
-            added2: 0
         };
 
     },
 
 	onSubmitPressed: function() {
-		if (this.checkSolution) {
+		if (this.checkSolution()) {
 			var solutionList = this.getSolutionListFromDatabase();
 			console.log("sollist" + solutionList);
 			this.updateDatabaseSolutionList(solutionList);
 			Alert.alert(
 				'Clue Correct',
-				"Woohoo!"
+				"Woohoo!",
+				[
+					{onPress: this.returnToClueList},
+				]
 			);
 		}
 		else {
 			Alert.alert(
 				'Incorrect Submission',
-				'Try again!'
+				'Try again!',
 			);
 		}
+	},
+
+	returnToClueList: function() {
+		console.log('dani123');
+		this.props.navigator.pop();
 	},
 
 	checkSolution: function(userSolution) {
@@ -121,27 +127,20 @@ var ClueDisplay = React.createClass({
 
 		//append newest solution to list
 		if (solutionList) {
-				newSolutionList = solutionList;
-				newSolutionList.push(this.props.clueId);
-				this.state.added = 1;
-				console.log("newest solution list" + newSolutionList);
+			newSolutionList = solutionList;
+			newSolutionList.push(this.props.clueId);
+			console.log("newest solution list" + newSolutionList);
 		}
 
 		//push new list to Firebase
+		//TODO: for some reason set doesn't work here--newSolutionList becomes undefined?
 		if (newSolutionList) {
 			var thisHuntRef = huntsListRef.child(this.state.huntId);
 			thisHuntRef.update(newSolutionList);
-			return true;
 		}
 	},
 
-	verifySolution: function() {
-		//check solution against Firebase solution
-	},
-
-	render: function() {
-		console.log('got to clue display');
-	        		
+	render: function() {	        		
 		return (
 			<View style={styles.container}>
 				<Text style={styles.title}>{this.state.clue.title}</Text>

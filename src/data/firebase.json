@@ -41,6 +41,30 @@
   		"name": "Dani"
   		}
   	},
+  "user_solutions": {
+  	"0":
+  		{
+  			"user_id": 0,
+  			"clue_id": 0,
+  			"hunt_id": 0,
+  			"completed": 1
+  		},
+  	"1":
+  		{
+  			"user_id": 0,
+  			"clue_id": 1,
+  			"hunt_id": 0,
+  			"completed": 0
+  		},
+  	"2":
+  		{
+  			"user_id": 0,
+  			"clue_id": 1,
+  			"hunt_id": 1,
+  			"completed": 0
+  		}
+  },
+
   "clues": 
   	[
 	  {	"id": 0,
