@@ -112,8 +112,6 @@ var ClueList = React.createClass({
         var userCompletedClues = [];
         var inProgress;
 
-        console.log('solutions for this hunt ' + solutionsForThisHunt);
-
         // specify which of user's clues are in progress versus completed
         for (var i = 0; i < solutionsForThisHunt.length; i++ ) {
             if (solutionsForThisHunt[i].completed == 0) {
@@ -122,6 +120,10 @@ var ClueList = React.createClass({
             else {
                 userCompletedClues.push(solutionsForThisHunt[i].clue_id);
             }
+        }
+
+        if (!inProgress) {
+            inProgress = userCompletedClues[userCompletedClues.length-1] +1;
         }
 
         //for all clues in clueArray
@@ -165,18 +167,16 @@ var ClueList = React.createClass({
         }
     },  
 
-    listenForItems: function(cluesRef) {                
+    listenForItems: function(cluesRef) {       
 
         //get all clues for user in hunt, add them to array
         var huntID = this.props.hunt.id;
 
         var solutionsForThisHunt = [];
-        //TODO: don't hardcode hunt -- but startAt endAt not working
-        userSolutionsRef.orderByChild('user_id').startAt(0).endAt(0).once('value', (snap) => {
+        userSolutionsRef.orderByChild('user_id').startAt(Number(huntID)).endAt(Number(huntID)).once('value', (snap) => {
             var solution = snap.val();
             var array = Object.keys(solution).map(key =>({ ...solution[key], id:key}));
             for (var i = 0; i < array.length; i++) {
-                console.log('got here');
                 if (array[i].hunt_id == 0) {
                     solutionsForThisHunt.push(array[i]);
                 }
@@ -209,7 +209,8 @@ var ClueList = React.createClass({
                 component: CurrentClueDisplay,
                 passProps: {
                     hunt: this.props.hunt,
-                    clueId: clueInfo.clueId
+                    clueId: clueInfo.clueId,
+                    callback: this.listenForItems
                 }
             });
         }
@@ -268,14 +269,6 @@ var ClueList = React.createClass({
     	}
 	},
 
-	// unneccessary unless we want different sections
-    // renderSectionHeader(sectionData, category) {
-    //     return (
-    //         <View style={styles.header}>
-    //             <Text style={styles.headerText}>{category}</Text>
-    //         </View>
-    //     );
-    // }
 
 	render: function() {
 		var hunt = this.props.hunt;
