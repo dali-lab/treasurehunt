@@ -55,9 +55,10 @@ const Firebase = require('firebase')
 const config = require('../../config')
 const usersRef = new Firebase(`${ config.FIREBASE_ROOT }/users`)
 const cluesRef = new Firebase(`${ config.FIREBASE_ROOT }/clues`)
+const userSolutionsRef = new Firebase(`${ config.FIREBASE_ROOT }/user_solutions`)
 
 
-var ClueDisplay = React.createClass({
+var CurrentClueDisplay = React.createClass({
 	getInitialState: function() {
 		var clueRef = cluesRef.child(this.props.clueId);
 		var clue;
@@ -79,6 +80,7 @@ var ClueDisplay = React.createClass({
 		if (this.checkSolution()) {
 			var solutionList = this.getSolutionListFromDatabase();
 			console.log("sollist" + solutionList);
+			this.addUserSolutionToFirebase();
 			this.updateDatabaseSolutionList(solutionList);
 			Alert.alert(
 				'Clue Correct',
@@ -105,7 +107,23 @@ var ClueDisplay = React.createClass({
 		return true;
 	},
 
+	addUserSolutionToFirebase: function() {
+
+		//TODO: fix this so we're pushing a new child 
+		var thisSolutionRef = userSolutionsRef.child(this.props.clueId);
+
+		//thisSolutionRef.update({
+  		userSolutionsRef.push({
+    			user_id: 0,
+    			clue_id: this.props.clueId,
+    			hunt_id: 0,
+    			completed: 0
+  			
+		});
+	},
+
 	getSolutionListFromDatabase: function() {
+		//TODO: Don't hard code this!!
 		var userRef = usersRef.child(0);
 		var huntsListRef = userRef.child("hunts_list");
 		var thisHuntRef = huntsListRef.child(this.state.huntId);
@@ -154,5 +172,5 @@ var ClueDisplay = React.createClass({
 	},
 });
 
-module.exports = ClueDisplay;
+module.exports = CurrentClueDisplay;
 

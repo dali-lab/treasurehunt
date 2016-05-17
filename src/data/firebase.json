@@ -54,13 +54,20 @@
   			"user_id": 0,
   			"clue_id": 1,
   			"hunt_id": 0,
-  			"completed": 0
+  			"completed": 1
   		},
   	"2":
   		{
   			"user_id": 0,
   			"clue_id": 1,
   			"hunt_id": 1,
+  			"completed": 0
+  		},
+  	"3":
+  		{
+  			"user_id": 0,
+  			"clue_id": 2,
+  			"hunt_id": 0,
   			"completed": 0
   		}
   },
