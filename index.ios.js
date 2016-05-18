@@ -20,34 +20,51 @@ class treasurehunt extends React.Component {
 
     this.state = {
       loggedIn: false,
+      loggingIn: true,
     };
   }
 
   onLogin() {
     this.setState({
       loggedIn: true,
+      loggingIn: false,
     })
   }
 
   onLogout() {
     this.setState({
       loggedIn: false,
+      loggingIn: true,
     })
   }
 
+  onSkipLogin() {
+    this.setState({
+      loggedIn: false,
+      loggingIn: false,
+    })
+  }
+
+  isLoggingIn() {
+    return !this.state.loggedIn && this.state.loggingIn
+  }
+
   render() {
-    if (!this.state.loggedIn) {
+    if (this.isLoggingIn()) {
       return (
-        <LoginScreen onLogin={this.onLogin.bind(this)}/>
+        <LoginScreen onLogin={this.onLogin.bind(this)} onSkipLogin={this.onSkipLogin.bind(this)}/>
       );
     }else{
+      var rightButton = "Login"
+      if (this.state.loggedIn)
+        rightButton = "Logout"
       return (
         <React.NavigatorIOS
           style={styles.container}
           initialRoute={{
             title: 'Treasure Hunt',
             component: HomePage,
-            rightButtonTitle: "Logout",
+            rightButtonTitle: rightButton,
             onRightButtonPress: this.onLogout.bind(this),
           }}/>
       );

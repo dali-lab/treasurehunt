@@ -12,7 +12,7 @@ var {
   Image,
   Component,
   Dimensions,
-  Link
+  Modal,
 } = React;
 
 var screenPadding = 60;
@@ -21,6 +21,7 @@ var screenWidth = Dimensions.get('window').width;
 var styles = StyleSheet.create({
 	container: {
 		flex: 1,
+		width: screenWidth,
 		alignItems: "center",
 		flexDirection: "column",
 	},
@@ -64,7 +65,7 @@ var styles = StyleSheet.create({
 	textField: {
 		height: 40,
 		flex: 1,
-		marginBottom: 10,
+		marginBottom: 0,
 		flexDirection: 'row',
 		fontSize: 20,
 		paddingLeft: 20,
@@ -74,7 +75,7 @@ var styles = StyleSheet.create({
 		flexDirection: "row",
 	},
 	loginTextInputMainView: {
-		height: 95,
+		height: 85,
 		borderColor: '#f0f8f5',
 		borderWidth: 3,
 		borderWidth: 1,
@@ -109,7 +110,7 @@ var styles = StyleSheet.create({
 		height: 1,
 		marginLeft: 5,
 		marginRight: 5,
-		flexDirection: 'column',
+		flexDirection: 'row',
 		alignSelf: 'stretch',
 	},
 	forgotPassword: {
@@ -128,13 +129,48 @@ var styles = StyleSheet.create({
 	}
 });
 
+var signUpStyles = StyleSheet.create({
+
+	container: {
+		flex: 1,
+		flexDirection: "column",
+		alignItems: "center",
+		justifyContent: "center",
+		backgroundColor: "white"
+	},
+	innerContainer: {
+		flex: 1,
+		flexDirection: "column",
+		alignItems: "center",
+		justifyContent: "center",
+		backgroundColor: "white",
+		marginLeft: 5,
+		marginBottom: 150,
+		marginTop: 150,
+		marginRight: 5,
+		borderRadius: 10
+	},
+	description: {
+		fontSize: 20,
+	},
+	returnButton: {
+		marginTop: 20,
+	}
+});
+
 class LoginScreen extends Component {
 	propTypes: {
 		onLogin: React.PropTypes.func,
+		onSkipLogin: React.PropTypes.func,
     }
 
 	constructor(props) {
-	  super(props);
+		super(props);
+
+		this.state = {
+			signingUp: false,
+			recoveringPassword: false,
+		};
 	}
 
 	onLoginPressed() {
@@ -144,66 +180,102 @@ class LoginScreen extends Component {
 	}
 
 	signUpPressed() {
-
+		this.setState({
+			signingUp: true,
+		})
 	}
 
 	forgotPasswordPressed() {
-
+		this.setState({
+			recoveringPassword: true,
+		})
 	}
 
 	skipPressed() {
+		if (typeof this.props.onSkipLogin == 'function') {
+			this.props.onSkipLogin();
+		}
+	}
 
+	hideModal() {
+		this.setState({
+			signingUp: false,
+			recoveringPassword: false,
+		})
 	}
 
 	render() {
+		var modalView = <View style={signUpStyles.container}>
+							<Text style={signUpStyles.description}>You cannot sign up yet</Text>
+							<Text style={[signUpStyles.returnButton, styles.linkStyle]} onPress={this.hideModal.bind(this)}>Return</Text>
+						</View>
+
+		if (this.state.recoveringPassword) {
+			modalView = <View style={signUpStyles.container}>
+							<Text style={signUpStyles.description}>You cannot forget your password yet</Text>
+							<Text style={[signUpStyles.returnButton, styles.linkStyle]} onPress={this.hideModal.bind(this)}>Return</Text>
+						</View>
+		}
+
 		return (
 			<View style={styles.container}>
-				<View style={styles.topBar}></View>
-				
-				<View style={styles.innerContainer}>
-					<Image
-						style={styles.icon}
-						source={require('../../loginLogo.png')}/>
-
-					<Text style={styles.titleStyle}>
-						{"TREASURE HUNT"}
-					</Text>
-
-					<View style={styles.loginTextInputMainView}>
-						<View style={styles.loginTextInputViews}><Image
-							style={styles.loginIcons}
-							source={require('../../user.png')}/>
-						<TextInput style= {styles.textField}
-							placeholder="Username"/>
-						</View>
-						<View style={styles.separationBar}></View>
-						<View style={styles.loginTextInputViews}>
+				<Modal
+					animated={true}
+					animationType='fade'
+					transparent={true}
+					visible={this.state.signingUp || this.state.recoveringPassword}
+					onRequestClose={() => {this.hideModal}}
+					>
+					{modalView}
+				</Modal>
+				<View style={styles.container}>
+					<View style={styles.topBar}></View>
+					
+					<View style={styles.innerContainer}>
 						<Image
-							style={styles.loginIcons}
-							source={require('../../password.png')}/>
-						<TextInput style={styles.textField}
-							secureTextEntry={true}
-							placeholder="Password"/>
+							style={styles.icon}
+							source={require('../../loginLogo.png')}/>
+
+						<Text style={styles.titleStyle}>
+							{"TREASURE HUNT"}
+						</Text>
+
+						<View style={styles.loginTextInputMainView}>
+							<View style={styles.loginTextInputViews}><Image
+								style={styles.loginIcons}
+								source={require('../../user.png')}/>
+							<TextInput style= {styles.textField}
+								placeholder="Username"/>
+							</View>
+							<View style={styles.separationBar}></View>
+							<View style={styles.loginTextInputViews}>
+							<Image
+								style={styles.loginIcons}
+								source={require('../../password.png')}/>
+							<TextInput style={styles.textField}
+								secureTextEntry={true}
+								placeholder="Password"/>
+							</View>
 						</View>
-					</View>
 
-					<TouchableHighlight style={styles.button}
-						onPress={this.onLoginPressed.bind(this)}
-						underlayColor='#cadb66'>
-			    		<Text style={styles.buttonText}>Sign in</Text>
-			  		</TouchableHighlight>
+						<TouchableHighlight style={styles.button}
+							onPress={this.onLoginPressed.bind(this)}
+							underlayColor='#cadb66'>
+				    		<Text style={styles.buttonText}>Sign in</Text>
+				  		</TouchableHighlight>
 
-			  		<Text style={styles.forgotPassword} onPress={this.forgotPasswordPressed.bind(this)}>Forgot your password?</Text>
-			  		<Text style={styles.forgotPassword}>
-			  			New? Sign up <Text style={styles.linkStyle} onPress={this.signUpPressed.bind(this)}>
-			  				here
+				  		<Text style={styles.forgotPassword} onPress={this.forgotPasswordPressed.bind(this)}>Forgot your password?</Text>
+				  		<Text style={styles.forgotPassword}>
+				  			New? Sign up <Text style={styles.linkStyle} onPress={this.signUpPressed.bind(this)}>
+				  				here
+			  				</Text>
 		  				</Text>
-	  				</Text>
 
-				</View>
-		  		<Text style={styles.skipSyle} onPress={this.skipPressed.bind(this)}>No thanks, just take me to the puzzle</Text>
-		  		<View style={styles.bottomBar}></View>
-		  	</View>
+					</View>
+			  		<Text style={styles.skipSyle} onPress={this.skipPressed.bind(this)}>No thanks, just take me to the puzzle</Text>
+			  		<View style={styles.bottomBar}></View>
+			  	</View>
+			</View>
 	  	);
 	}
 }
