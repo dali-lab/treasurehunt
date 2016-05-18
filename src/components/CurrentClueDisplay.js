@@ -58,6 +58,7 @@ const cluesRef = new Firebase(`${ config.FIREBASE_ROOT }/clues`)
 const userSolutionsRef = new Firebase(`${ config.FIREBASE_ROOT }/user_solutions`)
 
 
+
 var CurrentClueDisplay = React.createClass({
 	getInitialState: function() {
 		var clueRef = cluesRef.child(this.props.clueId);
@@ -82,6 +83,11 @@ var CurrentClueDisplay = React.createClass({
 			console.log("sollist" + solutionList);
 			this.addUserSolutionToFirebase();
 			this.updateDatabaseSolutionList(solutionList);
+			
+
+			//need to also put next clue in progress at this point
+			var thisSolutionRef = userSolutionsRef.child(3);
+			thisSolutionRef.update({completed: 1});
 			Alert.alert(
 				'Clue Correct',
 				"Woohoo!",
@@ -99,7 +105,7 @@ var CurrentClueDisplay = React.createClass({
 	},
 
 	returnToClueList: function() {
-		console.log('dani123');
+		this.props.callback(cluesRef);
 		this.props.navigator.pop();
 	},
 
@@ -117,7 +123,7 @@ var CurrentClueDisplay = React.createClass({
     			user_id: 0,
     			clue_id: this.props.clueId,
     			hunt_id: 0,
-    			completed: 0
+    			completed: 1
   			
 		});
 	},
@@ -129,6 +135,7 @@ var CurrentClueDisplay = React.createClass({
 		var thisHuntRef = huntsListRef.child(this.state.huntId);
 
 		// TODO: check if clue is correct
+
 
 		// if so, get clues_list for specific hunt
 		thisHuntRef.once('value', (snap) => {
