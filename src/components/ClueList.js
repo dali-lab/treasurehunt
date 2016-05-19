@@ -105,12 +105,12 @@ var ClueList = React.createClass({
     },
 
     populateArray: function(solutionsForThisHunt) {
-        console.log('executed');
         var cluesArray = this.props.hunt.clues;
         var clues = [];
         var solutionsToClues = [];
         var userCompletedClues = [];
         var inProgress;
+        var toStart;
 
         // specify which of user's clues are in progress versus completed
         for (var i = 0; i < solutionsForThisHunt.length; i++ ) {
@@ -123,15 +123,28 @@ var ClueList = React.createClass({
         }
 
         if (!inProgress) {
-            inProgress = userCompletedClues[userCompletedClues.length-1] +1;
+            toStart = 1;
         }
+
 
         //for all clues in clueArray
         for (var j = 0; j < cluesArray.length; j++) {
             var clueRef = cluesRef.child(cluesArray[j]);
             clueRef.on('value', (snap) => {
 
-                // if a clue is in progress, add to appropriate category
+                // if the hunt hasn't been started yet 
+                if (toStart == 1) {
+                    if (j==0) {
+                        clues.push({
+                        title:snap.val().title,
+                        description: snap.val().description,
+                        category: "toStart", 
+                        clueId: snap.val().id
+                        });
+                    }
+                }
+
+                // if a clue is in progress
                 if (snap.val().id == inProgress) {
                     clues.push({
                         title:snap.val().title,
@@ -173,7 +186,8 @@ var ClueList = React.createClass({
         var huntID = this.props.hunt.id;
 
         var solutionsForThisHunt = [];
-        userSolutionsRef.orderByChild('user_id').startAt(Number(huntID)).endAt(Number(huntID)).once('value', (snap) => {
+        //TODO: for now there is only user 0 but we don't want this hard-coded for all users 
+        userSolutionsRef.orderByChild('user_id').startAt(0).endAt(0).once('value', (snap) => {
             var solution = snap.val();
             var array = Object.keys(solution).map(key =>({ ...solution[key], id:key}));
             for (var i = 0; i < array.length; i++) {
@@ -234,6 +248,23 @@ var ClueList = React.createClass({
             </TouchableHighlight>
 	      	);
     	} 
+        else if (rowData.category === "toStart") {
+            return (
+                <TouchableHighlight onPress={() => this.rowPressed(rowData)}
+                underlayColor='#dddddd'>
+                <View>
+                    <View style={styles.rowContainer}>
+                        <View style={styles.completeTextContainer}>
+                            <Text style={styles.title}>{rowData.title}</Text>
+                            <Text style={styles.statusDescription}
+                                >- CLICK HERE TO START -</Text>
+                        </View> 
+                    </View>
+                    <View style={styles.separator}/>
+                </View>
+            </TouchableHighlight>
+            );
+        } 
         else if (rowData.category === "inProgress") {
             return (
                 <TouchableHighlight onPress={() => this.rowPressed(rowData)}
