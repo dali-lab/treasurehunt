@@ -4,7 +4,6 @@
 var React = require('react-native');
 var Progress = require('react-native-progress');
 var HuntOverview = require('./HuntOverview');
-var ReactFireMixin = require('reactfire');
 
 var {
     StyleSheet,
@@ -78,7 +77,6 @@ const rootRef = new Firebase(`${ config.FIREBASE_ROOT }`)
 
 
 var Home = React.createClass({
-    mixins: [ReactFireMixin],
 
     getInitialState: function() {
         var dataSource = new ListView.DataSource({
