@@ -80,13 +80,15 @@ var CurrentClueDisplay = React.createClass({
 	onSubmitPressed: function() {
 		if (this.checkSolution()) {
 			var solutionList = this.getSolutionListFromDatabase();
-			console.log("sollist" + solutionList);
 			this.addUserSolutionToFirebase();
 			this.updateDatabaseSolutionList(solutionList);
 			
 
 			//need to also put next clue in progress at this point
+			//TODO: figure out a way to not hard code these!
 			var thisSolutionRef = userSolutionsRef.child(3);
+			thisSolutionRef.update({completed: 1});
+			var thisSolutionRef = userSolutionsRef.child(2);
 			thisSolutionRef.update({completed: 1});
 			Alert.alert(
 				'Clue Correct',
@@ -122,7 +124,7 @@ var CurrentClueDisplay = React.createClass({
   		userSolutionsRef.push({
     			user_id: 0,
     			clue_id: this.props.clueId,
-    			hunt_id: 0,
+    			hunt_id: this.state.huntId,
     			completed: 1
   			
 		});
@@ -154,7 +156,6 @@ var CurrentClueDisplay = React.createClass({
 		if (solutionList) {
 			newSolutionList = solutionList;
 			newSolutionList.push(this.props.clueId);
-			console.log("newest solution list" + newSolutionList);
 		}
 
 		//push new list to Firebase

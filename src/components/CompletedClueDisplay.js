@@ -77,7 +77,6 @@ var CompletedClueDisplay = React.createClass({
     },
 
 	returnToClueList: function() {
-		console.log('dani123');
 		this.props.navigator.pop();
 	},
 

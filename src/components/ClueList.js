@@ -105,6 +105,7 @@ var ClueList = React.createClass({
     },
 
     populateArray: function(solutionsForThisHunt) {
+        debugger;
         var cluesArray = this.props.hunt.clues;
         var clues = [];
         var solutionsToClues = [];
@@ -122,8 +123,13 @@ var ClueList = React.createClass({
             }
         }
 
+        if (solutionsForThisHunt.length == 0) {
+            inProgress = cluesArray[0];
+        }
+
+        //TODO: fix this calculation since clues won't always have chronological id's 
         if (!inProgress) {
-            toStart = 1;
+            inProgress = solutionsForThisHunt[solutionsForThisHunt.length -1].clue_id + 1;
         }
 
 
@@ -131,18 +137,6 @@ var ClueList = React.createClass({
         for (var j = 0; j < cluesArray.length; j++) {
             var clueRef = cluesRef.child(cluesArray[j]);
             clueRef.on('value', (snap) => {
-
-                // if the hunt hasn't been started yet 
-                if (toStart == 1) {
-                    if (j==0) {
-                        clues.push({
-                        title:snap.val().title,
-                        description: snap.val().description,
-                        category: "toStart", 
-                        clueId: snap.val().id
-                        });
-                    }
-                }
 
                 // if a clue is in progress
                 if (snap.val().id == inProgress) {
@@ -191,7 +185,7 @@ var ClueList = React.createClass({
             var solution = snap.val();
             var array = Object.keys(solution).map(key =>({ ...solution[key], id:key}));
             for (var i = 0; i < array.length; i++) {
-                if (array[i].hunt_id == 0) {
+                if (array[i].hunt_id == Number(huntID)) {
                     solutionsForThisHunt.push(array[i]);
                 }
             }
@@ -248,23 +242,6 @@ var ClueList = React.createClass({
             </TouchableHighlight>
 	      	);
     	} 
-        else if (rowData.category === "toStart") {
-            return (
-                <TouchableHighlight onPress={() => this.rowPressed(rowData)}
-                underlayColor='#dddddd'>
-                <View>
-                    <View style={styles.rowContainer}>
-                        <View style={styles.completeTextContainer}>
-                            <Text style={styles.title}>{rowData.title}</Text>
-                            <Text style={styles.statusDescription}
-                                >- CLICK HERE TO START -</Text>
-                        </View> 
-                    </View>
-                    <View style={styles.separator}/>
-                </View>
-            </TouchableHighlight>
-            );
-        } 
         else if (rowData.category === "inProgress") {
             return (
                 <TouchableHighlight onPress={() => this.rowPressed(rowData)}

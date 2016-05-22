@@ -71,7 +71,14 @@
   			"completed": 0
   		}
   },
-
+  "clue_solutions": {
+  	"0": 
+  		{
+  			"clue_id" : 0,
+  			"type": "fillIn",
+  			"solution": "Baker Berry"
+  		}
+  },
   "clues": 
   	[
 	  {	"id": 0,
