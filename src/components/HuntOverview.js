@@ -49,13 +49,14 @@ var styles = StyleSheet.create({
 	buttonText: {
 	  fontSize: 18,
 	  color: 'white',
-	  alignSelf: 'center'
+	  alignSelf: 'center',
+	  fontWeight: 'bold'
 	},
 	button: {
 	  height: 36,
 	  flexDirection: 'column',
-	  backgroundColor: '#48BBEC',
-	  borderColor: '#48BBEC',
+	  backgroundColor: '#cadb66',
+	  borderColor: '#cadb66',
 	  justifyContent: 'center',
 	  borderWidth: 1,
 	  borderRadius: 8,

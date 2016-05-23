@@ -27,19 +27,23 @@ var styles = StyleSheet.create({
 	},
 	huntTitle: {
 		fontSize: 20,
-		fontWeight: 'bold',
 		margin: 5,
 		color: '#656565',
 		alignSelf: 'center'
 	},
+    topSeparator: {
+        height: 2,
+        backgroundColor: '#5da990'
+    },
 	separator: {
         height: 1,
         backgroundColor: '#dddddd'
     },
     title: {
         fontSize: 20,
-        color: '#656565',
-        alignSelf: 'center'
+        color: '#000000',
+        alignSelf: 'center',
+        fontWeight: 'bold'
     }, 
     description: {
         paddingTop: 3,
@@ -59,19 +63,24 @@ var styles = StyleSheet.create({
     rowContainer: {
 	    flexDirection: 'row',
 	    padding: 10,
-	    height: 75,
+        paddingTop: 10,
+	    height: 90,
 	    justifyContent: 'center'
   	},
     completeTextContainer: {
+        paddingTop: 10,
     	flex: 1,
-	    borderWidth: 2,
-	    borderColor:'#000000', 
+        backgroundColor: '#e8f0cd'
 	},
+    inProgressTextContainer: {
+        paddingTop: 10,
+        flex: 1,
+        backgroundColor: '#FFFACD'
+    },
     incompleteTextContainer: {
+        paddingTop: 10,
 	    flex: 1,
-	    backgroundColor: '#dddddd',
-	    borderWidth: 2,
-	    borderColor:'#000000', 
+	    backgroundColor: '#f6d1d0',
     }
 });
 
@@ -247,7 +256,7 @@ var ClueList = React.createClass({
                 underlayColor='#dddddd'>
                 <View>
                     <View style={styles.rowContainer}>
-                        <View style={styles.completeTextContainer}>
+                        <View style={styles.inProgressTextContainer}>
                             <Text style={styles.title}>{rowData.title}</Text>
                             <Text style={styles.statusDescription}
                                 >- IN PROGRESS -</Text>
@@ -284,7 +293,7 @@ var ClueList = React.createClass({
 			<View style={styles.container}>
 				<View>
 					<Text style={styles.huntTitle}>{hunt.title.toUpperCase()}</Text>
-					<Text style={styles.huntTitle}>CLUES LIST</Text>
+                    <View style={styles.topSeparator}/>
 				</View>
 				<View style={styles.separatorSmall}/>
 				<ListView

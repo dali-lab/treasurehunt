@@ -18,6 +18,16 @@ var styles = StyleSheet.create({
 		paddingLeft: 30, 
 		flex: 1
 	},
+	huntTitle: {
+		fontSize: 20,
+		margin: 5,
+		color: '#656565',
+		alignSelf: 'center'
+	},
+    topSeparator: {
+        height: 2,
+        backgroundColor: '#5da990'
+    },
 	separatorSmall: {
 		height: 16
 	},
@@ -28,35 +38,39 @@ var styles = StyleSheet.create({
         height: 1,
         backgroundColor: '#dddddd'
     },
-    title: {
+    clueName: {
         fontSize: 20,
-        color: '#656565',
-        alignSelf: 'center'
+        color: '#000000',
+        fontStyle: 'italic'
     }, 
     description: {
         paddingTop: 3,
         paddingBottom: 8,
-        paddingRight: 23,
-        paddingLeft: 23,
-        alignSelf: 'center'
+
     },
     buttonText: {
 	  fontSize: 18,
 	  color: 'white',
-	  alignSelf: 'center'
+	  alignSelf: 'center',
+	  fontWeight: 'bold'
 	},
 	button: {
 	  height: 36,
 	  flexDirection: 'column',
-	  backgroundColor: '#48BBEC',
-	  borderColor: '#48BBEC',
+	  backgroundColor: '#5da990',
+	  borderColor: '#5da990',
 	  justifyContent: 'center',
 	  borderWidth: 1,
 	  borderRadius: 8,
 	  marginBottom: 10,
 	  alignSelf: 'stretch',
 	  padding:20
-	}
+	},
+	hint: {
+		textAlign: 'left',
+		color: "gray",
+		alignSelf: "flex-start",
+	},
 });
 
 const Firebase = require('firebase')
@@ -90,22 +104,20 @@ var CurrentClueDisplay = React.createClass({
             clue: clue,
             huntId: this.props.hunt.id,
             clueSolution: clueSolution,
-            submission: 'Your answer here'
+            submission: ''
         };
 
     },
 
 	onSubmitPressed: function() {
-		var output2 = this.getSolutionAndCompare();
-		console.log('output2 ' + output2);
+		console.log(`getSolutionAndCompare output ${this.getSolutionAndCompare()}`);
 		if (this.getSolutionAndCompare()) {
 			var solutionList = this.getSolutionListFromDatabase();
 			this.addUserSolutionToFirebase();
 			this.updateDatabaseSolutionList(solutionList);
 			
-
 			//need to also put next clue in progress at this point
-			//TODO: figure out a way to not hard code these!
+			//TODO: don't hard code these!
 			var thisSolutionRef = userSolutionsRef.child(3);
 			thisSolutionRef.update({completed: 1});
 			var thisSolutionRef = userSolutionsRef.child(2);
@@ -134,20 +146,20 @@ var CurrentClueDisplay = React.createClass({
 	getSolutionAndCompare: function() {
 		//get solution from database
 		var clueSolution;
-        clueSolutionsRef.orderByChild('clue_id').equalTo(Number(this.props.clueId)).once('value').then(function(snap) {
+        clueSolutionsRef.orderByChild('clue_id').equalTo(Number(this.props.clueId)).once('value', (snap) => {
             var solution = snap.val();
             for (var key in solution) {
             	clueSolution = solution[key].solution;
             }
-            console.log('output ' + this.checkSolution(clueSolution));
+            console.log(`checkSolution ${this.checkSolution(clueSolution)}`);
             return this.checkSolution(clueSolution);
         });
 
 	},
 
 	checkSolution: function(clueSolution) {
-		console.log('submission' + this.state.submission);
-		console.log('cluesoltuion ' + clueSolution);
+		console.log(`submission ${this.state.submission}`);
+		console.log(`cluesolution ${clueSolution}`);
 		if (this.state.submission == clueSolution) {
 			return true;
 		}
@@ -179,9 +191,6 @@ var CurrentClueDisplay = React.createClass({
 		var huntsListRef = userRef.child("hunts_list");
 		var thisHuntRef = huntsListRef.child(this.state.huntId);
 
-		// TODO: check if clue is correct
-
-
 		// if so, get clues_list for specific hunt
 		thisHuntRef.once('value', (snap) => {
 			var solutionList = snap.val();
@@ -212,10 +221,13 @@ var CurrentClueDisplay = React.createClass({
 	},
 
 	render: function() {
+		var hunt = this.props.hunt;
 		 if (this.state.clue.type == "fillIn") { 
 			return (
 				<View style={styles.container}>
-					<Text style={styles.title}>{this.state.clue.title}</Text>
+					<Text style={styles.huntTitle}>{hunt.title.toUpperCase()}</Text>
+                    <View style={styles.topSeparator}/>
+					<Text style={styles.clueName}>{this.state.clue.title}</Text>
 					<Text style={styles.description}>{this.state.clue.description}</Text>
 
 					<TextInput
@@ -225,8 +237,11 @@ var CurrentClueDisplay = React.createClass({
 					<TouchableHighlight style = {styles.button}
 							onPress={this.onSubmitPressed}
 							underlayColor='#99d9f4'>
-							<Text style = {styles.buttonText}>SUBMIT CLUE</Text>
+							<Text style = {styles.buttonText}>Submit</Text>
 					</TouchableHighlight>
+					<Text style={styles.hint}>
+				  			Need a hint?
+			  		</Text>
 				</View>
 			);
 		}   		

@@ -81,7 +81,7 @@ var HomePage = React.createClass({
   },
   _renderSearch: function(){
     return(
-      <Search navigator = {this.props.navigator} />
+      <Search navigator = {this.props.navigator}  />
       );
   },
   _renderCreate: function(){
