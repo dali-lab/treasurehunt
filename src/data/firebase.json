@@ -77,6 +77,24 @@
   			"clue_id" : 0,
   			"type": "fillIn",
   			"solution": "Baker Berry"
+  		},
+  	"1":
+  		{
+  			"clue_id" : 1,
+  			"type": "fillIn",
+  			"solution": "Collis"
+  		},
+  	"2":
+  		{
+  			"clue_id" : 2,
+  			"type": "fillIn",
+  			"solution": "Sudikoff"
+  		},
+  	"3":
+  		{
+  			"clue_id" : 3,
+  			"type": "fillIn",
+  			"solution": "Moore"
   		}
   },
   "clues": 
@@ -96,13 +114,13 @@
 	  	"id": 2,
 	  	"type":"fillIn",
 	  	"title":"Sudikoff Search",
-	  	"description":"What is the name of the pysch building?"
+	  	"description":"What is the name of the CS building?"
 	  },
 	  {
 	  	"id": 3,
 	  	"type":"fillIn",
 	  	"title":"Fill in the Word!",
-	  	"description":"What is the name of the CS building?"
+	  	"description":"What is the name of the psych building?"
 	  },
 	  {
 	  	"id": 4,

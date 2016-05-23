@@ -7,7 +7,8 @@ var {
 	Text,
 	Component,
 	TouchableHighlight,
-	Alert
+	Alert,
+	TextInput
 } = React;
 
 var styles = StyleSheet.create({
@@ -32,6 +33,13 @@ var styles = StyleSheet.create({
         color: '#656565',
         alignSelf: 'center'
     }, 
+    description: {
+        paddingTop: 3,
+        paddingBottom: 8,
+        paddingRight: 23,
+        paddingLeft: 23,
+        alignSelf: 'center'
+    },
     buttonText: {
 	  fontSize: 18,
 	  color: 'white',
@@ -56,29 +64,41 @@ const config = require('../../config')
 const usersRef = new Firebase(`${ config.FIREBASE_ROOT }/users`)
 const cluesRef = new Firebase(`${ config.FIREBASE_ROOT }/clues`)
 const userSolutionsRef = new Firebase(`${ config.FIREBASE_ROOT }/user_solutions`)
-
+const clueSolutionsRef = new Firebase(`${ config.FIREBASE_ROOT }/clue_solutions`)
 
 
 var CurrentClueDisplay = React.createClass({
 	getInitialState: function() {
 		var clueRef = cluesRef.child(this.props.clueId);
 		var clue;
+		var clueSolution;
         clueRef.on('value', (snap) => {
         	clue = {
         		title: snap.val().title,
         		description: snap.val().description,
+        		type: snap.val().type
         	};
         });
-        
+        clueSolutionsRef.orderByChild('clue_id').equalTo(Number(this.props.clueId)).once('value', (snap) => {
+            var solution = snap.val();
+            for (var key in solution) {
+            	clueSolution = solution[key].solution;
+            }
+        });
+            
         return {
             clue: clue,
             huntId: this.props.hunt.id,
+            clueSolution: clueSolution,
+            submission: 'Your answer here'
         };
 
     },
 
 	onSubmitPressed: function() {
-		if (this.checkSolution()) {
+		var output2 = this.getSolutionAndCompare();
+		console.log('output2 ' + output2);
+		if (this.getSolutionAndCompare()) {
 			var solutionList = this.getSolutionListFromDatabase();
 			this.addUserSolutionToFirebase();
 			this.updateDatabaseSolutionList(solutionList);
@@ -111,15 +131,38 @@ var CurrentClueDisplay = React.createClass({
 		this.props.navigator.pop();
 	},
 
-	checkSolution: function(userSolution) {
-		return true;
+	getSolutionAndCompare: function() {
+		//get solution from database
+		var clueSolution;
+        clueSolutionsRef.orderByChild('clue_id').equalTo(Number(this.props.clueId)).once('value').then(function(snap) {
+            var solution = snap.val();
+            for (var key in solution) {
+            	clueSolution = solution[key].solution;
+            }
+            console.log('output ' + this.checkSolution(clueSolution));
+            return this.checkSolution(clueSolution);
+        });
+
 	},
+
+	checkSolution: function(clueSolution) {
+		console.log('submission' + this.state.submission);
+		console.log('cluesoltuion ' + clueSolution);
+		if (this.state.submission == clueSolution) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	},
+
 
 	addUserSolutionToFirebase: function() {
 
 		//TODO: fix this so we're pushing a new child 
 		var thisSolutionRef = userSolutionsRef.child(this.props.clueId);
 
+		//TODO: make this specific to user!!
 		//thisSolutionRef.update({
   		userSolutionsRef.push({
     			user_id: 0,
@@ -149,6 +192,8 @@ var CurrentClueDisplay = React.createClass({
 
 	updateDatabaseSolutionList: function(solutionList) {
 		var newSolutionList = [];
+
+		//TODO: make this specific to user!
 		var userRef = usersRef.child(0);
 		var huntsListRef = userRef.child("hunts_list");
 
@@ -166,17 +211,25 @@ var CurrentClueDisplay = React.createClass({
 		}
 	},
 
-	render: function() {	        		
-		return (
-			<View style={styles.container}>
-				<Text style={styles.title}>{this.state.clue.title}</Text>
-				<TouchableHighlight style = {styles.button}
-						onPress={this.onSubmitPressed}
-						underlayColor='#99d9f4'>
-						<Text style = {styles.buttonText}>SUBMIT CLUE</Text>
-				</TouchableHighlight>
-			</View>
-		);
+	render: function() {
+		 if (this.state.clue.type == "fillIn") { 
+			return (
+				<View style={styles.container}>
+					<Text style={styles.title}>{this.state.clue.title}</Text>
+					<Text style={styles.description}>{this.state.clue.description}</Text>
+
+					<TextInput
+	    				style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+	    				onChangeText={(submission) => this.setState({submission})}
+	    				value={this.state.submission}/>
+					<TouchableHighlight style = {styles.button}
+							onPress={this.onSubmitPressed}
+							underlayColor='#99d9f4'>
+							<Text style = {styles.buttonText}>SUBMIT CLUE</Text>
+					</TouchableHighlight>
+				</View>
+			);
+		}   		
 	},
 });
 

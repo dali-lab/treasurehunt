@@ -69,6 +69,7 @@ var CompletedClueDisplay = React.createClass({
         	};
         });
         
+        
         return {
             clue: clue,
             huntId: this.props.hunt.id,

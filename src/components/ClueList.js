@@ -105,7 +105,6 @@ var ClueList = React.createClass({
     },
 
     populateArray: function(solutionsForThisHunt) {
-        debugger;
         var cluesArray = this.props.hunt.clues;
         var clues = [];
         var solutionsToClues = [];

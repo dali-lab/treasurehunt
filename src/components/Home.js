@@ -34,8 +34,8 @@ var styles = StyleSheet.create({
         height: 70
     },
     separator: {
-        height: 1,
-        backgroundColor: '#dddddd'
+        height: 10,
+        backgroundColor: '#FFFFFF'
     },
     title: {
         fontSize: 20,
@@ -43,11 +43,24 @@ var styles = StyleSheet.create({
     }, 
     description: {
         paddingTop: 3,
-        paddingBottom: 8
+        paddingBottom: 4
     },
-    rowContainer: {
+    points: {
+        fontWeight: 'bold'
+    },
+    currentRowContainer: {
         flexDirection: 'row',
-        padding: 10
+        padding: 10,
+        marginLeft: 20,
+        marginRight: 20,
+        backgroundColor: '#FFFACD'
+    },
+    pastRowContainer: {
+        flexDirection: 'row',
+        padding: 10,
+        marginLeft: 20,
+        marginRight: 20,
+        backgroundColor: '#e8f0cd'
     },
     header: {
         height: 30,
@@ -56,15 +69,9 @@ var styles = StyleSheet.create({
         backgroundColor: 'white',
         flexDirection: 'column',
     },
-    header2: {
-        justifyContent: 'flex-end',
-        alignItems: 'flex-start',
-        backgroundColor: 'white',
-        flexDirection: 'column',
-    },
     headerText: {
-        fontWeight: 'bold',
         fontSize: 20,
+        padding:10,
         color: 'black'
     }
 });
@@ -129,7 +136,7 @@ var Home = React.createClass({
                         description: snap.val().description,
                         image: snap.val().image,
                         progress: totalCluesCompleted/totalCluesInHunt,
-                        category: "  PAST HUNTS", 
+                        category: "  Past Puzzles", 
                         clues: snap.val().clues
                 });
                 }
@@ -140,7 +147,7 @@ var Home = React.createClass({
                         description: snap.val().description,
                         image: snap.val().image,
                         progress: totalCluesCompleted/totalCluesInHunt,
-                        category: "  CURRENT HUNTS",
+                        category: "  Current Puzzles",
                         clues: snap.val().clues
                     });
                 }
@@ -167,24 +174,46 @@ var Home = React.createClass({
     },
 
     renderRow: function(hunt) {
-        return (
-            <TouchableHighlight onPress={() => this.rowPressed(hunt)}
-                underlayColor='#dddddd'>
-                <View>
-                    <View style={styles.rowContainer}>
-                        <Image style={styles.thumb} source={{ uri: hunt.image}} />
-                        <View style={styles.textContainer}>
-                            <Text style={styles.title}>{hunt.title}</Text>
-                            <Text style={styles.description}
-                                numberOfLines={2}>{hunt.description}</Text>
-                            <Progress.Bar style={styles.progressBar} 
-                                progress={hunt.progress} width={200} />
-                        </View> 
+        if (hunt.category == "  Past Puzzles") {
+            return (
+                <TouchableHighlight onPress={() => this.rowPressed(hunt)}
+                    underlayColor='#dddddd'>
+                    <View>
+                        <View style={styles.pastRowContainer}>
+                            <Image style={styles.thumb} source={{ uri: hunt.image}} />
+                            <View style={styles.textContainer}>
+                                <Text style={styles.title} numberOfLines={1}>{hunt.title.toUpperCase()}</Text>
+                                <Text style={styles.description}
+                                    numberOfLines={2}>{hunt.description}</Text>
+                                <Text style={styles.points}
+                                    numberOfLines={1}>Points: N/A </Text>
+                            </View> 
+                        </View>
+                        <View style={styles.separator}/>
                     </View>
-                    <View style={styles.separator}/>
-                </View>
-            </TouchableHighlight>
-        );
+                </TouchableHighlight>
+            );
+        }
+        else {
+            return (
+                <TouchableHighlight onPress={() => this.rowPressed(hunt)}
+                    underlayColor='#dddddd'>
+                    <View>
+                        <View style={styles.currentRowContainer}>
+                            <Image style={styles.thumb} source={{ uri: hunt.image}} />
+                            <View style={styles.textContainer}>
+                                <Text style={styles.title} numberOfLines={1}>{hunt.title.toUpperCase()}</Text>
+                                <Text style={styles.description}
+                                    numberOfLines={2}>{hunt.description}</Text>
+                                <Progress.Bar style={styles.progressBar} 
+                                    progress={hunt.progress} width={200} height={10} color='#fbda3d'/>
+                            </View> 
+                        </View>
+                        <View style={styles.separator}/>
+                    </View>
+                </TouchableHighlight>
+            );
+        }
     },
 
     renderSectionHeader: function(sectionData, category) {

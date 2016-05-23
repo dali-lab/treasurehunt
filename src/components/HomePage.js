@@ -99,7 +99,7 @@ var HomePage = React.createClass({
     return (
       <TabBarIOS
         tintColor="white"
-        barTintColor="darkslateblue">
+        barTintColor="#cee4dc">
         <Icon.TabBarItemIOS
           title="SEARCH"
           selected={this.state.selectedTab === TABS.search}

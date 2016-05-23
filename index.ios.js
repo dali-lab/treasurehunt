@@ -10,7 +10,7 @@ var styles = React.StyleSheet.create({
     margin: 80
   },
   container: {
-    flex: 1
+    flex: 1, 
   }
 });
 
@@ -62,10 +62,12 @@ class treasurehunt extends React.Component {
         <React.NavigatorIOS
           style={styles.container}
           initialRoute={{
-            title: 'Treasure Hunt',
+            title: 'TREASURE HUNT',
             component: HomePage,
             rightButtonTitle: rightButton,
             onRightButtonPress: this.onLogout.bind(this),
+            barTintColor: '#5da990',
+            titleTextColor: '#FFFFFF'
           }}/>
       );
     }
