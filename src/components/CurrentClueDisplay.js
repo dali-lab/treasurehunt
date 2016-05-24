@@ -93,12 +93,6 @@ var CurrentClueDisplay = React.createClass({
         		type: snap.val().type
         	};
         });
-        clueSolutionsRef.orderByChild('clue_id').equalTo(Number(this.props.clueId)).once('value', (snap) => {
-            var solution = snap.val();
-            for (var key in solution) {
-            	clueSolution = solution[key].solution;
-            }
-        });
             
         return {
             clue: clue,
@@ -109,9 +103,26 @@ var CurrentClueDisplay = React.createClass({
 
     },
 
+    componentDidMount: function() {
+        this.listenForItems(clueSolutionsRef);
+    },
+
+    listenForItems: function(clueSolutionsRef) {
+        
+        clueSolutionsRef.orderByChild('clue_id').equalTo(Number(this.props.clueId)).once('value', (snap) => {
+            var solution = snap.val();
+            for (var key in solution) {
+            	clueSolution = solution[key].solution;
+            }
+			this.setState({
+                clueSolution: clueSolution
+            });
+        
+        });
+    },
+
 	onSubmitPressed: function() {
-		console.log(`getSolutionAndCompare output ${this.getSolutionAndCompare()}`);
-		if (this.getSolutionAndCompare()) {
+		if (this.checkSolution()) {
 			var solutionList = this.getSolutionListFromDatabase();
 			this.addUserSolutionToFirebase();
 			this.updateDatabaseSolutionList(solutionList);
@@ -143,24 +154,8 @@ var CurrentClueDisplay = React.createClass({
 		this.props.navigator.pop();
 	},
 
-	getSolutionAndCompare: function() {
-		//get solution from database
-		var clueSolution;
-        clueSolutionsRef.orderByChild('clue_id').equalTo(Number(this.props.clueId)).once('value', (snap) => {
-            var solution = snap.val();
-            for (var key in solution) {
-            	clueSolution = solution[key].solution;
-            }
-            console.log(`checkSolution ${this.checkSolution(clueSolution)}`);
-            return this.checkSolution(clueSolution);
-        });
-
-	},
-
-	checkSolution: function(clueSolution) {
-		console.log(`submission ${this.state.submission}`);
-		console.log(`cluesolution ${clueSolution}`);
-		if (this.state.submission == clueSolution) {
+	checkSolution: function() {
+		if (this.state.submission == this.state.clueSolution) {
 			return true;
 		}
 		else {
