@@ -1,6 +1,7 @@
 'use strict';
  
 var React = require('react-native');
+var User = require('./User');
 
 var {
   StyleSheet,
@@ -174,6 +175,10 @@ class LoginScreen extends Component {
 	}
 
 	onLoginPressed() {
+		User.getUser(email, password, function(error, user) {
+			
+		});
+
 		if (typeof this.props.onLogin == 'function') {
 			this.props.onLogin();
 		}
@@ -245,7 +250,7 @@ class LoginScreen extends Component {
 								style={styles.loginIcons}
 								source={require('../../user.png')}/>
 							<TextInput style= {styles.textField}
-								placeholder="Username"/>
+								placeholder="email"/>
 							</View>
 							<View style={styles.separationBar}></View>
 							<View style={styles.loginTextInputViews}>
@@ -254,7 +259,7 @@ class LoginScreen extends Component {
 								source={require('../../password.png')}/>
 							<TextInput style={styles.textField}
 								secureTextEntry={true}
-								placeholder="Password"/>
+								placeholder="password"/>
 							</View>
 						</View>
 
