@@ -1,7 +1,9 @@
 'use strict';
  
 var React = require('react-native');
-var User = require('./User');
+const SignUp = require('./SignUp');
+const ForgotPassword = require('./ForgotPassword');
+import User from './User';
 
 var {
   StyleSheet,
@@ -14,10 +16,13 @@ var {
   Component,
   Dimensions,
   Modal,
+  AlertIOS,
 } = React;
 
-var screenPadding = 60;
+var screenPadding = 10;
 var screenWidth = Dimensions.get('window').width;
+var screenHeight = Dimensions.get('window').height;
+
 
 var styles = StyleSheet.create({
 	container: {
@@ -35,13 +40,13 @@ var styles = StyleSheet.create({
 		marginRight: screenPadding,
 	},
 	icon: {
-		width: 144,
-		height: 120,
+		width: screenWidth * 0.4,
+		height: screenWidth * 0.4 * 0.83,
 		alignSelf: "center"
 	},
 	titleStyle: {
 		marginTop: 20,
-		marginBottom: 40,
+		marginBottom: screenHeight > 500 ? 40 : 10,
 		fontSize: 25,
 		color: "#59aa91",
 		alignSelf: "center"
@@ -84,7 +89,6 @@ var styles = StyleSheet.create({
 		backgroundColor: "#f0f8f5",
 		flexDirection: 'column',
 		alignSelf: 'stretch',
-		bottom: 20,
 	},
 	loginIcons: {
 		top: 10,
@@ -171,17 +175,29 @@ class LoginScreen extends Component {
 		this.state = {
 			signingUp: false,
 			recoveringPassword: false,
+			processingLogin: false,
+			email: "",
+			password: "",
 		};
 	}
 
 	onLoginPressed() {
-		User.getUser(email, password, function(error, user) {
-			
+		this.setState({
+			processingLogin: true,
 		});
-
-		if (typeof this.props.onLogin == 'function') {
-			this.props.onLogin();
-		}
+		User.getUser(this.state.email.toLowerCase(), this.state.password, function(error, user) {
+			if (typeof this.props.onLogin == 'function' && error == null && user != null) {
+				this.props.onLogin();
+			}else{
+				AlertIOS.alert(
+					"Incorrect Login",
+					"Either your email or password was incorrect. If you cannot remember your password click 'Forgot your password?'"
+				);
+			}
+			this.setState({
+				processingLogin: false,
+			});
+		}.bind(this));
 	}
 
 	signUpPressed() {
@@ -210,16 +226,10 @@ class LoginScreen extends Component {
 	}
 
 	render() {
-		var modalView = <View style={signUpStyles.container}>
-							<Text style={signUpStyles.description}>You cannot sign up yet</Text>
-							<Text style={[signUpStyles.returnButton, styles.linkStyle]} onPress={this.hideModal.bind(this)}>Return</Text>
-						</View>
+		var modalView = <SignUp hideModal={this.hideModal.bind(this)}/>
 
 		if (this.state.recoveringPassword) {
-			modalView = <View style={signUpStyles.container}>
-							<Text style={signUpStyles.description}>You cannot forget your password yet</Text>
-							<Text style={[signUpStyles.returnButton, styles.linkStyle]} onPress={this.hideModal.bind(this)}>Return</Text>
-						</View>
+			modalView = <ForgotPassword hideModal={this.hideModal.bind(this)}/>
 		}
 
 		return (
@@ -250,6 +260,9 @@ class LoginScreen extends Component {
 								style={styles.loginIcons}
 								source={require('../../user.png')}/>
 							<TextInput style= {styles.textField}
+								onChangeText={(text) => this.setState({email: text})}
+    							value={this.state.email}
+    							disabled={this.state.processingLogin}
 								placeholder="email"/>
 							</View>
 							<View style={styles.separationBar}></View>
@@ -259,12 +272,21 @@ class LoginScreen extends Component {
 								source={require('../../password.png')}/>
 							<TextInput style={styles.textField}
 								secureTextEntry={true}
+								onChangeText={(text) => this.setState({password: text})}
+								disabled={this.state.processingLogin}
+    							value={this.state.password}
 								placeholder="password"/>
 							</View>
 						</View>
 
+						<ActivityIndicatorIOS
+							animating={this.state.processingLogin}
+							hidesWhenStopped={true}
+							size="small"/>
+
 						<TouchableHighlight style={styles.button}
 							onPress={this.onLoginPressed.bind(this)}
+							disabled={this.state.processingLogin}
 							underlayColor='#cadb66'>
 				    		<Text style={styles.buttonText}>Sign in</Text>
 				  		</TouchableHighlight>

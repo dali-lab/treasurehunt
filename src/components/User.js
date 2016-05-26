@@ -2,12 +2,13 @@ const Firebase = require('firebase');
 var ref = new Firebase("https://incandescent-torch-4551.firebaseio.com/");
 
 class User {
+	// No one but this class should make user objects
 	constructor(authData) {
 		this.uid = authData.uid;
 		this.provider = authData.provider;
 		this.token = authData.token;
 		this.auth = authData.auth;
-		this.email = this.password.email;
+		this.email = authData.password.email;
 		this.authData = authData;
 	}
 
@@ -23,7 +24,7 @@ class User {
 			if (error) {
 				callBack(error, null);
 			}else{
-				var user = User(authData);
+				var user = new User(authData);
 				callBack(error, user);
 			}
 		});
@@ -41,7 +42,7 @@ class User {
 			if (error) {
 				callBack(error, null);
 			}else{
-				var user = User(authData);
+				var user = new User(authData);
 				callBack(error, user);
 			}
 		});
@@ -59,3 +60,5 @@ class User {
 		});
 	}
 }
+
+export default User;
