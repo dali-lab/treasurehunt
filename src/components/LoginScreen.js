@@ -83,8 +83,6 @@ var styles = StyleSheet.create({
 	loginTextInputMainView: {
 		height: 85,
 		borderColor: '#f0f8f5',
-		borderWidth: 3,
-		borderWidth: 1,
 		borderRadius: 5,
 		backgroundColor: "#f0f8f5",
 		flexDirection: 'column',
@@ -186,8 +184,8 @@ class LoginScreen extends Component {
 			processingLogin: true,
 		});
 		User.getUser(this.state.email.toLowerCase(), this.state.password, function(error, user) {
-			if (typeof this.props.onLogin == 'function' && error == null && user != null) {
-				this.props.onLogin();
+			if (error == null && user != null) {
+				this.didLogIn(user);
 			}else{
 				AlertIOS.alert(
 					"Incorrect Login",
@@ -198,6 +196,12 @@ class LoginScreen extends Component {
 				processingLogin: false,
 			});
 		}.bind(this));
+	}
+
+	didLogIn(user) {
+		if (typeof this.props.onLogin == 'function') {
+			this.props.onLogin(user);
+		}
 	}
 
 	signUpPressed() {
@@ -226,7 +230,7 @@ class LoginScreen extends Component {
 	}
 
 	render() {
-		var modalView = <SignUp hideModal={this.hideModal.bind(this)}/>
+		var modalView = <SignUp hideModal={this.hideModal.bind(this)} didSignUp={this.didLogIn.bind(this)}/>
 
 		if (this.state.recoveringPassword) {
 			modalView = <ForgotPassword hideModal={this.hideModal.bind(this)}/>

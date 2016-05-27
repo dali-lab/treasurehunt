@@ -38,7 +38,8 @@ var styles = StyleSheet.create({
 		borderRadius: 10
 	},
 	description: {
-		fontSize: 20,
+		fontSize: 15,
+		textAlign: "center"
 	},
 	returnButton: {
 		marginTop: 20,
@@ -56,7 +57,8 @@ class ForgotPassword extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
-				<Text style={styles.description}>You cannot forget your password yet</Text>
+				<Text style={styles.description}>
+					We do not have an interface for reseting your password yet, but email us so we can reset your password for you</Text>
 				<Text style={[styles.returnButton, styles.linkStyle]} onPress={this.props.hideModal}>Return</Text>
 			</View>
 		);

@@ -19,34 +19,33 @@ class treasurehunt extends React.Component {
     super(props)
 
     this.state = {
-      loggedIn: false,
+      user: null,
       loggingIn: true,
     };
   }
 
-  onLogin() {
+  onLogin(user) {
     this.setState({
-      loggedIn: true,
+      user: user,
       loggingIn: false,
     })
   }
 
   onLogout() {
     this.setState({
-      loggedIn: false,
+      user: null,
       loggingIn: true,
     })
   }
 
   onSkipLogin() {
     this.setState({
-      loggedIn: false,
       loggingIn: false,
     })
   }
 
   isLoggingIn() {
-    return !this.state.loggedIn && this.state.loggingIn
+    return this.state.user == null && this.state.loggingIn
   }
 
   render() {
