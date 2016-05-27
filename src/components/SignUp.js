@@ -175,7 +175,7 @@ class SignUp extends Component {
 					);
 					this.refs.emailInput.focus()
     			}
-    		});
+    		}.bind(this));
     	}else{
     		AlertIOS.alert(
 				"Passwords don't match",

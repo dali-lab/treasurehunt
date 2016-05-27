@@ -1,15 +1,19 @@
 const Firebase = require('firebase');
 var ref = new Firebase("https://incandescent-torch-4551.firebaseio.com/");
+const config = require('../../config')
+const usersRef = new Firebase(`${ config.FIREBASE_ROOT }/users`)
 
 class User {
 	// No one but this class should make user objects
-	constructor(authData) {
+	constructor(authData, userRef, email) {
 		this.uid = authData.uid;
 		this.provider = authData.provider;
 		this.token = authData.token;
 		this.auth = authData.auth;
-		this.email = authData.password.email;
+		this.email = email;
 		this.authData = authData;
+		this.userRef = userRef;
+		this.huntList = userRef.child("hunts_list");
 	}
 
 	/**
@@ -24,7 +28,10 @@ class User {
 			if (error) {
 				callBack(error, null);
 			}else{
-				var user = new User(authData);
+				// Get user object
+				var userObject = usersRef.child(authData.uid);
+
+				var user = new User(authData, userObject, email);
 				callBack(error, user);
 			}
 		});
@@ -42,7 +49,14 @@ class User {
 			if (error) {
 				callBack(error, null);
 			}else{
-				var user = new User(authData);
+				// Make new user object
+				var userObject = usersRef.child(authData.uid);
+				userObject.set({
+					email: email,
+					hunts_list: [0]
+				});
+
+				var user = new User(authData, userObject, email);
 				callBack(error, user);
 			}
 		});

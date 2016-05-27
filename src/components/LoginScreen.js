@@ -191,10 +191,10 @@ class LoginScreen extends Component {
 					"Incorrect Login",
 					"Either your email or password was incorrect. If you cannot remember your password click 'Forgot your password?'"
 				);
+				this.setState({
+					processingLogin: false,
+				});
 			}
-			this.setState({
-				processingLogin: false,
-			});
 		}.bind(this));
 	}
 

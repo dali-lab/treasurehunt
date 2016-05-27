@@ -55,7 +55,7 @@ class treasurehunt extends React.Component {
       );
     }else{
       var rightButton = "Login"
-      if (this.state.loggedIn)
+      if (this.state.user != null)
         rightButton = "Logout"
       return (
         <React.NavigatorIOS
