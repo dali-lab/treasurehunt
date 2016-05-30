@@ -46,7 +46,6 @@ var styles = StyleSheet.create({
     description: {
         paddingTop: 3,
         paddingBottom: 8,
-
     },
     buttonText: {
 	  fontSize: 18,
@@ -108,7 +107,7 @@ var CurrentClueDisplay = React.createClass({
     },
 
     listenForItems: function(clueSolutionsRef) {
-        
+        //TODO: make this user specific!!!
         clueSolutionsRef.orderByChild('clue_id').equalTo(Number(this.props.clueId)).once('value', (snap) => {
             var solution = snap.val();
             for (var key in solution) {
@@ -163,6 +162,12 @@ var CurrentClueDisplay = React.createClass({
 		}
 	},
 
+	getHint: function() {
+		Alert.alert(
+			'Sorry! Not yet supported.',
+			'Check back in the future!',
+		);
+	},
 
 	addUserSolutionToFirebase: function() {
 
@@ -175,14 +180,16 @@ var CurrentClueDisplay = React.createClass({
     			user_id: 0,
     			clue_id: this.props.clueId,
     			hunt_id: this.state.huntId,
-    			completed: 1
+    			completed: 1,
+    			solution: this.state.submission
   			
 		});
 	},
 
 	getSolutionListFromDatabase: function() {
-		//TODO: Don't hard code this!!
-		var userRef = usersRef.child(0);
+
+		//DANITODO: need to plug in user id here
+		var userRef = usersRef.child("c75abb81-8054-4919-b5db-35bce71c3c0a");
 		var huntsListRef = userRef.child("hunts_list");
 		var thisHuntRef = huntsListRef.child(this.state.huntId);
 
@@ -197,10 +204,9 @@ var CurrentClueDisplay = React.createClass({
 	updateDatabaseSolutionList: function(solutionList) {
 		var newSolutionList = [];
 
-		//TODO: make this specific to user!
-		var userRef = usersRef.child(0);
+		//DANITODO: make this specific to user! just need to plug in user id here
+		var userRef = usersRef.child("c75abb81-8054-4919-b5db-35bce71c3c0a");
 		var huntsListRef = userRef.child("hunts_list");
-
 		//append newest solution to list
 		if (solutionList) {
 			newSolutionList = solutionList;
@@ -208,7 +214,7 @@ var CurrentClueDisplay = React.createClass({
 		}
 
 		//push new list to Firebase
-		//TODO: for some reason set doesn't work here--newSolutionList becomes undefined?
+		console.log(`newSolutionList ${newSolutionList}`);
 		if (newSolutionList) {
 			var thisHuntRef = huntsListRef.child(this.state.huntId);
 			thisHuntRef.update(newSolutionList);
@@ -234,7 +240,7 @@ var CurrentClueDisplay = React.createClass({
 							underlayColor='#99d9f4'>
 							<Text style = {styles.buttonText}>Submit</Text>
 					</TouchableHighlight>
-					<Text style={styles.hint}>
+					<Text style={styles.hint} onPress={this.getHint}>
 				  			Need a hint?
 			  		</Text>
 				</View>

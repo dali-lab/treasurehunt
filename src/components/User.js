@@ -56,7 +56,7 @@ class User {
 				var userObject = usersRef.child(authData.uid);
 				userObject.set({
 					email: email,
-					hunts_list: [0]
+					hunts_list: {"0": [1]}
 				});
 
 				var user = new User(authData, userObject, email);

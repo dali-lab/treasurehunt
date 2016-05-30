@@ -84,7 +84,7 @@ class HuntOverview extends Component {
 
 	render() {
 		var hunt = this.props.hunt;
-
+		console.log(hunt.category);
 		return (
 			<View style={styles.container}>
 				<View>
@@ -98,7 +98,7 @@ class HuntOverview extends Component {
 				<TouchableHighlight style = {styles.button}
 						onPress={this.onStartPressed.bind(this)}
 						underlayColor='#99d9f4'>
-						<Text style = {styles.buttonText}>GET STARTED</Text>
+						<Text style = {styles.buttonText}>OPEN HUNT</Text>
 				</TouchableHighlight>
 				<TouchableHighlight style = {styles.button}
 						onPress={this.onExitPressed.bind(this)}

@@ -80,21 +80,52 @@ const Firebase = require('firebase')
 const config = require('../../config')
 const huntsRef = new Firebase(`${ config.FIREBASE_ROOT }/hunts`)
 const rootRef = new Firebase(`${ config.FIREBASE_ROOT }`)
-
-
+const usersRef = new Firebase(`${ config.FIREBASE_ROOT }/users`)
 
 var Home = React.createClass({
 
     getInitialState: function() {
+
+        // var userRef = usersRef.child("5019e705-08a3-4471-8f6c-29f09e520b7e");
+        // var huntsListRef = userRef.child("hunts_list");
+        // var huntsList;
+
+        // huntsListRef.on('value', (snap) => {
+        //     huntsList = snap.val();
+        //     this.setState({
+        //         huntsList: huntsList
+        //     });        
+        // });
+        // console.log('huntslist' + huntsList);
+
+        var userHuntsArray = {
+            0: [1],
+            1: [2,3],
+            2: [8, 9, 10],
+            3: [11, 12, 13],
+        };
+
         var dataSource = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1.guid != r2.guid,
             sectionHeaderHasChanged: (s1, s2) => s1 !== s2
         });
         
         return {
-            dataSource: dataSource
+            dataSource: dataSource,
+            huntsList: this.getHuntsList()
         };
 
+    },
+
+    getHuntsList: function() {
+        var userRef = usersRef.child("5019e705-08a3-4471-8f6c-29f09e520b7e");
+        var huntsListRef = userRef.child("hunts_list");
+        var huntsList;
+
+        huntsListRef.on('value', (snap) => {
+            huntsList = snap.val();
+            return huntsList;     
+        });
     },
 
     convertHuntsArrayToMap: function(hunts) {
@@ -111,6 +142,7 @@ var Home = React.createClass({
 
     listenForItems: function(huntsRef) {
         //TODO: replace userHuntsArray with specific list of user hunts/solutions
+
         var userHuntsArray = {
             0: [1],
             1: [2,3],
@@ -118,9 +150,7 @@ var Home = React.createClass({
             3: [11, 12, 13],
         };
 
-        var newUserHuntsArray = [0,1,2,3];
         var hunts = [];
-
         //for each hunt the user has completed
         for (var key in userHuntsArray) {
             var huntRef = huntsRef.child(key);
