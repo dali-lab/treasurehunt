@@ -4,6 +4,8 @@ const config = require('../../config')
 const usersRef = new Firebase(`${ config.FIREBASE_ROOT }/users`)
 
 class User {
+	static currentUser = null;
+
 	// No one but this class should make user objects
 	constructor(authData, userRef, email) {
 		this.uid = authData.uid;
@@ -32,6 +34,7 @@ class User {
 				var userObject = usersRef.child(authData.uid);
 
 				var user = new User(authData, userObject, email);
+				User.currentUser = user;
 				callBack(error, user);
 			}
 		});
@@ -57,6 +60,7 @@ class User {
 				});
 
 				var user = new User(authData, userObject, email);
+				User.currentUser = user;
 				callBack(error, user);
 			}
 		});

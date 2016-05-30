@@ -264,7 +264,12 @@ class LoginScreen extends Component {
 								style={styles.loginIcons}
 								source={require('../../user.png')}/>
 							<TextInput style= {styles.textField}
+								ref="emailTextField"
+								returnKeyType='next'
 								onChangeText={(text) => this.setState({email: text})}
+								onSubmitEditing={() =>
+									this.refs.passwordTextField.focus()
+								}
     							value={this.state.email}
     							disabled={this.state.processingLogin}
 								placeholder="email"/>
@@ -275,8 +280,11 @@ class LoginScreen extends Component {
 								style={styles.loginIcons}
 								source={require('../../password.png')}/>
 							<TextInput style={styles.textField}
+								ref="passwordTextField"
+								returnKeyType='go'
 								secureTextEntry={true}
 								onChangeText={(text) => this.setState({password: text})}
+								onSubmitEditing={this.onLoginPressed.bind(this)}
 								disabled={this.state.processingLogin}
     							value={this.state.password}
 								placeholder="password"/>
