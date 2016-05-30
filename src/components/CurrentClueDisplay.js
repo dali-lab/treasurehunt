@@ -1,5 +1,5 @@
 var React = require('react-native');
-
+var Modal   = require('react-native-modalbox');
 var {
 	StyleSheet,
 	Image,
@@ -43,6 +43,25 @@ var styles = StyleSheet.create({
         color: '#000000',
         fontStyle: 'italic'
     }, 
+    modal: {
+	    height: 300,
+	    width: 300
+  	},
+  	btn: {
+	    margin: 10,
+	    backgroundColor: "#3B5998",
+	    color: "white",
+	    padding: 10
+  	},
+
+  	btnModal: {
+	    position: "absolute",
+	    top: 0,
+	    right: 0,
+	    width: 50,
+	    height: 50,
+	    backgroundColor: "transparent"
+  	},
     description: {
         paddingTop: 3,
         paddingBottom: 8,
@@ -120,6 +139,10 @@ var CurrentClueDisplay = React.createClass({
         });
     },
 
+    openModal: function(id) {
+    	this.refs.modal.open();
+  	},
+
 	onSubmitPressed: function() {
 		if (this.checkSolution()) {
 			var solutionList = this.getSolutionListFromDatabase();
@@ -132,13 +155,14 @@ var CurrentClueDisplay = React.createClass({
 			thisSolutionRef.update({completed: 1});
 			var thisSolutionRef = userSolutionsRef.child(2);
 			thisSolutionRef.update({completed: 1});
-			Alert.alert(
-				'Clue Correct',
-				"Woohoo!",
-				[
-					{onPress: this.returnToClueList},
-				]
-			);
+			this.openModal();
+			// Alert.alert(
+			// 	'Clue Correct',
+			// 	"Woohoo!",
+			// 	[
+			// 		{onPress: this.returnToClueList},
+			// 	]
+			// );
 		}
 		else {
 			Alert.alert(

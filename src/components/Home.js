@@ -86,24 +86,13 @@ var Home = React.createClass({
 
     getInitialState: function() {
 
-        // var userRef = usersRef.child("5019e705-08a3-4471-8f6c-29f09e520b7e");
-        // var huntsListRef = userRef.child("hunts_list");
-        // var huntsList;
-
-        // huntsListRef.on('value', (snap) => {
-        //     huntsList = snap.val();
-        //     this.setState({
-        //         huntsList: huntsList
-        //     });        
-        // });
-        // console.log('huntslist' + huntsList);
-
         var userHuntsArray = {
             0: [1],
             1: [2,3],
             2: [8, 9, 10],
             3: [11, 12, 13],
         };
+        var huntsList;
 
         var dataSource = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1.guid != r2.guid,
@@ -112,7 +101,7 @@ var Home = React.createClass({
         
         return {
             dataSource: dataSource,
-            huntsList: this.getHuntsList()
+            huntsList: huntsList
         };
 
     },
@@ -140,25 +129,35 @@ var Home = React.createClass({
         return huntsCategoryMap;
     },
 
-    listenForItems: function(huntsRef) {
-        //TODO: replace userHuntsArray with specific list of user hunts/solutions
+    listenForItems: function() {
 
-        var userHuntsArray = {
-            0: [1],
-            1: [2,3],
-            2: [8, 9, 10],
-            3: [11, 12, 13],
-        };
+        //DANITODO: need to plug in user id here
+        var userRef = usersRef.child("e1e5bc7a-9510-44e1-8a1e-0ccf354a5f06");
+        var huntsListRef = userRef.child("hunts_list");
+        var huntsList; 
+
+        huntsListRef.on('value', (snap) => {
+            huntsList = snap.exportVal();
+            this.updateStateWithHunts(huntsList);
+        });
+
+    },
+
+    updateStateWithHunts: function(huntsList) {
 
         var hunts = [];
         //for each hunt the user has completed
-        for (var key in userHuntsArray) {
+        for (var key in huntsList) {
             var huntRef = huntsRef.child(key);
-            
             //get that hunt, calculate user progress, get hunt data
+            //for now, if they're only on first clue set progress to 0
             huntRef.on('value', (snap) => {
                 var totalCluesInHunt = snap.val().clues.length;
-                var totalCluesCompleted = userHuntsArray[snap.key()].length;
+                var keys = Object.keys(huntsList[snap.key()]);
+                var totalCluesCompleted = keys.length;
+                if (totalCluesCompleted == 1) {
+                    totalCluesCompleted =0;
+                }
                 if (totalCluesInHunt===totalCluesCompleted) {
                     hunts.push({
                         id: snap.key(),
@@ -190,7 +189,7 @@ var Home = React.createClass({
     },
 
     componentDidMount: function() {
-        this.listenForItems(huntsRef);
+        this.listenForItems();
     },
 
     rowPressed: function(hunt) {
