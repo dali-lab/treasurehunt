@@ -156,6 +156,8 @@ var Home = React.createClass({
                 var totalCluesInHunt = snap.val().clues.length;
                 var keys = Object.keys(huntsList[snap.key()]);
                 var totalCluesCompleted = keys.length;
+
+                //TODO: get last clue, check if it's complete. if not don't add it to totalCluesCompleted
                 if (totalCluesCompleted == 1) {
                     totalCluesCompleted =0;
                 }

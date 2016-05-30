@@ -1,6 +1,7 @@
 var React = require('react-native');
 var CurrentClueDisplay = require('./CurrentClueDisplay');
 var CompletedClueDisplay = require('./CompletedClueDisplay');
+var User = require('./User').default
 
 var {
 	StyleSheet,
@@ -118,7 +119,7 @@ var ClueList = React.createClass({
         var clues = [];
         var solutionsToClues = [];
         var userCompletedClues = [];
-        var inProgress;
+        var inProgress = -1;
         var toStart;
 
         // specify which of user's clues are in progress versus completed
@@ -136,7 +137,7 @@ var ClueList = React.createClass({
         }
 
         //TODO: fix this calculation since clues won't always have chronological id's 
-        if (!inProgress) {
+        if (inProgress == -1) {
             inProgress = solutionsForThisHunt[solutionsForThisHunt.length -1].clue_id + 1;
         }
 
@@ -188,13 +189,16 @@ var ClueList = React.createClass({
         var huntID = this.props.hunt.id;
 
         var solutionsForThisHunt = [];
+        var currentUser = User.getCurrentUser();
         //TODO: for now there is only user 0 but we don't want this hard-coded for all users 
-        userSolutionsRef.orderByChild('user_id').startAt(0).endAt(0).once('value', (snap) => {
+        userSolutionsRef.orderByChild('user_id').startAt(currentUser.uid).endAt(currentUser.uid).once('value', (snap) => {
             var solution = snap.val();
-            var array = Object.keys(solution).map(key =>({ ...solution[key], id:key}));
-            for (var i = 0; i < array.length; i++) {
-                if (array[i].hunt_id == Number(huntID)) {
-                    solutionsForThisHunt.push(array[i]);
+            if (solution) {
+                var array = Object.keys(solution).map(key =>({ ...solution[key], id:key}));
+                for (var i = 0; i < array.length; i++) {
+                    if (array[i].hunt_id == Number(huntID)) {
+                        solutionsForThisHunt.push(array[i]);
+                    }
                 }
             }
             this.populateArray(solutionsForThisHunt);

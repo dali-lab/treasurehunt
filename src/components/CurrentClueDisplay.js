@@ -199,11 +199,12 @@ var CurrentClueDisplay = React.createClass({
 
 		//TODO: fix this so we're pushing a new child 
 		var thisSolutionRef = userSolutionsRef.child(this.props.clueId);
+		var currentUser = User.getCurrentUser();
 
 		//TODO: make this specific to user!!
 		//thisSolutionRef.update({
   		userSolutionsRef.push({
-    			user_id: 0,
+    			user_id: currentUser.uid,
     			clue_id: this.props.clueId,
     			hunt_id: this.state.huntId,
     			completed: 1,
