@@ -4,6 +4,7 @@
 var React = require('react-native');
 var Progress = require('react-native-progress');
 var HuntOverview = require('./HuntOverview');
+var User = require('./User').default
 
 var {
     StyleSheet,
@@ -107,7 +108,8 @@ var Home = React.createClass({
     },
 
     getHuntsList: function() {
-        var userRef = usersRef.child("5019e705-08a3-4471-8f6c-29f09e520b7e");
+        var currentUser = User.getCurrentUser();
+        var userRef = usersRef.child(currentUser.uid);
         var huntsListRef = userRef.child("hunts_list");
         var huntsList;
 
@@ -130,9 +132,8 @@ var Home = React.createClass({
     },
 
     listenForItems: function() {
-
-        //DANITODO: need to plug in user id here
-        var userRef = usersRef.child("e1e5bc7a-9510-44e1-8a1e-0ccf354a5f06");
+        var currentUser = User.getCurrentUser();
+        var userRef = usersRef.child(currentUser.uid);
         var huntsListRef = userRef.child("hunts_list");
         var huntsList; 
 

@@ -18,6 +18,10 @@ class User {
 		this.huntList = userRef.child("hunts_list");
 	}
 
+	static getCurrentUser() {
+		return this.currentUser;
+	}
+
 	/**
 		This function authenticates a user, and will call the callBack when done
 		callBack = function(error, user)

@@ -1,5 +1,7 @@
 var React = require('react-native');
 var Modal   = require('react-native-modalbox');
+var User = require('./User').default
+
 var {
 	StyleSheet,
 	Image,
@@ -155,14 +157,14 @@ var CurrentClueDisplay = React.createClass({
 			thisSolutionRef.update({completed: 1});
 			var thisSolutionRef = userSolutionsRef.child(2);
 			thisSolutionRef.update({completed: 1});
-			this.openModal();
-			// Alert.alert(
-			// 	'Clue Correct',
-			// 	"Woohoo!",
-			// 	[
-			// 		{onPress: this.returnToClueList},
-			// 	]
-			// );
+			//this.openModal();
+			Alert.alert(
+				'Clue Correct',
+				"Woohoo!",
+				[
+					{onPress: this.returnToClueList},
+				]
+			);
 		}
 		else {
 			Alert.alert(
@@ -213,7 +215,8 @@ var CurrentClueDisplay = React.createClass({
 	getSolutionListFromDatabase: function() {
 
 		//DANITODO: need to plug in user id here
-		var userRef = usersRef.child("c75abb81-8054-4919-b5db-35bce71c3c0a");
+		var currentUser = User.getCurrentUser();
+		var userRef = usersRef.child(currentUser.uid);
 		var huntsListRef = userRef.child("hunts_list");
 		var thisHuntRef = huntsListRef.child(this.state.huntId);
 
@@ -228,8 +231,8 @@ var CurrentClueDisplay = React.createClass({
 	updateDatabaseSolutionList: function(solutionList) {
 		var newSolutionList = [];
 
-		//DANITODO: make this specific to user! just need to plug in user id here
-		var userRef = usersRef.child("c75abb81-8054-4919-b5db-35bce71c3c0a");
+		var currentUser = User.getCurrentUser();
+		var userRef = usersRef.child(currentUser.uid);
 		var huntsListRef = userRef.child("hunts_list");
 		//append newest solution to list
 		if (solutionList) {
