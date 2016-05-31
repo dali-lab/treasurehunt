@@ -180,7 +180,7 @@ var CurrentClueDisplay = React.createClass({
 	},
 
 	checkSolution: function() {
-		if (this.state.submission == this.state.clueSolution) {
+		if (this.state.submission.toUpperCase() == this.state.clueSolution.toUpperCase()) {
 			return true;
 		}
 		else {
@@ -196,10 +196,7 @@ var CurrentClueDisplay = React.createClass({
 	},
 
 	addUserSolutionToFirebase: function() {
-
 		var currentUser = User.getCurrentUser();
-
-		//thisSolutionRef.update({
   		userSolutionsRef.push({
     		user_id: currentUser.uid,
     		clue_id: this.props.clueId,
@@ -211,8 +208,6 @@ var CurrentClueDisplay = React.createClass({
 	},
 
 	getSolutionListFromDatabase: function() {
-
-		//DANITODO: need to plug in user id here
 		var currentUser = User.getCurrentUser();
 		var userRef = usersRef.child(currentUser.uid);
 		var huntsListRef = userRef.child("hunts_list");
@@ -228,10 +223,10 @@ var CurrentClueDisplay = React.createClass({
 
 	updateDatabaseSolutionList: function(solutionList) {
 		var newSolutionList = [];
-
 		var currentUser = User.getCurrentUser();
 		var userRef = usersRef.child(currentUser.uid);
 		var huntsListRef = userRef.child("hunts_list");
+
 		//append newest solution to list
 		if (solutionList == -1) {
 			newSolutionList.push(this.props.clueId);
@@ -242,7 +237,6 @@ var CurrentClueDisplay = React.createClass({
 		}
 
 		//push new list to Firebase
-		console.log(`newSolutionList ${newSolutionList}`);
 		if (newSolutionList) {
 			var thisHuntRef = huntsListRef.child(this.state.huntId);
 			thisHuntRef.update(newSolutionList);
@@ -278,4 +272,3 @@ var CurrentClueDisplay = React.createClass({
 });
 
 module.exports = CurrentClueDisplay;
-

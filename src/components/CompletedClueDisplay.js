@@ -79,6 +79,7 @@ const clueSolutionsRef = new Firebase(`${ config.FIREBASE_ROOT }/clue_solutions`
 
 
 var CompletedClueDisplay = React.createClass({
+
 	getInitialState: function() {
 		var clueRef = cluesRef.child(this.props.clueId);
 		var clue;
@@ -117,7 +118,6 @@ var CompletedClueDisplay = React.createClass({
         });
     },
 
-
 	returnToClueList: function() {
 		this.props.navigator.pop();
 	},
@@ -125,7 +125,6 @@ var CompletedClueDisplay = React.createClass({
 	checkSolution: function(userSolution) {
 		return true;
 	},
-
 
 	render: function() {	 
 		var hunt = this.props.hunt;

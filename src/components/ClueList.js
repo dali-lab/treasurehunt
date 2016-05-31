@@ -92,6 +92,7 @@ const cluesRef = new Firebase(`${ config.FIREBASE_ROOT }/clues`)
 const userSolutionsRef = new Firebase(`${ config.FIREBASE_ROOT }/user_solutions`)
 
 var ClueList = React.createClass({
+
 	getInitialState: function() {
         var dataSource = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1.guid != r2.guid,
@@ -219,7 +220,6 @@ var ClueList = React.createClass({
     },
 
     rowPressed: function(clueInfo) {
-        //TODO: if clue is completed, load solution. 
         //if clue is in progress, load current progress
         if (clueInfo.category === "complete") {
             this.props.navigator.push({
@@ -296,7 +296,6 @@ var ClueList = React.createClass({
         	);
     	}
 	},
-
 
 	render: function() {
 		var hunt = this.props.hunt;
