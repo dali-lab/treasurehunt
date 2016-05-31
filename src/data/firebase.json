@@ -95,6 +95,12 @@
   			"clue_id" : 3,
   			"type": "fillIn",
   			"solution": "Moore"
+  		},
+  	"4":
+  		{
+  			"clue_id" : 4,
+  			"type": "fillIn",
+  			"solution": "bla"
   		}
   },
   "clues": 

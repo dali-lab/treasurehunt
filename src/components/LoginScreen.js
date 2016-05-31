@@ -217,9 +217,14 @@ class LoginScreen extends Component {
 	}
 
 	skipPressed() {
-		if (typeof this.props.onSkipLogin == 'function') {
-			this.props.onSkipLogin();
-		}
+		// removed this functionality for now
+		// if (typeof this.props.onSkipLogin == 'function') {
+		// 	this.props.onSkipLogin();
+		// }
+		AlertIOS.alert(
+			"Not yet supported",
+			"Please create an account to win cool prizes!"
+		);
 	}
 
 	hideModal() {

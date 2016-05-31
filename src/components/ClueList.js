@@ -10,7 +10,8 @@ var {
 	Text,
 	Component,
 	TouchableHighlight,
-	ListView
+	ListView,
+    Alert
 } = React;
 
 var styles = StyleSheet.create({
@@ -180,6 +181,13 @@ var ClueList = React.createClass({
                     dataSource: this.state.dataSource.cloneWithRowsAndSections(this.convertCluesArrayToMap(clues))
                 });
             });
+        }
+
+        if (solutionsForThisHunt.length == cluesArray.length && solutionsForThisHunt[solutionsForThisHunt.length-1].completed ==1) {
+            Alert.alert(
+                'HUNT COMPLETE',
+                "You did it!!!!"
+            );
         }
     },  
 

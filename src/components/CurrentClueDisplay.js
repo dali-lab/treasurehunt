@@ -153,10 +153,10 @@ var CurrentClueDisplay = React.createClass({
 			
 			//need to also put next clue in progress at this point
 			//TODO: don't hard code these!
-			var thisSolutionRef = userSolutionsRef.child(3);
-			thisSolutionRef.update({completed: 1});
-			var thisSolutionRef = userSolutionsRef.child(2);
-			thisSolutionRef.update({completed: 1});
+			// var thisSolutionRef = userSolutionsRef.child(3);
+			// thisSolutionRef.update({completed: 1});
+			// var thisSolutionRef = userSolutionsRef.child(2);
+			// thisSolutionRef.update({completed: 1});
 			//this.openModal();
 			Alert.alert(
 				'Clue Correct',
@@ -197,18 +197,15 @@ var CurrentClueDisplay = React.createClass({
 
 	addUserSolutionToFirebase: function() {
 
-		//TODO: fix this so we're pushing a new child 
-		var thisSolutionRef = userSolutionsRef.child(this.props.clueId);
 		var currentUser = User.getCurrentUser();
 
-		//TODO: make this specific to user!!
 		//thisSolutionRef.update({
   		userSolutionsRef.push({
-    			user_id: currentUser.uid,
-    			clue_id: this.props.clueId,
-    			hunt_id: this.state.huntId,
-    			completed: 1,
-    			solution: this.state.submission
+    		user_id: currentUser.uid,
+    		clue_id: this.props.clueId,
+    		hunt_id: this.state.huntId,
+    		completed: 1,
+    		solution: this.state.submission
   			
 		});
 	},
@@ -236,7 +233,10 @@ var CurrentClueDisplay = React.createClass({
 		var userRef = usersRef.child(currentUser.uid);
 		var huntsListRef = userRef.child("hunts_list");
 		//append newest solution to list
-		if (solutionList) {
+		if (solutionList == -1) {
+			newSolutionList.push(this.props.clueId);
+		}
+		else if (solutionList) {
 			newSolutionList = solutionList;
 			newSolutionList.push(this.props.clueId);
 		}
