@@ -4,6 +4,7 @@ var React = require('react-native');
 const SignUp = require('./SignUp');
 const ForgotPassword = require('./ForgotPassword');
 import User from './User';
+var dismissKeyboard = require('dismissKeyboard');
 
 var {
   StyleSheet,
@@ -28,8 +29,9 @@ var styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		width: screenWidth,
-		alignItems: "center",
 		flexDirection: "column",
+		alignItems: "center",
+		backgroundColor: "white",
 	},
 	innerContainer: {
 		flexDirection: "column",
@@ -242,6 +244,9 @@ class LoginScreen extends Component {
 		}
 
 		return (
+			<TouchableHighlight style={styles.container} activeOpacity={1}
+			onPress={() => dismissKeyboard()}
+			>
 			<View style={styles.container}>
 				<Modal
 					animated={true}
@@ -320,6 +325,7 @@ class LoginScreen extends Component {
 			  		<View style={styles.bottomBar}></View>
 			  	</View>
 			</View>
+			</TouchableHighlight>
 	  	);
 	}
 }
