@@ -180,7 +180,7 @@ var CurrentClueDisplay = React.createClass({
 	},
 
 	checkSolution: function() {
-		if (this.state.submission.toUpperCase() == this.state.clueSolution.toUpperCase()) {
+		if (this.state.submission.toUpperCase().trim() == this.state.clueSolution.toUpperCase().trim()) {
 			return true;
 		}
 		else {
