@@ -2,10 +2,10 @@
   "hunts": {
   	"0":
 	    {
-	    "title":"Dartmouth",
-	    "description": "Become familiar with the Dartmouth campus through this orientation hunt!", 
+	    "title":"DALI End of Term Event!",
+	    "description": "Collect clues from each project to complete the hunt!", 
 	    "image": "https://www.dropbox.com/s/j2lzjfh7666wzc5/dart.jpg?raw=1",
-	    "clues": [0, 1, 2, 3, 4]
+	    "clues": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 	    },
 	"1":
 	    {
@@ -76,87 +76,147 @@
   		{
   			"clue_id" : 0,
   			"type": "fillIn",
-  			"solution": "Baker Berry"
+  			"solution": "Flux"
   		},
   	"1":
   		{
   			"clue_id" : 1,
   			"type": "fillIn",
-  			"solution": "Collis"
+  			"solution": "electromagnetic"
   		},
   	"2":
   		{
   			"clue_id" : 2,
   			"type": "fillIn",
-  			"solution": "Sudikoff"
+  			"solution": "run"
   		},
   	"3":
   		{
   			"clue_id" : 3,
   			"type": "fillIn",
-  			"solution": "Moore"
+  			"solution": "audience choice"
   		},
   	"4":
   		{
   			"clue_id" : 4,
   			"type": "fillIn",
-  			"solution": "bla"
+  			"solution": "cube"
+  		},
+  	"5":
+  		{
+  			"clue_id" : 5,
+  			"type": "fillIn",
+  			"solution": "26"
+  		},
+  	"6":
+  		{
+  			"clue_id" : 6,
+  			"type": "fillIn",
+  			"solution": "music"
+  		},
+  	"7":
+  		{
+  			"clue_id" : 7,
+  			"type": "fillIn",
+  			"solution": "14"
+  		},
+  	"8":
+  		{
+  			"clue_id" : 8,
+  			"type": "fillIn",
+  			"solution": "donate"
+  		},
+  	"9":
+  		{
+  			"clue_id" : 9,
+  			"type": "fillIn",
+  			"solution": "disease diagnosing"
+  		},
+  	"10":
+  		{
+  			"clue_id" : 10,
+  			"type": "fillIn",
+  			"solution": "pays"
+  		},
+  	"11":
+  		{
+  			"clue_id" : 11,
+  			"type": "fillIn",
+  			"solution": "social media"
   		}
   },
   "clues": 
   	[
 	  {	"id": 0,
 	  	"type":"fillIn",
-	  	"title":"Find the Missing Piece",
-	  	"description":"What is the most famous library on campus?"
+	  	"title":"Orchard",
+	  	"description":"Orchard’s original name was _________"
 	  },
 	  {
 	  	"id": 1,
 	  	"type":"fillIn",
-	  	"title":"Word on a Stone",
-	  	"description":"Where do you go for stir fry?"
+	  	"title":"Sky Survey",
+	  	"description":"The filter bar in Sky Survey filters the surveys based on a survey’s _______ band. "
 	  },
 	  {
 	  	"id": 2,
 	  	"type":"fillIn",
-	  	"title":"Sudikoff Search",
-	  	"description":"What is the name of the CS building?"
+	  	"title":"RunRite",
+	  	"description":"Some people ______ to get high.. But I don't have time for exercise."
 	  },
 	  {
 	  	"id": 3,
 	  	"type":"fillIn",
-	  	"title":"Fill in the Word!",
-	  	"description":"What is the name of the psych building?"
+	  	"title":"PukePocket",
+	  	"description":"PukePocket won _____  _______ at the 16W Pitch."
 	  },
 	  {
 	  	"id": 4,
 	  	"type":"fillIn",
-	  	"title":"Fill in the Word!",
-	  	"description":"Bla bla bla bla bla!!!!!!"
+	  	"title":"MakeStuff",
+	  	"description":"At DAX you saw our silhouette wall, 3-d printed bugs, a new instrument, and _____ filled with fog and light."
 	  },
 	  {
 	  	"id": 5,
 	  	"type":"fillIn",
-	  	"title":"Fill in the Word!",
-	  	"description":"Bla bla bla bla bla!!!!!!"
+	  	"title":"HealthMatters",
+	  	"description":"On May _____, this team's project logged 1,048 responses."
 	  },
 	  {
 	  	"id": 6,
 	  	"type":"fillIn",
-	  	"title":"Fill in the Word!",
-	  	"description":"Bla bla bla bla bla!!!!!!"
+	  	"title":"HeartStrings",
+	  	"description":"Our mission is to 'elevate your videos with _________.'"
 	  },
 	  {
 	  	"id": 7,
 	  	"type":"fillIn",
-	  	"title":"Fill in the Word!",
-	  	"description":"Bla bla bla bla bla!!!!!!"
+	  	"title":"PsychVR",
+	  	"description":"The rig we use to film uses _____ go pros."
 	  },
 	  {
 	  	"id": 8,
 	  	"type":"fillIn",
-	  	"title":"Fill in the Word!",
-	  	"description":"Bla bla bla bla bla!!!!!!"
+	  	"title":"FoodShare",
+	  	"description":"The best way to _______ a meal is to take a picture with our app."
+	  },
+	  {
+	  	"id": 9,
+	  	"type":"fillIn",
+	  	"title":"Generva",
+	  	"description":"Generva is the _________ _________ app."
+	  },
+	  {
+	  	"id": 10,
+	  	"type":"fillIn",
+	  	"title":"Pulse",
+	  	"description":"Pulse is the project that _______ students to learn what the campus thinks about shit."
+	  },
+	  {
+	  	"id": 11,
+	  	"type":"fillIn",
+	  	"title":"FliQ",
+	  	"description":" Instantly connect with people you meet, on multiple ________ ___________. "
 	  }
   ]
 }
