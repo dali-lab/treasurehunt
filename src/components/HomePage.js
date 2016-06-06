@@ -82,7 +82,7 @@ var HomePage = React.createClass({
     return (
       <NavigatorIOS
         style={styles.container}
-        tintColor='#D6573D'
+        barTintColor='#5da990'
         ref='homeRef'
         initialRoute={{
           title: 'Puzzles',

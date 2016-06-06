@@ -19,6 +19,8 @@ var styles = React.StyleSheet.create({
   }
 });
 
+console.disableYellowBox = true;
+
 var treasurehunt = React.createClass ({
     getInitialState: function() {
         return {
@@ -66,7 +68,7 @@ var treasurehunt = React.createClass ({
     render: function() {
         if (this.isLoggingIn()) {
             return (
-                <LoginScreen onLogin={this.onLogin.bind(this)} onSkipLogin={this.onSkipLogin.bind(this)}/>
+                <LoginScreen onLogin={this.onLogin} onSkipLogin={this.onSkipLogin}/>
             );
         } 
         else {
@@ -78,7 +80,6 @@ var treasurehunt = React.createClass ({
                       sceneStyle={styles.container}
                       ref = {(navigator) => {this.navigator = navigator; }}
                       renderScene={this.renderScene}
-                      tintColor='#D6573D'
                       barTintColor='#5da990'
                       titleTextColor='#FFFFFF'
                       navigationBarHidden={true}
@@ -86,7 +87,7 @@ var treasurehunt = React.createClass ({
                         title: 'TREASURE HUNT',
                         component: HomePage,
                         rightButtonTitle: rightButton,
-                        onRightButtonPress: this.onLogout.bind(this),
+                        onRightButtonPress: this.onLogout.bind,
                     }}/>
                 );
         }

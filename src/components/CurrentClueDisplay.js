@@ -10,8 +10,11 @@ var {
 	Component,
 	TouchableHighlight,
 	Alert,
-	TextInput
+	TextInput,
+	Dimensions
 } = React;
+
+var screenWidth = Dimensions.get('window').width;
 
 var styles = StyleSheet.create({
 	container: {
@@ -84,7 +87,8 @@ var styles = StyleSheet.create({
 	  borderRadius: 8,
 	  marginBottom: 10,
 	  alignSelf: 'stretch',
-	  padding:20
+	  padding:20,
+	  paddingTop:20
 	},
 	hint: {
 		textAlign: 'left',
@@ -248,15 +252,17 @@ var CurrentClueDisplay = React.createClass({
 		 if (this.state.clue.type == "fillIn") { 
 			return (
 				<View style={styles.container}>
+					<View style={styles.separatorSmall}/>
 					<Text style={styles.huntTitle}>{hunt.title.toUpperCase()}</Text>
                     <View style={styles.topSeparator}/>
+                    <View style={styles.separatorSmall}/>
 					<Text style={styles.clueName}>{this.state.clue.title}</Text>
 					<Text style={styles.description}>{this.state.clue.description}</Text>
-
 					<TextInput
 	    				style={{height: 40, borderColor: 'gray', borderWidth: 1}}
 	    				onChangeText={(submission) => this.setState({submission})}
 	    				value={this.state.submission}/>
+	    			<View style={styles.separatorLarge}/>
 					<TouchableHighlight style = {styles.button}
 							onPress={this.onSubmitPressed}
 							underlayColor='#99d9f4'>
