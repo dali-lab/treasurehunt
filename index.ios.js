@@ -2,6 +2,11 @@ var React = require('react-native');
 var LoginScreen = require('./src/components/LoginScreen');
 var HomePage = require('./src/components/HomePage');
 
+var {
+    Navigator,
+    View
+} = React;
+
 var styles = React.StyleSheet.create({
   text: {
     color: 'black',
@@ -46,6 +51,18 @@ var treasurehunt = React.createClass ({
         return this.state.user == null && this.state.loggingIn
     },
 
+    renderScene: function(route, navigator) {
+        var Component = route.component;
+        return (
+            <View style={styles.container}>
+                <Component
+                    route={route}
+                    navigator = {navigator}
+                    topNavigator={navigator} />
+            </View>
+        )
+    },
+
     render: function() {
         if (this.isLoggingIn()) {
             return (
@@ -57,15 +74,19 @@ var treasurehunt = React.createClass ({
             if (this.state.user != null)
                 rightButton = "Logout"
                 return (
-                    <React.NavigatorIOS
-                      style={styles.container}
+                    <Navigator
+                      sceneStyle={styles.container}
+                      ref = {(navigator) => {this.navigator = navigator; }}
+                      renderScene={this.renderScene}
+                      tintColor='#D6573D'
+                      barTintColor='#5da990'
+                      titleTextColor='#FFFFFF'
+                      navigationBarHidden={true}
                       initialRoute={{
                         title: 'TREASURE HUNT',
                         component: HomePage,
                         rightButtonTitle: rightButton,
                         onRightButtonPress: this.onLogout.bind(this),
-                        barTintColor: '#5da990',
-                        titleTextColor: '#FFFFFF'
                     }}/>
                 );
         }

@@ -84,7 +84,7 @@ class HuntOverview extends Component {
 
 	render() {
 		var hunt = this.props.hunt;
-		console.log(hunt.category);
+//		console.log(hunt.category);
 		return (
 			<View style={styles.container}>
 				<View>
