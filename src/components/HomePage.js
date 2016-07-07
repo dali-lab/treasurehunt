@@ -16,7 +16,8 @@ var {
   View,
   TouchableHighlight,
   Image,
-  ListView
+  ListView,
+  NavigatorIOS
 } = React;
 
 var TABS = {
@@ -41,6 +42,9 @@ var styles = StyleSheet.create({
   separator: {
     height: 1,
     backgroundColor: '#dddddd'
+  },
+  container:{
+    flex: 1
   },
   price: {
     fontSize: 25,
@@ -74,10 +78,17 @@ var HomePage = React.createClass({
       <Feed navigator = {this.props.navigator} />
       );
   },
-  _renderHome: function(){
-    return(
-      <Home navigator = {this.props.navigator} />
-      );
+  _renderHome: function() {
+    return (
+      <NavigatorIOS
+        style={styles.container}
+        barTintColor='#5da990'
+        ref='homeRef'
+        initialRoute={{
+          title: 'Puzzles',
+          component: Home
+        }} />
+      )
   },
   _renderSearch: function(){
     return(
@@ -130,9 +141,13 @@ var HomePage = React.createClass({
           iconName="ios-home"
           selectedIconName="ios-home"
           onPress={() => {
-            this.setState({
-              selectedTab: TABS.home,
-            });
+            if (this.state.selectedTab !== TABS.home) {
+                this.setState({
+                    selectedTab: TABS.home,
+                });
+            } else if (this.state.selectedTab === TABS.home) {
+                this.refs.homeRef.popToTop();
+            }
           }}>
          {this._renderHome()}
         </Icon.TabBarItemIOS>
