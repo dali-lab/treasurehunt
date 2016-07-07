@@ -186,7 +186,7 @@ class LoginScreen extends Component {
 			processingLogin: true,
 		});
 		User.getUser(this.state.email.toLowerCase(), this.state.password, function(error, user) {
-			if (error == null && user != null) {
+			if (user != null) {
 				this.didLogIn(user);
 			}else{
 				AlertIOS.alert(
