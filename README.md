@@ -31,7 +31,7 @@ Now that we have the first prototype, we need to take a step back and take a bet
 - End of week of July 8th:
 	- First meeting ✅
 	- Timeline ✅
-	- Make Trello Board
+	- Make Trello Board ✅
 	- Get everyone access to everything ✅
 - Monday July 11th:
 	- Meet with O team - John
@@ -52,13 +52,14 @@ Now that we have the first prototype, we need to take a step back and take a bet
 	- Interface for main view and login view done - Dev
 - End of week July 22nd: (John is in SC this week)
 	- Hunt overview (without feed) and hunt completion interface finished - Design
-	- Search method design
+	- Tags done
 - Monday July 25th:
-  	- Search functionality done
+	- Search method design - Design
 	- Clue types!
-    		- Data structures planned - Dev
-    		- Icons for interface finalized - Design
+    	- Data structures planned - Dev
+    	- Icons for interface finalized - Design
 - End of week July 29th:
+  	- Search functionality done - Dev
 	- (some extra time for expansion)
 	- Sudoku/Crossword prototype - Dev & Design
 	- Design for feed and create tab done
