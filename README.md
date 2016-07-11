@@ -52,7 +52,9 @@ Now that we have the first prototype, we need to take a step back and take a bet
 	- Interface for main view and login view done - Dev
 - End of week July 22nd: (John is in SC this week)
 	- Hunt overview (without feed) and hunt completion interface finished - Design
+	- Search method design
 - Monday July 25th:
+  	- Search functionality done
 	- Clue types!
     		- Data structures planned - Dev
     		- Icons for interface finalized - Design
