@@ -38,7 +38,6 @@ Now that we have the first prototype, we need to take a step back and take a bet
 	- Finish clean database structure ✅ - Abby
 	- Start changing database - Dev
 	- Compile all design instructions into on place ✅ - Design
-	- Choose new colors? - Design
 - End of week of July 15th:
 	- Plan interface for sign up, feed, and create views - Design
 	- Finish database structure remake - Dev
@@ -46,6 +45,7 @@ Now that we have the first prototype, we need to take a step back and take a bet
     	- 3 tabs instead of 5 - Dev
 	- Move all backend code to separate files - Dev
 	- Make database changes in code - Dev
+	- Choose new colors? - Design
 - Monday July 18th:
 	- Have all the art assets in one place - Design
 	- Code is clean and ready for expansion - Dev
@@ -85,12 +85,14 @@ Now that we have the first prototype, we need to take a step back and take a bet
 	- Release on App store at least 3 days in advance to Orientation.
 
 
+TODO: Update security settings
+
 ## Team Members:
 
 __Client__: Amanda Lobel
 
 __Designers__: Yixuan He, Shouqi Chen
 
-__Developers__: Dani Gnibus, John Kotz
+__Developers__: Abby Starr, John Kotz
 
 __Project Manager__: John Kotz

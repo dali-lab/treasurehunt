@@ -77,12 +77,6 @@ var styles = StyleSheet.create({
     }
 });
 
-const Firebase = require('firebase')
-const config = require('../../config')
-const huntsRef = new Firebase(`${ config.FIREBASE_ROOT }/hunts`)
-const rootRef = new Firebase(`${ config.FIREBASE_ROOT }`)
-const usersRef = new Firebase(`${ config.FIREBASE_ROOT }/users`)
-
 var Home = React.createClass({
 
     getInitialState: function() {
@@ -141,7 +135,6 @@ var Home = React.createClass({
             huntsList = snap.exportVal();
             this.updateStateWithHunts(huntsList);
         });
-
     },
 
     updateStateWithHunts: function(huntsList) {
