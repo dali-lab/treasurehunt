@@ -85,7 +85,7 @@ var HomePage = React.createClass({
         barTintColor='#5da990'
         ref='homeRef'
         initialRoute={{
-          title: 'Puzzles',
+          title: 'TREASURE HUNT',
           component: Home
         }} />
       )

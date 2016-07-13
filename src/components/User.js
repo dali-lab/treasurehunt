@@ -1,7 +1,7 @@
 const Firebase = require('firebase');
-var ref = new Firebase("https://incandescent-torch-4551.firebaseio.com/");
+var ref = new Firebase("https://treasurehuntdali.firebaseio.com/");
 const config = require('../../config')
-const usersRef = new Firebase(`${ config.FIREBASE_ROOT }/users`)
+const usersRef = new Firebase("https://treasurehuntdali.firebaseio.com/users")
 
 class User {
 	static currentUser = null;
@@ -60,7 +60,9 @@ class User {
 				var userObject = usersRef.child(authData.uid);
 				userObject.set({
 					email: email,
-					hunts_list: {"0": [-1]}
+					hunts_list: {},
+					completedHunts: {},
+					name: "",
 				});
 
 				var user = new User(authData, userObject, email);
@@ -80,6 +82,27 @@ class User {
 		}, function(error) {
 			callBack(error);
 		});
+	}
+
+	/**
+	 * Gets the hunts reference for the current user
+	 */
+	getHuntsRef() {
+		return this.hunts_list
+	}
+
+	getHuntsList() {
+		return new Promise((fulfill, reject) => {
+			this.getHuntsRef().once('value', (snap) => {
+				if (snap.val() == NSNull) {
+					reject()
+				}else{
+					fulfill(snap.exportVal())
+				}
+			}, (error) => {
+				reject()
+			})
+		})
 	}
 }
 

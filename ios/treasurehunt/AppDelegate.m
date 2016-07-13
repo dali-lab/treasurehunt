@@ -10,11 +10,14 @@
 #import "AppDelegate.h"
 
 #import "RCTRootView.h"
+#import "Firebase/Firebase.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  [FIRApp configure];
+  
   NSURL *jsCodeLocation;
   
   /**

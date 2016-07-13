@@ -4,7 +4,7 @@
 var React = require('react-native');
 var Progress = require('react-native-progress');
 var HuntOverview = require('./HuntOverview');
-var User = require('./User').default
+var User = require('./User').default;
 
 var {
     StyleSheet,
@@ -77,22 +77,30 @@ var styles = StyleSheet.create({
     }
 });
 
+var noHuntsStyle = StyleSheet.create({
+    noHuntsView: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row',
+        flex: 1,
+    },
+    noHuntsText:{
+        fontSize: 20,
+    }
+})
+
 const Firebase = require('firebase')
 const config = require('../../config')
 const huntsRef = new Firebase(`${ config.FIREBASE_ROOT }/hunts`)
 const rootRef = new Firebase(`${ config.FIREBASE_ROOT }`)
 const usersRef = new Firebase(`${ config.FIREBASE_ROOT }/users`)
 
+/**
+ * The Home view for the app. It is a list of hunts
+ */
 var Home = React.createClass({
 
     getInitialState: function() {
-
-        var userHuntsArray = {
-            0: [1],
-            1: [2,3],
-            2: [8, 9, 10],
-            3: [11, 12, 13],
-        };
         var huntsList;
 
         var dataSource = new ListView.DataSource({
@@ -107,47 +115,17 @@ var Home = React.createClass({
 
     },
 
-    getHuntsList: function() {
-        var currentUser = User.getCurrentUser();
-        var userRef = usersRef.child(currentUser.uid);
-        var huntsListRef = userRef.child("hunts_list");
-        var huntsList;
-
-        huntsListRef.on('value', (snap) => {
-            huntsList = snap.val();
-            return huntsList;     
-        });
-    },
-
-    convertHuntsArrayToMap: function(hunts) {
-        var huntsCategoryMap = {};
-        for (var i =0; i < hunts.length; i++ ) {
-            if (!huntsCategoryMap[hunts[i].category]) {
-                huntsCategoryMap[hunts[i].category] = [];
-            }
-            huntsCategoryMap[hunts[i].category].push(hunts[i]);
-        }
-
-        return huntsCategoryMap;
-    },
-
+    // Will load all the things!
     listenForItems: function() {
-        var currentUser = User.getCurrentUser();
-        var userRef = usersRef.child(currentUser.uid);
-        var huntsListRef = userRef.child("hunts_list");
-        var huntsList; 
-
-        huntsListRef.on('value', (snap) => {
-            huntsList = snap.exportVal();
+        User.getCurrentUser().getHuntsList().then((huntsList) => {
             this.updateStateWithHunts(huntsList);
         });
-
     },
 
     updateStateWithHunts: function(huntsList) {
 
         var hunts = [];
-        //for each hunt the user has completed
+
         for (var key in huntsList) {
             var huntRef = huntsRef.child(key);
             //get that hunt, calculate user progress, get hunt data
@@ -159,36 +137,26 @@ var Home = React.createClass({
 
                 //TODO: get last clue, check if it's complete. if not don't add it to totalCluesCompleted
                 if (totalCluesCompleted == 1) {
-                    totalCluesCompleted =0;
+                    totalCluesCompleted = 0;
                 }
-                if (totalCluesInHunt===totalCluesCompleted) {
-                    hunts.push({
-                        id: snap.key(),
-                        title: snap.val().title,
-                        description: snap.val().description,
-                        image: snap.val().image,
-                        progress: totalCluesCompleted/totalCluesInHunt,
-                        category: "  Past Puzzles", 
-                        clues: snap.val().clues
+                hunts.push({
+                    id: snap.key(),
+                    title: snap.val().title,
+                    description: snap.val().description,
+                    image: snap.val().image,
+                    progress: totalCluesCompleted/totalCluesInHunt,
+                    clues: snap.val().clues
                 });
-                }
-                else {
-                    hunts.push({
-                        id: snap.key(),
-                        title: snap.val().title,
-                        description: snap.val().description,
-                        image: snap.val().image,
-                        progress: totalCluesCompleted/totalCluesInHunt,
-                        category: "  Current Puzzles",
-                        clues: snap.val().clues
-                    });
-                }
                 
                 this.setState({
                     dataSource: this.state.dataSource.cloneWithRowsAndSections(this.convertHuntsArrayToMap(hunts))
                 });
             });
         }
+
+        this.setState({
+            hunts: hunts
+        })
     },
 
     componentDidMount: function() {
@@ -206,66 +174,49 @@ var Home = React.createClass({
     },
 
     renderRow: function(hunt) {
-        if (hunt.category == "  Past Puzzles") {
-            return (
-                <TouchableHighlight onPress={() => this.rowPressed(hunt)}
-                    underlayColor='#dddddd'>
-                    <View>
-                        <View style={styles.pastRowContainer}>
-                            <Image style={styles.thumb} source={{ uri: hunt.image}} />
-                            <View style={styles.textContainer}>
-                                <Text style={styles.title} numberOfLines={1}>{hunt.title.toUpperCase()}</Text>
-                                <Text style={styles.description}
-                                    numberOfLines={2}>{hunt.description}</Text>
-                                <Text style={styles.points}
-                                    numberOfLines={1}>Points: N/A </Text>
-                            </View> 
-                        </View>
-                        <View style={styles.separator}/>
-                    </View>
-                </TouchableHighlight>
-            );
-        }
-        else {
-            return (
-                <TouchableHighlight onPress={() => this.rowPressed(hunt)}
-                    underlayColor='#dddddd'>
-                    <View>
-                        <View style={styles.currentRowContainer}>
-                            <Image style={styles.thumb} source={{ uri: hunt.image}} />
-                            <View style={styles.textContainer}>
-                                <Text style={styles.title} numberOfLines={1}>{hunt.title.toUpperCase()}</Text>
-                                <Text style={styles.description}
-                                    numberOfLines={2}>{hunt.description}</Text>
-                                <Progress.Bar style={styles.progressBar} 
-                                    progress={hunt.progress} width={200} height={10} color='#fbda3d'/>
-                            </View> 
-                        </View>
-                        <View style={styles.separator}/>
-                    </View>
-                </TouchableHighlight>
-            );
-        }
-    },
-
-    renderSectionHeader: function(sectionData, category) {
         return (
-            <View style={styles.header}>
-                <Text style={styles.headerText}>{category}</Text>
-            </View>
+            <TouchableHighlight onPress={() => this.rowPressed(hunt)}
+                underlayColor='#dddddd'>
+                <View>
+                    <View style={styles.currentRowContainer}>
+                        <Image style={styles.thumb} source={{ uri: hunt.image}} />
+                        <View style={styles.textContainer}>
+                            <Text style={styles.title} numberOfLines={1}>{hunt.title.toUpperCase()}</Text>
+                            <Text style={styles.description}
+                                numberOfLines={2}>{hunt.description}</Text>
+                            <Progress.Bar style={styles.progressBar} 
+                                progress={hunt.progress} width={200} height={10} color='#fbda3d'/>
+                        </View> 
+                    </View>
+                    <View style={styles.separator}/>
+                </View>
+            </TouchableHighlight>
         );
     },
 
     render: function() {
+        var listView = <ListView
+                        dataSource={this.state.dataSource}
+                        automaticallyAdjustContentInsets={false}
+                        renderRow={this.renderRow}/>
+
+        var noHunts = <View style={noHuntsStyle.noHuntsView}>
+                        <Text style={noHuntsStyle.noHuntsText}>You have no hunts yet</Text>
+                    </View>
+
+        var internalView = <View></View>
+
+        // if (this.hunts === null || this.hunts.length === 0) {
+        //     internalView = noHunts
+        // }else{
+            internalView = noHunts
+        // }
+
         return (
             <View style={styles.container}>
                 <View style={styles.emptyContainer}>
                 </View>
-                <ListView
-                    dataSource={this.state.dataSource}
-                    automaticallyAdjustContentInsets={false}
-                    renderRow={this.renderRow}
-                    renderSectionHeader={this.renderSectionHeader}/>
+                {internalView}
             </View>
         );
     },
