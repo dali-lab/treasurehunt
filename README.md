@@ -36,13 +36,13 @@ Now that we have the first prototype, we need to take a step back and take a bet
 - Monday July 11th:
 	- Meet with O team - John
 	- Finish clean database structure ✅ - Abby
-	- Start changing database - Dev
+	- Start changing database ✅  - Dev
 	- Compile all design instructions into on place ✅ - Design
 - End of week of July 15th:
 	- Plan interface for sign up, feed, and create views - Design
 	- Finish database structure remake - Dev
 	- Update app to use new fonts, colors (?), and full-res icons - Dev
-    	- 3 tabs instead of 5 - Dev
+    	        - 3 tabs instead of 5 - Dev
 	- Move all backend code to separate files - Dev
 	- Make database changes in code - Dev
 	- Choose new colors? - Design
