@@ -42,7 +42,7 @@ Now that we have the first prototype, we need to take a step back and take a bet
 	- Plan interface for sign up, feed, and create views - Design
 	- Finish database structure remake - Dev
 	- Update app to use new fonts, colors (?), and full-res icons - Dev
-    	        - 3 tabs instead of 5 - Dev
+	  - 3 tabs instead of 5 - Dev
 	- Move all backend code to separate files - Dev
 	- Make database changes in code - Dev
 	- Choose new colors? - Design
