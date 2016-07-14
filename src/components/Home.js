@@ -14,6 +14,7 @@ var {
     ListView,
     Text,
     Component,
+    AlertIOS,
 } = React; 
 
 var styles = StyleSheet.create({
@@ -118,45 +119,17 @@ var Home = React.createClass({
     // Will load all the things!
     listenForItems: function() {
         User.getCurrentUser().getHuntsList().then((huntsList) => {
-            this.updateStateWithHunts(huntsList);
-        });
-    },
+            AlertIOS.alert(
+                "test",
+                "test"
+            );
+            getHuntObjects(huntsList).then(function(hunts) {
 
-    updateStateWithHunts: function(huntsList) {
-
-        var hunts = [];
-
-        for (var key in huntsList) {
-            var huntRef = huntsRef.child(key);
-            //get that hunt, calculate user progress, get hunt data
-            //for now, if they're only on first clue set progress to 0
-            huntRef.on('value', (snap) => {
-                var totalCluesInHunt = snap.val().clues.length;
-                var keys = Object.keys(huntsList[snap.key()]);
-                var totalCluesCompleted = keys.length;
-
-                //TODO: get last clue, check if it's complete. if not don't add it to totalCluesCompleted
-                if (totalCluesCompleted == 1) {
-                    totalCluesCompleted = 0;
-                }
-                hunts.push({
-                    id: snap.key(),
-                    title: snap.val().title,
-                    description: snap.val().description,
-                    image: snap.val().image,
-                    progress: totalCluesCompleted/totalCluesInHunt,
-                    clues: snap.val().clues
-                });
-                
                 this.setState({
-                    dataSource: this.state.dataSource.cloneWithRowsAndSections(this.convertHuntsArrayToMap(hunts))
-                });
-            });
-        }
-
-        this.setState({
-            hunts: hunts
-        })
+                    hunts: hunts
+                })
+            })
+        });
     },
 
     componentDidMount: function() {

@@ -15,7 +15,7 @@ class User {
 		this.email = email;
 		this.authData = authData;
 		this.userRef = userRef;
-		this.huntList = userRef.child("hunts_list");
+		this.huntList = userRef.child("currentHunts");
 	}
 
 	static getCurrentUser() {
@@ -60,8 +60,8 @@ class User {
 				var userObject = usersRef.child(authData.uid);
 				userObject.set({
 					email: email,
-					hunts_list: {},
-					completedHunts: {},
+					currentHunts: [],
+					completedHunts: [],
 					name: "",
 				});
 
@@ -84,25 +84,24 @@ class User {
 		});
 	}
 
-	/**
-	 * Gets the hunts reference for the current user
-	 */
-	getHuntsRef() {
-		return this.hunts_list
-	}
-
 	getHuntsList() {
+		console.log("Starting to get...");
+		console.log(this.usersRef);
 		return new Promise((fulfill, reject) => {
-			this.getHuntsRef().once('value', (snap) => {
+			this.hunts_list.once('value', function(snap) {
 				if (snap.val() == NSNull) {
-					reject()
+					console.log("hunts list is null!");
+					reject(NSNull);
 				}else{
-					fulfill(snap.exportVal())
+					console.log("fulfilling")
+					fulfill(snap.exportVal());
 				}
-			}, (error) => {
-				reject()
-			})
-		})
+			}, function(error) {
+				console.log("getHuntsList: something went wrong!");
+				reject(error);
+			});
+			console.log("something happened");
+		});
 	}
 }
 

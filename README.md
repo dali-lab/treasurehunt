@@ -47,7 +47,7 @@ Now that we have the first prototype, we need to take a step back and take a bet
 	- Make database changes in code - Dev
 	- Choose new colors? - Design
 - Monday July 18th:
-	- Have all the art assets in one place - Design
+	- Have all the art assets in one place ✅  - Design
 	- Code is clean and ready for expansion - Dev
 	- Interface for main view and login view done - Dev
 - End of week July 22nd: (John is in SC this week)
