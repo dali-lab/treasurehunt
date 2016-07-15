@@ -13,5 +13,18 @@
     "react-native-progress": "^2.2.2",
     "react-native-vector-icons": "^1.3.4",
     "react-tap-event-plugin": "^0.2.2"
-  }
+  },
+  "description": "> John Kotz, Abby Starr, Yixuan He, Shouqi Chen",
+  "main": "config.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dali-lab/treasurehunt.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dali-lab/treasurehunt/issues"
+  },
+  "homepage": "https://github.com/dali-lab/treasurehunt#readme"
 }

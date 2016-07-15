@@ -15,7 +15,7 @@ var styles = React.StyleSheet.create({
     margin: 80
   },
   container: {
-    flex: 1, 
+    flex: 1,
   }
 });
 
@@ -70,7 +70,7 @@ var treasurehunt = React.createClass ({
             return (
                 <LoginScreen onLogin={this.onLogin} onSkipLogin={this.onSkipLogin}/>
             );
-        } 
+        }
         else {
             var rightButton = "Login"
             if (this.state.user != null)
@@ -80,7 +80,7 @@ var treasurehunt = React.createClass ({
                       sceneStyle={styles.container}
                       ref = {(navigator) => {this.navigator = navigator; }}
                       renderScene={this.renderScene}
-                      barTintColor='#5da990'
+                      barTintColor='#5da900'
                       titleTextColor='#FFFFFF'
                       navigationBarHidden={true}
                       initialRoute={{

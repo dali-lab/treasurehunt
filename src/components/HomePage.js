@@ -38,7 +38,7 @@ var styles = StyleSheet.create({
   },
   textContainer: {
     flex: 1
-  }, 
+  },
   separator: {
     height: 1,
     backgroundColor: '#dddddd'
@@ -53,8 +53,10 @@ var styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    color: '#656565'
-  }, 
+  //  color: '#656565',
+  color: 'ffffff',
+    fontFamily: 'Museo Slab'
+  },
   rowContainer: {
     flexDirection: 'row',
     padding: 10

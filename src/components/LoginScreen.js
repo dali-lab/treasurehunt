@@ -1,5 +1,5 @@
 'use strict';
- 
+
 var React = require('react-native');
 const SignUp = require('./SignUp');
 const ForgotPassword = require('./ForgotPassword');
@@ -50,6 +50,7 @@ var styles = StyleSheet.create({
 		marginTop: 20,
 		marginBottom: screenHeight > 500 ? 40 : 10,
 		fontSize: 25,
+  //  fontFamily: 'Museo Slab',
 		color: "#59aa91",
 		alignSelf: "center"
 	},
@@ -259,7 +260,7 @@ class LoginScreen extends Component {
 				</Modal>
 				<View style={styles.container}>
 					<View style={styles.topBar}></View>
-					
+
 					<View style={styles.innerContainer}>
 						<Image
 							style={styles.icon}

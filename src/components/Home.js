@@ -16,7 +16,7 @@ var {
     Text,
     Component,
     AlertIOS,
-} = React; 
+} = React;
 
 var styles = StyleSheet.create({
     thumb: {
@@ -32,7 +32,7 @@ var styles = StyleSheet.create({
     },
     emptyContainer: {
         backgroundColor: 'white',
-        paddingTop: 5, 
+        paddingTop: 5,
         flexDirection: 'column',
         height: 70
     },
@@ -43,7 +43,7 @@ var styles = StyleSheet.create({
     title: {
         fontSize: 20,
         color: '#656565',
-    }, 
+    },
     description: {
         paddingTop: 3,
         paddingBottom: 4
@@ -109,7 +109,7 @@ var Home = React.createClass({
         var dataSource = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1.guid !== r2.guid
         });
-        
+
         return {
             dataSource: dataSource,
             huntsList: huntsList
@@ -126,7 +126,7 @@ var Home = React.createClass({
 
         huntsListRef.on('value', (snap) => {
             huntsList = snap.val();
-            return huntsList;     
+            return huntsList;
         });
     },
 
@@ -189,9 +189,9 @@ var Home = React.createClass({
                             <Text style={styles.title} numberOfLines={1}>{hunt.title.toUpperCase()}</Text>
                             <Text style={styles.description}
                                 numberOfLines={2}>{hunt.description}</Text>
-                            <Progress.Bar style={styles.progressBar} 
+                            <Progress.Bar style={styles.progressBar}
                                 progress={hunt.progress} width={200} height={10} color='#fbda3d'/>
-                        </View> 
+                        </View>
                     </View>
                     <View style={styles.separator}/>
                 </View>

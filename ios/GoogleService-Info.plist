@@ -36,5 +36,10 @@
 	<string>1:947176430571:ios:c3b498a905b30ff4</string>
 	<key>DATABASE_URL</key>
 	<string>https://treasurehuntdali.firebaseio.com</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>exljbris - MuseoSlab-500.otf</string>
+		<string>Verlag.zip</string>
+	</array>
 </dict>
 </plist>
