@@ -140,10 +140,10 @@ var HomePage = React.createClass({
 
 
         <Icon.TabBarItemIOS
-          title="HOME"
+          // title="HOME"
           selected={this.state.selectedTab === TABS.home}
-          iconName="ios-thumb"
-          selectedIconName="ios-thumb"
+          iconName="ios-home"
+          selectedIconName="ios-home"
           onPress={() => {
             if (this.state.selectedTab !== TABS.home) {
                 this.setState({
