@@ -50,7 +50,7 @@ var styles = StyleSheet.create({
 		marginTop: 20,
 		marginBottom: screenHeight > 500 ? 40 : 10,
 		fontSize: 25,
-  //  fontFamily: 'Museo Slab',
+    fontFamily: 'Museo Slab',
 		color: "#59aa91",
 		alignSelf: "center"
 	},
