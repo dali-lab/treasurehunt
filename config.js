@@ -1,3 +1,3 @@
 module.exports = {
-  FIREBASE_ROOT: 'https://incandescent-torch-4551.firebaseio.com/'
+  FIREBASE_ROOT: 'https://treasurehuntdali.firebaseio.com/'
 }

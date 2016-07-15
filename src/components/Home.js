@@ -5,6 +5,7 @@ var React = require('react-native');
 var Progress = require('react-native-progress');
 var HuntOverview = require('./HuntOverview');
 var User = require('./User').default;
+var Hunts = require('./Hunts');
 
 var {
     StyleSheet,
@@ -102,31 +103,60 @@ const usersRef = new Firebase(`${ config.FIREBASE_ROOT }/users`)
 var Home = React.createClass({
 
     getInitialState: function() {
+        console.log("running getInitialState");
         var huntsList;
 
         var dataSource = new ListView.DataSource({
-            rowHasChanged: (r1, r2) => r1.guid != r2.guid,
-            sectionHeaderHasChanged: (s1, s2) => s1 !== s2
+            rowHasChanged: (r1, r2) => r1.guid !== r2.guid
         });
         
         return {
             dataSource: dataSource,
             huntsList: huntsList
         };
+    },
 
+    getHuntsList: function() {
+
+        console.log("running getHuntsList");
+        var currentUser = User.getCurrentUser();
+        var userRef = usersRef.child(currentUser.uid);
+        var huntsListRef = userRef.child("hunts_list");
+        var huntsList;
+
+        huntsListRef.on('value', (snap) => {
+            huntsList = snap.val();
+            return huntsList;     
+        });
+    },
+
+    convertHuntsArrayToMap: function(hunts) {
+        console.log("running convertHuntsArrayToMap");
+        var huntsCategoryMap = {};
+        for (var i =0; i < hunts.length; i++ ) {
+            if (!huntsCategoryMap[hunts[i].category]) {
+                huntsCategoryMap[hunts[i].category] = [];
+            }
+            huntsCategoryMap[hunts[i].category].push(hunts[i]);
+        }
+
+        return huntsCategoryMap;
     },
 
     // Will load all the things!
     listenForItems: function() {
+        console.log("running listenForItems");
+        console.log(this.state);
         User.getCurrentUser().getHuntsList().then((huntsList) => {
-            AlertIOS.alert(
-                "test",
-                "test"
-            );
-            getHuntObjects(huntsList).then(function(hunts) {
+            Hunts.getHuntObjects(huntsList).then((hunts) => {
+                console.log("Loaded hunts: " + hunts + "\nSetting the state");
+                console.log("State was: ");
 
+                var newDataSource = this.state.dataSource.cloneWithRows(hunts);
+                console.log("Now it is: ");
                 this.setState({
-                    hunts: hunts
+                    hunts: hunts,
+                    dataSource: newDataSource
                 })
             })
         });
@@ -147,12 +177,14 @@ var Home = React.createClass({
     },
 
     renderRow: function(hunt) {
+        // <Image style={styles.thumb} source={{ uri: hunt.image}} />
+
+        console.log("Rendering row for hunt " + hunt.id);
         return (
             <TouchableHighlight onPress={() => this.rowPressed(hunt)}
                 underlayColor='#dddddd'>
                 <View>
                     <View style={styles.currentRowContainer}>
-                        <Image style={styles.thumb} source={{ uri: hunt.image}} />
                         <View style={styles.textContainer}>
                             <Text style={styles.title} numberOfLines={1}>{hunt.title.toUpperCase()}</Text>
                             <Text style={styles.description}
@@ -168,23 +200,36 @@ var Home = React.createClass({
     },
 
     render: function() {
+
+        console.log("running render ...");
         var listView = <ListView
                         dataSource={this.state.dataSource}
                         automaticallyAdjustContentInsets={false}
                         renderRow={this.renderRow}/>
 
+        console.log("listView Done");
+
         var noHunts = <View style={noHuntsStyle.noHuntsView}>
                         <Text style={noHuntsStyle.noHuntsText}>You have no hunts yet</Text>
                     </View>
 
-        var internalView = <View></View>
+        console.log("noHunts done");
 
-        // if (this.hunts === null || this.hunts.length === 0) {
-        //     internalView = noHunts
-        // }else{
-            internalView = noHunts
-        // }
+        var internalView;
 
+        console.log(internalView);
+        if (this.state.hunts == undefined) {
+            internalView = <View style={noHuntsStyle.noHuntsView}>
+                            <Text style={noHuntsStyle.noHuntsText}>Loading...</Text>
+                        </View>
+        }else if (this.state.hunts === null || this.state.hunts.length === 0) {
+            internalView = noHunts;
+        }else{
+            internalView = listView;
+        }
+
+
+        console.log("internalView rendered. Returning");
         return (
             <View style={styles.container}>
                 <View style={styles.emptyContainer}>

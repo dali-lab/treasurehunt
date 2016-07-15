@@ -15,7 +15,7 @@ class User {
 		this.email = email;
 		this.authData = authData;
 		this.userRef = userRef;
-		this.huntList = userRef.child("currentHunts");
+		this.currentHunts = userRef.child("currentHunts");
 	}
 
 	static getCurrentUser() {
@@ -36,6 +36,7 @@ class User {
 			}else{
 				// Get user object
 				var userObject = usersRef.child(authData.uid);
+				console.log(authData.uid)
 
 				var user = new User(authData, userObject, email);
 				User.currentUser = user;
@@ -58,6 +59,7 @@ class User {
 			}else{
 				// Make new user object
 				var userObject = usersRef.child(authData.uid);
+				console.log(authData.uid)
 				userObject.set({
 					email: email,
 					currentHunts: [],
@@ -85,22 +87,16 @@ class User {
 	}
 
 	getHuntsList() {
-		console.log("Starting to get...");
-		console.log(this.usersRef);
 		return new Promise((fulfill, reject) => {
-			this.hunts_list.once('value', function(snap) {
-				if (snap.val() == NSNull) {
-					console.log("hunts list is null!");
+			this.currentHunts.once('value', function(snap) {
+				if (snap.val() == null) {
 					reject(NSNull);
 				}else{
-					console.log("fulfilling")
 					fulfill(snap.exportVal());
 				}
 			}, function(error) {
-				console.log("getHuntsList: something went wrong!");
 				reject(error);
 			});
-			console.log("something happened");
 		});
 	}
 }

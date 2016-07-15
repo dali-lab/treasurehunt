@@ -9,6 +9,10 @@ function getHuntWithID(id) {
 
 	return new Promise((fulfill, reject) => {
 		ref.once('value', function(snapshot) {
+			if (snapshot.val() == null) {
+				reject()
+			}
+
 			fulfill(snapshot.val());
 		}, function (errorObject) {
 			reject(errorObject);
@@ -17,43 +21,44 @@ function getHuntWithID(id) {
 }
 
 // Returns a promise the gives all the hunt objects as an array
-function getHuntObjects(hunt_ids) {
+export function getHuntObjects(hunt_ids) {
 
+	console.log("Starting to load hunt objects");
 	return new Promise((fulfill, reject) => {
 		var hunts = [];
 
 		// To keep track of asyncronous task
-		var complted = 0;
-		var todo = hunt_ids.length
+		var complete = 0;
+		var todo = Object.keys(hunt_ids).length;
 
 	    for (var key in hunt_ids) {
-	    	var contents = hunt_ids[key]
+	    	var contents = hunt_ids[key];
 	        //get that hunt, calculate user progress, get hunt data
 
 	        getHuntWithID(key).then(function(hunt) {
 	        	// We have a hunt
 
 	        	// Now lets get the total clues
-	        	var totalCluesInHunt = hunt.clues.length
-	        	var totalCluesCompleted = contents.cluesComplete
+	        	var totalCluesInHunt = hunt.clues.length;
+	        	var totalCluesCompleted = contents.cluesComplete;
 
 	        	hunts.push({
 	                id: key,
-	                title: hunt.title,
-	                description: hunt.description,
+	                title: hunt.name,
+	                description: hunt.desc,
 	                image: hunt.image,
 	                progress: totalCluesCompleted/totalCluesInHunt,
 	                clues: hunt.clues,
 	                hunt: hunt
 	            });
 
-	        	complete += 1
+	        	complete += 1;
 
 	        	if (complete >= todo) {
-	        		fulfill(hunts)
+	        		fulfill(hunts);
 	        	}
-	        }, { // Rejected!
-	        	todo -= 1
+	        }, function(error) { // Rejected!
+	        	todo = todo - 1;
 	        })
 
 	//         this.setState({
