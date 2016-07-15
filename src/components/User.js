@@ -1,13 +1,24 @@
 const Firebase = require('firebase');
-var ref = new Firebase("https://treasurehuntdali.firebaseio.com/");
+const ref = new Firebase("https://treasurehuntdali.firebaseio.com/");
 const config = require('../../config')
 const usersRef = new Firebase("https://treasurehuntdali.firebaseio.com/users")
+const React = require('react-native');
+
+var {
+  AsyncStorage
+} = React;
+
+const USER_STORAGE_KEY = '@TreasureHunt:userObject'
 
 class User {
 	static currentUser = null;
 
 	// No one but this class should make user objects
-	constructor(authData, userRef, email) {
+	constructor(uid) {
+		this.uid = uid;
+	}
+
+	buildWithData(authData, userRef, email) {
 		this.uid = authData.uid;
 		this.provider = authData.provider;
 		this.token = authData.token;
@@ -19,7 +30,43 @@ class User {
 	}
 
 	static getCurrentUser() {
+		if (this.currentUser === null) {
+			User.updateCurrentUserFromStore()
+		}
 		return this.currentUser;
+	}
+
+	static updateCurrentUserFromStore() {
+		console.log("Updating user from store...");
+		try {
+			console.log("Got something...");
+			var value = AsyncStorage.getItem(USER_STORAGE_KEY);
+			console.log("It is: " + value);
+			if (value !== null) {
+				console.log("Made a user!");
+				this.currentUser = User(value);
+			}else{
+				console.log("It was null :(");
+				this.currentUser = null;
+			}
+		}catch (error) {
+			console.log("Failed!");
+			return;
+		}
+	}
+
+	static updateUserInStore() {
+		// Method from Documentation on AsyncStorage
+		console.log("Updating user to store...");
+		try {
+			console.log("Saving " + User.getCurrentUser().uid + " ...");
+		  AsyncStorage.setItem(USER_STORAGE_KEY, User.getCurrentUser().uid);
+			console.log("Complete!");
+		} catch (error) {
+			console.log("Failed!!");
+		  // Error saving data
+			console.log("AsyncStorage error: " + AsyncStorage);
+		}
 	}
 
 	/**
@@ -38,9 +85,11 @@ class User {
 				var userObject = usersRef.child(authData.uid);
 				console.log(authData.uid)
 
-				var user = new User(authData, userObject, email);
+				var user = new User(authData.uid);
+				user.buildWithData(authData, userObject, email);
 				User.currentUser = user;
 				callBack(error, user);
+				User.updateUserInStore();
 			}
 		});
 	}
@@ -67,9 +116,11 @@ class User {
 					name: "",
 				});
 
-				var user = new User(authData, userObject, email);
+				var user = new User(authData.uid);
+				user.buildWithData(authData, userObject, email);
 				User.currentUser = user;
 				callBack(error, user);
+				User.updateUserInStore();
 			}
 		});
 	}

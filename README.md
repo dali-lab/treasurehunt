@@ -40,12 +40,12 @@ Now that we have the first prototype, we need to take a step back and take a bet
 	- Compile all design instructions into on place ✅ - Design
 - End of week of July 15th:
 	- Plan interface for sign up, feed, and create views - Design
-	- Finish database structure remake - Dev
+	- Finish database structure remake ✅  - Dev
 	- Update app to use new fonts, colors (?), and full-res icons - Dev
-	  - 3 tabs instead of 5 - Dev
-	- Move all backend code to separate files - Dev
-	- Make database changes in code - Dev
-	- Choose new colors? - Design
+	  - 3 tabs instead of 5 ✅  - Dev
+	- Move all backend code to separate files ✅  - Dev
+	- Make database changes in code ✅  - Dev
+	- Choose new colors? ✅  - Design
 - Monday July 18th:
 	- Have all the art assets in one place ✅  - Design
 	- Code is clean and ready for expansion - Dev

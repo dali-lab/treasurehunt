@@ -130,19 +130,6 @@ var Home = React.createClass({
         });
     },
 
-    convertHuntsArrayToMap: function(hunts) {
-        console.log("running convertHuntsArrayToMap");
-        var huntsCategoryMap = {};
-        for (var i =0; i < hunts.length; i++ ) {
-            if (!huntsCategoryMap[hunts[i].category]) {
-                huntsCategoryMap[hunts[i].category] = [];
-            }
-            huntsCategoryMap[hunts[i].category].push(hunts[i]);
-        }
-
-        return huntsCategoryMap;
-    },
-
     // Will load all the things!
     listenForItems: function() {
         console.log("running listenForItems");

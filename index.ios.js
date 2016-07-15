@@ -1,6 +1,7 @@
 var React = require('react-native');
 var LoginScreen = require('./src/components/LoginScreen');
 var HomePage = require('./src/components/HomePage');
+var User = require('./src/components/User').default;
 
 var {
     Navigator,
@@ -23,9 +24,11 @@ console.disableYellowBox = true;
 
 var treasurehunt = React.createClass ({
     getInitialState: function() {
+      var user = User.getCurrentUser()
+      console.log(user);
         return {
-            user: null,
-            loggingIn: true,
+            user: user,
+            loggingIn: user === null,
         };
     },
 
