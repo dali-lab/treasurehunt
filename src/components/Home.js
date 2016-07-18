@@ -5,7 +5,7 @@ var React = require('react-native');
 var Progress = require('react-native-progress');
 var HuntOverview = require('./HuntOverview');
 var User = require('./User').default;
-var Hunts = require('./Hunts');
+var Hunts = require('./Data');
 
 var {
     StyleSheet,

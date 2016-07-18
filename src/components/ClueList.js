@@ -190,7 +190,7 @@ var ClueList = React.createClass({
                 "You did it!!!!"
             );
         }
-    },  
+    },
 
     listenForItems: function(cluesRef) {       
 
