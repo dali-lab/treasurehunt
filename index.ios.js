@@ -25,6 +25,16 @@ console.disableYellowBox = true;
 var treasurehunt = React.createClass ({
     getInitialState: function() {
       var user = User.getCurrentUser()
+      User.updateCurrentUserFromStore().then((user) => {
+        console.log("Got a user!");
+        this.setState({
+            user: user,
+            loggingIn: user === null,
+        });
+      }, () => {
+        console.log("Rejected");
+      });
+
       console.log(user);
         return {
             user: user,
@@ -75,24 +85,12 @@ var treasurehunt = React.createClass ({
             );
         }
         else {
-            var rightButton = "Login"
-            if (this.state.user != null)
-                rightButton = "Logout"
-                return (
-                    <Navigator
-                      sceneStyle={styles.container}
-                      ref = {(navigator) => {this.navigator = navigator; }}
-                      renderScene={this.renderScene}
-                      barTintColor='#5da900'
-                      titleTextColor='#FFFFFF'
-                      navigationBarHidden={true}
-                      initialRoute={{
-                        title: 'TREASURE HUNT',
-                        component: HomePage,
-                        rightButtonTitle: rightButton,
-                        onRightButtonPress: this.onLogout.bind,
-                    }}/>
-                );
+            // var rightButton = "Login"
+            // if (this.state.user != null)
+            //     rightButton = "Logout"
+            return (
+                <HomePage onLogout={this.onLogout}/>
+            );
         }
     },
 });

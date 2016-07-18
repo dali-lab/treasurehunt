@@ -70,6 +70,9 @@ var styles = StyleSheet.create({
 });
 
 var HomePage = React.createClass({
+  propTypes: {
+    onLogout: React.PropTypes.func,
+  },
 
   componentWillMount: function() {
     Icon.getImageSource('android-arrow-back', 30).then((source) => this.setState({ backIcon: source }));
@@ -87,15 +90,24 @@ var HomePage = React.createClass({
       );
   },
 
+  onLogout: function() {
+    if (typeof this.props.onLogout == 'function') {
+      this.props.onLogout();
+    }
+  },
+
   _renderHome: function() {
     return (
       <NavigatorIOS
         style={styles.container}
         barTintColor='#5da990'
         ref='homeRef'
+        titleTextColor='white'
         initialRoute={{
           title: 'TREASURE HUNT',
-          component: Home
+          component: Home,
+          rightButtonTitle: "Logout",
+          onRightButtonPress: this.onLogout.bind(this),
         }} />
       )
   },

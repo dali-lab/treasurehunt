@@ -4,11 +4,13 @@ const config = require('../../config')
 const usersRef = new Firebase("https://treasurehuntdali.firebaseio.com/users")
 const React = require('react-native');
 
+const USER_STORAGE_KEY = '@TreasureHunt:userObject'
+
 var {
-  AsyncStorage
+	AsyncStorage,
 } = React;
 
-const USER_STORAGE_KEY = '@TreasureHunt:userObject'
+// var UserDefaults = require('react-native-userdefaults-ios');
 
 class User {
 	static currentUser = null;
@@ -29,38 +31,50 @@ class User {
 		this.currentHunts = userRef.child("currentHunts");
 	}
 
+	setUpRefs(userRef) {
+		this.userRef = userRef;
+		this.currentHunts = userRef.child("currentHunts");
+	}
+
 	static getCurrentUser() {
-		if (this.currentUser === null) {
-			User.updateCurrentUserFromStore()
-		}
 		return this.currentUser;
 	}
 
 	static updateCurrentUserFromStore() {
 		console.log("Updating user from store...");
-		try {
-			console.log("Got something...");
-			var value = AsyncStorage.getItem(USER_STORAGE_KEY);
-			console.log("It is: " + value);
-			if (value !== null) {
-				console.log("Made a user!");
-				this.currentUser = User(value);
-			}else{
-				console.log("It was null :(");
-				this.currentUser = null;
+		return new Promise(async (fulfill, reject) => {	
+			try {
+				const value = await AsyncStorage.getItem(USER_STORAGE_KEY)
+				console.log("Got something...");
+
+				if (value !== null) {
+					console.log("It was: " + value);
+					User.currentUser = new User(value);
+					User.currentUser.setUpRefs(usersRef.child(value));
+					console.log("Set User... fulfilling");
+					fulfill(User.getCurrentUser());
+				}else{
+					reject(null);
+					console.log("It was null")
+				}
+			}catch (error) {
+				// console.log("Failed! with error " + error);
+				reject();
 			}
-		}catch (error) {
-			console.log("Failed!");
-			return;
-		}
+		});
 	}
 
-	static updateUserInStore() {
+	static async updateUserInStore() {
 		// Method from Documentation on AsyncStorage
 		console.log("Updating user to store...");
 		try {
 			console.log("Saving " + User.getCurrentUser().uid + " ...");
-		  AsyncStorage.setItem(USER_STORAGE_KEY, User.getCurrentUser().uid);
+		  	// UserDefaults.setObjectForKey(User.getCurrentUser(), USER_STORAGE_KEY)
+		  	// 	.then(result => {
+		  	// 		console.log(result);
+		  	// 	});
+
+			await AsyncStorage.setItem(USER_STORAGE_KEY, User.getCurrentUser().uid)
 			console.log("Complete!");
 		} catch (error) {
 			console.log("Failed!!");
