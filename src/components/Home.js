@@ -56,14 +56,16 @@ var styles = StyleSheet.create({
         padding: 10,
         marginLeft: 20,
         marginRight: 20,
-        backgroundColor: '#FFFACD'
+        backgroundColor: '#FEF7C0',
+        borderRadius: 3
     },
     pastRowContainer: {
         flexDirection: 'row',
         padding: 10,
         marginLeft: 20,
         marginRight: 20,
-        backgroundColor: '#e8f0cd'
+        backgroundColor: '#E8F3BB',
+        borderRadius: 3
     },
     header: {
         height: 30,
@@ -76,7 +78,13 @@ var styles = StyleSheet.create({
         fontSize: 20,
         padding:10,
         color: 'black'
+    },
+    searchBar: {
+        height: 40,
+        backgroundColor: '#E4EEEC',
+        borderRadius: 2
     }
+
 });
 
 var noHuntsStyle = StyleSheet.create({
@@ -177,7 +185,7 @@ var Home = React.createClass({
                             <Text style={styles.description}
                                 numberOfLines={2}>{hunt.description}</Text>
                             <Progress.Bar style={styles.progressBar}
-                                progress={hunt.progress} width={200} height={10} color='#fbda3d'/>
+                                progress={hunt.progress} width={200} height={10} color='#ffd900' backgroundColor='white'/>
                         </View>
                     </View>
                     <View style={styles.separator}/>
