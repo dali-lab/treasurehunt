@@ -107,7 +107,7 @@ var HomePage = React.createClass({
           title: 'TREASURE HUNT',
           component: Home,
           rightButtonTitle: "Logout",
-          onRightButtonPress: this.onLogout.bind(this),
+          onRightButtonPress: this.onLogout,
         }} />
       )
   },

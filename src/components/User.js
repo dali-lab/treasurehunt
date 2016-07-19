@@ -36,6 +36,17 @@ class User {
 		this.currentHunts = userRef.child("currentHunts");
 	}
 
+	static async logout() {
+		this.currentUser = null;
+		try {
+			console.log("Logging out...");
+			await AsyncStorage.removeItem(USER_STORAGE_KEY);
+			console.log("Logged out!");
+		}catch (error) {
+			console.log("Failed to logout!");
+		}
+	}
+
 	static getCurrentUser() {
 		return this.currentUser;
 	}

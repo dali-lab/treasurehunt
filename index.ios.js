@@ -50,6 +50,7 @@ var treasurehunt = React.createClass ({
     },
 
     onLogout: function() {
+        User.logout()
         this.setState({
             user: null,
             loggingIn: true,
