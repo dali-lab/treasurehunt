@@ -173,7 +173,7 @@ var HomePage = React.createClass({
 
 
        <Icon.TabBarItemIOS
-      
+
          selected={this.state.selectedTab === TABS.create}
          iconName="ios-gear"
          selectedIconName="ios-gear"
