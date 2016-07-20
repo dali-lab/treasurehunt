@@ -102,7 +102,7 @@ var HomePage = React.createClass({
     return (
       <NavigatorIOS
         style={styles.container}
-        barTintColor='#5da990'
+        barTintColor='#23B090'
         ref='homeRef'
         titleTextColor='white'
         initialRoute={{
@@ -137,10 +137,10 @@ var HomePage = React.createClass({
     return (
       <TabBarIOS
         tintColor="white"
-        barTintColor="#cee4dc">
+        barTintColor="#c5ebe0">
 
         <Icon.TabBarItemIOS
-         title="FEED"
+
          iconName="ios-star"
          selectedIconName="ios-star"
          selected={this.state.selectedTab === TABS.feed}
@@ -154,7 +154,7 @@ var HomePage = React.createClass({
 
 
         <Icon.TabBarItemIOS
-          title="HOME"
+
           selected={this.state.selectedTab === TABS.home}
           iconName="ios-home"
           selectedIconName="ios-home"
@@ -175,7 +175,7 @@ var HomePage = React.createClass({
 
 
        <Icon.TabBarItemIOS
-         title="CREATE"
+      
          selected={this.state.selectedTab === TABS.create}
          iconName="ios-gear"
          selectedIconName="ios-gear"
