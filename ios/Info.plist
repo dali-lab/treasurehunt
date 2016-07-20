@@ -42,6 +42,24 @@
 		<string>Octicons.ttf</string>
 		<string>Zocial.ttf</string>
 		<string>MuseoSlab.otf</string>
+		<string>Verlag-Black.ttf</string>
+		<string>Verlag-BlackItalic.ttf</string>
+		<string>Verlag-Bold.ttf</string>
+		<string>Verlag-Book.ttf</string>
+		<string>Verlag-BookItalic.ttf</string>
+		<string>Verlag-Light.ttf</string>
+		<string>Verlag-LightItalic.ttf</string>
+		<string>Verlag-XLight.ttf</string>
+		<string>Verlag-XLightItalic.ttf</string>
+		<string>VerlagCondensed-Black.ttf</string>
+		<string>VerlagCondensed-BlackItalic.ttf</string>
+		<string>VerlagCondensed-Bold.ttf</string>
+		<string>VerlagCondensed-BoldItalic.ttf</string>
+		<string>VerlagCondensed-Book.ttf</string>
+		<string>VerlagCondensed-BookItalic.ttf</string>
+		<string>VerlagCondensed-Light.ttf</string>
+		<string>VerlagCondensed-LightItalic.ttf</string>
+		<string>VerlagCondensed-XLight.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

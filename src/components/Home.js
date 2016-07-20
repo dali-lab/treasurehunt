@@ -42,6 +42,8 @@ var styles = StyleSheet.create({
     },
     title: {
         fontSize: 20,
+        fontFamily: 'Verlag',
+        fontWeight: '300',
         color: '#656565',
     },
     description: {
@@ -83,6 +85,13 @@ var styles = StyleSheet.create({
         height: 40,
         backgroundColor: '#E4EEEC',
         borderRadius: 2
+    },
+    images: {
+      width: 75,
+      height: 75,
+      backgroundColor: 'red',
+      alignSelf: 'center',
+      marginRight: 5
     }
 
 });
@@ -180,6 +189,9 @@ var Home = React.createClass({
                 underlayColor='#dddddd'>
                 <View>
                     <View style={styles.currentRowContainer}>
+                      <View style={styles.images}>
+                      <Text> Image goes here! </Text>
+                      </View>
                         <View style={styles.textContainer}>
                             <Text style={styles.title} numberOfLines={1}>{hunt.title.toUpperCase()}</Text>
                             <Text style={styles.description}
@@ -195,6 +207,7 @@ var Home = React.createClass({
     },
 
     render: function() {
+
 
         console.log("running render ...");
         var listView = <ListView
