@@ -3,6 +3,7 @@ var Create = require('./Create');
   var Feed = require('./Feed');
 //  var Search = require('./Search');
 var Home = require('./Home');
+var User = require('./User').default;
 // var Profile = require('./Profile');
 
 const Firebase = require('firebase')
@@ -91,6 +92,7 @@ var HomePage = React.createClass({
   },
 
   onLogout: function() {
+    User.logout();
     if (typeof this.props.onLogout == 'function') {
       this.props.onLogout();
     }

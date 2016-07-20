@@ -3,6 +3,7 @@ const ref = new Firebase("https://treasurehuntdali.firebaseio.com/");
 const config = require('../../config')
 const usersRef = new Firebase("https://treasurehuntdali.firebaseio.com/users")
 const React = require('react-native');
+const {FBLoginManager} = require('react-native-facebook-login');
 
 const USER_STORAGE_KEY = '@TreasureHunt:userObject'
 
@@ -18,22 +19,38 @@ class User {
 	// No one but this class should make user objects
 	constructor(uid) {
 		this.uid = uid;
+		this.isFacebook = false;
 	}
 
 	buildWithData(authData, userRef, email) {
+		console.log(authData);
 		this.uid = authData.uid;
 		this.provider = authData.provider;
 		this.token = authData.token;
 		this.auth = authData.auth;
-		this.email = email;
 		this.authData = authData;
+		this.buildWithData2(userRef, email);
+	}
+
+	buildWithData2(userRef, email) {
+		this.email = email;
 		this.userRef = userRef;
 		this.currentHunts = userRef.child("currentHunts");
 	}
 
-	setUpRefs(userRef) {
-		this.userRef = userRef;
-		this.currentHunts = userRef.child("currentHunts");
+	static initializeNewUser(id, email) {
+		var userObject = usersRef.child(id);
+		userObject.set({
+			email: email,
+			currentHunts: [],
+			completedHunts: [],
+			name: "",
+		});
+
+		var user = new User(id);
+		user.buildWithData2(userObject, email);
+
+		return user;
 	}
 
 	static getCurrentUser() {
@@ -108,6 +125,34 @@ class User {
 		});
 	}
 
+	static FBonLogin(data) {
+		var id = data.credentials.userId;
+		console.log(data);
+
+
+		User.currentUser = User.initializeNewUser(id, id);
+		User.updateUserInStore();
+		User.currentUser.isFacebook = true;
+		User.currentUser.data = data;
+		return User.currentUser;
+	}
+
+	static logout() {
+		if (!User.currentUser) {
+			return;
+		}
+
+		if (User.currentUser.isFacebook) {
+			console.log("Trying to log out of facebook");
+			FBLoginManager.logout(() => {
+				
+			});
+		}
+
+		User.currentUser = null;
+		AsyncStorage.removeItem(USER_STORAGE_KEY);
+	}
+
 	/**
 		This function creates a user, and will call the callBack when done
 		callBack = function(error, user)
@@ -155,7 +200,7 @@ class User {
 		return new Promise((fulfill, reject) => {
 			this.currentHunts.once('value', function(snap) {
 				if (snap.val() == null) {
-					reject(NSNull);
+					reject();
 				}else{
 					fulfill(snap.exportVal());
 				}

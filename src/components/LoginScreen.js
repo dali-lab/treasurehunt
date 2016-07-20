@@ -5,6 +5,7 @@ const SignUp = require('./SignUp');
 const ForgotPassword = require('./ForgotPassword');
 import User from './User';
 var dismissKeyboard = require('dismissKeyboard');
+var {FBLogin} = require('react-native-facebook-login');
 
 var {
   StyleSheet,
@@ -37,7 +38,7 @@ var styles = StyleSheet.create({
 		flexDirection: "column",
 		flex: 1,
 		width: screenWidth * 2 / 3,
-		marginTop: screenPadding + 40,
+		marginTop: screenPadding + 20,
 		marginLeft: screenPadding,
 		marginRight: screenPadding,
 	},
@@ -51,7 +52,7 @@ var styles = StyleSheet.create({
 		marginBottom: 20,
 		fontSize: 26,
     	fontFamily: 'Museo Slab',
-		color: "#59aa91",
+		color: "#22B08F",
 		alignSelf: "center"
 	},
 	buttonText: {
@@ -63,13 +64,22 @@ var styles = StyleSheet.create({
 	button: {
 		height: 36,
 		flexDirection: 'row',
-		backgroundColor: '#bfcf60',
-		borderColor: '#bfcf60',
+		backgroundColor: '#BAC928',
+		borderColor: '#BAC928',
 		borderWidth: 1,
 		borderRadius: 5,
-		marginBottom: 10,
+		marginBottom: 5,
 		alignSelf: 'stretch',
 		justifyContent: 'center'
+	},
+	orText: {
+		alignSelf: 'center',
+		marginBottom: 5,
+		color: "gray",
+	},
+	fbButton: {
+		alignSelf: 'center',
+		marginBottom: 10,
 	},
 	textField: {
 		height: 40,
@@ -112,17 +122,17 @@ var styles = StyleSheet.create({
 		marginLeft: 0,
 		flexDirection: 'row',
 		alignSelf: 'stretch',
-		backgroundColor: '#72b7a3',
+		backgroundColor: '#22B08F',
 	},
 	bottomBar: {
 		height: 40,
 		flexDirection: 'column',
 		alignSelf: 'stretch',
-		backgroundColor: '#72b7a3',
+		backgroundColor: '#22B08F',
 	},
 	separationBar: {
 		backgroundColor: "#1d8377",
-		height: 1,
+		height: 0.7,
 		marginLeft: 5,
 		marginRight: 5,
 		flexDirection: 'row',
@@ -319,6 +329,14 @@ class LoginScreen extends Component {
 							underlayColor='#cadb66'>
 				    		<Text style={styles.buttonText}>Sign in</Text>
 				  		</TouchableHighlight>
+				  		<Text style={styles.orText}>or</Text>
+				  		<FBLogin style={styles.fbButton}
+				  			permissions={["email"]}
+				  			onLogin={(data) => {
+					        	var user = User.FBonLogin(data);
+					        	if (user != null)
+									this.didLogIn(user);
+					   		}}/>
 
 				  		<Text style={styles.forgotPassword} onPress={this.forgotPasswordPressed.bind(this)}>Forgot your password?</Text>
 				  		<Text style={styles.forgotPassword}>
@@ -333,6 +351,8 @@ class LoginScreen extends Component {
 			</View>
 			</TouchableHighlight>
 	  	);
+
+		// Later for importing friends, add this to FBLogin permissions: "user_friends"
 
 		// For skipping login
 		// <Text style={styles.skipSyle} onPress={this.skipPressed.bind(this)}>No thanks, just take me to the puzzle</Text>
