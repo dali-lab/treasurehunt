@@ -25,30 +25,39 @@ var styles = StyleSheet.create({
         marginRight: 10
     },
     textContainer: {
-        flex: 1
+        flex: 1,
+        justifyContent: 'space-between'
     },
     container:{
-        flex: 1
+        flex: 1,
     },
-    emptyContainer: {
+    emptyContainerTop: {
         backgroundColor: 'white',
         paddingTop: 5,
         flexDirection: 'column',
-        height: 70
+        height: 70,
+    },
+    emptyContainerBottom: {
+      backgroundColor: 'white',
+      flexDirection: 'column',
+      height: 52,
+      borderTopWidth: 3,
+      borderColor: '#23B090'
     },
     separator: {
         height: 10,
-        backgroundColor: '#FFFFFF'
+        backgroundColor: '#FFFFFF',
     },
     title: {
-        fontSize: 20,
-        fontFamily: 'Verlag',
-        fontWeight: '300',
-        color: '#656565',
+        fontSize: 18,
+        fontFamily: 'Verlag-Book',
+        color: '#242021',
     },
     description: {
-        paddingTop: 3,
-        paddingBottom: 4
+        paddingTop: 0,
+        paddingBottom: 4,
+        fontFamily: 'Verlag-Book',
+        color: '#242021'
     },
     points: {
         fontWeight: 'bold'
@@ -69,30 +78,41 @@ var styles = StyleSheet.create({
         backgroundColor: '#E8F3BB',
         borderRadius: 3
     },
+
     header: {
         height: 30,
-        justifyContent: 'flex-end',
+        justifyContent: 'flex-start',
         alignItems: 'flex-start',
         backgroundColor: 'white',
         flexDirection: 'column',
+
     },
     headerText: {
-        fontSize: 20,
-        padding:10,
-        color: 'black'
+        fontSize: 25,
+        fontFamily: 'Verlag-Book',
+        color: '#242021',
+    },
+    extraInfoContainer: {
+      marginLeft: 20,
+      marginRight: 20,
+      marginTop: 10
     },
     searchBar: {
-        height: 40,
+        height: 25,
         backgroundColor: '#E4EEEC',
-        borderRadius: 2
+        borderRadius: 5,
     },
     images: {
-      width: 75,
-      height: 75,
+      width: 80,
+      height: 80,
       backgroundColor: 'red',
       alignSelf: 'center',
-      marginRight: 5
+      marginRight: 10
+    },
+    listView: {
+    
     }
+
 
 });
 
@@ -193,11 +213,15 @@ var Home = React.createClass({
                       <Text> Image goes here! </Text>
                       </View>
                         <View style={styles.textContainer}>
+                          <View>
                             <Text style={styles.title} numberOfLines={1}>{hunt.title.toUpperCase()}</Text>
                             <Text style={styles.description}
                                 numberOfLines={2}>{hunt.description}</Text>
+                          </View>
+                          <View>
                             <Progress.Bar style={styles.progressBar}
-                                progress={hunt.progress} width={200} height={10} color='#ffd900' backgroundColor='white'/>
+                                progress={hunt.progress} width={200} borderRadius={0} border={0} height={10} color='#ffd900' backgroundColor='white'/>
+                          </View>
                         </View>
                     </View>
                     <View style={styles.separator}/>
@@ -210,7 +234,7 @@ var Home = React.createClass({
 
 
         console.log("running render ...");
-        var listView = <ListView
+        var listView = <ListView style={styles.listView}
                         dataSource={this.state.dataSource}
                         automaticallyAdjustContentInsets={false}
                         renderRow={this.renderRow}/>
@@ -240,9 +264,25 @@ var Home = React.createClass({
         console.log("internalView rendered. Returning");
         return (
             <View style={styles.container}>
-                <View style={styles.emptyContainer}>
+                <View style={styles.emptyContainerTop}>
                 </View>
+
+                <View style={styles.extraInfoContainer}>
+                  <View style={styles.searchBar}>
+                  </View>
+
+                <View style={styles.separator}>
+                </View>
+
+                  <View style={styles.header}>
+                    <Text style={styles.headerText}> Current Puzzles </Text>
+                  </View>
+
+                </View>
+
                 {internalView}
+                <View style={styles.emptyContainerBottom}>
+                </View>
             </View>
         );
     },

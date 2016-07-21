@@ -66,7 +66,10 @@ var styles = StyleSheet.create({
   rowContainer: {
     flexDirection: 'row',
     padding: 10
-  }
+  },
+  tabBarStyle: {
+    borderWidth: 10
+  },
 });
 
 var HomePage = React.createClass({
@@ -133,6 +136,7 @@ var HomePage = React.createClass({
 
   render: function() {
     return (
+
       <TabBarIOS
         tintColor="white"
         barTintColor="#c5ebe0">
@@ -175,8 +179,7 @@ var HomePage = React.createClass({
        <Icon.TabBarItemIOS
 
          selected={this.state.selectedTab === TABS.create}
-         iconName="ios-gear"
-         selectedIconName="ios-gear"
+         icon={require('./create.png')}
          onPress={() => {
            this.setState({
              selectedTab: TABS.create,
@@ -186,6 +189,7 @@ var HomePage = React.createClass({
        </Icon.TabBarItemIOS>
 
       </TabBarIOS>
+
 
     );
   },
