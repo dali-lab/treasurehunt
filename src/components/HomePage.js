@@ -68,7 +68,7 @@ var styles = StyleSheet.create({
     padding: 10
   },
   tabBarStyle: {
-    borderWidth: 10
+
   },
 });
 
@@ -143,8 +143,7 @@ var HomePage = React.createClass({
 
         <Icon.TabBarItemIOS
 
-         iconName="ios-star"
-         selectedIconName="ios-star"
+         icon={require('./feed.png')}
          selected={this.state.selectedTab === TABS.feed}
          onPress={() => {
            this.setState({
@@ -158,8 +157,7 @@ var HomePage = React.createClass({
         <Icon.TabBarItemIOS
 
           selected={this.state.selectedTab === TABS.home}
-          iconName="ios-home"
-          selectedIconName="ios-home"
+          icon={require('./home.png')}
           onPress={() => {
             if (this.state.selectedTab !== TABS.home) {
                 this.setState({

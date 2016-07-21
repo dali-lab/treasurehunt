@@ -29,11 +29,13 @@ class User {
 		this.authData = authData;
 		this.userRef = userRef;
 		this.currentHunts = userRef.child("currentHunts");
+		this.completedHunts = userRef.child("completedHunts");  // 7/21/16 AES
 	}
 
 	setUpRefs(userRef) {
 		this.userRef = userRef;
 		this.currentHunts = userRef.child("currentHunts");
+		this.completedHunts = userRef.child("completedHunts");  // 7/21/16 AES
 	}
 
 	static async logout() {
@@ -53,7 +55,7 @@ class User {
 
 	static updateCurrentUserFromStore() {
 		console.log("Updating user from store...");
-		return new Promise(async (fulfill, reject) => {	
+		return new Promise(async (fulfill, reject) => {
 			try {
 				const value = await AsyncStorage.getItem(USER_STORAGE_KEY)
 				console.log("Got something...");
@@ -175,6 +177,22 @@ class User {
 			});
 		});
 	}
+
+	// This whole function 7/21/16 AES
+	getCompletedHuntsList() {
+		return new Promise((fulfill, reject) => {
+			this.completedHunts.once('value', function(snap) {
+				if (snap.val() == null) {
+					reject(NSNull);
+				}else{
+					fulfill(snap.exportVal());
+				}
+			}, function(error) {
+				reject(error);
+			});
+		});
+	}
+	// end of function 7/21/16 AES
 }
 
 export default User;

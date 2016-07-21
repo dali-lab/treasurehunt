@@ -109,9 +109,7 @@ var styles = StyleSheet.create({
       alignSelf: 'center',
       marginRight: 10
     },
-    listView: {
-    
-    }
+
 
 
 });
@@ -144,7 +142,8 @@ var Home = React.createClass({
         var huntsList;
 
         var dataSource = new ListView.DataSource({
-            rowHasChanged: (r1, r2) => r1.guid !== r2.guid
+            rowHasChanged: (r1, r2) => r1.guid !== r2.guid,
+            sectionHeaderHasChanged: (s1, s2) => s1.guid !== s2.guid
         });
 
         return {
@@ -160,12 +159,28 @@ var Home = React.createClass({
         var userRef = usersRef.child(currentUser.uid);
         var huntsListRef = userRef.child("hunts_list");
         var huntsList;
-
+        console.log('huntslist is' + huntsList);
         huntsListRef.on('value', (snap) => {
             huntsList = snap.val();
             return huntsList;
         });
     },
+
+    // the whole function 7/21/16 AES
+    getCompletedHuntsList: function() {
+
+        console.log("running getHuntsList");
+        var currentUser = User.getCurrentUser();
+        var userRef = usersRef.child(currentUser.uid);
+        var huntsListRef = userRef.child("hunts_list");
+        var huntsList;
+        console.log('huntslist is' + huntsList);
+        huntsListRef.on('value', (snap) => {
+            huntsList = snap.val();
+            return huntsList;
+        });
+    },
+    // end of this function 7/21/16 AES
 
     // Will load all the things!
     listenForItems: function() {
@@ -176,6 +191,7 @@ var Home = React.createClass({
                 console.log("Loaded hunts: " + hunts + "\nSetting the state");
                 console.log("State was: ");
 
+            //    var newDataSource = this.state.dataSource.clonewithRowsAndSections({current: hunts}, ['current']);
                 var newDataSource = this.state.dataSource.cloneWithRows(hunts);
                 console.log("Now it is: ");
                 this.setState({
@@ -234,7 +250,7 @@ var Home = React.createClass({
 
 
         console.log("running render ...");
-        var listView = <ListView style={styles.listView}
+        var listView = <ListView
                         dataSource={this.state.dataSource}
                         automaticallyAdjustContentInsets={false}
                         renderRow={this.renderRow}/>
@@ -281,6 +297,18 @@ var Home = React.createClass({
                 </View>
 
                 {internalView}
+
+              <View style={styles.extraInfoContainer}>
+                <View style={styles.header}>
+                  <Text style={styles.headerText}> Past Puzzles </Text>
+                </View>
+              </View>
+
+
+
+
+
+
                 <View style={styles.emptyContainerBottom}>
                 </View>
             </View>
