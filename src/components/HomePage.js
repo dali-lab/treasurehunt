@@ -17,7 +17,8 @@ var {
   TouchableHighlight,
   Image,
   ListView,
-  NavigatorIOS
+  NavigatorIOS,
+  Navigator
 } = React;
 
 var TABS = {
@@ -101,17 +102,20 @@ var HomePage = React.createClass({
 
   _renderHome: function() {
     return (
+
       <NavigatorIOS
         style={styles.container}
         barTintColor='#23B090'
         ref='homeRef'
         titleTextColor='white'
         initialRoute={{
-          title: 'TREASURE HUNT',
+          title: 'TREASUREHUNT',
+          rightButtonImage: <Image source={'./home.png'} /> ,
           component: Home,
           rightButtonTitle: "Logout",
           onRightButtonPress: this.onLogout,
         }} />
+
       )
   },
 /*

@@ -37,28 +37,30 @@ var styles = StyleSheet.create({
 		flexDirection: "column",
 		flex: 1,
 		width: screenWidth * 2 / 3,
-		marginTop: screenPadding + 40,
+		marginTop: screenPadding,
 		marginLeft: screenPadding,
 		marginRight: screenPadding,
 	},
 	icon: {
 		width: screenWidth * 0.4,
 		height: screenWidth * 0.4 * 0.83,
-		alignSelf: "center"
+		alignSelf: "center",
+    marginTop: screenPadding * 3,
 	},
 	titleStyle: {
 		marginTop: 20,
-		marginBottom: 20,
-		fontSize: 26,
-    	fontFamily: 'Museo Slab',
+		marginBottom: screenHeight > 500 ? 30 : 10,
+		fontSize: 25,
+    fontFamily: 'Museo Slab',
 		color: "#59aa91",
-		alignSelf: "center"
+		alignSelf: "center",
 	},
 	buttonText: {
-		fontSize: 18,
+		fontSize: 20,
 		color: 'white',
 		alignSelf: 'center',
 		fontWeight: 'bold',
+    fontFamily: 'Verlag-Book'
 	},
 	button: {
 		height: 36,
@@ -74,7 +76,6 @@ var styles = StyleSheet.create({
 	textField: {
 		height: 40,
 		flex: 1,
-		marginBottom: 0,
 		flexDirection: 'row',
 		fontSize: 20,
 		paddingLeft: 20,
@@ -85,26 +86,16 @@ var styles = StyleSheet.create({
 	},
 	loginTextInputMainView: {
 		height: 85,
-		borderColor: '#f0f8f5',
 		borderRadius: 5,
-		backgroundColor: "#f0f8f5",
+		backgroundColor: "#E3EFED",
 		flexDirection: 'column',
 		alignSelf: 'stretch',
 	},
-	loginIconsEmail: {
-		top: 13,
-		left: 15,
-		height: 15,
-		marginRight: 3,
-		width: 20,
-		flexDirection: 'row',
-	},
-	loginIconsPassword: {
+	loginIcons: {
 		top: 10,
-		left: 17,
-		marginRight: 5,
+		left: 10,
 		height: 20,
-		width: 17,
+		width: 20,
 		flexDirection: 'row',
 	},
 	topBar: {
@@ -112,13 +103,13 @@ var styles = StyleSheet.create({
 		marginLeft: 0,
 		flexDirection: 'row',
 		alignSelf: 'stretch',
-		backgroundColor: '#72b7a3',
+		backgroundColor: '#23B090',
 	},
 	bottomBar: {
 		height: 40,
 		flexDirection: 'column',
 		alignSelf: 'stretch',
-		backgroundColor: '#72b7a3',
+		backgroundColor: '#23B090',
 	},
 	separationBar: {
 		backgroundColor: "#1d8377",
@@ -132,15 +123,17 @@ var styles = StyleSheet.create({
 		textAlign: 'left',
 		color: "gray",
 		alignSelf: "flex-start",
+    fontFamily: 'Verlag-Book'
 	},
 	skipSyle: {
 		color: "gray",
 		flexDirection: "row",
 		alignSelf: "center",
-		marginBottom: 10
+		marginBottom: 10,
+    fontFamily: 'Verlag-Book'
 	},
 	linkStyle: {
-		color: "#1d8377",
+		color: "blue",
 	}
 });
 
@@ -228,15 +221,16 @@ class LoginScreen extends Component {
 		})
 	}
 
-	// skipPressed() {
-	// 	if (typeof this.props.onSkipLogin == 'function') {
-	// 		this.props.onSkipLogin();
-	// 	}
-	// 	// AlertIOS.alert(
-	// 	// 	"Not yet supported",
-	// 	// 	"Please create an account to win cool prizes!"
-	// 	// );
-	// }
+	skipPressed() {
+		// removed this functionality for now
+		// if (typeof this.props.onSkipLogin == 'function') {
+		// 	this.props.onSkipLogin();
+		// }
+		AlertIOS.alert(
+			"Not yet supported",
+			"Please create an account to win cool prizes!"
+		);
+	}
 
 	hideModal() {
 		this.setState({
@@ -280,7 +274,7 @@ class LoginScreen extends Component {
 
 						<View style={styles.loginTextInputMainView}>
 							<View style={styles.loginTextInputViews}><Image
-								style={styles.loginIconsEmail}
+								style={styles.loginIcons}
 								source={require('../../user.png')}/>
 							<TextInput style= {styles.textField}
 								ref="emailTextField"
@@ -290,21 +284,23 @@ class LoginScreen extends Component {
 									this.refs.passwordTextField.focus()
 								}
     							value={this.state.email}
-    							disabled={this.state.processingLogin}/>
+    							disabled={this.state.processingLogin}
+								placeholder="email"/>
 							</View>
 							<View style={styles.separationBar}></View>
 							<View style={styles.loginTextInputViews}>
 							<Image
-								style={styles.loginIconsPassword}
+								style={styles.loginIcons}
 								source={require('../../password.png')}/>
 							<TextInput style={styles.textField}
 								ref="passwordTextField"
 								returnKeyType='go'
 								secureTextEntry={true}
 								onChangeText={(text) => this.setState({password: text})}
-								onSubmitEditing=this.onLoginPressed
+								onSubmitEditing={this.onLoginPressed.bind(this)}
 								disabled={this.state.processingLogin}
-    							value={this.state.password}/>
+    							value={this.state.password}
+								placeholder="password"/>
 							</View>
 						</View>
 
@@ -314,7 +310,7 @@ class LoginScreen extends Component {
 							size="small"/>
 
 						<TouchableHighlight style={styles.button}
-							onPress=this.onLoginPressed
+							onPress={this.onLoginPressed.bind(this)}
 							disabled={this.state.processingLogin}
 							underlayColor='#cadb66'>
 				    		<Text style={styles.buttonText}>Sign in</Text>
@@ -328,14 +324,12 @@ class LoginScreen extends Component {
 		  				</Text>
 
 					</View>
+			  		<Text style={styles.skipSyle} onPress={this.skipPressed.bind(this)}>No thanks, just take me to the puzzle</Text>
 			  		<View style={styles.bottomBar}></View>
 			  	</View>
 			</View>
 			</TouchableHighlight>
 	  	);
-
-		// For skipping login
-		// <Text style={styles.skipSyle} onPress={this.skipPressed.bind(this)}>No thanks, just take me to the puzzle</Text>
 	}
 }
 
