@@ -18,19 +18,17 @@ var styles = StyleSheet.create({
 	container: {
 		marginTop: 65,
 		paddingRight:30,
-		paddingLeft: 30, 
-		flex: 1
+		paddingLeft: 30,
+		flex: 1,
 	},
 	separatorSmall: {
-		height: 16
-	},
-	separatorLarge: {
-		height: 26
+		height: 16,
 	},
 	huntTitle: {
-		fontSize: 20,
-		margin: 5,
-		color: '#656565',
+		fontSize: 25,
+		marginTop: 20,
+		fontFamily: 'Verlag-Book',
+		color: '#242021',
 		alignSelf: 'center'
 	},
     topSeparator: {
@@ -45,44 +43,50 @@ var styles = StyleSheet.create({
         fontSize: 20,
         color: '#000000',
         alignSelf: 'center',
-        fontWeight: 'bold'
-    }, 
+        fontWeight: 'bold',
+    },
     description: {
         paddingTop: 3,
         paddingBottom: 8,
-        alignSelf: 'center'
+        alignSelf: 'center',
+				color: '#242021',
     },
     statusDescription: {
-    	paddingTop: 5,
-    	paddingBottom: 8,
     	alignSelf: 'center',
+			fontSize: 16,
+			color: '#242021',
     },
     lockedDescription: {
     	textAlign: 'center',
+			fontWeight: 'bold',
     	fontSize: 25,
-    	paddingTop: 10
+			color: '#242021',
     },
     rowContainer: {
 	    flexDirection: 'row',
 	    padding: 10,
-        paddingTop: 10,
+      paddingTop: 10,
 	    height: 90,
-	    justifyContent: 'center'
+	    justifyContent: 'center',
   	},
     completeTextContainer: {
         paddingTop: 10,
-    	flex: 1,
-        backgroundColor: '#e8f0cd'
+    		flex: 1,
+        backgroundColor: '#e8f0cd',
+				borderRadius: 3
 	},
     inProgressTextContainer: {
         paddingTop: 10,
         flex: 1,
-        backgroundColor: '#FFFACD'
+        backgroundColor: '#FFFACD',
+				borderRadius: 3
     },
     incompleteTextContainer: {
-        paddingTop: 10,
+      paddingTop: 10,
 	    flex: 1,
 	    backgroundColor: '#f6d1d0',
+			borderRadius: 3,
+			justifyContent: 'center',
     }
 });
 
@@ -98,7 +102,7 @@ var ClueList = React.createClass({
             rowHasChanged: (r1, r2) => r1.guid != r2.guid,
             sectionHeaderHasChanged: (s1, s2) => s1 !== s2
         });
-        
+
         return {
             dataSource: dataSource
         };
@@ -138,7 +142,7 @@ var ClueList = React.createClass({
             inProgress = cluesArray[0];
         }
 
-        //TODO: fix this calculation since clues won't always have chronological id's 
+        //TODO: fix this calculation since clues won't always have chronological id's
         if (inProgress == -1) {
             inProgress = solutionsForThisHunt[solutionsForThisHunt.length -1].clue_id + 1;
         }
@@ -154,7 +158,7 @@ var ClueList = React.createClass({
                     clues.push({
                         title:snap.val().title,
                         description: snap.val().description,
-                        category: "inProgress", 
+                        category: "inProgress",
                         clueId: snap.val().id
                     });
                 }
@@ -164,7 +168,7 @@ var ClueList = React.createClass({
                     clues.push({
                         title:snap.val().title,
                         description: snap.val().description,
-                        category: "complete", 
+                        category: "complete",
                         clueId: snap.val().id
                     });
                 }
@@ -173,7 +177,7 @@ var ClueList = React.createClass({
                 else {
                     clues.push({
                         title:snap.val().title,
-                        description: snap.val().description, 
+                        description: snap.val().description,
                         category: "incomplete",
                         clueId: snap.val().id
                     });
@@ -192,14 +196,14 @@ var ClueList = React.createClass({
         }
     },
 
-    listenForItems: function(cluesRef) {       
+    listenForItems: function(cluesRef) {
 
         //get all clues for user in hunt, add them to array
         var huntID = this.props.hunt.id;
 
         var solutionsForThisHunt = [];
         var currentUser = User.getCurrentUser();
-        //TODO: for now there is only user 0 but we don't want this hard-coded for all users 
+        //TODO: for now there is only user 0 but we don't want this hard-coded for all users
         userSolutionsRef.orderByChild('user_id').startAt(currentUser.uid).endAt(currentUser.uid).once('value', (snap) => {
             var solution = snap.val();
             if (solution) {
@@ -255,13 +259,13 @@ var ClueList = React.createClass({
                             <Text style={styles.title}>{rowData.title}</Text>
                             <Text style={styles.statusDescription}
                                 >- COMPLETED -</Text>
-                        </View> 
+                        </View>
                     </View>
                     <View style={styles.separator}/>
                 </View>
             </TouchableHighlight>
 	      	);
-    	} 
+    	}
         else if (rowData.category === "inProgress") {
             return (
                 <TouchableHighlight onPress={() => this.rowPressed(rowData)}
@@ -272,13 +276,13 @@ var ClueList = React.createClass({
                             <Text style={styles.title}>{rowData.title}</Text>
                             <Text style={styles.statusDescription}
                                 >- IN PROGRESS -</Text>
-                        </View> 
+                        </View>
                     </View>
                     <View style={styles.separator}/>
                 </View>
             </TouchableHighlight>
             );
-        } 
+        }
         else {
 	      	return (
             <TouchableHighlight
@@ -287,8 +291,10 @@ var ClueList = React.createClass({
                     <View style={styles.rowContainer}>
                         <View style={styles.incompleteTextContainer}>
                             <Text style={styles.lockedDescription}
-                                >- LOCKED -</Text>
-                        </View> 
+                                > Clue Name </Text>
+																<Text style={styles.statusDescription}
+		                                > Locked </Text>
+                        </View>
                     </View>
                     <View style={styles.separator}/>
                 </View>
@@ -317,4 +323,3 @@ var ClueList = React.createClass({
 });
 
 module.exports = ClueList;
-

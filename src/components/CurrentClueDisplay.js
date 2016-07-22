@@ -20,12 +20,12 @@ var styles = StyleSheet.create({
 	container: {
 		marginTop: 65,
 		paddingRight:30,
-		paddingLeft: 30, 
-		flex: 1
+		paddingLeft: 30,
+		flex: 1,
 	},
 	huntTitle: {
 		fontSize: 20,
-		margin: 5,
+		margin: 10,
 		color: '#656565',
 		alignSelf: 'center'
 	},
@@ -34,10 +34,10 @@ var styles = StyleSheet.create({
         backgroundColor: '#5da990'
     },
 	separatorSmall: {
-		height: 16
+		height: 16,
 	},
 	separatorLarge: {
-		height: 26
+		height: 26,
 	},
 	separator: {
         height: 1,
@@ -47,16 +47,16 @@ var styles = StyleSheet.create({
         fontSize: 20,
         color: '#000000',
         fontStyle: 'italic'
-    }, 
+    },
     modal: {
 	    height: 300,
-	    width: 300
+	    width: 300,
   	},
   	btn: {
 	    margin: 10,
 	    backgroundColor: "#3B5998",
 	    color: "white",
-	    padding: 10
+	    padding: 10,
   	},
 
   	btnModal: {
@@ -65,7 +65,7 @@ var styles = StyleSheet.create({
 	    right: 0,
 	    width: 50,
 	    height: 50,
-	    backgroundColor: "transparent"
+	    backgroundColor: "transparent",
   	},
     description: {
         paddingTop: 3,
@@ -88,7 +88,7 @@ var styles = StyleSheet.create({
 	  marginBottom: 10,
 	  alignSelf: 'stretch',
 	  padding:20,
-	  paddingTop:20
+	  paddingTop:20,
 	},
 	hint: {
 		textAlign: 'left',
@@ -117,7 +117,7 @@ var CurrentClueDisplay = React.createClass({
         		type: snap.val().type
         	};
         });
-            
+
         return {
             clue: clue,
             huntId: this.props.hunt.id,
@@ -141,7 +141,7 @@ var CurrentClueDisplay = React.createClass({
 			this.setState({
                 clueSolution: clueSolution
             });
-        
+
         });
     },
 
@@ -154,7 +154,7 @@ var CurrentClueDisplay = React.createClass({
 			var solutionList = this.getSolutionListFromDatabase();
 			this.addUserSolutionToFirebase();
 			this.updateDatabaseSolutionList(solutionList);
-			
+
 			//need to also put next clue in progress at this point
 			//TODO: don't hard code these!
 			// var thisSolutionRef = userSolutionsRef.child(3);
@@ -207,7 +207,7 @@ var CurrentClueDisplay = React.createClass({
     		hunt_id: this.state.huntId,
     		completed: 1,
     		solution: this.state.submission
-  			
+
 		});
 	},
 
@@ -249,7 +249,7 @@ var CurrentClueDisplay = React.createClass({
 
 	render: function() {
 		var hunt = this.props.hunt;
-		 if (this.state.clue.type == "fillIn") { 
+		 if (this.state.clue.type == "fillIn") {
 			return (
 				<View style={styles.container}>
 					<View style={styles.separatorSmall}/>
@@ -273,7 +273,7 @@ var CurrentClueDisplay = React.createClass({
 			  		</Text>
 				</View>
 			);
-		}   		
+		}
 	},
 });
 

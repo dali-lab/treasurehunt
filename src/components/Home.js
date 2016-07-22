@@ -101,6 +101,8 @@ var styles = StyleSheet.create({
         height: 25,
         backgroundColor: '#E4EEEC',
         borderRadius: 5,
+        justifyContent: 'center',
+        paddingLeft: 4
     },
     images: {
       width: 80,
@@ -109,6 +111,10 @@ var styles = StyleSheet.create({
       alignSelf: 'center',
       marginRight: 10
     },
+    searchIcon: {
+      width: 13,
+      height: 13,
+    }
 
 
 
@@ -285,6 +291,8 @@ var Home = React.createClass({
 
                 <View style={styles.extraInfoContainer}>
                   <View style={styles.searchBar}>
+                    <Image source={require('./search.png')}
+                    style={styles.searchIcon} />
                   </View>
 
                 <View style={styles.separator}>
@@ -297,17 +305,6 @@ var Home = React.createClass({
                 </View>
 
                 {internalView}
-
-              <View style={styles.extraInfoContainer}>
-                <View style={styles.header}>
-                  <Text style={styles.headerText}> Past Puzzles </Text>
-                </View>
-              </View>
-
-
-
-
-
 
                 <View style={styles.emptyContainerBottom}>
                 </View>

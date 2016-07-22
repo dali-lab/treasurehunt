@@ -15,17 +15,14 @@ var styles = StyleSheet.create({
 	container: {
 		marginTop: 65,
 		paddingRight:30,
-		paddingLeft: 30, 
-		flex: 1
-	},
-	heading: {
-		backgroundColor: '#F8F8F8',
+		paddingLeft: 30,
+		flex: 1,
 	},
 	separatorSmall: {
-		height: 16
+		height: 16,
 	},
 	separatorLarge: {
-		height: 26
+		height: 26,
 	},
 	image: {
 		width: 300,
@@ -33,24 +30,28 @@ var styles = StyleSheet.create({
 		alignSelf: 'center'
 	},
 	description: {
-        paddingTop: 3,
-        paddingBottom: 8,
-        paddingRight: 23,
-        paddingLeft: 23,
-        alignSelf: 'center'
+    paddingTop: 3,
+    paddingBottom: 8,
+    paddingRight: 23,
+    paddingLeft: 23,
+    alignSelf: 'center',
+		fontSize: 16,
+		fontFamily: 'Verlag-Book',
+		color: '#242021',
     },
 	title: {
-		fontSize: 20,
-		fontWeight: 'bold',
+		fontSize: 25,
 		margin: 5,
-		color: '#656565',
-		alignSelf: 'center'
+		color: '#242021',
+		alignSelf: 'center',
+		fontFamily: 'Verlag-Book',
 	},
 	buttonText: {
 	  fontSize: 18,
 	  color: 'white',
 	  alignSelf: 'center',
-	  fontWeight: 'bold'
+	  fontWeight: 'bold',
+		fontFamily: 'Verlag-Book'
 	},
 	button: {
 	  height: 36,
@@ -62,7 +63,7 @@ var styles = StyleSheet.create({
 	  borderRadius: 8,
 	  marginBottom: 10,
 	  alignSelf: 'stretch',
-	  padding:20
+	  padding:20,
 	}
 });
 
@@ -112,4 +113,3 @@ class HuntOverview extends Component {
 
 
 module.exports = HuntOverview;
-
