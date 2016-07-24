@@ -312,7 +312,7 @@ class LoginScreen extends Component {
 								returnKeyType='go'
 								secureTextEntry={true}
 								onChangeText={(text) => this.setState({password: text})}
-								onSubmitEditing={this.onLoginPressed.bind(this)}
+								onSubmitEditing=this.onLoginPressed
 								disabled={this.state.processingLogin}
     							value={this.state.password}/>
 							</View>
@@ -324,7 +324,7 @@ class LoginScreen extends Component {
 							size="small"/>
 
 						<TouchableHighlight style={styles.button}
-							onPress={this.onLoginPressed.bind(this)}
+							onPress=this.onLoginPressed
 							disabled={this.state.processingLogin}
 							underlayColor='#cadb66'>
 				    		<Text style={styles.buttonText}>Sign in</Text>
