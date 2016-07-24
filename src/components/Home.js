@@ -25,28 +25,39 @@ var styles = StyleSheet.create({
         marginRight: 10
     },
     textContainer: {
-        flex: 1
+        flex: 1,
+        justifyContent: 'space-between'
     },
     container:{
-        flex: 1
+        flex: 1,
     },
-    emptyContainer: {
+    emptyContainerTop: {
         backgroundColor: 'white',
         paddingTop: 5,
         flexDirection: 'column',
-        height: 70
+        height: 70,
+    },
+    emptyContainerBottom: {
+      backgroundColor: 'white',
+      flexDirection: 'column',
+      height: 52,
+      borderTopWidth: 3,
+      borderColor: '#23B090'
     },
     separator: {
         height: 10,
-        backgroundColor: '#FFFFFF'
+        backgroundColor: '#FFFFFF',
     },
     title: {
-        fontSize: 20,
-        color: '#656565',
+        fontSize: 18,
+        fontFamily: 'Verlag-Book',
+        color: '#242021',
     },
     description: {
-        paddingTop: 3,
-        paddingBottom: 4
+        paddingTop: 0,
+        paddingBottom: 4,
+        fontFamily: 'Verlag-Book',
+        color: '#242021'
     },
     points: {
         fontWeight: 'bold'
@@ -67,23 +78,45 @@ var styles = StyleSheet.create({
         backgroundColor: '#E8F3BB',
         borderRadius: 3
     },
+
     header: {
         height: 30,
-        justifyContent: 'flex-end',
+        justifyContent: 'flex-start',
         alignItems: 'flex-start',
         backgroundColor: 'white',
         flexDirection: 'column',
+
     },
     headerText: {
-        fontSize: 20,
-        padding:10,
-        color: 'black'
+        fontSize: 25,
+        fontFamily: 'Verlag-Book',
+        color: '#242021',
+    },
+    extraInfoContainer: {
+      marginLeft: 20,
+      marginRight: 20,
+      marginTop: 10
     },
     searchBar: {
-        height: 40,
+        height: 25,
         backgroundColor: '#E4EEEC',
-        borderRadius: 2
+        borderRadius: 5,
+        justifyContent: 'center',
+        paddingLeft: 4
+    },
+    images: {
+      width: 80,
+      height: 80,
+      backgroundColor: 'red',
+      alignSelf: 'center',
+      marginRight: 10
+    },
+    searchIcon: {
+      width: 13,
+      height: 13,
     }
+
+
 
 });
 
@@ -115,7 +148,8 @@ var Home = React.createClass({
         var huntsList;
 
         var dataSource = new ListView.DataSource({
-            rowHasChanged: (r1, r2) => r1.guid !== r2.guid
+            rowHasChanged: (r1, r2) => r1.guid !== r2.guid,
+            sectionHeaderHasChanged: (s1, s2) => s1.guid !== s2.guid
         });
 
         return {
@@ -131,12 +165,28 @@ var Home = React.createClass({
         var userRef = usersRef.child(currentUser.uid);
         var huntsListRef = userRef.child("hunts_list");
         var huntsList;
-
+        console.log('huntslist is' + huntsList);
         huntsListRef.on('value', (snap) => {
             huntsList = snap.val();
             return huntsList;
         });
     },
+
+    // the whole function 7/21/16 AES
+    getCompletedHuntsList: function() {
+
+        console.log("running getHuntsList");
+        var currentUser = User.getCurrentUser();
+        var userRef = usersRef.child(currentUser.uid);
+        var huntsListRef = userRef.child("hunts_list");
+        var huntsList;
+        console.log('huntslist is' + huntsList);
+        huntsListRef.on('value', (snap) => {
+            huntsList = snap.val();
+            return huntsList;
+        });
+    },
+    // end of this function 7/21/16 AES
 
     // Will load all the things!
     listenForItems: function() {
@@ -147,6 +197,7 @@ var Home = React.createClass({
                 console.log("Loaded hunts: " + hunts + "\nSetting the state");
                 console.log("State was: ");
 
+            //    var newDataSource = this.state.dataSource.clonewithRowsAndSections({current: hunts}, ['current']);
                 var newDataSource = this.state.dataSource.cloneWithRows(hunts);
                 console.log("Now it is: ");
                 this.setState({
@@ -180,12 +231,19 @@ var Home = React.createClass({
                 underlayColor='#dddddd'>
                 <View>
                     <View style={styles.currentRowContainer}>
+                      <View style={styles.images}>
+                      <Text> Image goes here! </Text>
+                      </View>
                         <View style={styles.textContainer}>
+                          <View>
                             <Text style={styles.title} numberOfLines={1}>{hunt.title.toUpperCase()}</Text>
                             <Text style={styles.description}
                                 numberOfLines={2}>{hunt.description}</Text>
+                          </View>
+                          <View>
                             <Progress.Bar style={styles.progressBar}
-                                progress={hunt.progress} width={200} height={10} color='#ffd900' backgroundColor='white'/>
+                                progress={hunt.progress} width={200} borderRadius={0} border={0} height={10} color='#ffd900' backgroundColor='white'/>
+                          </View>
                         </View>
                     </View>
                     <View style={styles.separator}/>
@@ -195,6 +253,7 @@ var Home = React.createClass({
     },
 
     render: function() {
+
 
         console.log("running render ...");
         var listView = <ListView
@@ -227,9 +286,28 @@ var Home = React.createClass({
         console.log("internalView rendered. Returning");
         return (
             <View style={styles.container}>
-                <View style={styles.emptyContainer}>
+                <View style={styles.emptyContainerTop}>
                 </View>
+
+                <View style={styles.extraInfoContainer}>
+                  <View style={styles.searchBar}>
+                    <Image source={require('./search.png')}
+                    style={styles.searchIcon} />
+                  </View>
+
+                <View style={styles.separator}>
+                </View>
+
+                  <View style={styles.header}>
+                    <Text style={styles.headerText}> Current Puzzles </Text>
+                  </View>
+
+                </View>
+
                 {internalView}
+
+                <View style={styles.emptyContainerBottom}>
+                </View>
             </View>
         );
     },

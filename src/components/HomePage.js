@@ -18,7 +18,8 @@ var {
   TouchableHighlight,
   Image,
   ListView,
-  NavigatorIOS
+  NavigatorIOS,
+  Navigator
 } = React;
 
 var TABS = {
@@ -67,7 +68,10 @@ var styles = StyleSheet.create({
   rowContainer: {
     flexDirection: 'row',
     padding: 10
-  }
+  },
+  tabBarStyle: {
+
+  },
 });
 
 var HomePage = React.createClass({
@@ -100,17 +104,20 @@ var HomePage = React.createClass({
 
   _renderHome: function() {
     return (
+
       <NavigatorIOS
         style={styles.container}
         barTintColor='#23B090'
         ref='homeRef'
         titleTextColor='white'
         initialRoute={{
-          title: 'TREASURE HUNT',
+          title: 'TREASUREHUNT',
+          rightButtonImage: <Image source={'./home.png'} /> ,
           component: Home,
           rightButtonTitle: "Logout",
           onRightButtonPress: this.onLogout,
         }} />
+
       )
   },
 /*
@@ -135,14 +142,14 @@ var HomePage = React.createClass({
 
   render: function() {
     return (
+
       <TabBarIOS
         tintColor="white"
         barTintColor="#c5ebe0">
 
         <Icon.TabBarItemIOS
 
-         iconName="ios-star"
-         selectedIconName="ios-star"
+         icon={require('./feed.png')}
          selected={this.state.selectedTab === TABS.feed}
          onPress={() => {
            this.setState({
@@ -156,8 +163,7 @@ var HomePage = React.createClass({
         <Icon.TabBarItemIOS
 
           selected={this.state.selectedTab === TABS.home}
-          iconName="ios-home"
-          selectedIconName="ios-home"
+          icon={require('./home.png')}
           onPress={() => {
             if (this.state.selectedTab !== TABS.home) {
                 this.setState({
@@ -175,10 +181,9 @@ var HomePage = React.createClass({
 
 
        <Icon.TabBarItemIOS
-      
+
          selected={this.state.selectedTab === TABS.create}
-         iconName="ios-gear"
-         selectedIconName="ios-gear"
+         icon={require('./create.png')}
          onPress={() => {
            this.setState({
              selectedTab: TABS.create,
@@ -188,6 +193,7 @@ var HomePage = React.createClass({
        </Icon.TabBarItemIOS>
 
       </TabBarIOS>
+
 
     );
   },
