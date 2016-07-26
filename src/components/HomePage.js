@@ -147,7 +147,8 @@ var HomePage = React.createClass({
 
         <Icon.TabBarItemIOS
 
-         icon={require('./feed.png')}
+         icon={require('./28reminder.png')}
+         selectedIcon={require('./w28reminder.png')}
          selected={this.state.selectedTab === TABS.feed}
          onPress={() => {
            this.setState({
@@ -162,6 +163,7 @@ var HomePage = React.createClass({
 
           selected={this.state.selectedTab === TABS.home}
           icon={require('./home.png')}
+          selectedIcon={require('./w28home.png')}
           onPress={() => {
             if (this.state.selectedTab !== TABS.home) {
                 this.setState({
@@ -181,7 +183,8 @@ var HomePage = React.createClass({
        <Icon.TabBarItemIOS
 
          selected={this.state.selectedTab === TABS.create}
-         icon={require('./create.png')}
+         icon={require('./28pencil.png')}
+         selectedIcon={require('./w28pencil.png')}
          onPress={() => {
            this.setState({
              selectedTab: TABS.create,
