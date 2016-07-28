@@ -291,7 +291,7 @@ var Home = React.createClass({
 
                 <View style={styles.extraInfoContainer}>
                   <View style={styles.searchBar}>
-                    <Image source={require('./search.png')}
+                    <Image source={require('./28magnifier.png')}
                     style={styles.searchIcon} />
                   </View>
 
