@@ -191,6 +191,11 @@ var Home = React.createClass({
         var currentUser = User.getCurrentUser();
         var userRef = usersRef.child(currentUser.uid);
         var huntsListRef = userRef.child("hunts_list");
+
+
+
+
+
         var huntsList;
         console.log('huntslist is' + huntsList);
         huntsListRef.on('value', (snap) => {
@@ -249,35 +254,26 @@ var Home = React.createClass({
         });
     },
 
+    // AES 7/29/16. Function currently not used, but gets the download url from a hunt
     getImage: function(hunt) {
-        var huntImage = storageRef.child(hunt.image);
+        var huntImage = storageRef.child(hunt.imagename);
         console.log(`current hunt image is ${huntImage}`);
         let huntImageURL;
 
         huntImage.getDownloadURL().then((url) => {
           huntImageURL = url;
-          this.currentImage = url;
+
           console.log(`laterhunt image is ${huntImage}`);
+          huntsRef.child(hunt.id).update({imageURL: huntImageURL});
+          console.log(`the saved image url is ${huntImageURL}`);
 
         });
     },
 
-
     renderRow: function(hunt) {
-        // <Image style={styles.thumb} source={{ uri: hunt.image}} />
 
-
-        var huntImage = storageRef.child(hunt.image);
-        var encoded = encodeURI(huntImage);
-        console.log(`current hunt image is ${huntImage}`);
-        var image = huntImage.toString();
-        console.log(`new hunt image is ${image}`);
-
-
-        // var image = this.getImage(hunt);
-
-        console.log(`current value of this.image is ${this.currentImage}`)
-
+        var huntimage = hunt.image;
+        console.log(`current image is ${huntimage}`);
 
         console.log("Rendering row for hunt " + hunt.id);
         return (
@@ -286,7 +282,7 @@ var Home = React.createClass({
                 <View>
                     <View style={styles.currentRowContainer}>
 
-                      <Image source={{uri: 'https://firebasestorage.googleapis.com/v0/b/treasurehuntdali.appspot.com/o/teletubbies.jpg?alt=media&token=5b3bcdd7-1ba2-4c1f-ae02-5bc0ea3ba801'}} style={{width: 80, height: 80}} />
+                      <Image source={{uri: huntimage}} style={styles.images} />
 
                         <View style={styles.textContainer}>
                           <View>

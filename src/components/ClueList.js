@@ -96,6 +96,7 @@ import rootRef from '../../newfirebase.js'
 
 
 const cluesRef = rootRef.ref('clues');
+const huntRef = rootRef.ref('hunts');
 const userSolutionsRef = rootRef.ref('user_solutions');
 
 /*
@@ -313,7 +314,7 @@ var ClueList = React.createClass({
 
 	render: function() {
 		var hunt = this.props.hunt;
-		var huntRef = new Firebase(`${ config.FIREBASE_ROOT }/hunts`);
+
 		return (
 			<View style={styles.container}>
 				<View>
