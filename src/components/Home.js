@@ -81,11 +81,14 @@ var styles = StyleSheet.create({
 
     header: {
         height: 30,
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
+
+
         backgroundColor: 'white',
         flexDirection: 'column',
-
+    },
+    headerButtons: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
     },
     headerText: {
         fontSize: 25,
@@ -146,8 +149,6 @@ const storageRef = storage.ref();
 
 var teletubbies = storageRef.child('teletubbies.jpg');
 
-let currentImage;
-
 
 /*
 const huntsRef = new Firebase(`${ config.FIREBASE_ROOT }/hunts`)
@@ -181,21 +182,16 @@ var Home = React.createClass({
 
         return {
             dataSource: dataSource,
-            huntsList: huntsList
+            huntsList: huntsList,
+            puzzle: 'current'
         };
     },
 
     getHuntsList: function() {
-
         console.log("running getHuntsList");
         var currentUser = User.getCurrentUser();
         var userRef = usersRef.child(currentUser.uid);
         var huntsListRef = userRef.child("hunts_list");
-
-
-
-
-
         var huntsList;
         console.log('huntslist is' + huntsList);
         huntsListRef.on('value', (snap) => {
@@ -212,18 +208,42 @@ var Home = React.createClass({
         var userRef = usersRef.child(currentUser.uid);
         var huntsListRef = userRef.child("hunts_list");
         var huntsList;
-        console.log('huntslist is' + huntsList);
+        console.log('completedhuntslist is' + huntsList);
+
         huntsListRef.on('value', (snap) => {
             huntsList = snap.val();
             return huntsList;
         });
+
     },
     // end of this function 7/21/16 AES
+
+
+    listenForCompletedItems: function() {
+      User.getCurrentUser().getCompletedHuntsList().then((huntsList) => {
+        console.log(`loaded this thing: ${huntsList}`);
+        Hunts.getHuntObjects(huntsList).then((hunts) => {
+            console.log("Loaded completed hunts: " + hunts );
+
+            var newDataSource = this.state.dataSource.cloneWithRows(hunts);
+            console.log("Now it is: ");
+            this.replaceState({
+                hunts: hunts,
+                dataSource: newDataSource,
+                huntsList: huntsList
+              })
+
+          //    this.forceUpdate();
+
+          });
+      });
+    },
 
     // Will load all the things!
     listenForItems: function() {
         console.log("running listenForItems");
         console.log(this.state);
+
         User.getCurrentUser().getHuntsList().then((huntsList) => {
             Hunts.getHuntObjects(huntsList).then((hunts) => {
                 console.log("Loaded hunts: " + hunts + "\nSetting the state");
@@ -234,14 +254,22 @@ var Home = React.createClass({
                 console.log("Now it is: ");
                 this.setState({
                     hunts: hunts,
-                    dataSource: newDataSource
+                    dataSource: newDataSource,
                 })
+
+
             })
         });
     },
 
     componentDidMount: function() {
+      if (this.state.puzzle === 'current'){
         this.listenForItems();
+      } else if (this.state.puzzle == 'past'){
+        console.log('what the hell is the state rn....');
+        this.listenForCompletedItems();
+      }
+
     },
 
     rowPressed: function(hunt) {
@@ -302,6 +330,15 @@ var Home = React.createClass({
         );
     },
 
+/* Well I think I fucked up.... AES 7/29
+    <View>
+    <TouchableHighlight underlayColor={'green'} onPress={() => this.setState({ puzzle: 'past'})}>
+      <Text style={styles.headerText}> Past Puzzles </Text>
+    </TouchableHighlight>
+    </View>
+    */
+
+    //   <TouchableHighlight underlayColor={'green'} onPress={() => this.listenForCompletedItems()}>
     render: function() {
 
 
@@ -349,7 +386,21 @@ var Home = React.createClass({
                 </View>
 
                   <View style={styles.header}>
-                    <Text style={styles.headerText}> Current Puzzles </Text>
+                    <View style={styles.headerButtons}>
+                    <View>
+                    <TouchableHighlight underlayColor={'blue'} onPress={() => alert('current!')}>
+                      <Text style={styles.headerText}> Current Puzzles</Text>
+                    </TouchableHighlight>
+                    </View>
+
+                    <View>
+                    <TouchableHighlight underlayColor={'green'} onPress={() => this.listenForCompletedItems()}>
+                      <Text style={styles.headerText}> Past Puzzles </Text>
+                    </TouchableHighlight>
+                    </View>
+
+                    </View>
+
                   </View>
 
                 </View>
