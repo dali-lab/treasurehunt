@@ -1,8 +1,15 @@
 const Firebase = require('firebase')
 const config = require('../../config')
+
+import rootRef from '../../newfirebase.js';
+const usersRef = rootRef.ref('users');
+const huntsRef = rootRef.ref('hunts');
+
+
+/*
 const huntsRef = new Firebase(`${ config.FIREBASE_ROOT }/hunts`)
 const usersRef = new Firebase(`${ config.FIREBASE_ROOT }/users`)
-
+*/
 
 function getHuntWithID(id) {
 	var ref = huntsRef.child(id);

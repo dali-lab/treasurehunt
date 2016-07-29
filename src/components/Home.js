@@ -107,7 +107,7 @@ var styles = StyleSheet.create({
     images: {
       width: 80,
       height: 80,
-      backgroundColor: 'red',
+
       alignSelf: 'center',
       marginRight: 10
     },
@@ -134,9 +134,36 @@ var noHuntsStyle = StyleSheet.create({
 
 const Firebase = require('firebase')
 const config = require('../../config')
+
+import rootRef from '../../newfirebase.js'
+
+
+const usersRef = rootRef.ref('users');
+const huntsRef = rootRef.ref('hunts');
+
+const storage = firebase.storage();
+const storageRef = storage.ref();
+
+var teletubbies = storageRef.child('teletubbies.jpg');
+
+let currentImage;
+
+
+/*
 const huntsRef = new Firebase(`${ config.FIREBASE_ROOT }/hunts`)
 const rootRef = new Firebase(`${ config.FIREBASE_ROOT }`)
 const usersRef = new Firebase(`${ config.FIREBASE_ROOT }/users`)
+*/
+
+
+// AES 7/28/16
+// var url = 'gs://treasurehuntdali.appspot.com'
+// const storage = new Firebase(`${url}`);
+// storageRef = storage.key();
+
+// const storage = Firebase.storage();
+// const storageRef = storage.ref();
+
 
 /**
  * The Home view for the app. It is a list of hunts
@@ -222,8 +249,35 @@ var Home = React.createClass({
         });
     },
 
+    getImage: function(hunt) {
+        var huntImage = storageRef.child(hunt.image);
+        console.log(`current hunt image is ${huntImage}`);
+        let huntImageURL;
+
+        huntImage.getDownloadURL().then((url) => {
+          huntImageURL = url;
+          this.currentImage = url;
+          console.log(`laterhunt image is ${huntImage}`);
+
+        });
+    },
+
+
     renderRow: function(hunt) {
         // <Image style={styles.thumb} source={{ uri: hunt.image}} />
+
+
+        var huntImage = storageRef.child(hunt.image);
+        var encoded = encodeURI(huntImage);
+        console.log(`current hunt image is ${huntImage}`);
+        var image = huntImage.toString();
+        console.log(`new hunt image is ${image}`);
+
+
+        // var image = this.getImage(hunt);
+
+        console.log(`current value of this.image is ${this.currentImage}`)
+
 
         console.log("Rendering row for hunt " + hunt.id);
         return (
@@ -231,9 +285,9 @@ var Home = React.createClass({
                 underlayColor='#dddddd'>
                 <View>
                     <View style={styles.currentRowContainer}>
-                      <View style={styles.images}>
-                      <Text> Image goes here! </Text>
-                      </View>
+
+                      <Image source={{uri: 'https://firebasestorage.googleapis.com/v0/b/treasurehuntdali.appspot.com/o/teletubbies.jpg?alt=media&token=5b3bcdd7-1ba2-4c1f-ae02-5bc0ea3ba801'}} style={{width: 80, height: 80}} />
+
                         <View style={styles.textContainer}>
                           <View>
                             <Text style={styles.title} numberOfLines={1}>{hunt.title.toUpperCase()}</Text>
