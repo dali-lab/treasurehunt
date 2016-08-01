@@ -223,16 +223,20 @@ var Home = React.createClass({
       User.getCurrentUser().getCompletedHuntsList().then((huntsList) => {
         console.log(`loaded this thing: ${huntsList}`);
         Hunts.getHuntObjects(huntsList).then((hunts) => {
-            console.log("Loaded completed hunts: " + hunts );
+            console.log("Loaded completed hunts: " + JSON.stringify(hunts) );
 
-            var newDataSource = this.state.dataSource.cloneWithRows(hunts);
-            console.log("Now it is: ");
-            this.replaceState({
+            console.log(`right now the datasource is ${JSON.stringify(this.state.dataSource)}`);
+            var thisIsNew = new ListView.DataSource({
+                rowHasChanged: (r1, r2) => r1.guid !== r2.guid,
+                sectionHeaderHasChanged: (s1, s2) => s1.guid !== s2.guid
+            });
+            var newDataSource = thisIsNew.cloneWithRows(hunts);
+            console.log(`middle datasource is ${JSON.stringify(this.state.dataSource)}`);
+            this.setState({
                 hunts: hunts,
                 dataSource: newDataSource,
-                huntsList: huntsList
               })
-
+              console.log(`Now it is: ${JSON.stringify(this.state.dataSource)}`);
           //    this.forceUpdate();
 
           });
@@ -249,8 +253,11 @@ var Home = React.createClass({
                 console.log("Loaded hunts: " + hunts + "\nSetting the state");
                 console.log("State was: ");
 
-            //    var newDataSource = this.state.dataSource.clonewithRowsAndSections({current: hunts}, ['current']);
-                var newDataSource = this.state.dataSource.cloneWithRows(hunts);
+                var thisIsNew = new ListView.DataSource({
+                    rowHasChanged: (r1, r2) => r1.guid !== r2.guid,
+                    sectionHeaderHasChanged: (s1, s2) => s1.guid !== s2.guid
+                });
+                var newDataSource = thisIsNew.cloneWithRows(hunts);
                 console.log("Now it is: ");
                 this.setState({
                     hunts: hunts,
@@ -330,15 +337,6 @@ var Home = React.createClass({
         );
     },
 
-/* Well I think I fucked up.... AES 7/29
-    <View>
-    <TouchableHighlight underlayColor={'green'} onPress={() => this.setState({ puzzle: 'past'})}>
-      <Text style={styles.headerText}> Past Puzzles </Text>
-    </TouchableHighlight>
-    </View>
-    */
-
-    //   <TouchableHighlight underlayColor={'green'} onPress={() => this.listenForCompletedItems()}>
     render: function() {
 
 
@@ -358,7 +356,6 @@ var Home = React.createClass({
 
         var internalView;
 
-        console.log(internalView);
         if (this.state.hunts == undefined) {
             internalView = <View style={noHuntsStyle.noHuntsView}>
                             <Text style={noHuntsStyle.noHuntsText}>Loading...</Text>
@@ -388,13 +385,13 @@ var Home = React.createClass({
                   <View style={styles.header}>
                     <View style={styles.headerButtons}>
                     <View>
-                    <TouchableHighlight underlayColor={'blue'} onPress={() => alert('current!')}>
+                    <TouchableHighlight underlayColor='#dddddd' onPress={() => this.listenForItems()}>
                       <Text style={styles.headerText}> Current Puzzles</Text>
                     </TouchableHighlight>
                     </View>
 
                     <View>
-                    <TouchableHighlight underlayColor={'green'} onPress={() => this.listenForCompletedItems()}>
+                    <TouchableHighlight underlayColor='#dddddd' onPress={() => this.listenForCompletedItems()}>
                       <Text style={styles.headerText}> Past Puzzles </Text>
                     </TouchableHighlight>
                     </View>
