@@ -5,6 +5,7 @@ const SignUp = require('./SignUp');
 const ForgotPassword = require('./ForgotPassword');
 import User from './User';
 var dismissKeyboard = require('dismissKeyboard');
+var {FBLogin} = require('react-native-facebook-login');
 
 var {
   StyleSheet,
@@ -37,45 +38,53 @@ var styles = StyleSheet.create({
 		flexDirection: "column",
 		flex: 1,
 		width: screenWidth * 2 / 3,
-		marginTop: screenPadding,
+		marginTop: screenPadding + 20,
 		marginLeft: screenPadding,
 		marginRight: screenPadding,
 	},
 	icon: {
 		width: screenWidth * 0.4,
 		height: screenWidth * 0.4 * 0.83,
-		alignSelf: "center",
-    marginTop: screenPadding * 3,
+		alignSelf: "center"
 	},
 	titleStyle: {
 		marginTop: 20,
-		marginBottom: screenHeight > 500 ? 30 : 10,
-		fontSize: 25,
-    fontFamily: 'Museo Slab',
-		color: "#59aa91",
-		alignSelf: "center",
+		marginBottom: 20,
+		fontSize: 26,
+    	fontFamily: 'Museo Slab',
+		color: "#22B08F",
+		alignSelf: "center"
 	},
 	buttonText: {
-		fontSize: 20,
+		fontSize: 18,
 		color: 'white',
 		alignSelf: 'center',
 		fontWeight: 'bold',
-    fontFamily: 'Verlag-Book'
 	},
 	button: {
 		height: 36,
 		flexDirection: 'row',
-		backgroundColor: '#bfcf60',
-		borderColor: '#bfcf60',
+		backgroundColor: '#BAC928',
+		borderColor: '#BAC928',
 		borderWidth: 1,
 		borderRadius: 5,
-		marginBottom: 10,
+		marginBottom: 5,
 		alignSelf: 'stretch',
 		justifyContent: 'center'
+	},
+	orText: {
+		alignSelf: 'center',
+		marginBottom: 5,
+		color: "gray",
+	},
+	fbButton: {
+		alignSelf: 'center',
+		marginBottom: 10,
 	},
 	textField: {
 		height: 40,
 		flex: 1,
+		marginBottom: 0,
 		flexDirection: 'row',
 		fontSize: 20,
 		paddingLeft: 20,
@@ -86,16 +95,26 @@ var styles = StyleSheet.create({
 	},
 	loginTextInputMainView: {
 		height: 85,
+		borderColor: '#f0f8f5',
 		borderRadius: 5,
-		backgroundColor: "#E3EFED",
+		backgroundColor: "#f0f8f5",
 		flexDirection: 'column',
 		alignSelf: 'stretch',
 	},
-	loginIcons: {
-		top: 10,
-		left: 10,
-		height: 20,
+	loginIconsEmail: {
+		top: 13,
+		left: 15,
+		height: 15,
+		marginRight: 3,
 		width: 20,
+		flexDirection: 'row',
+	},
+	loginIconsPassword: {
+		top: 10,
+		left: 17,
+		marginRight: 5,
+		height: 20,
+		width: 17,
 		flexDirection: 'row',
 	},
 	topBar: {
@@ -103,17 +122,17 @@ var styles = StyleSheet.create({
 		marginLeft: 0,
 		flexDirection: 'row',
 		alignSelf: 'stretch',
-		backgroundColor: '#23B090',
+		backgroundColor: '#22B08F',
 	},
 	bottomBar: {
 		height: 40,
 		flexDirection: 'column',
 		alignSelf: 'stretch',
-		backgroundColor: '#23B090',
+		backgroundColor: '#22B08F',
 	},
 	separationBar: {
 		backgroundColor: "#1d8377",
-		height: 1,
+		height: 0.7,
 		marginLeft: 5,
 		marginRight: 5,
 		flexDirection: 'row',
@@ -123,17 +142,15 @@ var styles = StyleSheet.create({
 		textAlign: 'left',
 		color: "gray",
 		alignSelf: "flex-start",
-    fontFamily: 'Verlag-Book'
 	},
 	skipSyle: {
 		color: "gray",
 		flexDirection: "row",
 		alignSelf: "center",
-		marginBottom: 10,
-    fontFamily: 'Verlag-Book'
+		marginBottom: 10
 	},
 	linkStyle: {
-		color: "blue",
+		color: "#1d8377",
 	}
 });
 
@@ -221,16 +238,15 @@ class LoginScreen extends Component {
 		})
 	}
 
-	skipPressed() {
-		// removed this functionality for now
-		// if (typeof this.props.onSkipLogin == 'function') {
-		// 	this.props.onSkipLogin();
-		// }
-		AlertIOS.alert(
-			"Not yet supported",
-			"Please create an account to win cool prizes!"
-		);
-	}
+	// skipPressed() {
+	// 	if (typeof this.props.onSkipLogin == 'function') {
+	// 		this.props.onSkipLogin();
+	// 	}
+	// 	// AlertIOS.alert(
+	// 	// 	"Not yet supported",
+	// 	// 	"Please create an account to win cool prizes!"
+	// 	// );
+	// }
 
 	hideModal() {
 		this.setState({
@@ -274,7 +290,7 @@ class LoginScreen extends Component {
 
 						<View style={styles.loginTextInputMainView}>
 							<View style={styles.loginTextInputViews}><Image
-								style={styles.loginIcons}
+								style={styles.loginIconsEmail}
 								source={require('../../user.png')}/>
 							<TextInput style= {styles.textField}
 								ref="emailTextField"
@@ -284,13 +300,12 @@ class LoginScreen extends Component {
 									this.refs.passwordTextField.focus()
 								}
     							value={this.state.email}
-    							disabled={this.state.processingLogin}
-								placeholder="email"/>
+    							disabled={this.state.processingLogin}/>
 							</View>
 							<View style={styles.separationBar}></View>
 							<View style={styles.loginTextInputViews}>
 							<Image
-								style={styles.loginIcons}
+								style={styles.loginIconsPassword}
 								source={require('../../password.png')}/>
 							<TextInput style={styles.textField}
 								ref="passwordTextField"
@@ -299,8 +314,7 @@ class LoginScreen extends Component {
 								onChangeText={(text) => this.setState({password: text})}
 								onSubmitEditing={this.onLoginPressed.bind(this)}
 								disabled={this.state.processingLogin}
-    							value={this.state.password}
-								placeholder="password"/>
+    							value={this.state.password}/>
 							</View>
 						</View>
 
@@ -315,6 +329,14 @@ class LoginScreen extends Component {
 							underlayColor='#cadb66'>
 				    		<Text style={styles.buttonText}>Sign in</Text>
 				  		</TouchableHighlight>
+				  		<Text style={styles.orText}>or</Text>
+				  		<FBLogin style={styles.fbButton}
+				  			permissions={["email"]}
+				  			onLogin={(data) => {
+					        	var user = User.FBonLogin(data);
+					        	if (user != null)
+									this.didLogIn(user);
+					   		}}/>
 
 				  		<Text style={styles.forgotPassword} onPress={this.forgotPasswordPressed.bind(this)}>Forgot your password?</Text>
 				  		<Text style={styles.forgotPassword}>
@@ -324,12 +346,16 @@ class LoginScreen extends Component {
 		  				</Text>
 
 					</View>
-			  		<Text style={styles.skipSyle} onPress={this.skipPressed.bind(this)}>No thanks, just take me to the puzzle</Text>
 			  		<View style={styles.bottomBar}></View>
 			  	</View>
 			</View>
 			</TouchableHighlight>
 	  	);
+
+		// Later for importing friends, add this to FBLogin permissions: "user_friends"
+
+		// For skipping login
+		// <Text style={styles.skipSyle} onPress={this.skipPressed.bind(this)}>No thanks, just take me to the puzzle</Text>
 	}
 }
 

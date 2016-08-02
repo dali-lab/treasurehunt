@@ -39,24 +39,24 @@ Now that we have the first prototype, we need to take a step back and take a bet
 	- Start changing database ✅  - Dev
 	- Compile all design instructions into on place ✅ - Design
 - End of week of July 15th:
-	- Plan interface for sign up, feed, and create views - Design
+	- Plan interface for sign up, feed, and create views ✅ - Design
 	- Finish database structure remake ✅  - Dev
-	- Update app to use new fonts, colors (?), and full-res icons - Dev
+	- Update app to use new fonts, colors (?), and full-res icons ✅ - Dev
 	  - 3 tabs instead of 5 ✅  - Dev
 	- Move all backend code to separate files ✅  - Dev
 	- Make database changes in code ✅  - Dev
 	- Choose new colors? ✅  - Design
 - Monday July 18th:
 	- Have all the art assets in one place ✅  - Design
-	- Code is clean and ready for expansion - Dev
-	- Interface for main view and login view done - Dev
+	- Code is clean and ready for expansion ✅ - Dev
+	- Interface for main view and login view done ✅ - Dev
 - End of week July 22nd: (John is in SC this week)
 	- Hunt overview (without feed) and hunt completion interface finished - Design
 	- Tags done
 - Monday July 25th:
 	- Search method design - Design
 	- Clue types!
-    	- Data structures planned - Dev
+    	- Data structures planned ✅  - Dev
     	- Icons for interface finalized - Design
 - End of week July 29th:
   	- Search functionality done - Dev

@@ -6,6 +6,7 @@ const config = require('../../config')
 const usersRef = rootRef.ref('users');
 // const usersRef = new Firebase("https://treasurehuntdali.firebaseio.com/users")
 const React = require('react-native');
+const {FBLoginManager} = require('react-native-facebook-login');
 
 const USER_STORAGE_KEY = '@TreasureHunt:userObject'
 
@@ -21,35 +22,38 @@ class User {
 	// No one but this class should make user objects
 	constructor(uid) {
 		this.uid = uid;
+		this.isFacebook = false;
 	}
 
 	buildWithData(authData, userRef, email) {
+		console.log(authData);
 		this.uid = authData.uid;
 		this.provider = authData.provider;
 		this.token = authData.token;
 		this.auth = authData.auth;
-		this.email = email;
 		this.authData = authData;
-		this.userRef = userRef;
-		this.currentHunts = userRef.child("currentHunts");
-		this.completedHunts = userRef.child("completedHunts");  // 7/21/16 AES
+		this.buildWithData2(userRef, email);
 	}
 
-	setUpRefs(userRef) {
+	buildWithData2(userRef, email) {
+		this.email = email;
 		this.userRef = userRef;
 		this.currentHunts = userRef.child("currentHunts");
-		this.completedHunts = userRef.child("completedHunts");  // 7/21/16 AES
 	}
 
-	static async logout() {
-		this.currentUser = null;
-		try {
-			console.log("Logging out...");
-			await AsyncStorage.removeItem(USER_STORAGE_KEY);
-			console.log("Logged out!");
-		}catch (error) {
-			console.log("Failed to logout!");
-		}
+	static initializeNewUser(id, email) {
+		var userObject = usersRef.child(id);
+		userObject.set({
+			email: email,
+			currentHunts: [],
+			completedHunts: [],
+			name: "",
+		});
+
+		var user = new User(id);
+		user.buildWithData2(userObject, email);
+
+		return user;
 	}
 
 	static getCurrentUser() {
@@ -58,7 +62,7 @@ class User {
 
 	static updateCurrentUserFromStore() {
 		console.log("Updating user from store...");
-		return new Promise(async (fulfill, reject) => {
+		return new Promise(async (fulfill, reject) => {	
 			try {
 				const value = await AsyncStorage.getItem(USER_STORAGE_KEY)
 				console.log("Got something...");
@@ -124,6 +128,34 @@ class User {
 		});
 	}
 
+	static FBonLogin(data) {
+		var id = data.credentials.userId;
+		console.log(data);
+
+
+		User.currentUser = User.initializeNewUser(id, id);
+		User.updateUserInStore();
+		User.currentUser.isFacebook = true;
+		User.currentUser.data = data;
+		return User.currentUser;
+	}
+
+	static logout() {
+		if (!User.currentUser) {
+			return;
+		}
+
+		if (User.currentUser.isFacebook) {
+			console.log("Trying to log out of facebook");
+			FBLoginManager.logout(() => {
+				
+			});
+		}
+
+		User.currentUser = null;
+		AsyncStorage.removeItem(USER_STORAGE_KEY);
+	}
+
 	/**
 		This function creates a user, and will call the callBack when done
 		callBack = function(error, user)
@@ -171,7 +203,7 @@ class User {
 		return new Promise((fulfill, reject) => {
 			this.currentHunts.once('value', function(snap) {
 				if (snap.val() == null) {
-					reject(NSNull);
+					reject();
 				}else{
 					fulfill(snap.exportVal());
 				}
@@ -180,22 +212,6 @@ class User {
 			});
 		});
 	}
-
-	// This whole function 7/21/16 AES
-	getCompletedHuntsList() {
-		return new Promise((fulfill, reject) => {
-			this.completedHunts.once('value', function(snap) {
-				if (snap.val() == null) {
-					reject(NSNull);
-				}else{
-					fulfill(snap.exportVal());
-				}
-			}, function(error) {
-				reject(error);
-			});
-		});
-	}
-	// end of function 7/21/16 AES
 }
 
 export default User;
