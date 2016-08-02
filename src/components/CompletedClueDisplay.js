@@ -14,7 +14,7 @@ var styles = StyleSheet.create({
 	container: {
 		marginTop: 65,
 		paddingRight:30,
-		paddingLeft: 30, 
+		paddingLeft: 30,
 		flex: 1
 	},
 	huntTitle: {
@@ -41,7 +41,7 @@ var styles = StyleSheet.create({
         fontSize: 20,
         color: '#000000',
         fontStyle: 'italic'
-    }, 
+    },
     description: {
         paddingTop: 3,
         paddingBottom: 8,
@@ -72,11 +72,20 @@ var styles = StyleSheet.create({
 
 const Firebase = require('firebase')
 const config = require('../../config')
+
+import rootRef from '../../newfirebase.js';
+
+
+const usersRef = rootRef.ref('users');
+const cluesRef = rootRef.ref('clues');
+const userSolutionsRef = rootRef.ref('user_solutions');
+const clueSolutionsRef = rootRef.ref('clue_solutions');
+/*
 const usersRef = new Firebase(`${ config.FIREBASE_ROOT }/users`)
 const cluesRef = new Firebase(`${ config.FIREBASE_ROOT }/clues`)
 const userSolutionsRef = new Firebase(`${ config.FIREBASE_ROOT }/user_solutions`)
 const clueSolutionsRef = new Firebase(`${ config.FIREBASE_ROOT }/clue_solutions`)
-
+*/
 
 var CompletedClueDisplay = React.createClass({
 
@@ -105,7 +114,7 @@ var CompletedClueDisplay = React.createClass({
     },
 
     listenForItems: function(clueSolutionsRef) {
-        
+
 		clueSolutionsRef.orderByChild('clue_id').equalTo(Number(this.props.clueId)).once('value', (snap) => {
             var solution = snap.val();
             for (var key in solution) {
@@ -114,7 +123,7 @@ var CompletedClueDisplay = React.createClass({
 			this.setState({
                 clueSolution: clueSolution
             });
-        
+
         });
     },
 
@@ -126,7 +135,7 @@ var CompletedClueDisplay = React.createClass({
 		return true;
 	},
 
-	render: function() {	 
+	render: function() {
 		var hunt = this.props.hunt;
 		return (
 			<View style={styles.container}>

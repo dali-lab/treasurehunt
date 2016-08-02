@@ -8,7 +8,10 @@ var User = require('./User').default;
 
 const Firebase = require('firebase')
 const config = require('../../config')
-const itemsRef = new Firebase(`${ config.FIREBASE_ROOT }/items`)
+
+import rootRef from '../../newfirebase.js';
+const itemsRef = rootRef.ref('items');
+// const itemsRef = new Firebase(`${ config.FIREBASE_ROOT }/items`)
 
 var {
   StyleSheet,

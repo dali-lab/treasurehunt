@@ -1,7 +1,10 @@
 const Firebase = require('firebase');
-const ref = new Firebase("https://treasurehuntdali.firebaseio.com/");
+import rootRef from '../../newfirebase.js';
+// const ref = new Firebase("https://treasurehuntdali.firebaseio.com/");
 const config = require('../../config')
-const usersRef = new Firebase("https://treasurehuntdali.firebaseio.com/users")
+
+const usersRef = rootRef.ref('users');
+// const usersRef = new Firebase("https://treasurehuntdali.firebaseio.com/users")
 const React = require('react-native');
 const {FBLoginManager} = require('react-native-facebook-login');
 

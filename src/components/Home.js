@@ -107,7 +107,7 @@ var styles = StyleSheet.create({
     images: {
       width: 80,
       height: 80,
-      backgroundColor: 'red',
+
       alignSelf: 'center',
       marginRight: 10
     },
@@ -134,9 +134,36 @@ var noHuntsStyle = StyleSheet.create({
 
 const Firebase = require('firebase')
 const config = require('../../config')
+
+import rootRef from '../../newfirebase.js'
+
+
+const usersRef = rootRef.ref('users');
+const huntsRef = rootRef.ref('hunts');
+
+const storage = firebase.storage();
+const storageRef = storage.ref();
+
+var teletubbies = storageRef.child('teletubbies.jpg');
+
+let currentImage;
+
+
+/*
 const huntsRef = new Firebase(`${ config.FIREBASE_ROOT }/hunts`)
 const rootRef = new Firebase(`${ config.FIREBASE_ROOT }`)
 const usersRef = new Firebase(`${ config.FIREBASE_ROOT }/users`)
+*/
+
+
+// AES 7/28/16
+// var url = 'gs://treasurehuntdali.appspot.com'
+// const storage = new Firebase(`${url}`);
+// storageRef = storage.key();
+
+// const storage = Firebase.storage();
+// const storageRef = storage.ref();
+
 
 /**
  * The Home view for the app. It is a list of hunts
@@ -164,6 +191,11 @@ var Home = React.createClass({
         var currentUser = User.getCurrentUser();
         var userRef = usersRef.child(currentUser.uid);
         var huntsListRef = userRef.child("hunts_list");
+
+
+
+
+
         var huntsList;
         console.log('huntslist is' + huntsList);
         huntsListRef.on('value', (snap) => {
@@ -222,8 +254,26 @@ var Home = React.createClass({
         });
     },
 
+    // AES 7/29/16. Function currently not used, but gets the download url from a hunt
+    getImage: function(hunt) {
+        var huntImage = storageRef.child(hunt.imagename);
+        console.log(`current hunt image is ${huntImage}`);
+        let huntImageURL;
+
+        huntImage.getDownloadURL().then((url) => {
+          huntImageURL = url;
+
+          console.log(`laterhunt image is ${huntImage}`);
+          huntsRef.child(hunt.id).update({imageURL: huntImageURL});
+          console.log(`the saved image url is ${huntImageURL}`);
+
+        });
+    },
+
     renderRow: function(hunt) {
-        // <Image style={styles.thumb} source={{ uri: hunt.image}} />
+
+        var huntimage = hunt.image;
+        console.log(`current image is ${huntimage}`);
 
         console.log("Rendering row for hunt " + hunt.id);
         return (
@@ -231,9 +281,9 @@ var Home = React.createClass({
                 underlayColor='#dddddd'>
                 <View>
                     <View style={styles.currentRowContainer}>
-                      <View style={styles.images}>
-                      <Text> Image goes here! </Text>
-                      </View>
+
+                      <Image source={{uri: huntimage}} style={styles.images} />
+
                         <View style={styles.textContainer}>
                           <View>
                             <Text style={styles.title} numberOfLines={1}>{hunt.title.toUpperCase()}</Text>

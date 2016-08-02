@@ -99,10 +99,21 @@ var styles = StyleSheet.create({
 
 const Firebase = require('firebase')
 const config = require('../../config')
+
+import rootRef from '../../newfirebase.js'
+
+const usersRef = rootRef.ref('users');
+const cluesRef = rootRef.ref('clues');
+const userSolutionsRef = rootRef.ref('user_solutions');
+const clueSolutionsRef = rootRef.ref('clue_solutions');
+
+
+/*
 const usersRef = new Firebase(`${ config.FIREBASE_ROOT }/users`)
 const cluesRef = new Firebase(`${ config.FIREBASE_ROOT }/clues`)
 const userSolutionsRef = new Firebase(`${ config.FIREBASE_ROOT }/user_solutions`)
 const clueSolutionsRef = new Firebase(`${ config.FIREBASE_ROOT }/clue_solutions`)
+*/
 
 
 var CurrentClueDisplay = React.createClass({

@@ -35,28 +35,8 @@
 		6B8E63E7DFBF4CCD87582CF1 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9CDBE5B9746D470A9B515BBD /* MaterialIcons.ttf */; };
 		81278E3018774811B49995A5 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B586B9823A874F8891F5672A /* Foundation.ttf */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
-		886864D01D400DFF00684741 /* Verlag-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 886864BD1D400DFF00684741 /* Verlag-Black.ttf */; };
-		886864D11D400DFF00684741 /* Verlag-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 886864BE1D400DFF00684741 /* Verlag-BlackItalic.ttf */; };
-		886864D21D400DFF00684741 /* Verlag-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 886864BF1D400DFF00684741 /* Verlag-Bold.ttf */; };
-		886864D31D400DFF00684741 /* Verlag-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 886864C01D400DFF00684741 /* Verlag-BoldItalic.ttf */; };
-		886864D41D400DFF00684741 /* Verlag-Book.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 886864C11D400DFF00684741 /* Verlag-Book.ttf */; };
-		886864D51D400DFF00684741 /* Verlag-BookItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 886864C21D400DFF00684741 /* Verlag-BookItalic.ttf */; };
-		886864D61D400DFF00684741 /* Verlag-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 886864C31D400DFF00684741 /* Verlag-Light.ttf */; };
-		886864D71D400DFF00684741 /* Verlag-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 886864C41D400DFF00684741 /* Verlag-LightItalic.ttf */; };
-		886864D81D400DFF00684741 /* Verlag-XLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 886864C51D400DFF00684741 /* Verlag-XLight.ttf */; };
-		886864D91D400DFF00684741 /* Verlag-XLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 886864C61D400DFF00684741 /* Verlag-XLightItalic.ttf */; };
-		886864DA1D400DFF00684741 /* VerlagCondensed-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 886864C71D400DFF00684741 /* VerlagCondensed-Black.ttf */; };
-		886864DB1D400DFF00684741 /* VerlagCondensed-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 886864C81D400DFF00684741 /* VerlagCondensed-BlackItalic.ttf */; };
-		886864DC1D400DFF00684741 /* VerlagCondensed-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 886864C91D400DFF00684741 /* VerlagCondensed-Bold.ttf */; };
-		886864DD1D400DFF00684741 /* VerlagCondensed-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 886864CA1D400DFF00684741 /* VerlagCondensed-BoldItalic.ttf */; };
-		886864DE1D400DFF00684741 /* VerlagCondensed-Book.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 886864CB1D400DFF00684741 /* VerlagCondensed-Book.ttf */; };
-		886864DF1D400DFF00684741 /* VerlagCondensed-BookItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 886864CC1D400DFF00684741 /* VerlagCondensed-BookItalic.ttf */; };
-		886864E01D400DFF00684741 /* VerlagCondensed-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 886864CD1D400DFF00684741 /* VerlagCondensed-Light.ttf */; };
-		886864E11D400DFF00684741 /* VerlagCondensed-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 886864CE1D400DFF00684741 /* VerlagCondensed-LightItalic.ttf */; };
-		886864E21D400DFF00684741 /* VerlagCondensed-XLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 886864CF1D400DFF00684741 /* VerlagCondensed-XLight.ttf */; };
 		8898362B1D36E82B0092056A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8898362A1D36E82B0092056A /* GoogleService-Info.plist */; };
 		8898362E1D3941D40092056A /* MuseoSlab.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8898362C1D3941D40092056A /* MuseoSlab.otf */; };
-		8898362F1D3941D40092056A /* Verlag.zip in Resources */ = {isa = PBXBuildFile; fileRef = 8898362D1D3941D40092056A /* Verlag.zip */; };
 		889836331D3959980092056A /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 889836321D3959980092056A /* Info.plist */; };
 		8E0E9272B4E9C38BE775CA49 /* libPods-treasurehunt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FD3513AEC42C8BF7D887838F /* libPods-treasurehunt.a */; };
 		EF6D924CE1FC4E09B1FE4DC7 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 246D546EEEBF461E8430263F /* libRNVectorIcons.a */; };
@@ -187,28 +167,27 @@
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		7CB39E3F31CF680CD6F2EC8F /* Pods-treasurehunt.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-treasurehunt.debug.xcconfig"; path = "Pods/Target Support Files/Pods-treasurehunt/Pods-treasurehunt.debug.xcconfig"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
-		886864BD1D400DFF00684741 /* Verlag-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Verlag-Black.ttf"; path = "../../../../../Downloads/Verlag-2/Verlag-Black.ttf"; sourceTree = "<group>"; };
-		886864BE1D400DFF00684741 /* Verlag-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Verlag-BlackItalic.ttf"; path = "../../../../../Downloads/Verlag-2/Verlag-BlackItalic.ttf"; sourceTree = "<group>"; };
-		886864BF1D400DFF00684741 /* Verlag-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Verlag-Bold.ttf"; path = "../../../../../Downloads/Verlag-2/Verlag-Bold.ttf"; sourceTree = "<group>"; };
-		886864C01D400DFF00684741 /* Verlag-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Verlag-BoldItalic.ttf"; path = "../../../../../Downloads/Verlag-2/Verlag-BoldItalic.ttf"; sourceTree = "<group>"; };
-		886864C11D400DFF00684741 /* Verlag-Book.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Verlag-Book.ttf"; path = "../../../../../Downloads/Verlag-2/Verlag-Book.ttf"; sourceTree = "<group>"; };
-		886864C21D400DFF00684741 /* Verlag-BookItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Verlag-BookItalic.ttf"; path = "../../../../../Downloads/Verlag-2/Verlag-BookItalic.ttf"; sourceTree = "<group>"; };
-		886864C31D400DFF00684741 /* Verlag-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Verlag-Light.ttf"; path = "../../../../../Downloads/Verlag-2/Verlag-Light.ttf"; sourceTree = "<group>"; };
-		886864C41D400DFF00684741 /* Verlag-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Verlag-LightItalic.ttf"; path = "../../../../../Downloads/Verlag-2/Verlag-LightItalic.ttf"; sourceTree = "<group>"; };
-		886864C51D400DFF00684741 /* Verlag-XLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Verlag-XLight.ttf"; path = "../../../../../Downloads/Verlag-2/Verlag-XLight.ttf"; sourceTree = "<group>"; };
-		886864C61D400DFF00684741 /* Verlag-XLightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Verlag-XLightItalic.ttf"; path = "../../../../../Downloads/Verlag-2/Verlag-XLightItalic.ttf"; sourceTree = "<group>"; };
-		886864C71D400DFF00684741 /* VerlagCondensed-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "VerlagCondensed-Black.ttf"; path = "../../../../../Downloads/Verlag-2/VerlagCondensed-Black.ttf"; sourceTree = "<group>"; };
-		886864C81D400DFF00684741 /* VerlagCondensed-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "VerlagCondensed-BlackItalic.ttf"; path = "../../../../../Downloads/Verlag-2/VerlagCondensed-BlackItalic.ttf"; sourceTree = "<group>"; };
-		886864C91D400DFF00684741 /* VerlagCondensed-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "VerlagCondensed-Bold.ttf"; path = "../../../../../Downloads/Verlag-2/VerlagCondensed-Bold.ttf"; sourceTree = "<group>"; };
-		886864CA1D400DFF00684741 /* VerlagCondensed-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "VerlagCondensed-BoldItalic.ttf"; path = "../../../../../Downloads/Verlag-2/VerlagCondensed-BoldItalic.ttf"; sourceTree = "<group>"; };
-		886864CB1D400DFF00684741 /* VerlagCondensed-Book.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "VerlagCondensed-Book.ttf"; path = "../../../../../Downloads/Verlag-2/VerlagCondensed-Book.ttf"; sourceTree = "<group>"; };
-		886864CC1D400DFF00684741 /* VerlagCondensed-BookItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "VerlagCondensed-BookItalic.ttf"; path = "../../../../../Downloads/Verlag-2/VerlagCondensed-BookItalic.ttf"; sourceTree = "<group>"; };
-		886864CD1D400DFF00684741 /* VerlagCondensed-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "VerlagCondensed-Light.ttf"; path = "../../../../../Downloads/Verlag-2/VerlagCondensed-Light.ttf"; sourceTree = "<group>"; };
-		886864CE1D400DFF00684741 /* VerlagCondensed-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "VerlagCondensed-LightItalic.ttf"; path = "../../../../../Downloads/Verlag-2/VerlagCondensed-LightItalic.ttf"; sourceTree = "<group>"; };
-		886864CF1D400DFF00684741 /* VerlagCondensed-XLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "VerlagCondensed-XLight.ttf"; path = "../../../../../Downloads/Verlag-2/VerlagCondensed-XLight.ttf"; sourceTree = "<group>"; };
+		884232061D51078D00D73071 /* Verlag-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Verlag-Black.ttf"; sourceTree = "<group>"; };
+		884232071D51078D00D73071 /* Verlag-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Verlag-BlackItalic.ttf"; sourceTree = "<group>"; };
+		884232081D51078D00D73071 /* Verlag-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Verlag-Bold.ttf"; sourceTree = "<group>"; };
+		884232091D51078D00D73071 /* Verlag-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Verlag-BoldItalic.ttf"; sourceTree = "<group>"; };
+		8842320A1D51078D00D73071 /* Verlag-Book.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Verlag-Book.ttf"; sourceTree = "<group>"; };
+		8842320B1D51078D00D73071 /* Verlag-BookItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Verlag-BookItalic.ttf"; sourceTree = "<group>"; };
+		8842320C1D51078D00D73071 /* Verlag-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Verlag-Light.ttf"; sourceTree = "<group>"; };
+		8842320D1D51078D00D73071 /* Verlag-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Verlag-LightItalic.ttf"; sourceTree = "<group>"; };
+		8842320E1D51078D00D73071 /* Verlag-XLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Verlag-XLight.ttf"; sourceTree = "<group>"; };
+		8842320F1D51078D00D73071 /* Verlag-XLightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Verlag-XLightItalic.ttf"; sourceTree = "<group>"; };
+		884232101D51078D00D73071 /* VerlagCondensed-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VerlagCondensed-Black.ttf"; sourceTree = "<group>"; };
+		884232111D51078D00D73071 /* VerlagCondensed-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VerlagCondensed-BlackItalic.ttf"; sourceTree = "<group>"; };
+		884232121D51078D00D73071 /* VerlagCondensed-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VerlagCondensed-Bold.ttf"; sourceTree = "<group>"; };
+		884232131D51078D00D73071 /* VerlagCondensed-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VerlagCondensed-BoldItalic.ttf"; sourceTree = "<group>"; };
+		884232141D51078D00D73071 /* VerlagCondensed-Book.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VerlagCondensed-Book.ttf"; sourceTree = "<group>"; };
+		884232151D51078D00D73071 /* VerlagCondensed-BookItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VerlagCondensed-BookItalic.ttf"; sourceTree = "<group>"; };
+		884232161D51078D00D73071 /* VerlagCondensed-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VerlagCondensed-Light.ttf"; sourceTree = "<group>"; };
+		884232171D51078D00D73071 /* VerlagCondensed-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VerlagCondensed-LightItalic.ttf"; sourceTree = "<group>"; };
+		884232181D51078D00D73071 /* VerlagCondensed-XLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VerlagCondensed-XLight.ttf"; sourceTree = "<group>"; };
 		8898362A1D36E82B0092056A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8898362C1D3941D40092056A /* MuseoSlab.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MuseoSlab.otf; sourceTree = "<group>"; };
-		8898362D1D3941D40092056A /* Verlag.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = Verlag.zip; sourceTree = "<group>"; };
 		889836321D3959980092056A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9536DD412B884E26837A05B6 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 0; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		9CDBE5B9746D470A9B515BBD /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 0; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
@@ -389,27 +368,26 @@
 		812E641B2FC843339B7CAC25 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				886864BD1D400DFF00684741 /* Verlag-Black.ttf */,
-				886864BE1D400DFF00684741 /* Verlag-BlackItalic.ttf */,
-				886864BF1D400DFF00684741 /* Verlag-Bold.ttf */,
-				886864C01D400DFF00684741 /* Verlag-BoldItalic.ttf */,
-				886864C11D400DFF00684741 /* Verlag-Book.ttf */,
-				886864C21D400DFF00684741 /* Verlag-BookItalic.ttf */,
-				886864C31D400DFF00684741 /* Verlag-Light.ttf */,
-				886864C41D400DFF00684741 /* Verlag-LightItalic.ttf */,
-				886864C51D400DFF00684741 /* Verlag-XLight.ttf */,
-				886864C61D400DFF00684741 /* Verlag-XLightItalic.ttf */,
-				886864C71D400DFF00684741 /* VerlagCondensed-Black.ttf */,
-				886864C81D400DFF00684741 /* VerlagCondensed-BlackItalic.ttf */,
-				886864C91D400DFF00684741 /* VerlagCondensed-Bold.ttf */,
-				886864CA1D400DFF00684741 /* VerlagCondensed-BoldItalic.ttf */,
-				886864CB1D400DFF00684741 /* VerlagCondensed-Book.ttf */,
-				886864CC1D400DFF00684741 /* VerlagCondensed-BookItalic.ttf */,
-				886864CD1D400DFF00684741 /* VerlagCondensed-Light.ttf */,
-				886864CE1D400DFF00684741 /* VerlagCondensed-LightItalic.ttf */,
-				886864CF1D400DFF00684741 /* VerlagCondensed-XLight.ttf */,
+				884232061D51078D00D73071 /* Verlag-Black.ttf */,
+				884232071D51078D00D73071 /* Verlag-BlackItalic.ttf */,
+				884232081D51078D00D73071 /* Verlag-Bold.ttf */,
+				884232091D51078D00D73071 /* Verlag-BoldItalic.ttf */,
+				8842320A1D51078D00D73071 /* Verlag-Book.ttf */,
+				8842320B1D51078D00D73071 /* Verlag-BookItalic.ttf */,
+				8842320C1D51078D00D73071 /* Verlag-Light.ttf */,
+				8842320D1D51078D00D73071 /* Verlag-LightItalic.ttf */,
+				8842320E1D51078D00D73071 /* Verlag-XLight.ttf */,
+				8842320F1D51078D00D73071 /* Verlag-XLightItalic.ttf */,
+				884232101D51078D00D73071 /* VerlagCondensed-Black.ttf */,
+				884232111D51078D00D73071 /* VerlagCondensed-BlackItalic.ttf */,
+				884232121D51078D00D73071 /* VerlagCondensed-Bold.ttf */,
+				884232131D51078D00D73071 /* VerlagCondensed-BoldItalic.ttf */,
+				884232141D51078D00D73071 /* VerlagCondensed-Book.ttf */,
+				884232151D51078D00D73071 /* VerlagCondensed-BookItalic.ttf */,
+				884232161D51078D00D73071 /* VerlagCondensed-Light.ttf */,
+				884232171D51078D00D73071 /* VerlagCondensed-LightItalic.ttf */,
+				884232181D51078D00D73071 /* VerlagCondensed-XLight.ttf */,
 				8898362C1D3941D40092056A /* MuseoSlab.otf */,
-				8898362D1D3941D40092056A /* Verlag.zip */,
 				9536DD412B884E26837A05B6 /* Entypo.ttf */,
 				FA432363FB96420CA6D33513 /* EvilIcons.ttf */,
 				51315DA6BAE44385913AE6A9 /* FontAwesome.ttf */,
@@ -716,39 +694,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				886864E21D400DFF00684741 /* VerlagCondensed-XLight.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				886864D01D400DFF00684741 /* Verlag-Black.ttf in Resources */,
-				886864DD1D400DFF00684741 /* VerlagCondensed-BoldItalic.ttf in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
-				886864DF1D400DFF00684741 /* VerlagCondensed-BookItalic.ttf in Resources */,
-				886864D11D400DFF00684741 /* Verlag-BlackItalic.ttf in Resources */,
-				886864D31D400DFF00684741 /* Verlag-BoldItalic.ttf in Resources */,
-				886864D21D400DFF00684741 /* Verlag-Bold.ttf in Resources */,
 				5C9E175FD5B0485EBC44B5A6 /* Entypo.ttf in Resources */,
-				886864D81D400DFF00684741 /* Verlag-XLight.ttf in Resources */,
-				886864E11D400DFF00684741 /* VerlagCondensed-LightItalic.ttf in Resources */,
-				886864D61D400DFF00684741 /* Verlag-Light.ttf in Resources */,
 				5B21F20564D147DF80F20D37 /* EvilIcons.ttf in Resources */,
-				886864E01D400DFF00684741 /* VerlagCondensed-Light.ttf in Resources */,
-				886864D51D400DFF00684741 /* Verlag-BookItalic.ttf in Resources */,
-				886864DE1D400DFF00684741 /* VerlagCondensed-Book.ttf in Resources */,
-				886864DA1D400DFF00684741 /* VerlagCondensed-Black.ttf in Resources */,
 				62BC093E5C544E6993BEB46D /* FontAwesome.ttf in Resources */,
 				8898362B1D36E82B0092056A /* GoogleService-Info.plist in Resources */,
 				889836331D3959980092056A /* Info.plist in Resources */,
-				886864DB1D400DFF00684741 /* VerlagCondensed-BlackItalic.ttf in Resources */,
 				81278E3018774811B49995A5 /* Foundation.ttf in Resources */,
-				886864D71D400DFF00684741 /* Verlag-LightItalic.ttf in Resources */,
 				0A39BE6F96F742B98A8A5F60 /* Ionicons.ttf in Resources */,
-				8898362F1D3941D40092056A /* Verlag.zip in Resources */,
 				6B8E63E7DFBF4CCD87582CF1 /* MaterialIcons.ttf in Resources */,
 				54BB2CC9EC5D416B83332825 /* Octicons.ttf in Resources */,
-				886864DC1D400DFF00684741 /* VerlagCondensed-Bold.ttf in Resources */,
-				886864D41D400DFF00684741 /* Verlag-Book.ttf in Resources */,
 				394A83029DAA4A568729F03F /* Zocial.ttf in Resources */,
 				8898362E1D3941D40092056A /* MuseoSlab.otf in Resources */,
-				886864D91D400DFF00684741 /* Verlag-XLightItalic.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
