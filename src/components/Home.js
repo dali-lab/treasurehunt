@@ -250,15 +250,17 @@ var Home = React.createClass({
 
         User.getCurrentUser().getHuntsList().then((huntsList) => {
             Hunts.getHuntObjects(huntsList).then((hunts) => {
+              /*
                 console.log("Loaded hunts: " + hunts + "\nSetting the state");
                 console.log("State was: ");
+              */
 
                 var thisIsNew = new ListView.DataSource({
                     rowHasChanged: (r1, r2) => r1.guid !== r2.guid,
                     sectionHeaderHasChanged: (s1, s2) => s1.guid !== s2.guid
                 });
                 var newDataSource = thisIsNew.cloneWithRows(hunts);
-                console.log("Now it is: ");
+              //  console.log("Now it is: ");
                 this.setState({
                     hunts: hunts,
                     dataSource: newDataSource,
@@ -273,7 +275,6 @@ var Home = React.createClass({
       if (this.state.puzzle === 'current'){
         this.listenForItems();
       } else if (this.state.puzzle == 'past'){
-        console.log('what the hell is the state rn....');
         this.listenForCompletedItems();
       }
 
@@ -298,9 +299,9 @@ var Home = React.createClass({
         huntImage.getDownloadURL().then((url) => {
           huntImageURL = url;
 
-          console.log(`laterhunt image is ${huntImage}`);
+        //  console.log(`laterhunt image is ${huntImage}`);
           huntsRef.child(hunt.id).update({imageURL: huntImageURL});
-          console.log(`the saved image url is ${huntImageURL}`);
+      //    console.log(`the saved image url is ${huntImageURL}`);
 
         });
     },
@@ -308,9 +309,8 @@ var Home = React.createClass({
     renderRow: function(hunt) {
 
         var huntimage = hunt.image;
-        console.log(`current image is ${huntimage}`);
 
-        console.log("Rendering row for hunt " + hunt.id);
+      //  console.log("Rendering row for hunt " + hunt.id);
         return (
             <TouchableHighlight onPress={() => this.rowPressed(hunt)}
                 underlayColor='#dddddd'>

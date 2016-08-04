@@ -104,8 +104,12 @@ import rootRef from '../../newfirebase.js'
 
 const usersRef = rootRef.ref('users');
 const cluesRef = rootRef.ref('clues');
+
+// note: these aren't being used currently
 const userSolutionsRef = rootRef.ref('user_solutions');
 const clueSolutionsRef = rootRef.ref('clue_solutions');
+
+const user = require('./User.js');
 
 
 /*
@@ -117,11 +121,16 @@ const clueSolutionsRef = new Firebase(`${ config.FIREBASE_ROOT }/clue_solutions`
 
 
 var CurrentClueDisplay = React.createClass({
+
+	/*
 	getInitialState: function() {
 		var clueRef = cluesRef.child(this.props.clueId);
+		console.log(`the current clueRef is ${clueRef}`);
 		var clue;
 		var clueSolution;
         clueRef.on('value', (snap) => {
+					console.log(`CurrentClueDisplay clueRef val ${JSON.stringify(snap.val())}`);
+					console.log(`CurrentClueDisplay clueRef val ${snap.key}`);
         	clue = {
         		title: snap.val().title,
         		description: snap.val().description,
@@ -135,12 +144,54 @@ var CurrentClueDisplay = React.createClass({
             clueSolution: clueSolution,
             submission: ''
         };
-
     },
+	*/
+
+		getInitialState: function() {
+			var clueRef = cluesRef.child(this.props.clueId);
+			var currentUser = User.getCurrentUser().uid;
+			console.log(`the current clueRef is ${clueRef}`);
+			var clue;
+			var clueSolution;
+	        clueRef.on('value', (snap) => {
+						console.log(`CurrentClueDisplay clueRef val ${JSON.stringify(snap.val())}`);
+						console.log(`CurrentClueDisplay clueRef val ${snap.key}`);
+						console.log(`however, props hunt id is: ${this.props.hunt.id}`)
+	        	clue = {
+	        		title: snap.val().creator,
+	        		description: snap.val().description,
+	        		type: snap.val().type,
+							data: snap.val().data,
+							solutions: snap.val().solutions,
+							submission: snap.child(submissions).child(currentUser).val()
+	        	};
+	        });
+
+	        return {
+	            clue: clue,
+	            huntId: this.props.hunt.id,
+	        };
+
+	    },
 
     componentDidMount: function() {
-        this.listenForItems(clueSolutionsRef);
+      //  this.listenForItems(clueSolutionsRef);
+			this.listenForItems2(clueSolutionsRef);
     },
+
+		listenForItems2: function(clueSolutionsRef) {
+				//TODO: make this user specific!!!
+				clueSolutionsRef.orderByChild('clue_id').equalTo(Number(this.props.clueId)).once('value', (snap) => {
+						var solution = snap.val();
+						for (var key in solution) {
+							clueSolution = solution[key].solution;
+						}
+			this.setState({
+								clueSolution: clueSolution
+						});
+
+				});
+		},
 
     listenForItems: function(clueSolutionsRef) {
         //TODO: make this user specific!!!
@@ -160,6 +211,38 @@ var CurrentClueDisplay = React.createClass({
     	this.refs.modal.open();
   	},
 
+
+		// STILL IN PROGRESS-- AES
+		onSubmitPressed: function(submission) {
+			this.addUserSolutionToFirebase();
+			if (this.checkSolution()) {
+				var solutionList = this.getSolutionListFromDatabase();
+				this.updateDatabaseSolutionList(solutionList);
+
+				//need to also put next clue in progress at this point
+				//TODO: don't hard code these!
+				// var thisSolutionRef = userSolutionsRef.child(3);
+				// thisSolutionRef.update({completed: 1});
+				// var thisSolutionRef = userSolutionsRef.child(2);
+				// thisSolutionRef.update({completed: 1});
+				//this.openModal();
+				Alert.alert(
+					'Clue Correct',
+					"Woohoo!",
+					[
+						{onPress: this.returnToClueList},
+					]
+				);
+			}
+			else {
+				Alert.alert(
+					'Incorrect Submission',
+					'Try again!',
+				);
+			}
+		},
+		// OLD --AES
+/*
 	onSubmitPressed: function() {
 		if (this.checkSolution()) {
 			var solutionList = this.getSolutionListFromDatabase();
@@ -188,6 +271,7 @@ var CurrentClueDisplay = React.createClass({
 			);
 		}
 	},
+	*/
 
 	returnToClueList: function() {
 		this.props.callback(cluesRef);
@@ -210,6 +294,8 @@ var CurrentClueDisplay = React.createClass({
 		);
 	},
 
+	// OLD-- AES
+	/*
 	addUserSolutionToFirebase: function() {
 		var currentUser = User.getCurrentUser();
   		userSolutionsRef.push({
@@ -220,6 +306,21 @@ var CurrentClueDisplay = React.createClass({
     		solution: this.state.submission
 
 		});
+	},
+	*/
+
+	addUserSolutionToFirebase: function() {
+		var currentUser = User.getCurrentUser();
+		var clueRef = cluesRef.child(this.props.clueId);
+		var submissionsRef =  clueRef.child(this.state.submission).child(currentUser.uid);
+		console.log(`the currentUser is: ${submissionsRef}`);
+		submissionsRef.set(submission).then(()=> {
+			console.log('successfully saved!');
+		})
+		.catch((err) => {
+			console.log('failed in saving....');
+		})
+
 	},
 
 	getSolutionListFromDatabase: function() {
@@ -257,10 +358,38 @@ var CurrentClueDisplay = React.createClass({
 			thisHuntRef.update(newSolutionList);
 		}
 	},
+	/*
+	if (this.state.clue.type == "fillIn") {
+	 return (
+		 <View style={styles.container}>
+			 <View style={styles.separatorSmall}/>
+			 <Text style={styles.huntTitle}>{hunt.title.toUpperCase()}</Text>
+								 <View style={styles.topSeparator}/>
+								 <View style={styles.separatorSmall}/>
+			 <Text style={styles.clueName}>{this.state.clue.title}</Text>
+			 <Text style={styles.description}>{this.state.clue.description}</Text>
+			 <TextInput
+					 style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+					 onChangeText={(submission) => this.setState({submission})}
+					 value={this.state.submission}/>
+				 <View style={styles.separatorLarge}/>
+			 <TouchableHighlight style = {styles.button}
+					 onPress={this.onSubmitPressed}
+					 underlayColor='#99d9f4'>
+					 <Text style = {styles.buttonText}>Submit</Text>
+			 </TouchableHighlight>
+			 <Text style={styles.hint} onPress={this.getHint}>
+						 Need a hint?
+				 </Text>
+		 </View>
+	 );
+ }
+ else {
+ */
 
 	render: function() {
 		var hunt = this.props.hunt;
-		 if (this.state.clue.type == "fillIn") {
+
 			return (
 				<View style={styles.container}>
 					<View style={styles.separatorSmall}/>
@@ -284,7 +413,7 @@ var CurrentClueDisplay = React.createClass({
 			  		</Text>
 				</View>
 			);
-		}
+	//	}
 	},
 });
 

@@ -99,6 +99,10 @@ const cluesRef = rootRef.ref('clues');
 const huntRef = rootRef.ref('hunts');
 const userSolutionsRef = rootRef.ref('user_solutions');
 
+// AES 8/3/16
+const usersRef = rootRef.ref('users');
+
+
 /*
 const cluesRef = new Firebase(`${ config.FIREBASE_ROOT }/clues`)
 const userSolutionsRef = new Firebase(`${ config.FIREBASE_ROOT }/user_solutions`)
@@ -161,6 +165,8 @@ var ClueList = React.createClass({
         for (var j = 0; j < cluesArray.length; j++) {
             var clueRef = cluesRef.child(cluesArray[j]);
             clueRef.on('value', (snap) => {
+							console.log(`clue's val: ${JSON.stringify(snap.val())}`);
+							console.log(`key's val: ${snap.key}`);
 
                 // if a clue is in progress
                 if (snap.val().id == inProgress) {
@@ -190,13 +196,14 @@ var ClueList = React.createClass({
                         category: "incomplete",
                         clueId: snap.val().id
                     });
+										console.log(`length of clues array rn is: ${clues.length}`);
                 }
                 this.setState({
                     dataSource: this.state.dataSource.cloneWithRowsAndSections(this.convertCluesArrayToMap(clues))
                 });
             });
         }
-
+				console.log(`solutionsForThisHunt array is: ${solutionsForThisHunt.length} ${solutionsForThisHunt}`);
         if (solutionsForThisHunt.length == cluesArray.length && solutionsForThisHunt[solutionsForThisHunt.length-1].completed ==1) {
             Alert.alert(
                 'HUNT COMPLETE',
@@ -205,10 +212,157 @@ var ClueList = React.createClass({
         }
     },
 
+		getCurrentClue: function(huntid) {
+			return new Promise((fulfill, reject) => {
+				const currentUser = User.getCurrentUser();
+				const userRef = usersRef.child(currentUser.uid);
+				var currentClueRef = userRef.child('currentHunts').child(huntid).child('currentClue');
+				var currentClue;
+
+				currentClueRef.on('value', (snap) => {
+					currentClue = snap.val();
+					console.log(`1st instance of currentClue = ${currentClue}`);
+					fulfill(snap.val());
+				});
+				if ('q' === 'p') {
+					reject();
+				}
+			});
+		},
+
+
+		populateArray2: function(solutionsForThisHunt, huntid) {
+			var cluesArray = this.props.hunt.clues;
+			var clues = [];
+			var solutionsToClues = [];
+			var userCompletedClues = [];
+			var inProgress = -1;
+			var toStart;
+			// var currentClueCategory = 'complete';
+			var currentClueCategory = 'completed';
+
+			const currentUser = User.getCurrentUser();
+			const userRef = usersRef.child(currentUser.uid);
+			var currentClueRef = userRef.child('currentHunts').child(huntid).child('currentClue');
+			var currentClue;
+
+			currentClueRef.on('value', (snap) => {
+				currentClue = snap.val();
+				console.log(`1st instance of currentClue = ${currentClue}`);
+			});
+			console.log(`2nd instance of currentClue = ${currentClue}`);
+
+
+	//		var currentClue = userRef.child('currentHunts').child(huntid);
+			// var currentClueVal = currentClue.val();
+
+
+			// specify which of user's clues are in progress versus completed
+			for (var i = 0; i < solutionsForThisHunt.length; i++ ) {
+					if (solutionsForThisHunt[i].completed == 0) {
+							inProgress = solutionsForThisHunt[i].clue_id;
+					}
+					else {
+							userCompletedClues.push(solutionsForThisHunt[i].clue_id);
+					}
+			}
+
+			if (solutionsForThisHunt.length == 0) {
+					inProgress = cluesArray[0];
+			}
+
+			//TODO: fix this calculation since clues won't always have chronological id's
+			if (inProgress == -1) {
+					inProgress = solutionsForThisHunt[solutionsForThisHunt.length -1].clue_id + 1;
+			}
+
+
+			console.log(`solutionsForThisHunt array is: ${solutionsForThisHunt.length}`);
+			if(solutionsForThisHunt.length === 0) {
+				currentClueCategory = 'inProgress';
+			}
+
+
+
+			//for all clues in clueArray
+			for (var j = 0; j < cluesArray.length; j++) {
+					var clueRef = cluesRef.child(cluesArray[j]);
+					clueRef.on('value', (snap) => {
+						console.log(`clue's val: ${JSON.stringify(snap.val())}`);
+						console.log(`key's val: ${snap.key}`);
+						console.log(`currentClueCategory is: ${currentClueCategory}`);
+						console.log(`currentClue is: ${currentClue}`);
+
+						if (snap.key == currentClue) {
+							console.log('snap.key is equal to current.clue!');
+							currentClueCategory = 'inProgress';
+						}
+
+						clues.push({
+							title:snap.val().creator,
+							description: snap.val().description,
+							category: currentClueCategory,
+							clueId: snap.key
+						});
+
+							if (currentClueCategory === 'inProgress') {
+								currentClueCategory = 'incomplete';
+							}
+							console.log(`length of clues array rn is: ${clues.length}`);
+/*
+
+							// if a clue is in progress
+							if (snap.val().id == inProgress) {
+									clues.push({
+											title:snap.val().title,
+											description: snap.val().description,
+											category: "inProgress",
+											clueId: snap.val().id
+									});
+							}
+
+							// completed clue
+							else if (userCompletedClues.indexOf(snap.val().id) > -1) {
+									clues.push({
+											title:snap.val().title,
+											description: snap.val().description,
+											category: "complete",
+											clueId: snap.val().id
+									});
+							}
+
+							//incomplete clue
+							else {
+									clues.push({
+											title:snap.val().title,
+											description: snap.val().description,
+											category: "incomplete",
+											clueId: snap.val().id
+									});
+									console.log(`length of clues array rn is: ${clues.length}`);
+
+							}
+							*/
+							this.setState({
+									dataSource: this.state.dataSource.cloneWithRowsAndSections(this.convertCluesArrayToMap(clues))
+							});
+					});
+			}
+
+			if (solutionsForThisHunt.length == cluesArray.length && solutionsForThisHunt[solutionsForThisHunt.length-1].completed ==1) {
+					Alert.alert(
+							'HUNT COMPLETE',
+							"You did it!!!!"
+					);
+			}
+	},
+
     listenForItems: function(cluesRef) {
 
         //get all clues for user in hunt, add them to array
-        var huntID = this.props.hunt.id;
+      //  var huntID = this.props.hunt.id;
+			var huntID = this.props.hunt.id;
+				console.log(`the hunt id rn is: ${huntID}`);
 
         var solutionsForThisHunt = [];
         var currentUser = User.getCurrentUser();
@@ -223,8 +377,16 @@ var ClueList = React.createClass({
                     }
                 }
             }
-            this.populateArray(solutionsForThisHunt);
+        //    this.populateArray(solutionsForThisHunt);
+				this.populateArray2(solutionsForThisHunt, huntID);
+/*
+			this.getCurrentClue(huntID).then((currentClue) => {
+				this.populateArray2(solutionsForThisHunt, currentClue);
+
+			});
+			*/
         });
+
 
     },
 
