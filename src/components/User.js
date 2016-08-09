@@ -224,7 +224,7 @@ class User {
 				Firebase.auth().signOut().then(() => {
 					// Completed!
 					console.log("Logged out!");
-					AsyncStorage.removeItem(USER_PASSWORD_KEY);
+					AsyncStorage.removeItem(USER_DATA_KEY);
 					success();
 				}, (error) => {
 					console.log("Failed to log out!");
@@ -237,11 +237,8 @@ class User {
 	getHuntsList() {
 		return new Promise((fulfill, reject) => {
 			this.currentHunts.once('value', function(snap) {
-				if (snap.val() == null) {
-					reject();
-				}else{
-					fulfill(snap.exportVal());
-				}
+				console.log("---Got a hunts list: " + snap.val());
+				fulfill(snap.val());
 			}, function(error) {
 				reject(error);
 			});
