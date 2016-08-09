@@ -22,7 +22,12 @@ class User {
 
 	/**
 	 * This constructs a user object
-	 * Usage: new User(firebase.User)
+	 * Usage: new User(firebase.User, null) or new User(null, {
+	 	id: String,
+	 	email: String,
+	 	providerId: String,
+	 	name: String or null
+	 * })
 	 */
 	constructor(firebaseUser, otherData) {
 		if (firebaseUser) {
@@ -111,6 +116,7 @@ class User {
 				if (user_data_json) {
 					// Got a token back
 					var myUser = new User(JSON.parse(user_data_json), null);
+					Firebase.auth().currentUser = JSON.parse(user_data_json);
 					User.currentUser = myUser
 					console.log("Loaded user!");
 					success(myUser);
@@ -227,240 +233,6 @@ class User {
 			}
 		});
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	// static currentUser = null;
-
-	// No one but this class should make user objects
-	// constructor(uid) {
-	// 	this.uid = uid;
-	// 	this.isFacebook = false;
-	// }
-
-	// buildWithData(authData, userRef, email) {
-	// 	console.log(authData);
-	// 	this.uid = authData.uid;
-	// 	this.provider = authData.provider;
-	// 	this.token = authData.token;
-	// 	this.auth = authData.auth;
-	// 	this.authData = authData;
-	// 	this.buildWithData2(userRef, email);
-	// }
-
-	// buildWithData2(userRef, email) {
-	// 	this.email = email;
-	// 	this.userRef = userRef;
-	// 	this.currentHunts = userRef.child("currentHunts");
-	// }
-
-	// static initializeNewUser(id, email) {
-	// 	// var userObject = usersRef.child(id);
-	// 	// userObject.set({
-	// 	// 	email: email,
-	// 	// 	currentHunts: [],
-	// 	// 	completedHunts: [],
-	// 	// 	name: "",
-	// 	// });
-
-	// 	// var user = new User(id);
-	// 	// user.buildWithData2(userObject, email);
-
-	// 	// return user;
-	// }
-
-	// static updateCurrentUserFromStore() {
-	// 	// console.log("Updating user from store...");
-	// 	// return new Promise(async (fulfill, reject) => {	
-	// 	// 	try {
-	// 	// 		const value = await AsyncStorage.getItem(USER_STORAGE_KEY)
-	// 	// 		console.log("Got something...");
-
-	// 	// 		if (value !== null) {
-	// 	// 			console.log("It was: " + value);
-	// 	// 			User.currentUser = new User(value);
-	// 	// 			User.currentUser.setUpRefs(usersRef.child(value));
-	// 	// 			console.log("Set User... fulfilling");
-	// 	// 			fulfill(User.getCurrentUser());
-	// 	// 		}else{
-	// 	// 			reject(null);
-	// 	// 			console.log("It was null")
-	// 	// 		}
-	// 	// 	}catch (error) {
-	// 	// 		// console.log("Failed! with error " + error);
-	// 	// 		reject();
-	// 	// 	}
-	// 	// });
-	// }
-
-	// static async updateUserInStore() {
-	// 	// Method from Documentation on AsyncStorage
-	// 	// console.log("Updating user to store...");
-	// 	// try {
-	// 	// 	console.log("Saving " + User.getCurrentUser().uid + " ...");
-	// 	//   	// UserDefaults.setObjectForKey(User.getCurrentUser(), USER_STORAGE_KEY)
-	// 	//   	// 	.then(result => {
-	// 	//   	// 		console.log(result);
-	// 	//   	// 	});
-
-	// 	// 	await AsyncStorage.setItem(USER_STORAGE_KEY, User.getCurrentUser().uid)
-	// 	// 	console.log("Complete!");
-	// 	// } catch (error) {
-	// 	// 	console.log("Failed!!");
-	// 	//   // Error saving data
-	// 	// 	console.log("AsyncStorage error: " + AsyncStorage);
-	// 	// }
-	// }
-
-	// /**
-	// 	This function authenticates a user, and will call the callBack when done
-	// 	callBack = function(error, user)
-	// */
-	// static getUser(email, password, callBack) {
-	// 	// Firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error, authData) {
-	// 	// 	if (error) {
-	// 	// 		callBack(error, null);
-	// 	// 	}else{
-	// 	// 		// Get user object
-	// 	// 		var userObject = usersRef.child(authData.uid);
-	// 	// 		console.log(authData.uid)
-
-	// 	// 		var user = new User(authData.uid);
-	// 	// 		user.buildWithData(authData, userObject, email);
-	// 	// 		User.currentUser = user;
-	// 	// 		callBack(error, user);
-	// 	// 		User.updateUserInStore();
-	// 	// 	}
-	// 	// });
-	// }
-
-	// static FBonLogin(data) {
-	// 	// var id = data.credentials.userId;
-	// 	// console.log(data);
-
-
-	// 	// User.currentUser = User.initializeNewUser(id, id);
-	// 	// User.updateUserInStore();
-	// 	// User.currentUser.isFacebook = true;
-	// 	// User.currentUser.data = data;
-	// 	// return User.currentUser;
-	// }
-
-	// static logout() {
-	// 	// if (!User.currentUser) {
-	// 	// 	return;
-	// 	// }
-
-	// 	// if (User.currentUser.isFacebook) {
-	// 	// 	console.log("Trying to log out of facebook");
-	// 	// 	FBLoginManager.logout(() => {
-	// 	// 		User.currentUser = null;
-	// 	// 		AsyncStorage.removeItem(USER_STORAGE_KEY);
-	// 	// 	});
-	// 	// }else{
-	// 	// 	firebase.auth().signOut().then(function() {
-	// 	// 		// Sign-out successful.
-	// 	// 		User.currentUser = null;
-	// 	// 		AsyncStorage.removeItem(USER_STORAGE_KEY);
-	// 	// 	}, function(error) {
-	// 	// 		// An error happened.
-	// 	// 		console.log("Failed to sign out!!");
-	// 	// 	});
-	// 	// }
-	// }
-
-	// /**
-	// 	This function creates a user, and will call the callBack when done
-	// 	callBack = function(errorMessage, user)
-	// */
-	// static signUp(email, password, callBack) {
-	// 	Firebase.auth().createUserWithEmailAndPassword(email, password).then((user) => {
-
-
-
-	// 	}).catch(function(error) {
-	// 		// Handle Errors here.
-	// 		var errorCode = error.code;
-	// 		var errorMessage = error.message;
-	// 		// ...
-	// 		callBack(errorMessage, null);
-	// 	});
-
-	// 	// Firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error, authData) {
-	// 	// 	if (error) {
-	// 	// 		callBack(error, null);
-	// 	// 	}else{
-	// 	// 		// Make new user object
-	// 	// 		var userObject = usersRef.child(authData.uid);
-	// 	// 		console.log(authData.uid)
-	// 	// 		userObject.set({
-	// 	// 			email: email,
-	// 	// 			currentHunts: [],
-	// 	// 			completedHunts: [],
-	// 	// 			name: "",
-	// 	// 		});
-
-	// 	// 		var user = new User(authData.uid);
-	// 	// 		user.buildWithData(authData, userObject, email);
-	// 	// 		User.currentUser = user;
-	// 	// 		callBack(error, user);
-	// 	// 		User.updateUserInStore();
-	// 	// 	}
-	// 	// });
-	// }
-
-	// /**
-	// 	This sends a reset email to the email, and will call the callBack when done
-	// 	callBack = function(error)
-	// */
-	// static sendResetEmail(email, callBack) {
-	// 	// Firebase.auth().resetPassword({
-	// 	// 	email: email
-	// 	// }, function(error) {
-	// 	// 	callBack(error);
-	// 	// });
-	// }
 
 	getHuntsList() {
 		return new Promise((fulfill, reject) => {
