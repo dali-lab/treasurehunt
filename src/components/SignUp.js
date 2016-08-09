@@ -160,7 +160,7 @@ class SignUp extends Component {
     		);
     		this.refs.passwordInput.focus()
     	}else if (this.state.passwordConfirm == this.state.password) {
-    		User.signUp(this.state.username.toLowerCase(), this.state.password, function(error, user) {
+    		User.signUp(this.state.username.toLowerCase(), this.state.password).then(() => {
     			if (!error && user) {
     				if (typeof this.props.hideModal == 'function') {
     					this.props.didSignUp(user);
@@ -175,7 +175,7 @@ class SignUp extends Component {
 					);
 					this.refs.emailInput.focus()
     			}
-    		}.bind(this));
+    		});
     	}else{
     		AlertIOS.alert(
 				"Passwords don't match",
