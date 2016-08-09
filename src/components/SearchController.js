@@ -30,7 +30,7 @@ var SearchController = React.createClass({
     },
 
 	render: function() {
-		var searchInstructions = this.props.searchText == "" ? <Text>You can search using a hunt id</Text> : null
+		var searchInstructions = this.props.searchText == "" ? <Text>You can search using a hunt name or id</Text> : null
 
 		var searchResults = this.props.searchText != "" ? <Text style={{width: 330, textAlign: 'center'}}>{this.props.searchResults !== null ? JSON.stringify(this.props.searchResults) : "Loading..."}</Text> : null//<ListView
 																// dataSource={this.state.dataSource}
