@@ -28,6 +28,25 @@
 		52009F5C1D3E7D9E00C0F477 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52009F591D3E7D9E00C0F477 /* FBSDKCoreKit.framework */; };
 		52009F5D1D3E7D9E00C0F477 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52009F5A1D3E7D9E00C0F477 /* FBSDKLoginKit.framework */; };
 		52009F5E1D3E7D9E00C0F477 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52009F5B1D3E7D9E00C0F477 /* FBSDKShareKit.framework */; };
+		52CF78F81D5A551A0073A572 /* Verlag-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 884232061D51078D00D73071 /* Verlag-Black.ttf */; };
+		52CF78F91D5A551A0073A572 /* Verlag-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 884232071D51078D00D73071 /* Verlag-BlackItalic.ttf */; };
+		52CF78FA1D5A551A0073A572 /* Verlag-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 884232081D51078D00D73071 /* Verlag-Bold.ttf */; };
+		52CF78FB1D5A551A0073A572 /* Verlag-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 884232091D51078D00D73071 /* Verlag-BoldItalic.ttf */; };
+		52CF78FC1D5A551A0073A572 /* Verlag-Book.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8842320A1D51078D00D73071 /* Verlag-Book.ttf */; };
+		52CF78FD1D5A551A0073A572 /* Verlag-BookItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8842320B1D51078D00D73071 /* Verlag-BookItalic.ttf */; };
+		52CF78FE1D5A551A0073A572 /* Verlag-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8842320C1D51078D00D73071 /* Verlag-Light.ttf */; };
+		52CF78FF1D5A551A0073A572 /* Verlag-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8842320D1D51078D00D73071 /* Verlag-LightItalic.ttf */; };
+		52CF79001D5A551A0073A572 /* Verlag-XLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8842320E1D51078D00D73071 /* Verlag-XLight.ttf */; };
+		52CF79011D5A551A0073A572 /* Verlag-XLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8842320F1D51078D00D73071 /* Verlag-XLightItalic.ttf */; };
+		52CF79021D5A551A0073A572 /* VerlagCondensed-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 884232101D51078D00D73071 /* VerlagCondensed-Black.ttf */; };
+		52CF79031D5A551A0073A572 /* VerlagCondensed-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 884232111D51078D00D73071 /* VerlagCondensed-BlackItalic.ttf */; };
+		52CF79041D5A551A0073A572 /* VerlagCondensed-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 884232121D51078D00D73071 /* VerlagCondensed-Bold.ttf */; };
+		52CF79051D5A551A0073A572 /* VerlagCondensed-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 884232131D51078D00D73071 /* VerlagCondensed-BoldItalic.ttf */; };
+		52CF79061D5A551A0073A572 /* VerlagCondensed-Book.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 884232141D51078D00D73071 /* VerlagCondensed-Book.ttf */; };
+		52CF79071D5A551A0073A572 /* VerlagCondensed-BookItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 884232151D51078D00D73071 /* VerlagCondensed-BookItalic.ttf */; };
+		52CF79081D5A551A0073A572 /* VerlagCondensed-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 884232161D51078D00D73071 /* VerlagCondensed-Light.ttf */; };
+		52CF79091D5A551A0073A572 /* VerlagCondensed-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 884232171D51078D00D73071 /* VerlagCondensed-LightItalic.ttf */; };
+		52CF790A1D5A551A0073A572 /* VerlagCondensed-XLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 884232181D51078D00D73071 /* VerlagCondensed-XLight.ttf */; };
 		54BB2CC9EC5D416B83332825 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3144933FAB474C1D8B58F79A /* Octicons.ttf */; };
 		5B21F20564D147DF80F20D37 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA432363FB96420CA6D33513 /* EvilIcons.ttf */; };
 		5C9E175FD5B0485EBC44B5A6 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9536DD412B884E26837A05B6 /* Entypo.ttf */; };
@@ -694,6 +713,25 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52CF78F81D5A551A0073A572 /* Verlag-Black.ttf in Resources */,
+				52CF78F91D5A551A0073A572 /* Verlag-BlackItalic.ttf in Resources */,
+				52CF78FA1D5A551A0073A572 /* Verlag-Bold.ttf in Resources */,
+				52CF78FB1D5A551A0073A572 /* Verlag-BoldItalic.ttf in Resources */,
+				52CF78FC1D5A551A0073A572 /* Verlag-Book.ttf in Resources */,
+				52CF78FD1D5A551A0073A572 /* Verlag-BookItalic.ttf in Resources */,
+				52CF78FE1D5A551A0073A572 /* Verlag-Light.ttf in Resources */,
+				52CF78FF1D5A551A0073A572 /* Verlag-LightItalic.ttf in Resources */,
+				52CF79001D5A551A0073A572 /* Verlag-XLight.ttf in Resources */,
+				52CF79011D5A551A0073A572 /* Verlag-XLightItalic.ttf in Resources */,
+				52CF79021D5A551A0073A572 /* VerlagCondensed-Black.ttf in Resources */,
+				52CF79031D5A551A0073A572 /* VerlagCondensed-BlackItalic.ttf in Resources */,
+				52CF79041D5A551A0073A572 /* VerlagCondensed-Bold.ttf in Resources */,
+				52CF79051D5A551A0073A572 /* VerlagCondensed-BoldItalic.ttf in Resources */,
+				52CF79061D5A551A0073A572 /* VerlagCondensed-Book.ttf in Resources */,
+				52CF79071D5A551A0073A572 /* VerlagCondensed-BookItalic.ttf in Resources */,
+				52CF79081D5A551A0073A572 /* VerlagCondensed-Light.ttf in Resources */,
+				52CF79091D5A551A0073A572 /* VerlagCondensed-LightItalic.ttf in Resources */,
+				52CF790A1D5A551A0073A572 /* VerlagCondensed-XLight.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				5C9E175FD5B0485EBC44B5A6 /* Entypo.ttf in Resources */,
