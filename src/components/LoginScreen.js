@@ -205,19 +205,20 @@ class LoginScreen extends Component {
 		this.setState({
 			processingLogin: true,
 		});
-		User.getUser(this.state.email.toLowerCase(), this.state.password, function(error, user) {
-			if (user != null) {
-				this.didLogIn(user);
-			}else{
-				AlertIOS.alert(
-					"Incorrect Login",
-					"Either your email or password was incorrect. If you cannot remember your password click 'Forgot your password?'"
-				);
-				this.setState({
-					processingLogin: false,
-				});
-			}
-		}.bind(this));
+		console.log('i can get this far at least');
+		User.login(this.state.email.toLowerCase(), this.state.password).then((user) => {
+			console.log("LOGGINGIGNIGIG");
+			this.didLogIn(user);
+		}, (error) => {
+			console.log(error);
+			AlertIOS.alert(
+				"Failed Login",
+				error.message
+			);
+			this.setState({
+				processingLogin: false,
+			});
+		});
 	}
 
 	didLogIn(user) {
@@ -336,7 +337,13 @@ class LoginScreen extends Component {
 					        	var user = User.FBonLogin(data);
 					        	if (user != null)
 									this.didLogIn(user);
-					   		}}/>
+					   		}}
+					   		onLoginFound={(data) => {
+					        	console.log("Existing login found.");
+					        	var user = User.FBonLogin(data);
+					        	if (user != null)
+					        		this.didLogIn(user);
+					        }}/>
 
 				  		<Text style={styles.forgotPassword} onPress={this.forgotPasswordPressed.bind(this)}>Forgot your password?</Text>
 				  		<Text style={styles.forgotPassword}>
