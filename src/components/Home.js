@@ -1,11 +1,13 @@
 'use strict';
 
-
 var React = require('react-native');
 var Progress = require('react-native-progress');
 var HuntOverview = require('./HuntOverview');
 var User = require('./User').default;
 var Hunts = require('./Data');
+var SearchController = require('./SearchController');
+
+var dismissKeyboard = require('dismissKeyboard');
 
 var {
     StyleSheet,
@@ -13,6 +15,7 @@ var {
     View,
     TouchableHighlight,
     ListView,
+    TextInput,
     Text,
     Component,
     AlertIOS,
@@ -97,13 +100,6 @@ var styles = StyleSheet.create({
       marginRight: 20,
       marginTop: 10
     },
-    searchBar: {
-        height: 25,
-        backgroundColor: '#E4EEEC',
-        borderRadius: 5,
-        justifyContent: 'center',
-        paddingLeft: 4
-    },
     images: {
       width: 80,
       height: 80,
@@ -114,9 +110,14 @@ var styles = StyleSheet.create({
     searchIcon: {
       width: 13,
       height: 13,
+    },
+
+    internalView: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row',
+        flex: 1,
     }
-
-
 
 });
 
@@ -129,8 +130,41 @@ var noHuntsStyle = StyleSheet.create({
     },
     noHuntsText:{
         fontSize: 20,
+        textAlign: 'center',
+        width: 330
     }
-})
+});
+
+var searchingStyles = StyleSheet.create({
+    searchBar: {
+        height: 30,
+        backgroundColor: '#E4EEEC',
+        borderRadius: 5,
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+        paddingLeft: 4
+    },
+    textInput: {
+        flexDirection: 'column',
+        flex: 1,
+        marginLeft: 5
+    },
+    cancelButton: {
+        backgroundColor: '#28cfa8',
+        borderColor: '#28cfa8',
+        borderRadius: 5,
+        width: 50,
+        height: 20,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    cancelButtonText: {
+        marginLeft: 2,
+        marginRight: 2,
+        alignSelf: 'center'
+    }
+});
 
 const Firebase = require('firebase')
 const config = require('../../config')
@@ -180,7 +214,8 @@ var Home = React.createClass({
 
         return {
             dataSource: dataSource,
-            huntsList: huntsList
+            huntsList: huntsList,
+            searchText: ""
         };
     },
 
@@ -280,6 +315,10 @@ var Home = React.createClass({
         );
     },
 
+    isSearching: function() {
+        return this.state.searching;
+    },
+
     render: function() {
 
         var listView = <ListView
@@ -288,7 +327,7 @@ var Home = React.createClass({
                         renderRow={this.renderRow}/>
 
         var noHunts = <View style={noHuntsStyle.noHuntsView}>
-                        <Text style={noHuntsStyle.noHuntsText}>You have no hunts yet</Text>
+                        <Text style={noHuntsStyle.noHuntsText}>You have no hunts yet. Try searching for some above</Text>
                     </View>
 
         var internalView;
@@ -303,24 +342,73 @@ var Home = React.createClass({
             internalView = listView;
         }
 
+        var currPuzzlesText = <View style={styles.header}>
+                    <Text style={styles.headerText}> Current Puzzles </Text>
+                </View>
+
+        if (this.isSearching()) {
+            currPuzzlesText = null;
+            // TODO, replace with search results...
+            internalView = <View style={styles.internalView}>
+                <SearchController searchText={this.state.searchText}/>
+            </View>;
+        }
+
+
+        /*
+        For reference:
+        <TextInput style= {styles.textField}
+            ref="emailTextField"
+            returnKeyType='next'
+            onChangeText={(text) => this.setState({email: text})}
+            onSubmitEditing={() =>
+                this.refs.passwordTextField.focus()
+            }
+            value={this.state.email}
+            disabled={this.state.processingLogin}/>*/
+
         return (
             <View style={styles.container}>
                 <View style={styles.emptyContainerTop}>
                 </View>
 
                 <View style={styles.extraInfoContainer}>
-                  <View style={styles.searchBar}>
+                  <View style={searchingStyles.searchBar}>
                     <Image source={require('./28magnifier.png')}
                     style={styles.searchIcon} />
+                    <TextInput style={searchingStyles.textInput}
+                        ref="searchBarTextInput"
+                        returnKeyType='done'
+                        onFocus={() => {
+                            this.setState({searching: true});
+                        }}
+                        onChangeText={(text) => {
+                            // So I can keep track of the text
+                            this.setState({searchText: text});
+                        }}
+                        onSubmitEditing={() => {
+                            dismissKeyboard();
+                            if (this.state.searchText == "") {
+                                this.setState({searching: false});
+                            }
+                        }}
+                        value={this.state.searchText}/>
+                    {this.isSearching() ? <TouchableHighlight style={searchingStyles.cancelButton}
+                        onPress={() => {
+                            dismissKeyboard();
+                            this.setState({
+                                searchText: "",
+                                searching: false
+                            });
+                        }}
+                        underlayColor='#58cfb3'>
+                        <Text>Cancel</Text>
+                    </TouchableHighlight> : null}
                   </View>
 
                 <View style={styles.separator}>
                 </View>
-
-                  <View style={styles.header}>
-                    <Text style={styles.headerText}> Current Puzzles </Text>
-                  </View>
-
+                {currPuzzlesText}
                 </View>
 
                 {internalView}
