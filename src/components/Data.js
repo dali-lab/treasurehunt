@@ -87,9 +87,12 @@ export function search(query) {
 
 	return new Promise((success, failure) => {
 		huntsRef.once('value', function(snap) {
+			console.log("Got " + JSON.stringify(snap.val()));
 			for (var key in snap.val()) {
-				if (key.includes(query.toLowerCase())) {
-					hunt_ids.push(key);
+				const hunt = snap.val()[key];
+				console.log("Searching hunt: " + JSON.stringify(hunt));
+				if (key.includes(query) || hunt.name.includes(query)) {
+					hunt_ids.push({key: key, name: hunt.name});
 				}
 			}
 
