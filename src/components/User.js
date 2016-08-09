@@ -237,7 +237,7 @@ class User {
 	getHuntsList() {
 		return new Promise((fulfill, reject) => {
 			this.currentHunts.once('value', function(snap) {
-				console.log("---Got a hunts list: " + snap.val());
+				console.log("---Got a hunts list: " + JSON.stringify(snap.val()));
 				fulfill(snap.val());
 			}, function(error) {
 				reject(error);

@@ -81,3 +81,23 @@ export function getHuntObjects(hunt_ids) {
 	    }
 	});
 }
+
+export function search(query) {
+	var hunt_ids = [];
+
+	return new Promise((success, failure) => {
+		huntsRef.once('value', function(snap) {
+			for (var key in snap.val()) {
+				if (key.includes(query.toLowerCase())) {
+					hunt_ids.push(key);
+				}
+			}
+
+			console.log("Searched and found: " + JSON.stringify(hunt_ids));
+
+			success(hunt_ids);
+		}, function(error) {
+			failure(error);
+		})
+	});
+}

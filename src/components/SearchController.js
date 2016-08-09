@@ -1,4 +1,5 @@
 var React = require('react-native');
+var Data = require('./Data');
 
 var {
     StyleSheet,
@@ -11,34 +12,34 @@ var {
 } = React;
 
 var SearchController = React.createClass({
-	propTypes: {
-		searchText: React.PropTypes.string,
+	searchResults: React.PropTypes.array,
+	searchText: React.PropTypes.string.isRequired,
+
+    getInitialState: function() {
+        var dataSource = new ListView.DataSource({
+            rowHasChanged: (r1, r2) => r1.guid !== r2.guid,
+            sectionHeaderHasChanged: (s1, s2) => s1.guid !== s2.guid
+        });
+        return {
+            dataSource: dataSource
+        };
     },
 
-    // getInitialState: function() {
-    //     var dataSource = new ListView.DataSource({
-    //         rowHasChanged: (r1, r2) => r1.guid !== r2.guid,
-    //         sectionHeaderHasChanged: (s1, s2) => s1.guid !== s2.guid
-    //     });
-    //     return {
-    //         dataSource: dataSource,
-    //     };
-    // },
+    renderRow: function(hunt) {
 
-    // renderRow: function(hunt) {
-
-    // },
+    },
 
 	render: function() {
-		var searchInstructions = this.props.searchText == "" ? <Text>You can search using a hunt name or by hunt id</Text> : null
+		var searchInstructions = this.props.searchText == "" ? <Text>You can search using a hunt id</Text> : null
 
-		// var searchResults = this.props.searchText != "" ? <ListView
-		// 														dataSource={this.state.dataSource}
-		// 								                        automaticallyAdjustContentInsets={false}
-		// 								                        renderRow={this.renderRow}/> : null;
+		var searchResults = this.props.searchText != "" ? <Text>{this.props.searchResults !== null ? JSON.stringify(this.props.searchResults) : "Loading..."}</Text> : null//<ListView
+																// dataSource={this.state.dataSource}
+										      //                   automaticallyAdjustContentInsets={false}
+										      //                   renderRow={this.renderRow}/> : null;
 
 		return <View>
 			{searchInstructions}
+			{searchResults}
 		</View>
 	}
 });

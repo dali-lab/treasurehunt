@@ -4,7 +4,7 @@ var React = require('react-native');
 var Progress = require('react-native-progress');
 var HuntOverview = require('./HuntOverview');
 var User = require('./User').default;
-var Hunts = require('./Data');
+var Data = require('./Data');
 var SearchController = require('./SearchController');
 
 var dismissKeyboard = require('dismissKeyboard');
@@ -215,7 +215,8 @@ var Home = React.createClass({
         return {
             dataSource: dataSource,
             huntsList: huntsList,
-            searchText: ""
+            searchText: "",
+            searchResults: null
         };
     },
 
@@ -248,7 +249,7 @@ var Home = React.createClass({
     // Will load all the things!
     listenForItems: function() {
         User.getCurrentUser().getHuntsList().then((huntsList) => {
-            Hunts.getHuntObjects(huntsList).then((hunts) => {
+            Data.getHuntObjects(huntsList).then((hunts) => {
 
             //    var newDataSource = this.state.dataSource.clonewithRowsAndSections({current: hunts}, ['current']);
                 var newDataSource = this.state.dataSource.cloneWithRows(hunts);
@@ -350,7 +351,7 @@ var Home = React.createClass({
             currPuzzlesText = null;
             // TODO, replace with search results...
             internalView = <View style={styles.internalView}>
-                <SearchController searchText={this.state.searchText}/>
+                <SearchController searchText={this.state.searchText} searchResults={this.state.searchResults}/>
             </View>;
         }
 
@@ -384,7 +385,13 @@ var Home = React.createClass({
                         }}
                         onChangeText={(text) => {
                             // So I can keep track of the text
-                            this.setState({searchText: text});
+                            this.setState({
+                                searchText: text,
+                                searchResults: null
+                            });
+                            Data.search(text).then((results) => {
+                                this.setState({searchResults: results});
+                            });
                         }}
                         onSubmitEditing={() => {
                             dismissKeyboard();
