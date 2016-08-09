@@ -171,7 +171,6 @@ const usersRef = new Firebase(`${ config.FIREBASE_ROOT }/users`)
 var Home = React.createClass({
 
     getInitialState: function() {
-        console.log("running getInitialState");
         var huntsList;
 
         var dataSource = new ListView.DataSource({
@@ -186,18 +185,12 @@ var Home = React.createClass({
     },
 
     getHuntsList: function() {
-
-        console.log("running getHuntsList");
         var currentUser = User.getCurrentUser();
         var userRef = usersRef.child(currentUser.uid);
         var huntsListRef = userRef.child("hunts_list");
 
 
-
-
-
         var huntsList;
-        console.log('huntslist is' + huntsList);
         huntsListRef.on('value', (snap) => {
             huntsList = snap.val();
             return huntsList;
@@ -206,13 +199,10 @@ var Home = React.createClass({
 
     // the whole function 7/21/16 AES
     getCompletedHuntsList: function() {
-
-        console.log("running getHuntsList");
         var currentUser = User.getCurrentUser();
         var userRef = usersRef.child(currentUser.uid);
         var huntsListRef = userRef.child("hunts_list");
         var huntsList;
-        console.log('huntslist is' + huntsList);
         huntsListRef.on('value', (snap) => {
             huntsList = snap.val();
             return huntsList;
@@ -222,16 +212,11 @@ var Home = React.createClass({
 
     // Will load all the things!
     listenForItems: function() {
-        console.log("running listenForItems");
-        console.log(this.state);
         User.getCurrentUser().getHuntsList().then((huntsList) => {
             Hunts.getHuntObjects(huntsList).then((hunts) => {
-                console.log("Loaded hunts: " + hunts + "\nSetting the state");
-                console.log("State was: ");
 
             //    var newDataSource = this.state.dataSource.clonewithRowsAndSections({current: hunts}, ['current']);
                 var newDataSource = this.state.dataSource.cloneWithRows(hunts);
-                console.log("Now it is: ");
                 this.setState({
                     hunts: hunts,
                     dataSource: newDataSource
@@ -257,25 +242,18 @@ var Home = React.createClass({
     // AES 7/29/16. Function currently not used, but gets the download url from a hunt
     getImage: function(hunt) {
         var huntImage = storageRef.child(hunt.imagename);
-        console.log(`current hunt image is ${huntImage}`);
         let huntImageURL;
 
         huntImage.getDownloadURL().then((url) => {
           huntImageURL = url;
 
-          console.log(`laterhunt image is ${huntImage}`);
           huntsRef.child(hunt.id).update({imageURL: huntImageURL});
-          console.log(`the saved image url is ${huntImageURL}`);
-
         });
     },
 
     renderRow: function(hunt) {
 
         var huntimage = hunt.image;
-        console.log(`current image is ${huntimage}`);
-
-        console.log("Rendering row for hunt " + hunt.id);
         return (
             <TouchableHighlight onPress={() => this.rowPressed(hunt)}
                 underlayColor='#dddddd'>
@@ -304,24 +282,17 @@ var Home = React.createClass({
 
     render: function() {
 
-
-        console.log("running render ...");
         var listView = <ListView
                         dataSource={this.state.dataSource}
                         automaticallyAdjustContentInsets={false}
                         renderRow={this.renderRow}/>
 
-        console.log("listView Done");
-
         var noHunts = <View style={noHuntsStyle.noHuntsView}>
                         <Text style={noHuntsStyle.noHuntsText}>You have no hunts yet</Text>
                     </View>
 
-        console.log("noHunts done");
-
         var internalView;
 
-        console.log(internalView);
         if (this.state.hunts == undefined) {
             internalView = <View style={noHuntsStyle.noHuntsView}>
                             <Text style={noHuntsStyle.noHuntsText}>Loading...</Text>
@@ -332,8 +303,6 @@ var Home = React.createClass({
             internalView = listView;
         }
 
-
-        console.log("internalView rendered. Returning");
         return (
             <View style={styles.container}>
                 <View style={styles.emptyContainerTop}>

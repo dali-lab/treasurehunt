@@ -35,6 +35,7 @@ export function getHuntObjects(hunt_ids) {
 		var hunts = [];
 
 		if (hunt_ids == null) {
+			console.log("No hunts");
 			fulfill(hunts);
 			return;
 		}
