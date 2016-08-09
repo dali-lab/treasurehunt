@@ -34,6 +34,11 @@ export function getHuntObjects(hunt_ids) {
 	return new Promise((fulfill, reject) => {
 		var hunts = [];
 
+		if (hunt_ids == null) {
+			fulfill(hunts);
+			return;
+		}
+
 		// To keep track of asyncronous task
 		var complete = 0;
 		var todo = Object.keys(hunt_ids).length;

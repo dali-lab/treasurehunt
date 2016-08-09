@@ -332,7 +332,7 @@ class LoginScreen extends Component {
 				  		</TouchableHighlight>
 				  		<Text style={styles.orText}>or</Text>
 				  		<FBLogin style={styles.fbButton}
-				  			permissions={["email"]}
+				  			permissions={["email", "public_profile"]}
 				  			onLogin={(data) => {
 					        	var user = User.FBonLogin(data);
 					        	if (user != null)
