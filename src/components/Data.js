@@ -75,3 +75,26 @@ export function getHuntObjects(hunt_ids) {
 	    }
 	});
 }
+
+export function search(query) {
+	var hunt_ids = [];
+
+	return new Promise((success, failure) => {
+		huntsRef.once('value', function(snap) {
+			console.log("Got " + JSON.stringify(snap.val()));
+			for (var key in snap.val()) {
+				const hunt = snap.val()[key];
+				console.log("Searching hunt: " + JSON.stringify(hunt));
+				if (key.includes(query) || hunt.name.includes(query)) {
+					hunt_ids.push({key: key, name: hunt.name});
+				}
+			}
+
+			console.log("Searched and found: " + JSON.stringify(hunt_ids));
+
+			success(hunt_ids);
+		}, function(error) {
+			failure(error);
+		})
+	});
+}

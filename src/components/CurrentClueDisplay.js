@@ -148,25 +148,40 @@ var CurrentClueDisplay = React.createClass({
 	*/
 
 		getInitialState: function() {
-			var clueRef = cluesRef.child(this.props.clueId);
-			var currentUser = User.getCurrentUser().uid;
-			console.log(`the current clueRef is ${clueRef}`);
-			var clue;
+			console.log('getting initial state...');
+
+			var clue = {};
 			var clueSolution;
-	        clueRef.on('value', (snap) => {
+			/*
+		 clueRef.on('value', (snap) => {
 						console.log(`CurrentClueDisplay clueRef val ${JSON.stringify(snap.val())}`);
 						console.log(`CurrentClueDisplay clueRef val ${snap.key}`);
-						console.log(`however, props hunt id is: ${this.props.hunt.id}`)
-	        	clue = {
-	        		title: snap.val().creator,
+						console.log(`however, props hunt id is: ${this.props.hunt.id}`);
+
+/*
+	        	 var clue = {
+	        		title: 'clue title goes here',
 	        		description: snap.val().description,
 	        		type: snap.val().type,
 							data: snap.val().data,
 							solutions: snap.val().solutions,
-							submission: snap.child(submissions).child(currentUser).val()
-	        	};
-	        });
+							submission: clueRef.child(submissions).child(currentUser.uid)
 
+	        	};
+						return clue;
+						*/
+						/*
+						clue[title]= 'clue title goes here';
+						console.log(`clue title is: ${clue[title]}`);
+						clue[description]= snap.val().description;
+						clue[type]= snap.val().type;
+						clue[data]= snap.val().data;
+						clue[solutions]= snap.val().solutions;
+						clue[submission]= clueRef.child(submissions).child(currentUser.uid);
+
+						console.log(`clue in cb is: ${clue}`);
+	        });
+					*/
 	        return {
 	            clue: clue,
 	            huntId: this.props.hunt.id,
@@ -175,8 +190,12 @@ var CurrentClueDisplay = React.createClass({
 	    },
 
     componentDidMount: function() {
+		//	console.log('in listen for items 2');
       //  this.listenForItems(clueSolutionsRef);
-			this.listenForItems2(clueSolutionsRef);
+		//	this.listenForItems2(clueSolutionsRef);
+		console.log('component did mount...');
+		this.populateClue();
+
     },
 
 		listenForItems2: function(clueSolutionsRef) {
@@ -192,6 +211,32 @@ var CurrentClueDisplay = React.createClass({
 
 				});
 		},
+
+		populateClue: function() {
+			console.log('populating clue....');
+				var clueRef = cluesRef.child(this.props.clueId);
+				var currentUser = User.getCurrentUser().uid;
+				console.log(`the current clueRef is ${clueRef}`);
+				clueRef.on('value', (snap) => {
+				 console.log(`CurrentClueDisplay clueRef val ${JSON.stringify(snap.val())}`);
+
+				 var submission1 = clueRef.child('submissions');
+				 var submission2 = submission1.child(currentUser);
+
+					var clue = {
+					 title: snap.val().creator,
+					 description: snap.val().description,
+					 type: snap.val().type,
+					 data: snap.val().data,
+					 solutions: snap.val().solutions,
+					 submission: submission2
+				 };
+				this.setState({
+					clue: clue
+				});
+
+			});  // value
+	},
 
     listenForItems: function(clueSolutionsRef) {
         //TODO: make this user specific!!!
@@ -389,6 +434,12 @@ var CurrentClueDisplay = React.createClass({
 
 	render: function() {
 		var hunt = this.props.hunt;
+		console.log(`state is now: ${this.state.clue}`);
+		console.log(`state title is now: ${this.state.clue.title}`);
+		console.log(`state is now: ${this.state.clue.description}`);
+		console.log(`state is now: ${this.state.clue.submission}`);
+		console.log(`state is now: ${this.state.clue.type}`);
+		console.log(`state is now: ${this.state.clue.data}`);
 
 			return (
 				<View style={styles.container}>
