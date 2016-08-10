@@ -150,8 +150,14 @@ var CurrentClueDisplay = React.createClass({
 		getInitialState: function() {
 			console.log('getting initial state...');
 
-			var clue = {};
-			var clueSolution;
+		//	var clue = {};
+		var clueTitle;
+		var clueDescription;
+		var clueType;
+		var clueData;
+		var clueSolutions;
+		var clueSubmission;
+		var clueSolution;
 			/*
 		 clueRef.on('value', (snap) => {
 						console.log(`CurrentClueDisplay clueRef val ${JSON.stringify(snap.val())}`);
@@ -183,8 +189,13 @@ var CurrentClueDisplay = React.createClass({
 	        });
 					*/
 	        return {
-	            clue: clue,
-	            huntId: this.props.hunt.id,
+						clueTitle: clueTitle,
+						clueDescription: clueDescription,
+						clueType: clueType,
+						clueData: clueData,
+						clueSolutions: clueSolutions,
+						clueSubmission: clueSubmission,
+	          huntId: this.props.hunt.id,
 	        };
 
 	    },
@@ -220,9 +231,14 @@ var CurrentClueDisplay = React.createClass({
 				clueRef.on('value', (snap) => {
 				 console.log(`CurrentClueDisplay clueRef val ${JSON.stringify(snap.val())}`);
 
-				 var submission1 = clueRef.child('submissions');
-				 var submission2 = submission1.child(currentUser);
+				 	// this isn't right.....
+	//			 var submission1 = clueRef.child('submissions');
+		//		 var submission2 = submission1.child(currentUser);
 
+					var submission1 = snap.val().submissions;
+					 var submission2 = submission1[currentUser];
+
+/*
 					var clue = {
 					 title: snap.val().creator,
 					 description: snap.val().description,
@@ -231,8 +247,21 @@ var CurrentClueDisplay = React.createClass({
 					 solutions: snap.val().solutions,
 					 submission: submission2
 				 };
+				*/
+				var clueTitle = snap.val().creator;
+				var clueDescription = snap.val().description;
+				var clueType = snap.val().type;
+				var clueData = snap.val().data;
+				var clueSolutions = snap.val().solutions;
+				var clueSubmission = submission2;
+
 				this.setState({
-					clue: clue
+					clueTitle: clueTitle,
+					clueDescription: clueDescription,
+					clueType: clueType,
+					clueData: clueData,
+					clueSolutions: clueSolutions,
+					clueSubmission: clueSubmission,
 				});
 
 			});  // value
@@ -259,10 +288,15 @@ var CurrentClueDisplay = React.createClass({
 
 		// STILL IN PROGRESS-- AES
 		onSubmitPressed: function(submission) {
-			this.addUserSolutionToFirebase();
+			this.addUserSubmissionToFirebase();
+			console.log('wow look we finished!');
+
 			if (this.checkSolution()) {
+				/*
 				var solutionList = this.getSolutionListFromDatabase();
 				this.updateDatabaseSolutionList(solutionList);
+				*/
+
 
 				//need to also put next clue in progress at this point
 				//TODO: don't hard code these!
@@ -354,6 +388,27 @@ var CurrentClueDisplay = React.createClass({
 	},
 	*/
 
+	addUserSubmissionToFirebase: function() {
+		const clueRef = cluesRef.child(this.props.clueId);
+		const currentUser = User.getCurrentUser().uid;
+
+		clueRef.on('value', (snap) => {
+		 console.log(`CurrentClueDisplay clueRef val ${JSON.stringify(snap.val())}`);
+
+		 var submissionRef = clueRef.child('submissions').child(currentUser);
+	//	 var submission2 = submission1.child(currentUser);
+
+		submissionRef.set(this.state.clueSubmission)
+		.then(() => {
+			console.log(`success! clueSubmission is: ${this.state.clueSubmission}`);
+		});
+
+
+
+	});  // snap
+},
+
+	// OLD
 	addUserSolutionToFirebase: function() {
 		var currentUser = User.getCurrentUser();
 		var clueRef = cluesRef.child(this.props.clueId);
@@ -434,12 +489,21 @@ var CurrentClueDisplay = React.createClass({
 
 	render: function() {
 		var hunt = this.props.hunt;
+		console.log(`clueSubmission is: ${this.state.clueSubmission}`);
+		console.log(`clueSubmission is: ${ typeof this.state.clueSubmission}`);
+	//	var clueSubString = String(this.state.clueSubmission);
+	//	var clueSubString2 = JSON.stringify(this.state.clueSubmission);
+	//	console.log(`clueSubString is: ${clueSubString}`);
+	//	console.log(`clueSubString2 is: ${clueSubString2}`);
+
+		/*
 		console.log(`state is now: ${this.state.clue}`);
 		console.log(`state title is now: ${this.state.clue.title}`);
 		console.log(`state is now: ${this.state.clue.description}`);
 		console.log(`state is now: ${this.state.clue.submission}`);
 		console.log(`state is now: ${this.state.clue.type}`);
 		console.log(`state is now: ${this.state.clue.data}`);
+		*/
 
 			return (
 				<View style={styles.container}>
@@ -447,12 +511,12 @@ var CurrentClueDisplay = React.createClass({
 					<Text style={styles.huntTitle}>{hunt.title.toUpperCase()}</Text>
                     <View style={styles.topSeparator}/>
                     <View style={styles.separatorSmall}/>
-					<Text style={styles.clueName}>{this.state.clue.title}</Text>
-					<Text style={styles.description}>{this.state.clue.description}</Text>
+					<Text style={styles.clueName}>{this.state.clueTitle}</Text>
+					<Text style={styles.description}>{this.state.clueDescription}</Text>
 					<TextInput
 	    				style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-	    				onChangeText={(submission) => this.setState({submission})}
-	    				value={this.state.submission}/>
+	    				onChangeText={(submission) => this.setState({clueSubmission: submission})}
+	    				value={this.state.clueSubmission}/>
 	    			<View style={styles.separatorLarge}/>
 					<TouchableHighlight style = {styles.button}
 							onPress={this.onSubmitPressed}
