@@ -77,5 +77,25 @@
 	<false/>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
+  <key>CFBundleURLTypes</key>
+  <array>
+    <dict>
+      <key>CFBundleURLSchemes</key>
+      <array>
+        <string>fb1058336930916497</string>
+      </array>
+    </dict>
+  </array>
+  <key>LSApplicationQueriesSchemes</key>
+  <array>
+    <string>fbapi</string>
+    <string>fb-messenger-api</string>
+    <string>fbauth2</string>
+    <string>fbshareextension</string>
+  </array>
+  <key>FacebookAppID</key>
+  <string>1058336930916497</string>
+  <key>FacebookDisplayName</key>
+  <string>Treasure Hunt</string>
 </dict>
 </plist>

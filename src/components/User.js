@@ -6,175 +6,241 @@ const config = require('../../config')
 const usersRef = rootRef.ref('users');
 // const usersRef = new Firebase("https://treasurehuntdali.firebaseio.com/users")
 const React = require('react-native');
+const {FBLoginManager} = require('react-native-facebook-login');
 
-const USER_STORAGE_KEY = '@TreasureHunt:userObject'
+
+// const USER_EMAIL_KEY = '@TreasureHunt:email';
+const USER_DATA_KEY = 'user_data';
 
 var {
 	AsyncStorage,
 } = React;
 
-// var UserDefaults = require('react-native-userdefaults-ios');
 
 class User {
 	static currentUser = null;
 
-	// No one but this class should make user objects
-	constructor(uid) {
-		this.uid = uid;
-	}
+	/**
+	 * This constructs a user object
+	 * Usage: new User(firebase.User, null) or new User(null, {
+	 	id: String,
+	 	email: String,
+	 	providerId: String,
+	 	name: String or null
+	 * })
+	 */
+	constructor(firebaseUser, otherData) {
+		if (firebaseUser) {
 
-	buildWithData(authData, userRef, email) {
-		this.uid = authData.uid;
-		this.provider = authData.provider;
-		this.token = authData.token;
-		this.auth = authData.auth;
-		this.email = email;
-		this.authData = authData;
-		this.userRef = userRef;
-		this.currentHunts = userRef.child("currentHunts");
-		this.completedHunts = userRef.child("completedHunts");  // 7/21/16 AES
-	}
+			this.firebaseUser = firebaseUser;
+			this.email = firebaseUser.email;
+			this.name = firebaseUser.displayName;
+			this.emailVerified = firebaseUser.emailVerified;
+			this.providerId = firebaseUser.providerId;
 
-	setUpRefs(userRef) {
-		this.userRef = userRef;
-		this.currentHunts = userRef.child("currentHunts");
-		this.completedHunts = userRef.child("completedHunts");  // 7/21/16 AES
-	}
-
-	static async logout() {
-		this.currentUser = null;
-		try {
-			console.log("Logging out...");
-			await AsyncStorage.removeItem(USER_STORAGE_KEY);
-			console.log("Logged out!");
-		}catch (error) {
-			console.log("Failed to logout!");
+			this.uid = firebaseUser.uid;
+		}else if (otherData) {
+			this.firebaseUser = null;
+			this.uid = otherData.id;
+			this.email = otherData.email;
+			this.providerId = otherData.providerId;
+			this.emailVerified = true;
+			this.name = otherData.name || "";
 		}
+
+		this.token = null;
+
+		this.dataRef = usersRef.child(this.uid);
+		this.currentHunts = this.dataRef.child("currentHunts");
+		this.completedHunts = this.dataRef.child("completedHunts");
+	}
+
+	// A function for when a user has just been created. It fills the user with empty data tables
+	initializeNewUser() {
+		this.dataRef.set({
+			email: this.email,
+			currentHunts: [],
+			completedHunts: [],
+			name: this.name || "",
+			Feed: [],
+			friends: [],
+		});
+	}
+
+	isFacebook() {
+		return this.firebaseUser == null;
 	}
 
 	static getCurrentUser() {
-		return this.currentUser;
-	}
-
-	static updateCurrentUserFromStore() {
-		console.log("Updating user from store...");
-		return new Promise(async (fulfill, reject) => {
-			try {
-				const value = await AsyncStorage.getItem(USER_STORAGE_KEY)
-				console.log("Got something...");
-
-				if (value !== null) {
-					console.log("It was: " + value);
-					User.currentUser = new User(value);
-					User.currentUser.setUpRefs(usersRef.child(value));
-					console.log("Set User... fulfilling");
-					fulfill(User.getCurrentUser());
-				}else{
-					reject(null);
-					console.log("It was null")
-				}
-			}catch (error) {
-				// console.log("Failed! with error " + error);
-				reject();
-			}
-		});
-	}
-
-	static async updateUserInStore() {
-		// Method from Documentation on AsyncStorage
-		console.log("Updating user to store...");
-		try {
-			console.log("Saving " + User.getCurrentUser().uid + " ...");
-		  	// UserDefaults.setObjectForKey(User.getCurrentUser(), USER_STORAGE_KEY)
-		  	// 	.then(result => {
-		  	// 		console.log(result);
-		  	// 	});
-
-			await AsyncStorage.setItem(USER_STORAGE_KEY, User.getCurrentUser().uid)
-			console.log("Complete!");
-		} catch (error) {
-			console.log("Failed!!");
-		  // Error saving data
-			console.log("AsyncStorage error: " + AsyncStorage);
+		console.log('getting current user');
+		if (User.currentUser) {
+			return User.currentUser;
 		}
+
+		console.log(Firebase.auth().currentUser);
+
+		if (Firebase.auth().currentUser) {
+			return new User(Firebase.auth().currentUser);
+		}
+
+		return null;
 	}
 
-	/**
-		This function authenticates a user, and will call the callBack when done
-		callBack = function(error, user)
-	*/
-	static getUser(email, password, callBack) {
-		ref.authWithPassword({
-			email: email,
-			password: password
-		}, function(error, authData) {
-			if (error) {
-				callBack(error, null);
-			}else{
-				// Get user object
-				var userObject = usersRef.child(authData.uid);
-				console.log(authData.uid)
+	static FBonLogin(data) {
+		var id = data.credentials.userId;
+		console.log(data);
 
-				var user = new User(authData.uid);
-				user.buildWithData(authData, userObject, email);
-				User.currentUser = user;
-				callBack(error, user);
-				User.updateUserInStore();
+		var user = new User(null, {
+			id: id,
+			email: "",
+			providerId: "facebook.com",
+			name: "",
+		});
+
+		user.dataRef.on("value", (snapshot) => {
+			if (!snapshot.hasChild("currentHunts")) {
+				console.log("initializing new user");
+				user.initializeNewUser();
+			}
+		});
+
+		User.currentUser = user;
+
+		return user;
+	}
+
+	static loadUserFromStore() {
+		console.log("Loading user...");
+		return new Promise(async (success, failure) => {
+			try {
+				const user_data_json = await AsyncStorage.getItem(USER_DATA_KEY);
+
+				if (user_data_json) {
+					// Got a token back
+					var myUser = new User(JSON.parse(user_data_json), null);
+					Firebase.auth().currentUser = JSON.parse(user_data_json);
+					User.currentUser = myUser
+					console.log("Loaded user!");
+					success(myUser);
+				}else{
+					console.log("Loaded null!");
+					User.currentUser = null;
+					success(null);
+				}
+			} catch(error) {
+				console.log("Failed to get user: " + error);
+				failure("Failed to get user: " + error);
+			}
+		});
+	}
+
+	static saveUser(user_data) {
+		console.log("Saving user...");
+		return new Promise(async (success, failure) => {
+			if (this.currentUser.isFacebook()) {
+				failure("Type is facebook. Cannot save!");
+				return;
+			}
+
+			try {
+				await AsyncStorage.setItem(USER_DATA_KEY, JSON.stringify(user_data));
+				console.log("Saved user!");
+				success();
+			} catch(error) {
+				failure("Error saving user: " + error);
 			}
 		});
 	}
 
 	/**
-		This function creates a user, and will call the callBack when done
-		callBack = function(error, user)
-	*/
-	static signUp(email, password, callBack) {
-		ref.createUser({
-			email: email,
-			password: password
-		}, function(error, authData) {
-			if (error) {
-				callBack(error, null);
-			}else{
-				// Make new user object
-				var userObject = usersRef.child(authData.uid);
-				console.log(authData.uid)
-				userObject.set({
-					email: email,
-					currentHunts: [],
-					completedHunts: [],
-					name: "",
+	 * Returns a promise with a non-null User
+	 */
+	static login(email, password) {
+		console.log("Attempting to log in");
+		return new Promise((fulfill, reject) => {
+			// if (Firebase.auth().currentUser) {
+			// 	reject("Failed to login! There is already a user!!!!");
+			//	return;
+			// }
+
+			Firebase.auth().signInWithEmailAndPassword(email, password).then((user) => {
+				// We have lift off!
+				var myUser = new User(user, null);
+				// The Eagle has landed!
+				console.log("Logged in with user: " + myUser);
+
+				User.currentUser = myUser;
+				User.saveUser(user);
+				fulfill(myUser);
+			}).catch(function(error) {
+				console.log("Failed to login with error message: '" + error.message + "' and error: " + error);
+				reject(error);
+			});
+		});
+	}
+
+	static signUp(email, password) {
+		return new Promise((fulfill, reject) => {
+			// if (Firebase.auth().currentUser) {
+			// 	reject("Failed to sign up! There is already a user!!!!");
+			//	return;
+			// }
+
+			Firebase.auth().createUserWithEmailAndPassword(email, password).then((user) => {
+				// We have lift off!
+				var myUser = new User(user, null);
+				// The Eagle has landed!
+				console.log("Signing up!");
+
+				myUser.initializeNewUser();
+				User.saveUser(user);
+				fulfill(myUser);
+			}).catch(function(error) {
+				console.log("Failed to login with error message: '" + error.message + "' and error: " + error);
+				reject(error);
+			});
+		});
+	}
+
+	static resetPassword(email) {
+		return Firebase.auth().sendPasswordResetEmail(email);
+	}
+
+	static logout() {
+		return User.currentUser.logout();
+	}
+
+	logout() {
+		return new Promise((success, failure) => {
+			if (this.isFacebook()) {
+				FBLoginManager.logout((error, data) => {
+					if (!error) {
+						console.log("Logged out!");
+						success();
+					}else{
+						console.log("Failed to logout!");
+						failure();
+					}
 				});
-
-				var user = new User(authData.uid);
-				user.buildWithData(authData, userObject, email);
-				User.currentUser = user;
-				callBack(error, user);
-				User.updateUserInStore();
+			}else{
+				Firebase.auth().signOut().then(() => {
+					// Completed!
+					console.log("Logged out!");
+					AsyncStorage.removeItem(USER_DATA_KEY);
+					success();
+				}, (error) => {
+					console.log("Failed to log out!");
+					failure(error);
+				});
 			}
-		});
-	}
-
-	/**
-		This sends a reset email to the email, and will call the callBack when done
-		callBack = function(error)
-	*/
-	static sendResetEmail(email, callBack) {
-		ref.resetPassword({
-			email: email
-		}, function(error) {
-			callBack(error);
 		});
 	}
 
 	getHuntsList() {
 		return new Promise((fulfill, reject) => {
 			this.currentHunts.once('value', function(snap) {
-				if (snap.val() == null) {
-					reject(NSNull);
-				}else{
-					fulfill(snap.exportVal());
-				}
+				console.log("---Got a hunts list: " + JSON.stringify(snap.val()));
+				fulfill(snap.val());
 			}, function(error) {
 				reject(error);
 			});
@@ -182,20 +248,20 @@ class User {
 	}
 
 	// This whole function 7/21/16 AES
-	getCompletedHuntsList() {
-		return new Promise((fulfill, reject) => {
-			this.completedHunts.once('value', function(snap) {
-				if (snap.val() == null) {
-					reject(NSNull);
-				}else{
-					fulfill(snap.exportVal());
-				}
-			}, function(error) {
-				reject(error);
-			});
+getCompletedHuntsList() {
+	return new Promise((fulfill, reject) => {
+		this.completedHunts.once('value', function(snap) {
+			if (snap.val() == null) {
+				reject(NSNull);
+			}else{
+				fulfill(snap.exportVal());
+			}
+		}, function(error) {
+			reject(error);
 		});
-	}
-	// end of function 7/21/16 AES
+	});
+}
+// end of function 7/21/16 AES
 }
 
 export default User;

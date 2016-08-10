@@ -1,11 +1,13 @@
 'use strict';
 
-
 var React = require('react-native');
 var Progress = require('react-native-progress');
 var HuntOverview = require('./HuntOverview');
 var User = require('./User').default;
-var Hunts = require('./Data');
+var Data = require('./Data');
+var SearchController = require('./SearchController');
+
+var dismissKeyboard = require('dismissKeyboard');
 
 var {
     StyleSheet,
@@ -13,6 +15,7 @@ var {
     View,
     TouchableHighlight,
     ListView,
+    TextInput,
     Text,
     Component,
     AlertIOS,
@@ -100,13 +103,6 @@ var styles = StyleSheet.create({
       marginRight: 20,
       marginTop: 10
     },
-    searchBar: {
-        height: 25,
-        backgroundColor: '#E4EEEC',
-        borderRadius: 5,
-        justifyContent: 'center',
-        paddingLeft: 4
-    },
     images: {
       width: 80,
       height: 80,
@@ -117,9 +113,14 @@ var styles = StyleSheet.create({
     searchIcon: {
       width: 13,
       height: 13,
+    },
+
+    internalView: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row',
+        flex: 1,
     }
-
-
 
 });
 
@@ -132,8 +133,41 @@ var noHuntsStyle = StyleSheet.create({
     },
     noHuntsText:{
         fontSize: 20,
+        textAlign: 'center',
+        width: 330
     }
-})
+});
+
+var searchingStyles = StyleSheet.create({
+    searchBar: {
+        height: 30,
+        backgroundColor: '#E4EEEC',
+        borderRadius: 5,
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+        paddingLeft: 4
+    },
+    textInput: {
+        flexDirection: 'column',
+        flex: 1,
+        marginLeft: 5
+    },
+    cancelButton: {
+        backgroundColor: '#28cfa8',
+        borderColor: '#28cfa8',
+        borderRadius: 5,
+        width: 50,
+        height: 20,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    cancelButtonText: {
+        marginLeft: 2,
+        marginRight: 2,
+        alignSelf: 'center'
+    }
+});
 
 const Firebase = require('firebase')
 const config = require('../../config')
@@ -172,7 +206,6 @@ const usersRef = new Firebase(`${ config.FIREBASE_ROOT }/users`)
 var Home = React.createClass({
 
     getInitialState: function() {
-        console.log("running getInitialState");
         var huntsList;
 
         var dataSource = new ListView.DataSource({
@@ -183,7 +216,10 @@ var Home = React.createClass({
         return {
             dataSource: dataSource,
             huntsList: huntsList,
-            puzzle: 'current'
+            puzzle: 'current',
+            searchText: "",
+            searchResults: null
+
         };
     },
 
@@ -193,7 +229,6 @@ var Home = React.createClass({
         var userRef = usersRef.child(currentUser.uid);
         var huntsListRef = userRef.child("hunts_list");
         var huntsList;
-        console.log('huntslist is' + huntsList);
         huntsListRef.on('value', (snap) => {
             huntsList = snap.val();
             return huntsList;
@@ -202,14 +237,10 @@ var Home = React.createClass({
 
     // the whole function 7/21/16 AES
     getCompletedHuntsList: function() {
-
-        console.log("running getHuntsList");
         var currentUser = User.getCurrentUser();
         var userRef = usersRef.child(currentUser.uid);
         var huntsListRef = userRef.child("hunts_list");
         var huntsList;
-        console.log('completedhuntslist is' + huntsList);
-
         huntsListRef.on('value', (snap) => {
             huntsList = snap.val();
             return huntsList;
@@ -222,7 +253,7 @@ var Home = React.createClass({
     listenForCompletedItems: function() {
       User.getCurrentUser().getCompletedHuntsList().then((huntsList) => {
         console.log(`loaded this thing: ${huntsList}`);
-        Hunts.getHuntObjects(huntsList).then((hunts) => {
+        Data.getHuntObjects(huntsList).then((hunts) => {
             console.log("Loaded completed hunts: " + JSON.stringify(hunts) );
 
             console.log(`right now the datasource is ${JSON.stringify(this.state.dataSource)}`);
@@ -249,7 +280,7 @@ var Home = React.createClass({
         console.log(this.state);
 
         User.getCurrentUser().getHuntsList().then((huntsList) => {
-            Hunts.getHuntObjects(huntsList).then((hunts) => {
+            Data.getHuntObjects(huntsList).then((hunts) => {
               /*
                 console.log("Loaded hunts: " + hunts + "\nSetting the state");
                 console.log("State was: ");
@@ -260,7 +291,15 @@ var Home = React.createClass({
                     sectionHeaderHasChanged: (s1, s2) => s1.guid !== s2.guid
                 });
                 var newDataSource = thisIsNew.cloneWithRows(hunts);
-              //  console.log("Now it is: ");
+
+/*
+        User.getCurrentUser().getHuntsList().then((huntsList) => {
+            Data.getHuntObjects(huntsList).then((hunts) => {
+
+            //    var newDataSource = this.state.dataSource.clonewithRowsAndSections({current: hunts}, ['current']);
+                var newDataSource = this.state.dataSource.cloneWithRows(hunts);
+                */
+
                 this.setState({
                     hunts: hunts,
                     dataSource: newDataSource,
@@ -272,6 +311,7 @@ var Home = React.createClass({
     },
 
     componentDidMount: function() {
+      console.log(`this.state.puzzle is ${this.state.puzzle}`);
       if (this.state.puzzle === 'current'){
         this.listenForItems();
       } else if (this.state.puzzle == 'past'){
@@ -293,24 +333,17 @@ var Home = React.createClass({
     // AES 7/29/16. Function currently not used, but gets the download url from a hunt
     getImage: function(hunt) {
         var huntImage = storageRef.child(hunt.imagename);
-        console.log(`current hunt image is ${huntImage}`);
         let huntImageURL;
 
         huntImage.getDownloadURL().then((url) => {
           huntImageURL = url;
-
-        //  console.log(`laterhunt image is ${huntImage}`);
           huntsRef.child(hunt.id).update({imageURL: huntImageURL});
-      //    console.log(`the saved image url is ${huntImageURL}`);
-
         });
     },
 
     renderRow: function(hunt) {
 
         var huntimage = hunt.image;
-
-      //  console.log("Rendering row for hunt " + hunt.id);
         return (
             <TouchableHighlight onPress={() => this.rowPressed(hunt)}
                 underlayColor='#dddddd'>
@@ -337,22 +370,20 @@ var Home = React.createClass({
         );
     },
 
+    isSearching: function() {
+        return this.state.searching;
+    },
+
     render: function() {
 
-
-        console.log("running render ...");
         var listView = <ListView
                         dataSource={this.state.dataSource}
                         automaticallyAdjustContentInsets={false}
                         renderRow={this.renderRow}/>
 
-        console.log("listView Done");
-
         var noHunts = <View style={noHuntsStyle.noHuntsView}>
-                        <Text style={noHuntsStyle.noHuntsText}>You have no hunts yet</Text>
+                        <Text style={noHuntsStyle.noHuntsText}>You have no hunts yet. Try searching for some above</Text>
                     </View>
-
-        console.log("noHunts done");
 
         var internalView;
 
@@ -366,17 +397,74 @@ var Home = React.createClass({
             internalView = listView;
         }
 
+        var currPuzzlesText = <View style={styles.header}>
+                    <Text style={styles.headerText}> Current Puzzles </Text>
+                </View>
 
-        console.log("internalView rendered. Returning");
+        if (this.isSearching()) {
+            currPuzzlesText = null;
+            // TODO, replace with search results...
+            internalView = <View style={styles.internalView}>
+                <SearchController searchText={this.state.searchText} searchResults={this.state.searchResults}/>
+            </View>;
+        }
+
+
+        /*
+        For reference:
+        <TextInput style= {styles.textField}
+            ref="emailTextField"
+            returnKeyType='next'
+            onChangeText={(text) => this.setState({email: text})}
+            onSubmitEditing={() =>
+                this.refs.passwordTextField.focus()
+            }
+            value={this.state.email}
+            disabled={this.state.processingLogin}/>*/
+
         return (
             <View style={styles.container}>
                 <View style={styles.emptyContainerTop}>
                 </View>
 
                 <View style={styles.extraInfoContainer}>
-                  <View style={styles.searchBar}>
+                  <View style={searchingStyles.searchBar}>
                     <Image source={require('./28magnifier.png')}
                     style={styles.searchIcon} />
+                    <TextInput style={searchingStyles.textInput}
+                        ref="searchBarTextInput"
+                        returnKeyType='done'
+                        onFocus={() => {
+                            this.setState({searching: true});
+                        }}
+                        onChangeText={(text) => {
+                            // So I can keep track of the text
+                            this.setState({
+                                searchText: text,
+                                searchResults: null
+                            });
+                            Data.search(text).then((results) => {
+                                this.setState({searchResults: results});
+                            });
+                        }}
+                        onSubmitEditing={() => {
+                            dismissKeyboard();
+                            if (this.state.searchText == "") {
+                                this.setState({searching: false});
+                            }
+                        }}
+                        value={this.state.searchText}/>
+                    {this.isSearching() ? <TouchableHighlight style={searchingStyles.cancelButton}
+                        onPress={() => {
+                            dismissKeyboard();
+                            this.setState({
+                                searchText: "",
+                                searching: false
+                            });
+                        }}
+                        underlayColor='#58cfb3'>
+                        <Text>Cancel</Text>
+                    </TouchableHighlight> : null}
                   </View>
 
                 <View style={styles.separator}>
