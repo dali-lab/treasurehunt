@@ -78,7 +78,7 @@ class HuntOverview extends Component {
             }
         });
 				console.log('1111111111111111111111111111');
-				console.log(`the hunt overview id of current hunt is ${JSON.stringify(this.props.hunt)}`);
+				console.log(`the hunt overview id of current hunt is ${JSON.stringify(this.props.hunt.id)}`);
 	}
 
 	onExitPressed() {

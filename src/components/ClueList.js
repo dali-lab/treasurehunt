@@ -134,6 +134,7 @@ var ClueList = React.createClass({
     },
 
     populateArray: function(solutionsForThisHunt) {
+			console.log(`hunt is: ${JSON.stringify(this.props.hunt)}`);
         var cluesArray = this.props.hunt.clues;
         var clues = [];
         var solutionsToClues = [];
@@ -232,6 +233,8 @@ var ClueList = React.createClass({
 
 
 		populateArray2: function(solutionsForThisHunt, huntid) {
+			console.log('AHHHHHHHHHHHHHHHHHHHHHHHH');
+				console.log(`hunt is: ${JSON.stringify(this.props.hunt)}`);
 			var cluesArray = this.props.hunt.clues;
 			var clues = [];
 			var solutionsToClues = [];
@@ -363,6 +366,8 @@ var ClueList = React.createClass({
       //  var huntID = this.props.hunt.id;
 			var huntID = this.props.hunt.id;
 				console.log(`the hunt id rn is: ${huntID}`);
+				console.log('dsfbjibgbsbibbnakpabpbaknabnpabpbaknpbanabjnl');
+				console.log(`the hunt rn is: ${JSON.stringify(this.props.hunt)}`);
 
         var solutionsForThisHunt = [];
         var currentUser = User.getCurrentUser();

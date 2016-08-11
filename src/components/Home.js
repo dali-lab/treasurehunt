@@ -311,7 +311,6 @@ var Home = React.createClass({
     },
 
     componentDidMount: function() {
-      console.log(`this.state.puzzle is ${this.state.puzzle}`);
       if (this.state.puzzle === 'current'){
         this.listenForItems();
       } else if (this.state.puzzle == 'past'){
@@ -321,6 +320,7 @@ var Home = React.createClass({
     },
 
     rowPressed: function(hunt) {
+      console.log(`row pressed! hunt is: ${JSON.stringify(hunt)}`)
         this.props.navigator.push({
             title: "Hunt",
             component: HuntOverview,
@@ -341,8 +341,9 @@ var Home = React.createClass({
         });
     },
 
-    renderRow: function(hunt) {
-
+    renderRow: function(hunt, SectionID, rowID) {
+      console.log(`hunt in render row is: ${JSON.stringify(hunt)}`);
+      console.log(`row id is: ${rowID}`);
         var huntimage = hunt.image;
         return (
             <TouchableHighlight onPress={() => this.rowPressed(hunt)}

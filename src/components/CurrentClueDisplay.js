@@ -291,7 +291,25 @@ var CurrentClueDisplay = React.createClass({
 			this.addUserSubmissionToFirebase();
 			console.log('wow look we finished!');
 
-			if (this.checkSolution()) {
+			this.checkSolutions().then((found) => {
+				if (found == true) {
+					this.clueIsCompleted();
+					Alert.alert(
+						'Clue Correct',
+						"Woohoo!",
+						[
+							{onPress: this.returnToClueList},
+						]
+					);
+				} else {
+					Alert.alert(
+						'Incorrect Submission',
+						'Try again!',
+					);
+				}
+			});  // then
+
+		//	if (this.checkSolutions()) {
 				/*
 				var solutionList = this.getSolutionListFromDatabase();
 				this.updateDatabaseSolutionList(solutionList);
@@ -305,20 +323,17 @@ var CurrentClueDisplay = React.createClass({
 				// var thisSolutionRef = userSolutionsRef.child(2);
 				// thisSolutionRef.update({completed: 1});
 				//this.openModal();
-				Alert.alert(
-					'Clue Correct',
-					"Woohoo!",
-					[
-						{onPress: this.returnToClueList},
-					]
-				);
-			}
-			else {
-				Alert.alert(
-					'Incorrect Submission',
-					'Try again!',
-				);
-			}
+
+
+		},
+
+		// NEW
+		clueIsCompleted: function() {
+
+			// update the clue to be completed for that user
+			var userHunt = User.getCurrentUser().currentHunts.child(this.state.huntId);
+			// child('currentHunts').child(this.state.huntId);
+			console.log(`userhunt is: ${userHunt} `);
 		},
 		// OLD --AES
 /*
@@ -357,6 +372,38 @@ var CurrentClueDisplay = React.createClass({
 		this.props.navigator.pop();
 	},
 
+	checkSolutions: function() {
+		console.log(`clueSOlutions keys is: ${Object.keys(this.state.clueSolutions)}`);
+
+		let found = false;
+		var solutions = Object.keys(this.state.clueSolutions);
+		let i = 0;
+		return new Promise ((fulfill, reject) => {
+			if (solutions.length == 0) {
+				reject();
+			} else {
+				// not using a for each loop here because cannot break out of it
+				console.log(`solutions.ength is: ${solutions.length}`);
+				while(i < solutions.length) {
+					var currSolution = solutions[i];
+					console.log(`currSolution is: ${currSolution}`);
+
+					if (currSolution.toUpperCase().trim() === this.state.clueSubmission.toUpperCase().trim()) {
+						console.log('found the right answer!');
+						found = true;
+						i++;
+						fulfill(true);
+					} else {i++;}
+				}
+				console.log(`found is: ${found}`);
+				if (found == false) {
+					fulfill(false);
+				}
+			}  // else
+		});  // promise
+	},
+
+// OLD
 	checkSolution: function() {
 		if (this.state.submission.toUpperCase().trim() == this.state.clueSolution.toUpperCase().trim()) {
 			return true;
@@ -422,7 +469,7 @@ var CurrentClueDisplay = React.createClass({
 		})
 
 	},
-
+	// OLD
 	getSolutionListFromDatabase: function() {
 		var currentUser = User.getCurrentUser();
 		var userRef = usersRef.child(currentUser.uid);
@@ -437,6 +484,7 @@ var CurrentClueDisplay = React.createClass({
 
 	},
 
+// OLD
 	updateDatabaseSolutionList: function(solutionList) {
 		var newSolutionList = [];
 		var currentUser = User.getCurrentUser();
