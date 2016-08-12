@@ -5,13 +5,25 @@ import rootRef from '../../newfirebase.js';
 const usersRef = rootRef.ref('users');
 const huntsRef = rootRef.ref('hunts');
 
+const SEARCH_WITH_SERVER = false;
+
+
+/**====== SEARCHING =====**/
+// Set the configuration for your app
+// TODO: Replace with your project's config object
+
+// TODO: Replace this with the path to your ElasticSearch queue
+// TODO: This is monitored by your app.js node script on the server
+// TODO: And this should match your seed/security_rules.json
+var PATH = "search";
+/**====== /SEARCHING =====**/
 
 /*
 const huntsRef = new Firebase(`${ config.FIREBASE_ROOT }/hunts`)
 const usersRef = new Firebase(`${ config.FIREBASE_ROOT }/users`)
 */
 
-function getHuntWithID(id) {
+export function getHuntWithID(id) {
 	var ref = huntsRef.child(id);
 
 	return new Promise((fulfill, reject) => {
@@ -48,8 +60,9 @@ export function getHuntObjects(hunt_ids) {
 	    	var contents = hunt_ids[key];
 	        //get that hunt, calculate user progress, get hunt data
 
-	        getHuntWithID(key).then(function(hunt) {
+	        getHuntWithID(key).then((function(key, hunt) {
 	        	// We have a hunt
+	        	console.log(key, hunt);
 
 	        	// Now lets get the total clues
 	        	var totalCluesInHunt = hunt.clues.length;
@@ -70,7 +83,7 @@ export function getHuntObjects(hunt_ids) {
 	        	if (complete >= todo) {
 	        		fulfill(hunts);
 	        	}
-	        }, function(error) { // Rejected!
+	        }).bind(undefined, key), function(error) { // Rejected!
 	        	todo = todo - 1;
 	        })
 
@@ -82,7 +95,7 @@ export function getHuntObjects(hunt_ids) {
 	});
 }
 
-export function search(query) {
+function manualSearch(query) {
 	var hunt_ids = [];
 
 	return new Promise((success, failure) => {
@@ -99,4 +112,12 @@ export function search(query) {
 			failure(error);
 		})
 	});
+}
+
+function serverSearch(query) {
+
+}
+
+export function search(query) {
+	return (SEARCH_WITH_SERVER ? serverSearch(query) : manualSearch(query));
 }

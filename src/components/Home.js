@@ -101,7 +101,7 @@ var styles = StyleSheet.create({
     images: {
       width: 80,
       height: 80,
-
+      borderRadius: 5,
       alignSelf: 'center',
       marginRight: 10
     },
@@ -171,14 +171,15 @@ var Home = React.createClass({
         var huntsList;
 
         var dataSource = new ListView.DataSource({
-            rowHasChanged: (r1, r2) => r1.guid !== r2.guid,
-            sectionHeaderHasChanged: (s1, s2) => s1.guid !== s2.guid
+            rowHasChanged: (r1, r2) => r1 !== r2,
+            sectionHeaderHasChanged: (s1, s2) => s1 !== s2
         });
 
         return {
             dataSource: dataSource,
             huntsList: huntsList,
-            searching: false
+            searching: false,
+            shouldReload: false
         };
     },
 
@@ -234,6 +235,7 @@ var Home = React.createClass({
             component: HuntOverview,
             passProps: {
                 hunt: hunt,
+                huntAdded: this.listenForItems.bind(this)
             }
         });
     },

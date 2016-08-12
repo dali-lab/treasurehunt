@@ -89,7 +89,7 @@ var styles = StyleSheet.create({
     images: {
       width: 80,
       height: 80,
-
+      borderRadius: 5,
       alignSelf: 'center',
       marginRight: 10
     },
@@ -251,17 +251,17 @@ var SearchController = React.createClass({
                     onChangeText={(text) => {
                         // So I can keep track of the text
 
-                        var newDataSource = this.state.dataSource.cloneWithRows([]);
                         this.setState({
                             searchText: text,
-                            searchResults: null,
-                            dataSource: newDataSource
+                            searchResults: null
                         });
                         if (text !== "") {
                             this.search(text);
                         }else{
+                            var newDataSource = this.state.dataSource.cloneWithRows([]);
                             this.setState({
                                 searchResults: [],
+                                dataSource: newDataSource
                             })
                         }
                     }}

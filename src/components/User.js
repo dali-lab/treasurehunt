@@ -7,6 +7,7 @@ const usersRef = rootRef.ref('users');
 // const usersRef = new Firebase("https://treasurehuntdali.firebaseio.com/users")
 const React = require('react-native');
 const {FBLoginManager} = require('react-native-facebook-login');
+const Data = require('./Data');
 
 
 // const USER_EMAIL_KEY = '@TreasureHunt:email';
@@ -52,6 +53,7 @@ class User {
 
 		this.dataRef = usersRef.child(this.uid);
 		this.currentHunts = this.dataRef.child("currentHunts");
+		this.getHuntsList();
 	}
 
 	// A function for when a user has just been created. It fills the user with empty data tables
@@ -208,6 +210,56 @@ class User {
 		return User.currentUser.logout();
 	}
 
+	hasHuntCurrent(hunt) {
+		return new Promise((fulfill, reject) => {
+			this.getHuntsList().then((huntsList) => {
+				console.log(huntsList, hunt.id, huntsList[hunt.id]);
+				fulfill(huntsList[hunt.id] != undefined);
+			}, (error) => {
+				reject(error);
+			});
+		});
+	}
+
+	addHunt(hunt) {
+		return new Promise((fulfill, reject) => {
+			this.hasHuntCurrent(hunt).then((flag) => {
+				if (!flag) {
+					Data.getHuntWithID(hunt.id).then((hunt2) => {
+						var firstClue = hunt2.clues[0];
+						this.currentHunts.child(hunt.id).set({
+							cluesCompleted: 0,
+							currentClue: firstClue
+						});
+						fulfill();
+					}, (error) => {
+						reject(error);
+					});
+				}else{
+					reject("Already have that hunt!");
+				}
+			}, (error) => {
+				reject(error);
+			});
+		});
+	}
+
+	removeHunt(hunt) {
+		console.log("Removing Hunt!");
+		return new Promise((fulfill, reject) => {
+			this.hasHuntCurrent(hunt).then((flag) => {
+				if (flag) {
+					this.currentHunts.child(hunt.id).remove();
+					fulfill();
+				}else{
+					reject("User does not have that hunt");
+				}
+			}, (error) => {
+				reject(error);
+			});
+		});
+	}
+
 	logout() {
 		return new Promise((success, failure) => {
 			if (this.isFacebook()) {
@@ -237,7 +289,6 @@ class User {
 	getHuntsList() {
 		return new Promise((fulfill, reject) => {
 			this.currentHunts.once('value', function(snap) {
-				console.log("---Got a hunts list: " + JSON.stringify(snap.val()));
 				fulfill(snap.val());
 			}, function(error) {
 				reject(error);

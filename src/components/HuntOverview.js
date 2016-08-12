@@ -1,6 +1,7 @@
 
 var React = require('react-native');
 var ClueList = require('./ClueList');
+import User from './User';
 
 var {
 	StyleSheet,
@@ -30,11 +31,11 @@ var styles = StyleSheet.create({
 		alignSelf: 'center'
 	},
 	description: {
-    paddingTop: 3,
-    paddingBottom: 8,
-    paddingRight: 23,
-    paddingLeft: 23,
-    alignSelf: 'center',
+	    paddingTop: 3,
+	    paddingBottom: 8,
+	    paddingRight: 23,
+	    paddingLeft: 23,
+	    alignSelf: 'center',
 		fontSize: 16,
 		fontFamily: 'Verlag-Book',
 		color: '#242021',
@@ -68,8 +69,17 @@ var styles = StyleSheet.create({
 });
 
 
-class HuntOverview extends Component {
-	onStartPressed() {
+var HuntOverview = React.createClass({
+	hunt: React.PropTypes.object,
+	huntAdded: React.PropTypes.func,
+
+	getInitialState: function() {
+		return {
+			shouldShowAddButton: null
+		}
+	},
+
+	onStartPressed: function() {
 		this.props.navigator.push({
             title: "Hunt",
             component: ClueList,
@@ -77,15 +87,50 @@ class HuntOverview extends Component {
                 hunt: this.props.hunt,
             }
         });
-	}
+	},
 
-	onExitPressed() {
+	onExitPressed: function() {
 		this.props.navigator.pop();
-	}
+	},
 
-	render() {
+	onAddHuntPressed: function() {
+		console.log("Doing something with hunt: " + this.props.hunt.id);
+		if (this.state.shouldShowAddButton) {
+			User.getCurrentUser().addHunt(this.props.hunt).then(() => {
+				if (typeof this.props.huntAdded == "function") {
+					this.props.huntAdded();
+				}
+				this.setState({
+					shouldShowAddButton: false
+				});
+			}, (error) => console.log(error));
+		}else{
+			User.getCurrentUser().removeHunt(this.props.hunt).then(() => {
+				if (typeof this.props.huntAdded == "function") {
+					this.props.huntAdded();
+				}
+
+				this.setState({
+					shouldShowAddButton: true
+				});
+			}, (error) => console.log(error));
+		}
+	},
+
+	updateShouldShowAddButton: function() {
+		if (this.state.shouldShowAddButton == null) {
+			User.getCurrentUser().hasHuntCurrent(this.props.hunt).then((flag) => {
+				this.setState({
+					shouldShowAddButton: !flag
+				});
+			});
+		}
+	},
+
+	render: function() {
 		var hunt = this.props.hunt;
 //		console.log(hunt.category);
+		this.updateShouldShowAddButton();
 		return (
 			<View style={styles.container}>
 				<View>
@@ -97,19 +142,24 @@ class HuntOverview extends Component {
 				<Text style={styles.description}>{hunt.description}</Text>
 				<View style={styles.separatorLarge}/>
 				<TouchableHighlight style = {styles.button}
-						onPress={this.onStartPressed.bind(this)}
+						onPress={this.onStartPressed}
 						underlayColor='#99d9f4'>
 						<Text style = {styles.buttonText}>OPEN HUNT</Text>
 				</TouchableHighlight>
 				<TouchableHighlight style = {styles.button}
-						onPress={this.onExitPressed.bind(this)}
+						onPress={this.onAddHuntPressed}
+						underlayColor='#99d9f4'>
+						<Text style = {styles.buttonText}>{ this.state.shouldShowAddButton ? "ADD HUNT" : "REMOVE HUNT" }</Text>
+				</TouchableHighlight>
+				<TouchableHighlight style = {styles.button}
+						onPress={this.onExitPressed}
 						underlayColor='#99d9f4'>
 						<Text style = {styles.buttonText}>RETURN HOME</Text>
 				</TouchableHighlight>
 			</View>
 		);
 	}
-}
+});
 
 
 module.exports = HuntOverview;
