@@ -41,23 +41,13 @@ export function getHuntObjects(hunt_ids) {
 		console.log(`todo's length is: ${todo}`);
 
 	    for (var key in hunt_ids) {
-				console.log(`key in for loop is: ${key}`);
 	    	var contents = hunt_ids[key];
-				console.log(`content in for loop is: ${JSON.stringify(contents)}`);
+
 	        //get that hunt, calculate user progress, get hunt data
-
-					// here i think is where the problem lies... would also account for why
-					// progress bar keeps getting chenged
-					console.log(`complete is: ${complete}`);
-
 	        getHuntWithID(key).then(function(hunt) {
-						console.log(`in data, our current hunt is: ${JSON.stringify(hunt)}`);
-			//			console.log(`in data, our current hunt key firebase is: ${hunt.parent.toString()}`);
-						console.log(`in data, our current hunt key is: ${key}`);
 	        	// We have a hunt
 						console.log(typeof hunt_ids)
 						var thisId = allKeys[complete];
-						console.log(`thisId is: ${thisId}`);
 	        	// Now lets get the total clues
 	        	var totalCluesInHunt = hunt.clues.length;
 	        	var totalCluesCompleted = contents.cluesComplete;
@@ -76,7 +66,6 @@ export function getHuntObjects(hunt_ids) {
 	        	complete += 1;
 
 	        	if (complete >= todo) {
-							console.log('complete jsut got finished!');
 	        		fulfill(hunts);
 	        	}
 	        }, function(error) { // Rejected!

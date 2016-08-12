@@ -252,23 +252,18 @@ var Home = React.createClass({
 
     listenForCompletedItems: function() {
       User.getCurrentUser().getCompletedHuntsList().then((huntsList) => {
-        console.log(`loaded this thing: ${huntsList}`);
         Data.getHuntObjects(huntsList).then((hunts) => {
             console.log("Loaded completed hunts: " + JSON.stringify(hunts) );
 
-            console.log(`right now the datasource is ${JSON.stringify(this.state.dataSource)}`);
             var thisIsNew = new ListView.DataSource({
                 rowHasChanged: (r1, r2) => r1.guid !== r2.guid,
                 sectionHeaderHasChanged: (s1, s2) => s1.guid !== s2.guid
             });
             var newDataSource = thisIsNew.cloneWithRows(hunts);
-            console.log(`middle datasource is ${JSON.stringify(this.state.dataSource)}`);
             this.setState({
                 hunts: hunts,
                 dataSource: newDataSource,
               })
-              console.log(`Now it is: ${JSON.stringify(this.state.dataSource)}`);
-          //    this.forceUpdate();
 
           });
       });
@@ -342,8 +337,6 @@ var Home = React.createClass({
     },
 
     renderRow: function(hunt, SectionID, rowID) {
-      console.log(`hunt in render row is: ${JSON.stringify(hunt)}`);
-      console.log(`row id is: ${rowID}`);
         var huntimage = hunt.image;
         return (
             <TouchableHighlight onPress={() => this.rowPressed(hunt)}

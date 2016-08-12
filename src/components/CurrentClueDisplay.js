@@ -209,6 +209,7 @@ var CurrentClueDisplay = React.createClass({
 
     },
 
+		// OLD
 		listenForItems2: function(clueSolutionsRef) {
 				//TODO: make this user specific!!!
 				clueSolutionsRef.orderByChild('clue_id').equalTo(Number(this.props.clueId)).once('value', (snap) => {
@@ -266,7 +267,7 @@ var CurrentClueDisplay = React.createClass({
 
 			});  // value
 	},
-
+		// OLD
     listenForItems: function(clueSolutionsRef) {
         //TODO: make this user specific!!!
         clueSolutionsRef.orderByChild('clue_id').equalTo(Number(this.props.clueId)).once('value', (snap) => {
@@ -333,8 +334,29 @@ var CurrentClueDisplay = React.createClass({
 			// update the clue to be completed for that user
 			var userHunt = User.getCurrentUser().currentHunts.child(this.state.huntId);
 			// child('currentHunts').child(this.state.huntId);
+			console.log('fjgjnjgjnojne');
 			console.log(`userhunt is: ${userHunt} `);
-		},
+
+				userHunt.once('value', (snap) => {
+					console.log(`snap val is: ${JSON.stringify(snap.val())}`);
+			//		var cluesCompleted =
+				var newCluesCompleted = snap.val().cluesCompleted + 1 ;
+					console.log(`cluesCompleted is now: ${newCluesCompleted}`);
+					userHunt.child('cluesCompleted').set(newCluesCompleted)
+					.then(() => {
+						console.log('success! updated cluesCompleted')
+						return userHunt.child('currentClue').set(this.props.nextClueId)
+						.then(() => {
+							console.log('currentClue is now reset!');
+						});
+						// now, set the current clue to be the next clue in the hunt, or null if there isn't one.
+					});
+			//		userHunt.child('cluesCompleted').set()
+			//		.then(() => {
+			//			console.log(`success! clueSubmission is: ${this.state.clueSubmission}`);
+		//			});
+		}); // snap
+	},
 		// OLD --AES
 /*
 	onSubmitPressed: function() {
@@ -372,9 +394,8 @@ var CurrentClueDisplay = React.createClass({
 		this.props.navigator.pop();
 	},
 
+// NEW
 	checkSolutions: function() {
-		console.log(`clueSOlutions keys is: ${Object.keys(this.state.clueSolutions)}`);
-
 		let found = false;
 		var solutions = Object.keys(this.state.clueSolutions);
 		let i = 0;
@@ -383,10 +404,8 @@ var CurrentClueDisplay = React.createClass({
 				reject();
 			} else {
 				// not using a for each loop here because cannot break out of it
-				console.log(`solutions.ength is: ${solutions.length}`);
 				while(i < solutions.length) {
 					var currSolution = solutions[i];
-					console.log(`currSolution is: ${currSolution}`);
 
 					if (currSolution.toUpperCase().trim() === this.state.clueSubmission.toUpperCase().trim()) {
 						console.log('found the right answer!');
@@ -443,7 +462,6 @@ var CurrentClueDisplay = React.createClass({
 		 console.log(`CurrentClueDisplay clueRef val ${JSON.stringify(snap.val())}`);
 
 		 var submissionRef = clueRef.child('submissions').child(currentUser);
-	//	 var submission2 = submission1.child(currentUser);
 
 		submissionRef.set(this.state.clueSubmission)
 		.then(() => {
@@ -538,7 +556,6 @@ var CurrentClueDisplay = React.createClass({
 	render: function() {
 		var hunt = this.props.hunt;
 		console.log(`clueSubmission is: ${this.state.clueSubmission}`);
-		console.log(`clueSubmission is: ${ typeof this.state.clueSubmission}`);
 	//	var clueSubString = String(this.state.clueSubmission);
 	//	var clueSubString2 = JSON.stringify(this.state.clueSubmission);
 	//	console.log(`clueSubString is: ${clueSubString}`);
