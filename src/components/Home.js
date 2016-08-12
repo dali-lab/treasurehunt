@@ -7,8 +7,6 @@ var User = require('./User').default;
 var Data = require('./Data');
 var SearchController = require('./SearchController');
 
-var dismissKeyboard = require('dismissKeyboard');
-
 var {
     StyleSheet,
     Image,
@@ -107,10 +105,6 @@ var styles = StyleSheet.create({
       alignSelf: 'center',
       marginRight: 10
     },
-    searchIcon: {
-      width: 13,
-      height: 13,
-    },
 
     internalView: {
         alignItems: 'center',
@@ -132,37 +126,6 @@ var noHuntsStyle = StyleSheet.create({
         fontSize: 20,
         textAlign: 'center',
         width: 330
-    }
-});
-
-var searchingStyles = StyleSheet.create({
-    searchBar: {
-        height: 30,
-        backgroundColor: '#E4EEEC',
-        borderRadius: 5,
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'row',
-        paddingLeft: 4
-    },
-    textInput: {
-        flexDirection: 'column',
-        flex: 1,
-        marginLeft: 5
-    },
-    cancelButton: {
-        backgroundColor: '#28cfa8',
-        borderColor: '#28cfa8',
-        borderRadius: 5,
-        width: 50,
-        height: 20,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    cancelButtonText: {
-        marginLeft: 2,
-        marginRight: 2,
-        alignSelf: 'center'
     }
 });
 
@@ -215,8 +178,7 @@ var Home = React.createClass({
         return {
             dataSource: dataSource,
             huntsList: huntsList,
-            searchText: "",
-            searchResults: null
+            searching: false
         };
     },
 
@@ -266,6 +228,7 @@ var Home = React.createClass({
     },
 
     rowPressed: function(hunt) {
+        console.log("Got the message");
         this.props.navigator.push({
             title: "Hunt",
             component: HuntOverview,
@@ -321,6 +284,18 @@ var Home = React.createClass({
     },
 
     render: function() {
+        var searchController = <SearchController
+                                    ref="searchController"
+                                    startSearching={() => {
+                                        this.setState({searching: true});
+                                    }}
+                                    endSearching={() => {
+                                        this.setState({searching: false});
+                                    }}
+                                    rowPressed={(hunt) => {
+                                        this.rowPressed(hunt)
+                                    }}/>;
+
 
         var listView = <ListView
                         dataSource={this.state.dataSource}
@@ -349,10 +324,7 @@ var Home = React.createClass({
 
         if (this.isSearching()) {
             currPuzzlesText = null;
-            // TODO, replace with search results...
-            internalView = <View style={styles.internalView}>
-                <SearchController searchText={this.state.searchText} searchResults={this.state.searchResults}/>
-            </View>;
+            internalView = null;
         }
 
 
@@ -373,46 +345,9 @@ var Home = React.createClass({
                 <View style={styles.emptyContainerTop}>
                 </View>
 
-                <View style={styles.extraInfoContainer}>
-                  <View style={searchingStyles.searchBar}>
-                    <Image source={require('./28magnifier.png')}
-                    style={styles.searchIcon} />
-                    <TextInput style={searchingStyles.textInput}
-                        ref="searchBarTextInput"
-                        returnKeyType='done'
-                        onFocus={() => {
-                            this.setState({searching: true});
-                        }}
-                        onChangeText={(text) => {
-                            // So I can keep track of the text
-                            this.setState({
-                                searchText: text,
-                                searchResults: null
-                            });
-                            Data.search(text).then((results) => {
-                                this.setState({searchResults: results});
-                            });
-                        }}
-                        onSubmitEditing={() => {
-                            dismissKeyboard();
-                            if (this.state.searchText == "") {
-                                this.setState({searching: false});
-                            }
-                        }}
-                        value={this.state.searchText}/>
-                    {this.isSearching() ? <TouchableHighlight style={searchingStyles.cancelButton}
-                        onPress={() => {
-                            dismissKeyboard();
-                            this.setState({
-                                searchText: "",
-                                searching: false
-                            });
-                        }}
-                        underlayColor='#58cfb3'>
-                        <Text>Cancel</Text>
-                    </TouchableHighlight> : null}
-                  </View>
 
+                {searchController}
+                <View style={styles.extraInfoContainer}>
                 <View style={styles.separator}>
                 </View>
                 {currPuzzlesText}
