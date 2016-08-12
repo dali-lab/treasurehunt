@@ -82,11 +82,14 @@ var styles = StyleSheet.create({
 
     header: {
         height: 30,
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
+
+
         backgroundColor: 'white',
         flexDirection: 'column',
-
+    },
+    headerButtons: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
     },
     headerText: {
         fontSize: 25,
@@ -143,8 +146,6 @@ const storageRef = storage.ref();
 
 var teletubbies = storageRef.child('teletubbies.jpg');
 
-let currentImage;
-
 
 /*
 const huntsRef = new Firebase(`${ config.FIREBASE_ROOT }/hunts`)
@@ -179,7 +180,9 @@ var Home = React.createClass({
             dataSource: dataSource,
             huntsList: huntsList,
             searching: false,
-            shouldReload: false
+            shouldReload: false,
+            huntsList: huntsList,
+            puzzle: 'current'
         };
     },
 
@@ -187,8 +190,6 @@ var Home = React.createClass({
         var currentUser = User.getCurrentUser();
         var userRef = usersRef.child(currentUser.uid);
         var huntsListRef = userRef.child("hunts_list");
-
-
         var huntsList;
         huntsListRef.on('value', (snap) => {
             huntsList = snap.val();
@@ -202,6 +203,8 @@ var Home = React.createClass({
         var userRef = usersRef.child(currentUser.uid);
         var huntsListRef = userRef.child("hunts_list");
         var huntsList;
+        console.log('completedhuntslist is' + huntsList);
+
         huntsListRef.on('value', (snap) => {
             huntsList = snap.val();
             return huntsList;
@@ -209,8 +212,36 @@ var Home = React.createClass({
     },
     // end of this function 7/21/16 AES
 
+
+    listenForCompletedItems: function() {
+      User.getCurrentUser().getCompletedHuntsList().then((huntsList) => {
+        console.log(`loaded this thing: ${huntsList}`);
+        Hunts.getHuntObjects(huntsList).then((hunts) => {
+            console.log("Loaded completed hunts: " + JSON.stringify(hunts) );
+
+            console.log(`right now the datasource is ${JSON.stringify(this.state.dataSource)}`);
+            var thisIsNew = new ListView.DataSource({
+                rowHasChanged: (r1, r2) => r1.guid !== r2.guid,
+                sectionHeaderHasChanged: (s1, s2) => s1.guid !== s2.guid
+            });
+            var newDataSource = thisIsNew.cloneWithRows(hunts);
+            console.log(`middle datasource is ${JSON.stringify(this.state.dataSource)}`);
+            this.setState({
+                hunts: hunts,
+                dataSource: newDataSource,
+              })
+              console.log(`Now it is: ${JSON.stringify(this.state.dataSource)}`);
+          //    this.forceUpdate();
+
+          });
+      });
+    },
+
     // Will load all the things!
     listenForItems: function() {
+        console.log("running listenForItems");
+        console.log(this.state);
+
         User.getCurrentUser().getHuntsList().then((huntsList) => {
             Data.getHuntObjects(huntsList).then((hunts) => {
 
@@ -218,18 +249,23 @@ var Home = React.createClass({
                 var newDataSource = this.state.dataSource.cloneWithRows(hunts);
                 this.setState({
                     hunts: hunts,
-                    dataSource: newDataSource
+                    dataSource: newDataSource,
                 })
             })
         });
     },
 
     componentDidMount: function() {
+      if (this.state.puzzle === 'current'){
         this.listenForItems();
+      } else if (this.state.puzzle == 'past'){
+        console.log('what the hell is the state rn....');
+        this.listenForCompletedItems();
+      }
+
     },
 
     rowPressed: function(hunt) {
-        console.log("Got the message");
         this.props.navigator.push({
             title: "Hunt",
             component: HuntOverview,
@@ -352,7 +388,25 @@ var Home = React.createClass({
                 <View style={styles.extraInfoContainer}>
                 <View style={styles.separator}>
                 </View>
-                {currPuzzlesText}
+
+                  <View style={styles.header}>
+                    <View style={styles.headerButtons}>
+                    <View>
+                    <TouchableHighlight underlayColor='#dddddd' onPress={() => this.listenForItems()}>
+                      <Text style={styles.headerText}> Current Puzzles</Text>
+                    </TouchableHighlight>
+                    </View>
+
+                    <View>
+                    <TouchableHighlight underlayColor='#dddddd' onPress={() => this.listenForCompletedItems()}>
+                      <Text style={styles.headerText}> Past Puzzles </Text>
+                    </TouchableHighlight>
+                    </View>
+
+                    </View>
+
+                  </View>
+
                 </View>
 
                 {internalView}
