@@ -5,13 +5,25 @@ import rootRef from '../../newfirebase.js';
 const usersRef = rootRef.ref('users');
 const huntsRef = rootRef.ref('hunts');
 
+const SEARCH_WITH_SERVER = false;
+
+
+/**====== SEARCHING =====**/
+// Set the configuration for your app
+// TODO: Replace with your project's config object
+
+// TODO: Replace this with the path to your ElasticSearch queue
+// TODO: This is monitored by your app.js node script on the server
+// TODO: And this should match your seed/security_rules.json
+var PATH = "search";
+/**====== /SEARCHING =====**/
 
 /*
 const huntsRef = new Firebase(`${ config.FIREBASE_ROOT }/hunts`)
 const usersRef = new Firebase(`${ config.FIREBASE_ROOT }/users`)
 */
 
-function getHuntWithID(id) {
+export function getHuntWithID(id) {
 	var ref = huntsRef.child(id);
 
 	return new Promise((fulfill, reject) => {
@@ -34,27 +46,30 @@ export function getHuntObjects(hunt_ids) {
 	return new Promise((fulfill, reject) => {
 		var hunts = [];
 
+		if (hunt_ids == null) {
+			console.log("No hunts");
+			fulfill(hunts);
+			return;
+		}
+
 		// To keep track of asyncronous task
 		var complete = 0;
-		var allKeys = Object.keys(hunt_ids);
 		var todo = Object.keys(hunt_ids).length;
-		console.log(`todo's length is: ${todo}`);
 
 	    for (var key in hunt_ids) {
 	    	var contents = hunt_ids[key];
-
 	        //get that hunt, calculate user progress, get hunt data
-	        getHuntWithID(key).then(function(hunt) {
+
+	        getHuntWithID(key).then((function(key, hunt) {
 	        	// We have a hunt
-						console.log(typeof hunt_ids)
-						var thisId = allKeys[complete];
+	        	console.log(key, hunt);
+
 	        	// Now lets get the total clues
 	        	var totalCluesInHunt = hunt.clues.length;
 	        	var totalCluesCompleted = contents.cluesComplete;
-						console.log(`complete now is: ${complete}`);
 
 	        	hunts.push({
-	                id: thisId,
+	                id: key,
 	                title: hunt.name,
 	                description: hunt.desc,
 	                image: hunt.image,
@@ -63,12 +78,14 @@ export function getHuntObjects(hunt_ids) {
 	                hunt: hunt
 	            });
 
+							console.log(hunt.name);
+
 	        	complete += 1;
 
 	        	if (complete >= todo) {
 	        		fulfill(hunts);
 	        	}
-	        }, function(error) { // Rejected!
+	        }).bind(undefined, key), function(error) { // Rejected!
 	        	todo = todo - 1;
 	        })
 
@@ -80,25 +97,29 @@ export function getHuntObjects(hunt_ids) {
 	});
 }
 
-export function search(query) {
+function manualSearch(query) {
 	var hunt_ids = [];
 
 	return new Promise((success, failure) => {
 		huntsRef.once('value', function(snap) {
-			console.log("Got " + JSON.stringify(snap.val()));
 			for (var key in snap.val()) {
 				const hunt = snap.val()[key];
-				console.log("Searching hunt: " + JSON.stringify(hunt));
-				if (key.includes(query) || hunt.name.includes(query)) {
-					hunt_ids.push({key: key, name: hunt.name});
+				if (key.toLowerCase().indexOf(query.toLowerCase()) == 0 || hunt.name.toLowerCase().includes(query.toLowerCase())) {
+					hunt_ids.push({key: key, hunt: hunt});
 				}
 			}
-
-			console.log("Searched and found: " + JSON.stringify(hunt_ids));
 
 			success(hunt_ids);
 		}, function(error) {
 			failure(error);
 		})
 	});
+}
+
+function serverSearch(query) {
+
+}
+
+export function search(query) {
+	return (SEARCH_WITH_SERVER ? serverSearch(query) : manualSearch(query));
 }

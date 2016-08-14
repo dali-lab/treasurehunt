@@ -217,9 +217,11 @@ var SearchController = React.createClass({
     },
 
 	render: function() {
+        console.log("Making the instructions");
 		var searchInstructions = this.state.searchText == "" && this.isSearching() ? <Text style={styles.instructions}>You can search using a hunt name or id</Text> : null
 
         // The not nice UI
+        console.log("Making search results view");
 		var searchResults = this.state.searchText != "" ? <Text style={{width: 330, textAlign: 'center', alignSelf: "center"}}>{this.state.searchResults !== null ? JSON.stringify(this.state.searchResults) : "Loading..."}</Text> : null
         
         // The nice UI
@@ -229,9 +231,9 @@ var SearchController = React.createClass({
 								automaticallyAdjustContentInsets={false}
 								renderRow={this.renderRow}/>;
 
-        const internalView = this.state.searching ? <View style={{flex: 1}}>
+        var internalView = this.state.searching ? <View style={{flex: 1}}>
             {this.state.searchText != "" ? <Text style={styles.titleText}>{this.state.searchResults ? "Results:": "Loading..."}</Text> : null}
-            {DEBUG && this.state.searchResults === null ? searchResults : resultsListView}
+            {this.state.searchResults != null ? (DEBUG ? searchResults : resultsListView) : null}
         </View> : null;
 
 		return (<View style={this.state.searching ? styles.container : {}}>
