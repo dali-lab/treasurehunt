@@ -391,17 +391,17 @@ var Home = React.createClass({
 
                   <View style={styles.header}>
                     <View style={styles.headerButtons}>
-                    <View>
+                    {this.isSearching() ? null : <View>
                     <TouchableHighlight underlayColor='#dddddd' onPress={() => this.listenForItems()}>
                       <Text style={styles.headerText}> Current Puzzles</Text>
                     </TouchableHighlight>
-                    </View>
+                    </View>}
 
-                    <View>
+                    {this.isSearching() ? null : <View>
                     <TouchableHighlight underlayColor='#dddddd' onPress={() => this.listenForCompletedItems()}>
                       <Text style={styles.headerText}> Past Puzzles </Text>
                     </TouchableHighlight>
-                    </View>
+                    </View>}
 
                     </View>
 
