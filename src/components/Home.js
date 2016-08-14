@@ -90,11 +90,17 @@ var styles = StyleSheet.create({
     headerButtons: {
         flexDirection: 'row',
         justifyContent: 'space-between',
+        alignItems: "center"
     },
-    headerText: {
+    headerTextSelected: {
         fontSize: 25,
         fontFamily: 'Verlag-Book',
         color: '#242021',
+    },
+    headerTextUnselected: {
+        fontSize: 25,
+        fontFamily: 'Verlag-Book',
+        color: 'grey',
     },
     extraInfoContainer: {
       marginLeft: 20,
@@ -391,15 +397,25 @@ var Home = React.createClass({
 
                   <View style={styles.header}>
                     <View style={styles.headerButtons}>
-                    {this.isSearching() ? null : <View>
-                    <TouchableHighlight underlayColor='#dddddd' onPress={() => this.listenForItems()}>
-                      <Text style={styles.headerText}> Current Puzzles</Text>
+                    {this.isSearching() ? null : <View style={styles.headerButtons}>
+                    <TouchableHighlight underlayColor='#dddddd' onPress={() => {
+                        this.setState({
+                            puzzle: "current"
+                        });
+                        this.listenForItems();
+                    }}>
+                      <Text style={this.state.puzzle == 'current' ? styles.headerTextSelected : styles.headerTextUnselected}> Current Puzzles</Text>
                     </TouchableHighlight>
                     </View>}
 
-                    {this.isSearching() ? null : <View>
-                    <TouchableHighlight underlayColor='#dddddd' onPress={() => this.listenForCompletedItems()}>
-                      <Text style={styles.headerText}> Past Puzzles </Text>
+                    {this.isSearching() ? null : <View style={styles.headerButtons}>
+                    <TouchableHighlight underlayColor='#dddddd' onPress={() => {
+                        this.setState({
+                            puzzle: "past"
+                        });
+                        this.listenForCompletedItems();
+                    }}>
+                      <Text style={this.state.puzzle == 'past' ? styles.headerTextSelected : styles.headerTextUnselected}> Past Puzzles </Text>
                     </TouchableHighlight>
                     </View>}
 
