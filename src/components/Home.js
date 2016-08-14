@@ -221,12 +221,7 @@ var Home = React.createClass({
       User.getCurrentUser().getCompletedHuntsList().then((huntsList) => {
         Data.getHuntObjects(huntsList).then((hunts) => {
             console.log("Loaded completed hunts: " + JSON.stringify(hunts) );
-
-            var thisIsNew = new ListView.DataSource({
-                rowHasChanged: (r1, r2) => r1.guid !== r2.guid,
-                sectionHeaderHasChanged: (s1, s2) => s1.guid !== s2.guid
-            });
-            var newDataSource = thisIsNew.cloneWithRows(hunts);
+            var newDataSource = this.state.dataSource.cloneWithRows(hunts);
             this.setState({
                 hunts: hunts,
                 dataSource: newDataSource,
