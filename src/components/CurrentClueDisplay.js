@@ -1,5 +1,5 @@
 var React = require('react-native');
-var Modal   = require('react-native-modalbox');
+var ClueCompleteModal = require('./ClueCompleteModal');
 var User = require('./User').default
 
 var {
@@ -11,7 +11,8 @@ var {
 	TouchableHighlight,
 	Alert,
 	TextInput,
-	Dimensions
+	Dimensions,
+	Modal
 } = React;
 
 var screenWidth = Dimensions.get('window').width;
@@ -147,58 +148,59 @@ var CurrentClueDisplay = React.createClass({
     },
 	*/
 
-		getInitialState: function() {
-			console.log('getting initial state...');
+	getInitialState: function() {
+		console.log('getting initial state...');
 
-		//	var clue = {};
-		var clueTitle;
-		var clueDescription;
-		var clueType;
-		var clueData;
-		var clueSolutions;
-		var clueSubmission;
-		var clueSolution;
-			/*
-		 clueRef.on('value', (snap) => {
-						console.log(`CurrentClueDisplay clueRef val ${JSON.stringify(snap.val())}`);
-						console.log(`CurrentClueDisplay clueRef val ${snap.key}`);
-						console.log(`however, props hunt id is: ${this.props.hunt.id}`);
+	//	var clue = {};
+	var clueTitle;
+	var clueDescription;
+	var clueType;
+	var clueData;
+	var clueSolutions;
+	var clueSubmission;
+	var clueSolution;
+		/*
+	 clueRef.on('value', (snap) => {
+					console.log(`CurrentClueDisplay clueRef val ${JSON.stringify(snap.val())}`);
+					console.log(`CurrentClueDisplay clueRef val ${snap.key}`);
+					console.log(`however, props hunt id is: ${this.props.hunt.id}`);
 
 /*
-	        	 var clue = {
-	        		title: 'clue title goes here',
-	        		description: snap.val().description,
-	        		type: snap.val().type,
-							data: snap.val().data,
-							solutions: snap.val().solutions,
-							submission: clueRef.child(submissions).child(currentUser.uid)
+        	 var clue = {
+        		title: 'clue title goes here',
+        		description: snap.val().description,
+        		type: snap.val().type,
+						data: snap.val().data,
+						solutions: snap.val().solutions,
+						submission: clueRef.child(submissions).child(currentUser.uid)
 
-	        	};
-						return clue;
-						*/
-						/*
-						clue[title]= 'clue title goes here';
-						console.log(`clue title is: ${clue[title]}`);
-						clue[description]= snap.val().description;
-						clue[type]= snap.val().type;
-						clue[data]= snap.val().data;
-						clue[solutions]= snap.val().solutions;
-						clue[submission]= clueRef.child(submissions).child(currentUser.uid);
-
-						console.log(`clue in cb is: ${clue}`);
-	        });
+        	};
+					return clue;
 					*/
-	        return {
-						clueTitle: clueTitle,
-						clueDescription: clueDescription,
-						clueType: clueType,
-						clueData: clueData,
-						clueSolutions: clueSolutions,
-						clueSubmission: clueSubmission,
-	          huntId: this.props.hunt.id,
-	        };
+					/*
+					clue[title]= 'clue title goes here';
+					console.log(`clue title is: ${clue[title]}`);
+					clue[description]= snap.val().description;
+					clue[type]= snap.val().type;
+					clue[data]= snap.val().data;
+					clue[solutions]= snap.val().solutions;
+					clue[submission]= clueRef.child(submissions).child(currentUser.uid);
 
-	    },
+					console.log(`clue in cb is: ${clue}`);
+        });
+				*/
+        return {
+			clueTitle: clueTitle,
+			clueDescription: clueDescription,
+			clueType: clueType,
+			clueData: clueData,
+			clueSolutions: clueSolutions,
+			clueSubmission: clueSubmission,
+  			huntId: this.props.hunt.id,
+  			showModal: false
+        };
+
+    },
 
     componentDidMount: function() {
 		//	console.log('in listen for items 2');
@@ -209,63 +211,63 @@ var CurrentClueDisplay = React.createClass({
 
     },
 
-		// OLD
-		listenForItems2: function(clueSolutionsRef) {
-				//TODO: make this user specific!!!
-				clueSolutionsRef.orderByChild('clue_id').equalTo(Number(this.props.clueId)).once('value', (snap) => {
-						var solution = snap.val();
-						for (var key in solution) {
-							clueSolution = solution[key].solution;
-						}
-			this.setState({
-								clueSolution: clueSolution
-						});
+	// OLD
+	listenForItems2: function(clueSolutionsRef) {
+			//TODO: make this user specific!!!
+			clueSolutionsRef.orderByChild('clue_id').equalTo(Number(this.props.clueId)).once('value', (snap) => {
+					var solution = snap.val();
+					for (var key in solution) {
+						clueSolution = solution[key].solution;
+					}
+		this.setState({
+							clueSolution: clueSolution
+					});
 
-				});
-		},
+			});
+	},
 
-		populateClue: function() {
-			console.log('populating clue....');
-				var clueRef = cluesRef.child(this.props.clueId);
-				var currentUser = User.getCurrentUser().uid;
-				console.log(`the current clueRef is ${clueRef}`);
-				clueRef.on('value', (snap) => {
-				 console.log(`CurrentClueDisplay clueRef val ${JSON.stringify(snap.val())}`);
+	populateClue: function() {
+		console.log('populating clue....');
+			var clueRef = cluesRef.child(this.props.clueId);
+			var currentUser = User.getCurrentUser().uid;
+			console.log(`the current clueRef is ${clueRef}`);
+			clueRef.on('value', (snap) => {
+			 console.log(`CurrentClueDisplay clueRef val ${JSON.stringify(snap.val())}`);
 
-				 	// this isn't right.....
-	//			 var submission1 = clueRef.child('submissions');
-		//		 var submission2 = submission1.child(currentUser);
+			 	// this isn't right.....
+//			 var submission1 = clueRef.child('submissions');
+	//		 var submission2 = submission1.child(currentUser);
 
-					var submission1 = snap.val().submissions;
-					 var submission2 = submission1[currentUser];
+				var submission1 = snap.val().submissions;
+				 var submission2 = submission1[currentUser];
 
 /*
-					var clue = {
-					 title: snap.val().creator,
-					 description: snap.val().description,
-					 type: snap.val().type,
-					 data: snap.val().data,
-					 solutions: snap.val().solutions,
-					 submission: submission2
-				 };
-				*/
-				var clueTitle = snap.val().creator;
-				var clueDescription = snap.val().description;
-				var clueType = snap.val().type;
-				var clueData = snap.val().data;
-				var clueSolutions = snap.val().solutions;
-				var clueSubmission = submission2;
+				var clue = {
+				 title: snap.val().creator,
+				 description: snap.val().description,
+				 type: snap.val().type,
+				 data: snap.val().data,
+				 solutions: snap.val().solutions,
+				 submission: submission2
+			 };
+			*/
+			var clueTitle = snap.val().creator;
+			var clueDescription = snap.val().description;
+			var clueType = snap.val().type;
+			var clueData = snap.val().data;
+			var clueSolutions = snap.val().solutions;
+			var clueSubmission = submission2;
 
-				this.setState({
-					clueTitle: clueTitle,
-					clueDescription: clueDescription,
-					clueType: clueType,
-					clueData: clueData,
-					clueSolutions: clueSolutions,
-					clueSubmission: clueSubmission,
-				});
+			this.setState({
+				clueTitle: clueTitle,
+				clueDescription: clueDescription,
+				clueType: clueType,
+				clueData: clueData,
+				clueSolutions: clueSolutions,
+				clueSubmission: clueSubmission,
+			});
 
-			});  // value
+		});  // value
 	},
 		// OLD
     listenForItems: function(clueSolutionsRef) {
@@ -287,73 +289,71 @@ var CurrentClueDisplay = React.createClass({
   	},
 
 
-		// STILL IN PROGRESS-- AES
-		onSubmitPressed: function(submission) {
-			this.addUserSubmissionToFirebase();
-			console.log('wow look we finished!');
+	// STILL IN PROGRESS-- AES
+	onSubmitPressed: function(submission) {
+		this.addUserSubmissionToFirebase();
+		console.log('wow look we finished!');
 
-			this.checkSolutions().then((found) => {
-				if (found == true) {
-					this.clueIsCompleted();
-					Alert.alert(
-						'Clue Correct',
-						"Woohoo!",
-						[
-							{onPress: this.returnToClueList},
-						]
-					);
-				} else {
-					Alert.alert(
-						'Incorrect Submission',
-						'Try again!',
-					);
-				}
-			});  // then
+		this.checkSolutions().then((found) => {
+			if (found == true) {
+				this.clueIsCompleted();
+				
+			} else {
+				Alert.alert(
+					'Incorrect Submission',
+					'Try again!',
+				);
+			}
+		});  // then
 
-		//	if (this.checkSolutions()) {
-				/*
-				var solutionList = this.getSolutionListFromDatabase();
-				this.updateDatabaseSolutionList(solutionList);
-				*/
+	//	if (this.checkSolutions()) {
+			/*
+			var solutionList = this.getSolutionListFromDatabase();
+			this.updateDatabaseSolutionList(solutionList);
+			*/
 
 
-				//need to also put next clue in progress at this point
-				//TODO: don't hard code these!
-				// var thisSolutionRef = userSolutionsRef.child(3);
-				// thisSolutionRef.update({completed: 1});
-				// var thisSolutionRef = userSolutionsRef.child(2);
-				// thisSolutionRef.update({completed: 1});
-				//this.openModal();
+			//need to also put next clue in progress at this point
+			//TODO: don't hard code these!
+			// var thisSolutionRef = userSolutionsRef.child(3);
+			// thisSolutionRef.update({completed: 1});
+			// var thisSolutionRef = userSolutionsRef.child(2);
+			// thisSolutionRef.update({completed: 1});
+			//this.openModal();
 
 
-		},
+	},
 
-		// NEW
-		clueIsCompleted: function() {
+	// NEW
+	clueIsCompleted: function() {
+
+		this.setState({
+			showModal: true,
+		});
 
 			// update the clue to be completed for that user
-			var userHunt = User.getCurrentUser().currentHunts.child(this.state.huntId);
-			// child('currentHunts').child(this.state.huntId);
-			console.log('fjgjnjgjnojne');
-			console.log(`userhunt is: ${userHunt} `);
+		var userHunt = User.getCurrentUser().currentHunts.child(this.state.huntId);
+		// child('currentHunts').child(this.state.huntId);
+		console.log('fjgjnjgjnojne');
+		console.log(`userhunt is: ${userHunt} `);
 
-				userHunt.once('value', (snap) => {
-					console.log(`snap val is: ${JSON.stringify(snap.val())}`);
-			//		var cluesCompleted =
-				var newCluesCompleted = snap.val().cluesCompleted + 1 ;
-					console.log(`cluesCompleted is now: ${newCluesCompleted}`);
-					userHunt.child('cluesCompleted').set(newCluesCompleted)
+			userHunt.once('value', (snap) => {
+				console.log(`snap val is: ${JSON.stringify(snap.val())}`);
+		//		var cluesCompleted =
+			var newCluesCompleted = snap.val().cluesCompleted + 1 ;
+				console.log(`cluesCompleted is now: ${newCluesCompleted}`);
+				userHunt.child('cluesCompleted').set(newCluesCompleted)
+				.then(() => {
+					console.log('success! updated cluesCompleted')
+					return userHunt.child('currentClue').set(this.props.nextClueId)
 					.then(() => {
-						console.log('success! updated cluesCompleted')
-						return userHunt.child('currentClue').set(this.props.nextClueId)
-						.then(() => {
-							console.log('currentClue is now reset!');
-						});
-						// now, set the current clue to be the next clue in the hunt, or null if there isn't one.
+						console.log('currentClue is now reset!');
 					});
-			//		userHunt.child('cluesCompleted').set()
-			//		.then(() => {
-			//			console.log(`success! clueSubmission is: ${this.state.clueSubmission}`);
+					// now, set the current clue to be the next clue in the hunt, or null if there isn't one.
+				});
+		//		userHunt.child('cluesCompleted').set()
+		//		.then(() => {
+		//			console.log(`success! clueSubmission is: ${this.state.clueSubmission}`);
 		//			});
 		}); // snap
 	},
@@ -570,8 +570,25 @@ var CurrentClueDisplay = React.createClass({
 		console.log(`state is now: ${this.state.clue.data}`);
 		*/
 
+		var modalView = <ClueCompleteModal done={() => {
+			this.setState({  showModal: false  });
+			this.returnToClueList();
+		}}/>
+
 			return (
 				<View style={styles.container}>
+					<Modal
+						animated={true}
+						animationType='fade'
+						transparent={true}
+						visible={this.state.showModal}
+						onRequestClose={() => {
+							this.setState({  showModal: false  });
+							this.returnToClueList();
+						}}
+						>
+						{modalView}
+					</Modal>
 					<View style={styles.separatorSmall}/>
 					<Text style={styles.huntTitle}>{hunt.title.toUpperCase()}</Text>
                     <View style={styles.topSeparator}/>
