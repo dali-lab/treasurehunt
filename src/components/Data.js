@@ -5,7 +5,7 @@ import rootRef from '../../newfirebase.js';
 const usersRef = rootRef.ref('users');
 const huntsRef = rootRef.ref('hunts');
 
-const SEARCH_WITH_SERVER = false;
+const SEARCH_WITH_SERVER = true;
 
 
 /**====== SEARCHING =====**/
@@ -15,7 +15,7 @@ const SEARCH_WITH_SERVER = false;
 // TODO: Replace this with the path to your ElasticSearch queue
 // TODO: This is monitored by your app.js node script on the server
 // TODO: And this should match your seed/security_rules.json
-var PATH = "search";
+var SEARCH_PATH = "search";
 /**====== /SEARCHING =====**/
 
 /*
@@ -112,12 +112,69 @@ function manualSearch(query) {
 			success(hunt_ids);
 		}, function(error) {
 			failure(error);
-		})
+		});
 	});
 }
 
 function serverSearch(query) {
+	// This is the example:
+	/*
+		function doSearch(index, type, query) {
+			var ref = database.ref().child(PATH);
+			var key = ref.child('request').push({ index: index, type: type, query: query }).key;
 
+			console.log('search', key, { index: index, type: type, query: query });
+			ref.child('response/'+key).on('value', showResults);
+		}
+	*/
+
+	console.log("Using server search...");
+	return new Promise((success, failure) => {
+		console.log("Entered promise");
+		var ref = rootRef.ref(SEARCH_PATH);
+		console.log("Now pushing...");
+		var key = ref.child('request').push({ index: 'firebase', type: 'hunt', query: "*" + query + "*" }).key;
+
+		console.log('Searching', key, { index: 'firebase', type: 'hunt', query: query.toLowerCase() });
+		ref.child('response/'+key).on('value', (snap) => {
+			console.log("Got response: " + JSON.stringify(snap.val()));
+			if ( snap.val() == null || snap.val().total == null) {
+				return;
+			}
+
+			var hunt_ids = [];
+			var total = snap.val().total;
+			if (total == 0) {
+				success([]);
+			}
+			var complete = 0;
+			for (var i = 0; i < total; i++) {
+				var item = snap.val().hits[i];
+				var key = item._id;
+
+				console.log(key);
+
+				getHuntWithID(key).then((function (key, hunt) {
+					console.log("Got hunt: ", hunt);
+					hunt_ids.push({ key: key, hunt: hunt });
+					complete += 1;
+
+					if (complete >= total) {
+						console.log("Finished search!", hunt_ids);
+						success(hunt_ids);
+					}
+				}).bind(undefined, key), function (error) {
+					total -= 1;
+				})
+			}
+
+			ref.child('response/'+key).remove()
+
+		}, function(error) {
+			console.log(error);
+			failure(error);
+		});
+	});
 }
 
 export function search(query) {
