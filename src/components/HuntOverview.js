@@ -91,6 +91,7 @@ var styles = StyleSheet.create({
 	},
 	actionBarIcons: {
 		resizeMode: "contain",
+		width: 20,
 		height: 20,
 	}
 });
@@ -102,7 +103,8 @@ var HuntOverview = React.createClass({
 
 	getInitialState: function() {
 		return {
-			shouldShowAddButton: null
+			shouldShowAddButton: null,
+			stars: 4
 		}
 	},
 
@@ -178,12 +180,32 @@ var HuntOverview = React.createClass({
 				<Image source={require("./shareIcon.png")} style={styles.actionBarIcons}/>
 			</TouchableHighlight>
 			<TouchableHighlight
-				style={styles.rateAction}
 				onPress={this.showUnimplemented}
 				underlayColor='white'>
-				<Image source={require("./ratingIcon.png")} style={styles.actionBarIcons}/>
+				<Image source={this.state.stars >= 1 ? require("./star.png") : require("./star_empty.png")} style={styles.actionBarIcons}/>
+			</TouchableHighlight>
+			<TouchableHighlight
+				onPress={this.showUnimplemented}
+				underlayColor='white'>
+				<Image source={this.state.stars >= 2 ? require("./star.png") : require("./star_empty.png")} style={styles.actionBarIcons}/>
+			</TouchableHighlight>
+			<TouchableHighlight
+				onPress={this.showUnimplemented}
+				underlayColor='white'>
+				<Image source={this.state.stars >= 3 ? require("./star.png") : require("./star_empty.png")} style={styles.actionBarIcons}/>
+			</TouchableHighlight>
+			<TouchableHighlight
+				onPress={this.showUnimplemented}
+				underlayColor='white'>
+				<Image source={this.state.stars >= 4 ? require("./star.png") : require("./star_empty.png")} style={styles.actionBarIcons}/>
+			</TouchableHighlight>
+			<TouchableHighlight
+				onPress={this.showUnimplemented}
+				underlayColor='white'>
+				<Image source={this.state.stars >= 5 ? require("./star.png") : require("./star_empty.png")} style={styles.actionBarIcons}/>
 			</TouchableHighlight>
 		</View>
+
 
 //		console.log(hunt.category);
 		this.updateShouldShowAddButton();
