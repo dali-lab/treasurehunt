@@ -163,6 +163,12 @@ var HuntOverview = React.createClass({
 		);
 	},
 
+	ratingButtonPressed: function(number) {
+		this.setState({
+			stars: number
+		})
+	},
+
 	render: function() {
 		var hunt = this.props.hunt;
 
@@ -180,27 +186,37 @@ var HuntOverview = React.createClass({
 				<Image source={require("./shareIcon.png")} style={styles.actionBarIcons}/>
 			</TouchableHighlight>
 			<TouchableHighlight
-				onPress={this.showUnimplemented}
+				onPress={() => {
+					this.ratingButtonPressed(1)
+				}}
 				underlayColor='white'>
 				<Image source={this.state.stars >= 1 ? require("./star.png") : require("./star_empty.png")} style={styles.actionBarIcons}/>
 			</TouchableHighlight>
 			<TouchableHighlight
-				onPress={this.showUnimplemented}
+				onPress={() => {
+					this.ratingButtonPressed(2)
+				}}
 				underlayColor='white'>
 				<Image source={this.state.stars >= 2 ? require("./star.png") : require("./star_empty.png")} style={styles.actionBarIcons}/>
 			</TouchableHighlight>
 			<TouchableHighlight
-				onPress={this.showUnimplemented}
+				onPress={() => {
+					this.ratingButtonPressed(3)
+				}}
 				underlayColor='white'>
 				<Image source={this.state.stars >= 3 ? require("./star.png") : require("./star_empty.png")} style={styles.actionBarIcons}/>
 			</TouchableHighlight>
 			<TouchableHighlight
-				onPress={this.showUnimplemented}
+				onPress={() => {
+					this.ratingButtonPressed(4)
+				}}
 				underlayColor='white'>
 				<Image source={this.state.stars >= 4 ? require("./star.png") : require("./star_empty.png")} style={styles.actionBarIcons}/>
 			</TouchableHighlight>
 			<TouchableHighlight
-				onPress={this.showUnimplemented}
+				onPress={() => {
+					this.ratingButtonPressed(5)
+				}}
 				underlayColor='white'>
 				<Image source={this.state.stars >= 5 ? require("./star.png") : require("./star_empty.png")} style={styles.actionBarIcons}/>
 			</TouchableHighlight>
