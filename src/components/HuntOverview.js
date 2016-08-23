@@ -9,14 +9,19 @@ var {
 	View,
 	Text,
 	Component,
+	Dimensions,
+  	AlertIOS,
 	TouchableHighlight
 } = React;
 
+var screenWidth = Dimensions.get('window').width;
+const margin = 30
+
 var styles = StyleSheet.create({
 	container: {
-		marginTop: 65,
-		paddingRight:30,
-		paddingLeft: 30,
+		marginTop: 70,
+		marginBottom: 50,
+		alignItems: 'center',
 		flex: 1,
 	},
 	separatorSmall: {
@@ -26,45 +31,82 @@ var styles = StyleSheet.create({
 		height: 26,
 	},
 	image: {
-		width: 300,
-		height: 200,
-		alignSelf: 'center'
+		height: 180,
+		width: screenWidth - 25,
+		marginBottom: 10,
+		resizeMode: "contain",
 	},
 	description: {
-	    paddingTop: 3,
-	    paddingBottom: 8,
-	    paddingRight: 23,
-	    paddingLeft: 23,
-	    alignSelf: 'center',
+		marginLeft: 30,
+		marginRight: 30,
 		fontSize: 16,
+		alignSelf: "flex-start",
 		fontFamily: 'Verlag-Book',
+		textAlign: "left",
 		color: '#242021',
     },
 	title: {
-		fontSize: 25,
-		margin: 5,
-		color: '#242021',
-		alignSelf: 'center',
+		fontSize: 30,
+		marginTop: 15,
+		marginBottom: 10,
+		letterSpacing: 2,
+		color: '#505050',
 		fontFamily: 'Verlag-Book',
 	},
 	buttonText: {
-	  fontSize: 18,
-	  color: 'white',
-	  alignSelf: 'center',
-	  fontWeight: 'bold',
+		fontSize: 18,
+		color: 'white',
+		fontWeight: 'bold',
 		fontFamily: 'Verlag-Book'
 	},
 	button: {
-	  height: 36,
-	  flexDirection: 'column',
-	  backgroundColor: '#cadb66',
-	  borderColor: '#cadb66',
-	  justifyContent: 'center',
-	  borderWidth: 1,
-	  borderRadius: 8,
-	  marginBottom: 10,
-	  alignSelf: 'stretch',
-	  padding:20,
+		marginLeft: 25,
+		marginRight: 25,
+		height: 70,
+		flexDirection: 'column',
+		justifyContent: 'center',
+		alignItems: 'center',
+		marginBottom: 10,
+		alignSelf: 'stretch',
+		padding:20,
+	},
+	buttonImage:{
+		height: 70,
+		resizeMode: "contain"
+	},
+	buttonAdd: {
+		marginLeft: 25,
+		marginRight: 25,
+		height: 36,
+		flexDirection: 'column',
+		backgroundColor: '#cadb66',
+		borderColor: '#cadb66',
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderWidth: 1,
+		borderRadius: 8,
+		marginBottom: 10,
+		alignSelf: 'stretch',
+		padding:20,
+	},
+	actionBarView: {
+		flexDirection: "row",
+		width: screenWidth - margin * 2,
+		marginBottom: 10,
+		marginRight: margin,
+		marginLeft: margin
+	},
+	shareAction: {
+		flex: 1,
+		alignSelf: "center",
+	},
+	rateAction: {
+		marginRight: -10
+	},
+	actionBarIcons: {
+		resizeMode: "contain",
+		width: 20,
+		height: 20,
 	}
 });
 
@@ -75,7 +117,8 @@ var HuntOverview = React.createClass({
 
 	getInitialState: function() {
 		return {
-			shouldShowAddButton: null
+			shouldShowAddButton: null,
+			stars: 4
 		}
 	},
 
@@ -127,34 +170,88 @@ var HuntOverview = React.createClass({
 		}
 	},
 
+	showUnimplemented: function() {
+		AlertIOS.alert(
+			"Not done yet!",
+			"We have yet to implment this feature. Come back soon and try again"
+		);
+	},
+
+	ratingButtonPressed: function(number) {
+		this.setState({
+			stars: number
+		})
+	},
+
 	render: function() {
 		var hunt = this.props.hunt;
+
+		var actionBar = <View style={styles.actionBarView}>
+			<TouchableHighlight
+				style={styles.shareAction}
+				onPress={this.showUnimplemented}
+				underlayColor='white'>
+				<Image source={require("./shareIcon.png")} style={styles.actionBarIcons}/>
+			</TouchableHighlight>
+			<TouchableHighlight
+				onPress={() => {
+					this.ratingButtonPressed(1)
+				}}
+				underlayColor='white'>
+				<Image source={this.state.stars >= 1 ? require("./star.png") : require("./star_empty.png")} style={styles.actionBarIcons}/>
+			</TouchableHighlight>
+			<TouchableHighlight
+				onPress={() => {
+					this.ratingButtonPressed(2)
+				}}
+				underlayColor='white'>
+				<Image source={this.state.stars >= 2 ? require("./star.png") : require("./star_empty.png")} style={styles.actionBarIcons}/>
+			</TouchableHighlight>
+			<TouchableHighlight
+				onPress={() => {
+					this.ratingButtonPressed(3)
+				}}
+				underlayColor='white'>
+				<Image source={this.state.stars >= 3 ? require("./star.png") : require("./star_empty.png")} style={styles.actionBarIcons}/>
+			</TouchableHighlight>
+			<TouchableHighlight
+				onPress={() => {
+					this.ratingButtonPressed(4)
+				}}
+				underlayColor='white'>
+				<Image source={this.state.stars >= 4 ? require("./star.png") : require("./star_empty.png")} style={styles.actionBarIcons}/>
+			</TouchableHighlight>
+			<TouchableHighlight
+				onPress={() => {
+					this.ratingButtonPressed(5)
+				}}
+				underlayColor='white'>
+				<Image source={this.state.stars >= 5 ? require("./star.png") : require("./star_empty.png")} style={styles.actionBarIcons}/>
+			</TouchableHighlight>
+		</View>
+
+
 //		console.log(hunt.category);
 		this.updateShouldShowAddButton();
 		return (
 			<View style={styles.container}>
 				<View>
-					<Text style={styles.title}>{hunt.title.toUpperCase()}</Text>
+					<Text style={styles.title}>{hunt.title}</Text>
 				</View>
 				<Image style={styles.image}
 					source={{uri: hunt.image}} />
-				<View style={styles.separatorSmall}/>
+				{actionBar}
 				<Text style={styles.description}>{hunt.description}</Text>
-				<View style={styles.separatorLarge}/>
+				<View style={{flex: 1}}/>
 				<TouchableHighlight style = {styles.button}
 						onPress={this.onStartPressed}
-						underlayColor='#99d9f4'>
-						<Text style = {styles.buttonText}>OPEN HUNT</Text>
+						underlayColor='#FFFFF'>
+						<Image style={styles.buttonImage} source={require("./viewCluseButton.png")}/>
 				</TouchableHighlight>
-				<TouchableHighlight style = {styles.button}
+				<TouchableHighlight style = {styles.buttonAdd}
 						onPress={this.onAddHuntPressed}
 						underlayColor='#99d9f4'>
 						<Text style = {styles.buttonText}>{ this.state.shouldShowAddButton ? "ADD HUNT" : "REMOVE HUNT" }</Text>
-				</TouchableHighlight>
-				<TouchableHighlight style = {styles.button}
-						onPress={this.onExitPressed}
-						underlayColor='#99d9f4'>
-						<Text style = {styles.buttonText}>RETURN HOME</Text>
 				</TouchableHighlight>
 			</View>
 		);
