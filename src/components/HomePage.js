@@ -22,7 +22,8 @@ var {
   Image,
   ListView,
   NavigatorIOS,
-  Navigator
+  Navigator,
+  AlertIOS,
 } = React;
 
 var TABS = {
@@ -156,9 +157,10 @@ var HomePage = React.createClass({
          selectedIcon={require('./w28reminder.png')}
          selected={this.state.selectedTab === TABS.feed}
          onPress={() => {
-           this.setState({
-             selectedTab: TABS.feed,
-           });
+           AlertIOS.alert(
+              "Unsupported",
+              "Functionality for reading the feed is unsupported in version 1 of TreasureHunt. Check back soon!"
+            )
         }}>
         {this._renderFeed()}
        </Icon.TabBarItemIOS>
@@ -191,9 +193,10 @@ var HomePage = React.createClass({
          icon={require('./28pencil.png')}
          selectedIcon={require('./w28pencil.png')}
          onPress={() => {
-           this.setState({
-             selectedTab: TABS.create,
-           });
+           AlertIOS.alert(
+              "Unsupported",
+              "Functionality for creating events is unsupported in version 1 of TreasureHunt. Check back soon!"
+            )
          }}>
         {this._renderCreate()}
        </Icon.TabBarItemIOS>
