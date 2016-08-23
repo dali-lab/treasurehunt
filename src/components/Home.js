@@ -238,6 +238,9 @@ var Home = React.createClass({
 
         User.getCurrentUser().getHuntsList().then((huntsList) => {
             Data.getHuntObjects(huntsList).then((hunts) => {
+                if (hunts.length == 1) {
+                    rowPressed(hunts[0]);
+                }
 
             //    var newDataSource = this.state.dataSource.clonewithRowsAndSections({current: hunts}, ['current']);
                 var newDataSource = this.state.dataSource.cloneWithRows(hunts);
