@@ -15,6 +15,7 @@ var {
 } = React;
 
 var screenWidth = Dimensions.get('window').width;
+const margin = 30
 
 var styles = StyleSheet.create({
 	container: {
@@ -75,16 +76,14 @@ var styles = StyleSheet.create({
 	},
 	actionBarView: {
 		flexDirection: "row",
-		width: screenWidth,
-		marginBottom: 10
-	},
-	likeAction: {
-		marginLeft: 40
+		width: screenWidth - margin * 2,
+		marginBottom: 10,
+		marginRight: margin,
+		marginLeft: margin
 	},
 	shareAction: {
 		flex: 1,
 		alignSelf: "center",
-		marginLeft: 70
 	},
 	rateAction: {
 		marginRight: -10
@@ -173,12 +172,6 @@ var HuntOverview = React.createClass({
 		var hunt = this.props.hunt;
 
 		var actionBar = <View style={styles.actionBarView}>
-			<TouchableHighlight
-				style={styles.likeAction}
-				onPress={this.showUnimplemented}
-				underlayColor='white'>
-				<Image source={require("./loveIcon.png")} style={styles.actionBarIcons}/>
-			</TouchableHighlight>
 			<TouchableHighlight
 				style={styles.shareAction}
 				onPress={this.showUnimplemented}
