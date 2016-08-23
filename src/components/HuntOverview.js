@@ -62,6 +62,21 @@ var styles = StyleSheet.create({
 	button: {
 		marginLeft: 25,
 		marginRight: 25,
+		height: 70,
+		flexDirection: 'column',
+		justifyContent: 'center',
+		alignItems: 'center',
+		marginBottom: 10,
+		alignSelf: 'stretch',
+		padding:20,
+	},
+	buttonImage:{
+		height: 70,
+		resizeMode: "contain"
+	},
+	buttonAdd: {
+		marginLeft: 25,
+		marginRight: 25,
 		height: 36,
 		flexDirection: 'column',
 		backgroundColor: '#cadb66',
@@ -230,10 +245,10 @@ var HuntOverview = React.createClass({
 				<View style={{flex: 1}}/>
 				<TouchableHighlight style = {styles.button}
 						onPress={this.onStartPressed}
-						underlayColor='#99d9f4'>
-						<Text style = {styles.buttonText}>OPEN HUNT</Text>
+						underlayColor='#FFFFF'>
+						<Image style={styles.buttonImage} source={require("./viewCluseButton.png")}/>
 				</TouchableHighlight>
-				<TouchableHighlight style = {styles.button}
+				<TouchableHighlight style = {styles.buttonAdd}
 						onPress={this.onAddHuntPressed}
 						underlayColor='#99d9f4'>
 						<Text style = {styles.buttonText}>{ this.state.shouldShowAddButton ? "ADD HUNT" : "REMOVE HUNT" }</Text>
