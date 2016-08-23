@@ -376,8 +376,6 @@ var Home = React.createClass({
                 <View style={styles.emptyContainerTop}>
                 </View>
 
-
-                {searchController}
                 <View style={styles.extraInfoContainer}>
                 <View style={styles.separator}>
                 </View>
