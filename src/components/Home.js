@@ -337,7 +337,7 @@ var Home = React.createClass({
                         renderRow={this.renderRow}/>
 
         var noHunts = <View style={noHuntsStyle.noHuntsView}>
-                        <Text style={noHuntsStyle.noHuntsText}>You have no hunts yet. Try searching for some above</Text>
+                        <Text style={noHuntsStyle.noHuntsText}>You have no hunts yet</Text>
                     </View>
 
         var internalView;
