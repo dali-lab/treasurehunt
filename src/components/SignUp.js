@@ -54,7 +54,7 @@ var styles = StyleSheet.create({
 		marginLeft: 0,
 		flexDirection: 'row',
 		alignSelf: 'stretch',
-		backgroundColor: '#72b7a3',
+		backgroundColor: '#22B08F',
 	},
 	buttonText: {
 		fontSize: 18,
@@ -66,7 +66,7 @@ var styles = StyleSheet.create({
 		height: 40,
 		flexDirection: 'column',
 		alignSelf: 'stretch',
-		backgroundColor: '#72b7a3',
+		backgroundColor: '#22B08F',
 	},
 	inputContainerView: {
 		marginLeft: 50,
@@ -91,25 +91,34 @@ var styles = StyleSheet.create({
 		height: 36,
 		marginTop: 20,
 		flexDirection: 'row',
-		backgroundColor: '#bfcf60',
-		borderColor: '#bfcf60',
+		backgroundColor: '#BAC928',
+		borderColor: '#BAC928',
 		borderWidth: 1,
 		borderRadius: 5,
 		marginBottom: 10,
 		alignSelf: 'stretch',
 		justifyContent: 'center'
 	},
-	icons: {
-		top: 10,
-		left: 10,
-		height: 20,
+	loginIconsEmail: {
+		top: 13,
+		left: 15,
+		height: 15,
+		marginRight: 3,
 		width: 20,
+		flexDirection: 'row',
+	},
+	loginIconsPassword: {
+		top: 10,
+		left: 16,
+		marginRight: 4,
+		height: 20,
+		width: 17,
 		flexDirection: 'row',
 	},
 	titleStyle: {
 		marginBottom: 20,
 		fontSize: 35,
-		color: "#59aa91",
+		color: "#22B08F",
 		alignSelf: "center",
 	},
 	cancel: {
@@ -197,7 +206,7 @@ class SignUp extends Component {
 				<View style={styles.inputContainerView}>
 					<View style={{flexDirection: 'row'}}>
 						<Image
-							style={styles.icons}
+							style={styles.loginIconsEmail}
 							source={require('../../user.png')}/>
 						<TextInput style= {styles.textField}
 							onChangeText={(text) => this.setState({username: text})}
@@ -214,7 +223,7 @@ class SignUp extends Component {
 					<View style={styles.separationBar}></View>
 					<View style={{flexDirection: 'row'}}>
 						<Image
-							style={styles.icons}
+							style={styles.loginIconsPassword}
 							source={require('../../password.png')}/>
 						<TextInput style={styles.textField}
 							disabled={this.state.loading}
@@ -232,7 +241,7 @@ class SignUp extends Component {
 					<View style={styles.separationBar}></View>
 					<View style={{flexDirection: 'row'}}>
 						<Image
-							style={styles.icons}
+							style={styles.loginIconsPassword}
 							source={require('../../password.png')}/>
 						<TextInput style={styles.textField}
 							disabled={this.state.loading}

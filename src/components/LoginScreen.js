@@ -111,8 +111,8 @@ var styles = StyleSheet.create({
 	},
 	loginIconsPassword: {
 		top: 10,
-		left: 17,
-		marginRight: 5,
+		left: 16,
+		marginRight: 4,
 		height: 20,
 		width: 17,
 		flexDirection: 'row',
