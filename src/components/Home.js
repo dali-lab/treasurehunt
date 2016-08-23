@@ -242,6 +242,8 @@ var Home = React.createClass({
               })
 
           });
+      }, () => {
+        // ERROR: TODO deal with it
       });
     },
 

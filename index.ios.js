@@ -27,10 +27,12 @@ var treasurehunt = React.createClass ({
         var user = User.getCurrentUser();
 
         User.loadUserFromStore().then((user) => {
-            this.setState({
-                user: user,
-                loggingIn: user === null,
-            });
+            if (this.state.user == null) {
+                this.setState({
+                    user: user,
+                    loggingIn: user === null,
+                });
+            }
         });
 
         console.log(user);

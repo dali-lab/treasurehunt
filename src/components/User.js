@@ -193,6 +193,7 @@ class User {
 				// The Eagle has landed!
 				console.log("Signing up!");
 
+				User.currentUser = myUser;
 				myUser.initializeNewUser();
 				User.saveUser(user);
 				fulfill(myUser);
@@ -308,7 +309,7 @@ class User {
 		return new Promise((fulfill, reject) => {
 			this.completedHunts.once('value', function(snap) {
 				if (snap.val() == null) {
-					reject(NSNull);
+					reject();
 				}else{
 					fulfill(snap.exportVal());
 				}

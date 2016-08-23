@@ -28,7 +28,8 @@ var styles = StyleSheet.create({
 		fontSize: 20,
 		margin: 10,
 		color: '#656565',
-		alignSelf: 'center'
+		alignSelf: 'center',
+		fontFamily: 'Verlag-Book'
 	},
     topSeparator: {
         height: 2,
@@ -151,44 +152,16 @@ var CurrentClueDisplay = React.createClass({
 	getInitialState: function() {
 		console.log('getting initial state...');
 
-	//	var clue = {};
-	var clueTitle;
-	var clueDescription;
-	var clueType;
-	var clueData;
-	var clueSolutions;
-	var clueSubmission;
-	var clueSolution;
-		/*
-	 clueRef.on('value', (snap) => {
-					console.log(`CurrentClueDisplay clueRef val ${JSON.stringify(snap.val())}`);
-					console.log(`CurrentClueDisplay clueRef val ${snap.key}`);
-					console.log(`however, props hunt id is: ${this.props.hunt.id}`);
+		//	var clue = {};
+		var clueTitle;
+		var clueDescription;
+		var clueType;
+		var clueData;
+		var clueSolutions;
+		var clueSubmission;
+		var clueSolution;
 
-/*
-        	 var clue = {
-        		title: 'clue title goes here',
-        		description: snap.val().description,
-        		type: snap.val().type,
-						data: snap.val().data,
-						solutions: snap.val().solutions,
-						submission: clueRef.child(submissions).child(currentUser.uid)
 
-        	};
-					return clue;
-					*/
-					/*
-					clue[title]= 'clue title goes here';
-					console.log(`clue title is: ${clue[title]}`);
-					clue[description]= snap.val().description;
-					clue[type]= snap.val().type;
-					clue[data]= snap.val().data;
-					clue[solutions]= snap.val().solutions;
-					clue[submission]= clueRef.child(submissions).child(currentUser.uid);
-
-					console.log(`clue in cb is: ${clue}`);
-        });
-				*/
         return {
 			clueTitle: clueTitle,
 			clueDescription: clueDescription,
@@ -197,7 +170,8 @@ var CurrentClueDisplay = React.createClass({
 			clueSolutions: clueSolutions,
 			clueSubmission: clueSubmission,
   			huntId: this.props.hunt.id,
-  			showModal: false
+  			showModal: false,
+  			solutionCorrect: false
         };
 
     },
@@ -299,10 +273,7 @@ var CurrentClueDisplay = React.createClass({
 				this.clueIsCompleted();
 				
 			} else {
-				Alert.alert(
-					'Incorrect Submission',
-					'Try again!',
-				);
+				this.solutionIsWrong();
 			}
 		});  // then
 
@@ -324,39 +295,43 @@ var CurrentClueDisplay = React.createClass({
 
 	},
 
+	solutionIsWrong: function() {
+		this.setState({
+			showModal: true,
+			solutionCorrect: false
+		});
+	},
+
 	// NEW
 	clueIsCompleted: function() {
 
 		this.setState({
 			showModal: true,
+			solutionCorrect: true
 		});
 
 			// update the clue to be completed for that user
 		var userHunt = User.getCurrentUser().currentHunts.child(this.state.huntId);
 		// child('currentHunts').child(this.state.huntId);
-		console.log('fjgjnjgjnojne');
-		console.log(`userhunt is: ${userHunt} `);
+		userHunt.once('value', (snap) => {
+			console.log(`snap val is: ${JSON.stringify(snap.val())}`);
 
-			userHunt.once('value', (snap) => {
-				console.log(`snap val is: ${JSON.stringify(snap.val())}`);
-		//		var cluesCompleted =
+
 			var newCluesCompleted = snap.val().cluesCompleted + 1 ;
-				console.log(`cluesCompleted is now: ${newCluesCompleted}`);
-				userHunt.child('cluesCompleted').set(newCluesCompleted)
+
+			userHunt.child('cluesCompleted').set(newCluesCompleted).then(() => {
+				console.log('success! updated cluesCompleted')
+				return userHunt.child('currentClue').set(this.props.nextClueId)
 				.then(() => {
-					console.log('success! updated cluesCompleted')
-					return userHunt.child('currentClue').set(this.props.nextClueId)
-					.then(() => {
-						console.log('currentClue is now reset!');
-					});
-					// now, set the current clue to be the next clue in the hunt, or null if there isn't one.
+					console.log('currentClue is now reset!');
 				});
-		//		userHunt.child('cluesCompleted').set()
-		//		.then(() => {
-		//			console.log(`success! clueSubmission is: ${this.state.clueSubmission}`);
-		//			});
+				// now, set the current clue to be the next clue in the hunt, or null if there isn't one.
+			});
 		}); // snap
 	},
+
+
+
 		// OLD --AES
 /*
 	onSubmitPressed: function() {
@@ -391,7 +366,7 @@ var CurrentClueDisplay = React.createClass({
 
 	returnToClueList: function() {
 		this.props.callback(cluesRef);
-		this.props.navigator.pop();
+		this.props.navigator.popN(this.props.nextClueId == null ? 2 : 1);
 	},
 
 // NEW
@@ -570,10 +545,15 @@ var CurrentClueDisplay = React.createClass({
 		console.log(`state is now: ${this.state.clue.data}`);
 		*/
 
-		var modalView = <ClueCompleteModal done={() => {
-			this.setState({  showModal: false  });
-			this.returnToClueList();
-		}}/>
+		var modalView = <ClueCompleteModal
+			wrong={!this.state.solutionCorrect}
+			huntDone={this.props.nextClueId == null}
+			done={() => {
+				this.setState({  showModal: false  });
+				if (this.state.solutionCorrect) {
+					this.returnToClueList();
+				}
+			}}/>
 
 			return (
 				<View style={styles.container}>
@@ -593,7 +573,6 @@ var CurrentClueDisplay = React.createClass({
 					<Text style={styles.huntTitle}>{hunt.title.toUpperCase()}</Text>
                     <View style={styles.topSeparator}/>
                     <View style={styles.separatorSmall}/>
-					<Text style={styles.clueName}>{this.state.clueTitle}</Text>
 					<Text style={styles.description}>{this.state.clueDescription}</Text>
 					<TextInput
 	    				style={{height: 40, borderColor: 'gray', borderWidth: 1}}
@@ -605,11 +584,13 @@ var CurrentClueDisplay = React.createClass({
 							underlayColor='#99d9f4'>
 							<Text style = {styles.buttonText}>Submit</Text>
 					</TouchableHighlight>
-					<Text style={styles.hint} onPress={this.getHint}>
-				  			Need a hint?
-			  		</Text>
+					
 				</View>
 			);
+
+			/* <Text style={styles.hint} onPress={this.getHint}>
+				  			Need a hint?
+			  		</Text>*/
 	//	}
 	},
 });

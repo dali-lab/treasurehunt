@@ -52,9 +52,10 @@ var styles = StyleSheet.create({
 				color: '#242021',
     },
     statusDescription: {
+        marginTop: 15,
     	alignSelf: 'center',
-			fontSize: 16,
-			color: '#242021',
+		fontSize: 16,
+		color: '#242021',
     },
     lockedDescription: {
     	textAlign: 'center',
@@ -82,11 +83,10 @@ var styles = StyleSheet.create({
 				borderRadius: 3
     },
     incompleteTextContainer: {
-      paddingTop: 10,
+        paddingTop: 10,
 	    flex: 1,
 	    backgroundColor: '#f6d1d0',
 			borderRadius: 3,
-			justifyContent: 'center',
     }
 });
 
@@ -421,7 +421,7 @@ var ClueList = React.createClass({
                 passProps: {
                     hunt: this.props.hunt,
                     clueId: clueInfo.clueId,
-										nextClueId: this.state.nextClueId
+					nextClueId: this.state.nextClueId
                 }
             });
         }
@@ -432,8 +432,12 @@ var ClueList = React.createClass({
                 passProps: {
                     hunt: this.props.hunt,
                     clueId: clueInfo.clueId,
-										nextClueId: this.state.nextClueId,
-                    callback: this.listenForItems
+					nextClueId: this.state.nextClueId,
+                    callback: (cluesRef) => {
+                        if (this.state.nextClueId != null) {
+                            this.listenForItems(cluesRef);
+                        }
+                    }
                 }
             });
         }
@@ -450,7 +454,6 @@ var ClueList = React.createClass({
                 <View>
                     <View style={styles.rowContainer}>
                         <View style={styles.completeTextContainer}>
-                            <Text style={styles.title}>{rowData.title}</Text>
                             <Text style={styles.statusDescription}
                                 >- COMPLETED -</Text>
                         </View>
@@ -467,7 +470,6 @@ var ClueList = React.createClass({
                 <View>
                     <View style={styles.rowContainer}>
                         <View style={styles.inProgressTextContainer}>
-                            <Text style={styles.title}>{rowData.title}</Text>
                             <Text style={styles.statusDescription}
                                 >- IN PROGRESS -</Text>
                         </View>
@@ -484,10 +486,7 @@ var ClueList = React.createClass({
                 <View>
                     <View style={styles.rowContainer}>
                         <View style={styles.incompleteTextContainer}>
-                            <Text style={styles.lockedDescription}
-                                > Clue Name </Text>
-																<Text style={styles.statusDescription}
-		                                > Locked </Text>
+							<Text style={styles.statusDescription}>- LOCKED -</Text>
                         </View>
                     </View>
                     <View style={styles.separator}/>
