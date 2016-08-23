@@ -107,7 +107,14 @@ var styles = StyleSheet.create({
 		resizeMode: "contain",
 		width: 20,
 		height: 20,
-	}
+	},
+    emptyContainerBottom: {
+      backgroundColor: 'white',
+      flexDirection: 'column',
+      height: 52,
+      borderTopWidth: 3,
+      borderColor: '#23B090'
+    },
 });
 
 

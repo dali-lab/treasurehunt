@@ -12,6 +12,7 @@ const Data = require('./Data');
 
 // const USER_EMAIL_KEY = '@TreasureHunt:email';
 const USER_DATA_KEY = 'user_data';
+const startingHuntID = 'hgieyty6';
 
 var {
 	AsyncStorage,
@@ -212,9 +213,10 @@ class User {
 
 	hasHuntCurrent(hunt) {
 		return new Promise((fulfill, reject) => {
+			console.log(1)
 			this.getHuntsList().then((huntsList) => {
-				console.log(huntsList, hunt.id, huntsList[hunt.id]);
-				fulfill(huntsList[hunt.id] != undefined);
+				console.log(huntsList != null && huntsList[hunt.id] != undefined)
+				fulfill(huntsList != null && huntsList[hunt.id] != undefined);
 			}, (error) => {
 				reject(error);
 			});
@@ -225,6 +227,7 @@ class User {
 		return new Promise((fulfill, reject) => {
 			this.hasHuntCurrent(hunt).then((flag) => {
 				if (!flag) {
+					console.log(3)
 					Data.getHuntWithID(hunt.id).then((hunt2) => {
 						var firstClue = hunt2.clues[0];
 						this.currentHunts.child(hunt.id).set({
@@ -242,6 +245,10 @@ class User {
 				reject(error);
 			});
 		});
+	}
+
+	addStartingHunt() {
+		return this.addHunt({id: startingHuntID});
 	}
 
 	removeHunt(hunt) {

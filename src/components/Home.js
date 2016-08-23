@@ -102,6 +102,18 @@ var styles = StyleSheet.create({
         fontFamily: 'Verlag-Book',
         color: 'grey',
     },
+    startingHuntButton: {
+        backgroundColor: "#FEF7C0",
+        padding: 10,
+        borderRadius: 8,
+        marginTop: 10
+    },
+    startingHuntButtonText: {
+        alignSelf: 'center',
+        fontFamily: 'Verlag-Book',
+        fontSize: 20,
+        justifyContent: 'center'
+    },
     extraInfoContainer: {
       marginLeft: 20,
       marginRight: 20,
@@ -128,12 +140,13 @@ var noHuntsStyle = StyleSheet.create({
     noHuntsView: {
         alignItems: 'center',
         justifyContent: 'center',
-        flexDirection: 'row',
+        flexDirection: 'column',
         flex: 1,
     },
     noHuntsText:{
         fontSize: 20,
         textAlign: 'center',
+        fontFamily: 'Verlag-Book',
         width: 330
     }
 });
@@ -182,11 +195,12 @@ var Home = React.createClass({
             sectionHeaderHasChanged: (s1, s2) => s1 !== s2
         });
 
+        this.firstLoad = true;
+
         return {
             dataSource: dataSource,
             huntsList: huntsList,
             searching: false,
-            shouldReload: false,
             huntsList: huntsList,
             puzzle: 'current'
         };
@@ -239,8 +253,27 @@ var Home = React.createClass({
         User.getCurrentUser().getHuntsList().then((huntsList) => {
             Data.getHuntObjects(huntsList).then((hunts) => {
                 if (hunts.length == 1) {
-                    rowPressed(hunts[0]);
+                    this.rowPressed(hunts[0]);
+                }else if (hunts.length == 0 && this.firstLoad) {
+                    AlertIOS.alert(
+                        "Welcome!",
+                        "Welcome to Treasurehunt. Would you like to start with the Activities Fair hunt?",
+                        [
+                            {text: "Close", onPress: ()=>{}, style: "cancel"},
+                            {text: "Let's go!", onPress: ()=>{
+                                User.currentUser.addStartingHunt().then(() => {
+                                    this.setState({
+                                        hunts: null
+                                    })
+
+                                    this.listenForItems();
+                                });
+                            }}
+                        ]
+                    );
                 }
+
+                this.firstLoad = false
 
             //    var newDataSource = this.state.dataSource.clonewithRowsAndSections({current: hunts}, ['current']);
                 var newDataSource = this.state.dataSource.cloneWithRows(hunts);
@@ -253,13 +286,12 @@ var Home = React.createClass({
     },
 
     componentDidMount: function() {
-      if (this.state.puzzle === 'current'){
-        this.listenForItems();
-      } else if (this.state.puzzle == 'past'){
-        console.log('what the hell is the state rn....');
-        this.listenForCompletedItems();
-      }
-
+        if (this.state.puzzle === 'current'){
+            this.listenForItems();
+        } else if (this.state.puzzle == 'past'){
+            console.log('what the hell is the state rn....');
+            this.listenForCompletedItems();
+        }
     },
 
     rowPressed: function(hunt) {
@@ -337,7 +369,19 @@ var Home = React.createClass({
                         renderRow={this.renderRow}/>
 
         var noHunts = <View style={noHuntsStyle.noHuntsView}>
-                        <Text style={noHuntsStyle.noHuntsText}>You have no hunts yet</Text>
+                        <Text style={[noHuntsStyle.noHuntsText, {}]}>You have no hunts yet</Text>
+                        <TouchableHighlight
+                            style={styles.startingHuntButton}
+                            underlayColor="#fef48f"
+                            onPress={() => {
+                                User.currentUser.addStartingHunt().then(() => {
+                                    this.setState({
+                                        hunts: null
+                                    })
+
+                                    this.listenForItems();
+                                });
+                            }}><Text style={styles.startingHuntButtonText}>Start the Activity Fair Hunt</Text></TouchableHighlight>
                     </View>
 
         var internalView;
@@ -414,9 +458,7 @@ var Home = React.createClass({
                 </View>
 
                 {internalView}
-
-                <View style={styles.emptyContainerBottom}>
-                </View>
+                <View style={styles.emptyContainerBottom}/>
             </View>
         );
     },
