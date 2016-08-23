@@ -38,6 +38,7 @@ var styles = StyleSheet.create({
 		marginLeft: 5,
 		marginRight: 5,
 		padding: 40,
+
 		borderRadius: 10
 	},
 	description: {
@@ -77,6 +78,7 @@ var styles = StyleSheet.create({
 		backgroundColor: "#f0f8f5",
 		flexDirection: 'column',
 		alignSelf: 'stretch',
+		marginBottom: 10
 	},
 	textField: {
 		height: 40,
@@ -89,13 +91,14 @@ var styles = StyleSheet.create({
 	},
 	button: {
 		height: 36,
-		marginTop: 20,
 		flexDirection: 'row',
 		backgroundColor: '#BAC928',
 		borderColor: '#BAC928',
 		borderWidth: 1,
 		borderRadius: 5,
-		marginBottom: 10,
+		marginTop: 5,
+		marginRight: 50,
+		marginLeft: 50,
 		alignSelf: 'stretch',
 		justifyContent: 'center'
 	},
@@ -130,7 +133,7 @@ var styles = StyleSheet.create({
 	},
 	separationBar: {
 		backgroundColor: "#1d8377",
-		height: 1,
+		height: 0.7,
 		marginLeft: 5,
 		marginRight: 5,
 		flexDirection: 'row',
@@ -169,8 +172,11 @@ class SignUp extends Component {
     		);
     		this.refs.passwordInput.focus()
     	}else if (this.state.passwordConfirm == this.state.password) {
-    		User.signUp(this.state.username.toLowerCase(), this.state.password).then(() => {
-    			if (!error && user) {
+    		this.setState({loading: true})
+    		User.signUp(this.state.username.toLowerCase(), this.state.password).then((user) => {
+
+
+    			if (user) {
     				if (typeof this.props.hideModal == 'function') {
     					this.props.didSignUp(user);
     				}
@@ -180,10 +186,19 @@ class SignUp extends Component {
     			}else{
     				AlertIOS.alert(
 						"Sign Up problem",
-						"That email is already registered"
+						"Something went wrong signing up!"
 					);
 					this.refs.emailInput.focus()
     			}
+
+
+    			this.setState({loading: false})
+    		}, (error) => {
+    			AlertIOS.alert(
+					"Sign Up problem",
+					error.message
+				);
+				this.setState({loading: false})
     		});
     	}else{
     		AlertIOS.alert(
@@ -254,14 +269,18 @@ class SignUp extends Component {
 							secureTextEntry={true}
 							placeholder="confirm password"/>
 					</View>
+				</View>
 
-					<TouchableHighlight style={styles.button}
+					<ActivityIndicatorIOS
+						animating={this.state.loading}
+						hidesWhenStopped={true}
+						size="small"/>
+					<TouchableHighlight style={[styles.button, this.state.loading ? {backgroundColor: "#cadb66"} : null]}
 						onPress={this.signUp.bind(this)}
 						disabled={this.state.loading}
 						underlayColor='#cadb66'>
 			    		<Text style={styles.buttonText}>Sign up</Text>
 			  		</TouchableHighlight>
-				</View>
 				</View>
 
 				<Text style={styles.cancel} onPress={this.props.hideModal}>Cancel</Text>
