@@ -25,7 +25,7 @@ console.disableYellowBox = true;
 var treasurehunt = React.createClass ({
     getInitialState: function() {
         var user = User.getCurrentUser();
-        
+
         User.loadUserFromStore().then((user) => {
             this.setState({
                 user: user,

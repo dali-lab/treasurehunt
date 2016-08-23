@@ -53,7 +53,7 @@ class User {
 
 		this.dataRef = usersRef.child(this.uid);
 		this.currentHunts = this.dataRef.child("currentHunts");
-		this.getHuntsList();
+		this.completedHunts = this.dataRef.child("completedHunts");
 	}
 
 	// A function for when a user has just been created. It fills the user with empty data tables

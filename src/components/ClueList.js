@@ -99,6 +99,10 @@ const cluesRef = rootRef.ref('clues');
 const huntRef = rootRef.ref('hunts');
 const userSolutionsRef = rootRef.ref('user_solutions');
 
+// AES 8/3/16
+const usersRef = rootRef.ref('users');
+
+
 /*
 const cluesRef = new Firebase(`${ config.FIREBASE_ROOT }/clues`)
 const userSolutionsRef = new Firebase(`${ config.FIREBASE_ROOT }/user_solutions`)
@@ -111,9 +115,10 @@ var ClueList = React.createClass({
             rowHasChanged: (r1, r2) => r1.guid != r2.guid,
             sectionHeaderHasChanged: (s1, s2) => s1 !== s2
         });
-
+				var nextClueId;
         return {
-            dataSource: dataSource
+            dataSource: dataSource,
+						nextClueId: nextClueId
         };
     },
 
@@ -129,7 +134,9 @@ var ClueList = React.createClass({
         return cluesCategoryMap;
     },
 
+		// OLD
     populateArray: function(solutionsForThisHunt) {
+			console.log(`hunt is: ${JSON.stringify(this.props.hunt)}`);
         var cluesArray = this.props.hunt.clues;
         var clues = [];
         var solutionsToClues = [];
@@ -161,6 +168,8 @@ var ClueList = React.createClass({
         for (var j = 0; j < cluesArray.length; j++) {
             var clueRef = cluesRef.child(cluesArray[j]);
             clueRef.on('value', (snap) => {
+							console.log(`clue's val: ${JSON.stringify(snap.val())}`);
+							console.log(`key's val: ${snap.key}`);
 
                 // if a clue is in progress
                 if (snap.val().id == inProgress) {
@@ -190,13 +199,14 @@ var ClueList = React.createClass({
                         category: "incomplete",
                         clueId: snap.val().id
                     });
+										console.log(`length of clues array rn is: ${clues.length}`);
                 }
                 this.setState({
                     dataSource: this.state.dataSource.cloneWithRowsAndSections(this.convertCluesArrayToMap(clues))
                 });
             });
         }
-
+				console.log(`solutionsForThisHunt array is: ${solutionsForThisHunt.length} ${solutionsForThisHunt}`);
         if (solutionsForThisHunt.length == cluesArray.length && solutionsForThisHunt[solutionsForThisHunt.length-1].completed ==1) {
             Alert.alert(
                 'HUNT COMPLETE',
@@ -205,10 +215,165 @@ var ClueList = React.createClass({
         }
     },
 
+		// 	NEW
+		populateArray2: function(huntid, currentClue) {
+			// DONE get the array of clues
+			// DONE get the current clue
+			// find the position of the current Clue in the array. Make that in progress
+			// store the id of the clue next to that one. if there isn't one, make it null
+			// all before are completed
+			// all after are incomplete
+
+			// setting the next clue:
+			// grab the index of the current clue
+			// if the index is -1, the next index is null
+			// if it's the last clue, the next index is null
+			// if it's anything before the last clue, the next index is current index + 1
+
+			// determining whether hunt is completed--
+
+
+			var cluesArray = this.props.hunt.clues;
+			var clues = [];
+			var nextClueId;
+
+			// if item isn't found (ex null), result will be -1
+			var indexCurrentClue = cluesArray.indexOf(currentClue);
+
+			console.log(`indexCurrentClue in populate array is: ${indexCurrentClue}`);
+			if (indexCurrentClue === -1 || cluesArray.indexOf(currentClue) === (cluesArray.length - 1)) {
+				nextClueId = null;
+			} else {
+				nextClueId = cluesArray[indexCurrentClue + 1];
+			}
+			console.log(`nextClueId is: ${nextClueId}`);
+
+
+
+			//for all clues in clueArray
+			for (var j = 0; j < cluesArray.length; j++) {
+
+					var clueRef = cluesRef.child(cluesArray[j]);
+					clueRef.on('value', (snap) => {
+						var newJ = cluesArray.indexOf(snap.key);
+						console.log(`j's value: ${j}`);
+						console.log(`newj's value: ${newJ}`);
+						console.log(`indexCurrentClue: ${indexCurrentClue}`);
+						console.log(`clue's val: ${JSON.stringify(snap.val())}`);
+						console.log(`key's val: ${snap.key}`);
+						console.log(`currentClue is: ${currentClue}`);
+
+						let currCategory;
+
+// "sghnfgt4"
+						console.log(`right before if else, indexCurrent clue is: ${indexCurrentClue}`);
+						console.log(`right before if else, indexCurrent clue is: ${typeof indexCurrentClue}`);
+						if (indexCurrentClue == -1 || indexCurrentClue == 'null') {
+							console.log('currcategory = completed');
+							currCategory = 'completed';
+							clues.push({
+								title:snap.val().creator,
+								description: snap.val().description,
+								category: currCategory,
+								clueId: snap.key
+							});
+						} else {
+							if (indexCurrentClue === newJ) {
+						//		console.log('currcategory = inprogress');
+								currCategory = 'inProgress';
+							} else if (newJ > indexCurrentClue) {
+						//		console.log('currcategory = incomplete');
+								currCategory = 'incomplete'
+							} else {
+						//		console.log('currcategory = completed2');
+								currCategory = 'completed';
+							}
+								console.log(`currCategory is: ${currCategory}`);
+							clues.push({
+								title:snap.val().creator,
+								description: snap.val().description,
+								category: currCategory,
+								clueId: snap.key
+							});
+						}  // else
+
+				//	console.log(`currCategory is: ${currCategory}`);
+
+
+
+							this.setState({
+									dataSource: this.state.dataSource.cloneWithRowsAndSections(this.convertCluesArrayToMap(clues)),
+									nextClueId: nextClueId
+							});
+					});
+			}
+
+/*
+			this.setState({nextClueId: nextClueId}).then(() => {
+					console.log(`in populate array, nextClueId is: ${this.state.nextClueId}`);
+			});
+			*/
+
+
+			if (indexCurrentClue === -1 || indexCurrentClue === undefined || indexCurrentClue == null) {
+				Alert.alert(
+						'HUNT COMPLETE',
+						"You did it!!!!"
+				);
+			}
+	},
+
+	// NEW
+	getCurrentClue: function(huntid) {
+		return new Promise((fulfill, reject) => {
+			const currentUser = User.getCurrentUser();
+			const userRef = usersRef.child(currentUser.uid);
+			var currentClueRef = userRef.child('currentHunts').child(huntid).child('currentClue');
+			var currentClue;
+
+			currentClueRef.on('value', (snap) => {
+				currentClue = snap.val();
+				console.log(`1st instance of currentClue = ${currentClue}`);
+				fulfill(snap.val());
+			});
+			if ('q' === 'p') {
+				reject();
+			}
+		});
+	},
+
+	// NEW
+	listenForItems: function(cluesRef) {
+
+			//get all clues for user in hunt, add them to array
+		//  var huntID = this.props.hunt.id;
+		var huntID = this.props.hunt.id;
+
+/*
+			console.log(`the hunt id rn is: ${huntID}`);
+			console.log('dsfbjibgbsbibbnakpabpbaknabnpabpbaknpbanabjnl');
+			console.log(`the hunt rn is: ${JSON.stringify(this.props.hunt)}`);
+		*/
+
+		this.getCurrentClue(huntID).then((currentClue) => {
+			this.populateArray2(huntID, currentClue);
+		});
+	},
+
+/*
+		// NEW-ISH
     listenForItems: function(cluesRef) {
 
         //get all clues for user in hunt, add them to array
-        var huntID = this.props.hunt.id;
+      //  var huntID = this.props.hunt.id;
+			var huntID = this.props.hunt.id;
+
+				console.log(`the hunt id rn is: ${huntID}`);
+				console.log('dsfbjibgbsbibbnakpabpbaknabnpabpbaknpbanabjnl');
+				console.log(`the hunt rn is: ${JSON.stringify(this.props.hunt)}`);
+
+				// for now. just call populate array
+
 
         var solutionsForThisHunt = [];
         var currentUser = User.getCurrentUser();
@@ -220,27 +385,43 @@ var ClueList = React.createClass({
                 for (var i = 0; i < array.length; i++) {
                     if (array[i].hunt_id == Number(huntID)) {
                         solutionsForThisHunt.push(array[i]);
+
+												console.log(`solutions for this hunt11111 is: ${solutionsForThisHunt}`);
+												console.log(`solutions for this hunt1111 is: ${typeof solutionsForThisHunt}`);
                     }
                 }
             }
-            this.populateArray(solutionsForThisHunt);
-        });
+					});  // snap
+
+
+				//		console.log(`solutions for this hunt is: ${solutionsForThisHunt}`);
+				//		console.log(`solutions for this hunt is: ${typeof solutionsForThisHunt}`);
+        //    this.populateArray(solutionsForThisHunt);
+			//	this.populateArray2(solutionsForThisHunt, huntID);
+
+			this.getCurrentClue(huntID).then((currentClue) => {
+				this.populateArray2(solutionsForThisHunt, huntID, currentClue);
+
+			});
 
     },
+		*/
 
     componentDidMount: function() {
         this.listenForItems(cluesRef);
     },
 
     rowPressed: function(clueInfo) {
+			console.log(`in rowPressed, clueinfo is: ${clueInfo}`);
         //if clue is in progress, load current progress
-        if (clueInfo.category === "complete") {
+        if (clueInfo.category === "completed") {
             this.props.navigator.push({
                 title: "Hunt",
                 component: CompletedClueDisplay,
                 passProps: {
                     hunt: this.props.hunt,
-                    clueId: clueInfo.clueId
+                    clueId: clueInfo.clueId,
+										nextClueId: this.state.nextClueId
                 }
             });
         }
@@ -251,6 +432,7 @@ var ClueList = React.createClass({
                 passProps: {
                     hunt: this.props.hunt,
                     clueId: clueInfo.clueId,
+										nextClueId: this.state.nextClueId,
                     callback: this.listenForItems
                 }
             });
@@ -258,7 +440,10 @@ var ClueList = React.createClass({
     },
 
     renderRow: function(rowData, sectionID, rowID) {
-    	if (rowData.category === "complete") {
+			console.log(`rowData is: ${JSON.stringify(rowData)}`);
+			//	console.log(`in rowPressed, clueinfo is: ${clueInfo}`);
+			console.log(`next Clue id is: ${this.state.nextClueId}`);
+    	if (rowData.category === "completed") {
 	      	return (
 	      		<TouchableHighlight onPress={() => this.rowPressed(rowData)}
                 underlayColor='#dddddd'>

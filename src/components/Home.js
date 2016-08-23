@@ -209,8 +209,6 @@ var Home = React.createClass({
         var userRef = usersRef.child(currentUser.uid);
         var huntsListRef = userRef.child("hunts_list");
         var huntsList;
-        console.log('completedhuntslist is' + huntsList);
-
         huntsListRef.on('value', (snap) => {
             huntsList = snap.val();
             return huntsList;
@@ -221,23 +219,13 @@ var Home = React.createClass({
 
     listenForCompletedItems: function() {
       User.getCurrentUser().getCompletedHuntsList().then((huntsList) => {
-        console.log(`loaded this thing: ${huntsList}`);
-        Hunts.getHuntObjects(huntsList).then((hunts) => {
+        Data.getHuntObjects(huntsList).then((hunts) => {
             console.log("Loaded completed hunts: " + JSON.stringify(hunts) );
-
-            console.log(`right now the datasource is ${JSON.stringify(this.state.dataSource)}`);
-            var thisIsNew = new ListView.DataSource({
-                rowHasChanged: (r1, r2) => r1.guid !== r2.guid,
-                sectionHeaderHasChanged: (s1, s2) => s1.guid !== s2.guid
-            });
-            var newDataSource = thisIsNew.cloneWithRows(hunts);
-            console.log(`middle datasource is ${JSON.stringify(this.state.dataSource)}`);
+            var newDataSource = this.state.dataSource.cloneWithRows(hunts);
             this.setState({
                 hunts: hunts,
                 dataSource: newDataSource,
               })
-              console.log(`Now it is: ${JSON.stringify(this.state.dataSource)}`);
-          //    this.forceUpdate();
 
           });
       });
@@ -272,6 +260,7 @@ var Home = React.createClass({
     },
 
     rowPressed: function(hunt) {
+      console.log(`row pressed! hunt is: ${JSON.stringify(hunt)}`)
         this.props.navigator.push({
             title: "Hunt",
             component: HuntOverview,
@@ -289,13 +278,11 @@ var Home = React.createClass({
 
         huntImage.getDownloadURL().then((url) => {
           huntImageURL = url;
-
           huntsRef.child(hunt.id).update({imageURL: huntImageURL});
         });
     },
 
-    renderRow: function(hunt) {
-
+    renderRow: function(hunt, SectionID, rowID) {
         var huntimage = hunt.image;
         return (
             <TouchableHighlight onPress={() => this.rowPressed(hunt)}
