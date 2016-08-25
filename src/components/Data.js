@@ -98,7 +98,7 @@ export function getHuntObjects(hunt_ids) {
 	                hunt: hunt
 	            });
 
-							console.log(hunt.name);
+				console.log(hunt.name);
 
 	        	complete += 1;
 
