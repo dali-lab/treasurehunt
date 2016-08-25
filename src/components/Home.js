@@ -214,6 +214,7 @@ var Home = React.createClass({
             huntsList: huntsList,
             searching: false,
             huntsList: huntsList,
+            hunts: null,
             puzzle: 'current'
         };
     },
@@ -266,9 +267,7 @@ var Home = React.createClass({
 
         User.getCurrentUser().getHuntsList().then((huntsList) => {
             Data.getHuntObjects(huntsList).then((hunts) => {
-                if (hunts.length == 1 && this.firstLoad) {
-                    this.rowPressed(hunts[0]);
-                }else if (hunts.length == 0 && this.firstLoad) {
+                if (hunts.length == 0 && this.firstLoad) {
                     AlertIOS.alert(
                         "Welcome!",
                         "Welcome to Treasurehunt. Would you like to start with the Activities Fair hunt?",
@@ -288,8 +287,6 @@ var Home = React.createClass({
                     );
                 }
 
-                this.firstLoad = false
-
             //    var newDataSource = this.state.dataSource.clonewithRowsAndSections({current: hunts}, ['current']);
                 var newDataSource = this.state.dataSource.cloneWithRows(hunts);
                 this.setState({
@@ -300,17 +297,28 @@ var Home = React.createClass({
         });
     },
 
-    componentDidMount: function() {
+    componentDidUpdate: function(nextProps, nextState) {
+
+        if (nextState.hunts != null) {
+            if (nextState.hunts.length == 1 && this.firstLoad) {
+                this.firstLoad = false
+                this.rowPressed(nextState.hunts[0]);
+            }
+        }
+    },
+
+    componentWillMount: function() {
         if (this.state.puzzle === 'current'){
             this.listenForItems();
         } else if (this.state.puzzle == 'past'){
-            console.log('what the hell is the state rn....');
             this.listenForCompletedItems();
         }
     },
 
     rowPressed: function(hunt) {
-      console.log(`row pressed! hunt is: ${JSON.stringify(hunt)}`)
+
+        console.log("GOING -> ----->")
+        console.log(`row pressed! hunt is: ${JSON.stringify(hunt)}`)
         this.props.navigator.push({
             title: "Hunt",
             component: HuntOverview,
