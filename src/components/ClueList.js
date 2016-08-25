@@ -177,7 +177,7 @@ var ClueList = React.createClass({
         //for all clues in clueArray
         for (var j = 0; j < cluesArray.length; j++) {
             var clueRef = cluesRef.child(cluesArray[j]);
-            clueRef.on('value', (snap) => {
+            clueRef.once('value', (snap) => {
 							console.log(`clue's val: ${JSON.stringify(snap.val())}`);
 							console.log(`key's val: ${snap.key}`);
 
@@ -406,15 +406,16 @@ var ClueList = React.createClass({
 			console.log(`in rowPressed, clueinfo is: ${clueInfo}`);
         //if clue is in progress, load current progress
         if (clueInfo.category === "completed") {
-            this.props.navigator.push({
-                title: "Hunt",
-                component: CompletedClueDisplay,
-                passProps: {
-                    hunt: this.props.hunt,
-                    clueId: clueInfo.clueId,
-					nextClueId: this.state.nextClueId
-                }
-            });
+            // We do nothing!
+     //        this.props.navigator.push({
+     //            title: "Hunt",
+     //            component: CompletedClueDisplay,
+     //            passProps: {
+     //                hunt: this.props.hunt,
+     //                clueId: clueInfo.clueId,
+					// nextClueId: this.state.nextClueId
+     //            }
+     //        });
         }
         else {
             this.props.navigator.push({
@@ -440,7 +441,7 @@ var ClueList = React.createClass({
 			console.log(`next Clue id is: ${this.state.nextClueId}`);
     	if (rowData.category === "completed") {
 	      	return (
-	      		<TouchableHighlight onPress={() => this.rowPressed(rowData)}
+	      		<TouchableHighlight
                 underlayColor='#dddddd'>
                 <View>
                     <View style={styles.rowContainer}>
