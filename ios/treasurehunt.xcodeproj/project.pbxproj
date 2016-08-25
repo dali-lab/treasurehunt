@@ -517,6 +517,7 @@
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				AA5B8DB2FB16D271EE012B5F /* [CP] Embed Pods Frameworks */,
 				D7C01A64303A0A6CD3EBE88E /* [CP] Copy Pods Resources */,
+				E23EBF7B1D6E17DC003F94E2 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -854,6 +855,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-treasurehunt/Pods-treasurehunt-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		E23EBF7B1D6E17DC003F94E2 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" 46ee2b2494200fc37080231a2cfd401866e5ae25 22bf5c454bec8c3bf4d7dcb6ce678e6bddc19983aa1c043f920da08ef84e068c\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
