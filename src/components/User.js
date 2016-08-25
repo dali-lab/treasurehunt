@@ -78,18 +78,15 @@ class User {
 			return User.currentUser;
 		}
 
-		console.log(Firebase.auth().currentUser);
-
 		if (Firebase.auth().currentUser) {
 			return new User(Firebase.auth().currentUser);
 		}
-
+		
 		return null;
 	}
 
 	static FBonLogin(data) {
 		var id = data.credentials.userId;
-		console.log(data);
 
 		var user = new User(null, {
 			id: id,
@@ -100,7 +97,6 @@ class User {
 
 		user.dataRef.on("value", (snapshot) => {
 			if (!snapshot.hasChild("currentHunts")) {
-				console.log("initializing new user");
 				user.initializeNewUser();
 			}
 		});
@@ -111,7 +107,6 @@ class User {
 	}
 
 	static loadUserFromStore() {
-		console.log("Loading user...");
 		return new Promise(async (success, failure) => {
 			try {
 				const user_data_json = await AsyncStorage.getItem(USER_DATA_KEY);
@@ -121,10 +116,8 @@ class User {
 					var myUser = new User(JSON.parse(user_data_json), null);
 					Firebase.auth().currentUser = JSON.parse(user_data_json);
 					User.currentUser = myUser
-					console.log("Loaded user!");
 					success(myUser);
 				}else{
-					console.log("Loaded null!");
 					User.currentUser = null;
 					success(null);
 				}
@@ -136,7 +129,6 @@ class User {
 	}
 
 	static saveUser(user_data) {
-		console.log("Saving user...");
 		return new Promise(async (success, failure) => {	
 			if (this.currentUser.isFacebook()) {
 				failure("Type is facebook. Cannot save!");
@@ -145,7 +137,6 @@ class User {
 
 			try {
 				await AsyncStorage.setItem(USER_DATA_KEY, JSON.stringify(user_data));
-				console.log("Saved user!");
 				success();
 			} catch(error) {
 				failure("Error saving user: " + error);
@@ -157,7 +148,6 @@ class User {
 	 * Returns a promise with a non-null User
 	 */
 	static login(email, password) {
-		console.log("Attempting to log in");
 		return new Promise((fulfill, reject) => {
 			// if (Firebase.auth().currentUser) {
 			// 	reject("Failed to login! There is already a user!!!!");
@@ -168,7 +158,6 @@ class User {
 				// We have lift off!
 				var myUser = new User(user, null);
 				// The Eagle has landed!
-				console.log("Logged in with user: " + myUser);
 
 				User.currentUser = myUser;
 				User.saveUser(user);
@@ -191,7 +180,6 @@ class User {
 				// We have lift off!
 				var myUser = new User(user, null);
 				// The Eagle has landed!
-				console.log("Signing up!");
 
 				User.currentUser = myUser;
 				myUser.initializeNewUser();
@@ -214,9 +202,7 @@ class User {
 
 	hasHuntCurrent(hunt) {
 		return new Promise((fulfill, reject) => {
-			console.log(1)
 			this.getHuntsList().then((huntsList) => {
-				console.log(huntsList != null && huntsList[hunt.id] != undefined)
 				fulfill(huntsList != null && huntsList[hunt.id] != undefined);
 			}, (error) => {
 				reject(error);
@@ -228,7 +214,6 @@ class User {
 		return new Promise((fulfill, reject) => {
 			this.hasHuntCurrent(hunt).then((flag) => {
 				if (!flag) {
-					console.log(3)
 					Data.getHuntWithID(hunt.id).then((hunt2) => {
 						var firstClue = hunt2.clues[0];
 						this.currentHunts.child(hunt.id).set({
@@ -253,7 +238,6 @@ class User {
 	}
 
 	removeHunt(hunt) {
-		console.log("Removing Hunt!");
 		return new Promise((fulfill, reject) => {
 			this.hasHuntCurrent(hunt).then((flag) => {
 				if (flag) {
@@ -273,21 +257,17 @@ class User {
 			if (this.isFacebook()) {
 				FBLoginManager.logout((error, data) => {
 					if (!error) {
-						console.log("Logged out!");
 						success();
 					}else{
-						console.log("Failed to logout!");
 						failure();
 					}
 				});
 			}else{
 				Firebase.auth().signOut().then(() => {
 					// Completed!
-					console.log("Logged out!");
 					AsyncStorage.removeItem(USER_DATA_KEY);
 					success();
 				}, (error) => {
-					console.log("Failed to log out!");
 					failure(error);
 				});
 			}
