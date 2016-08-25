@@ -60,13 +60,16 @@ export function getHuntObjects(hunt_ids) {
 	    	var contents = hunt_ids[key];
 	        //get that hunt, calculate user progress, get hunt data
 
-	        getHuntWithID(key).then((function(key, hunt) {
+	        getHuntWithID(key).then((function(contents, key, hunt) {
 	        	// We have a hunt
 	        	console.log(key, hunt);
 
 	        	// Now lets get the total clues
 	        	var totalCluesInHunt = hunt.clues.length;
-	        	var totalCluesCompleted = contents.cluesComplete;
+	        	console.log(contents);
+	        	var totalCluesCompleted = contents.cluesCompleted;
+
+	        	console.log("Calculating progress: " + totalCluesCompleted + " / " + totalCluesInHunt);
 
 	        	hunts.push({
 	                id: key,
@@ -85,7 +88,7 @@ export function getHuntObjects(hunt_ids) {
 	        	if (complete >= todo) {
 	        		fulfill(hunts);
 	        	}
-	        }).bind(undefined, key), function(error) { // Rejected!
+	        }).bind(undefined, contents, key), function(error) { // Rejected!
 	        	todo = todo - 1;
 	        })
 
