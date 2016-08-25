@@ -3,6 +3,12 @@ var React = require('react-native');
 var ClueList = require('./ClueList');
 import User from './User';
 
+
+const Firebase = require('firebase')
+const config = require('../../config')
+import rootRef from '../../newfirebase.js'
+const usersRef = rootRef.ref('users');
+
 var {
 	StyleSheet,
 	Image,
@@ -134,9 +140,26 @@ var HuntOverview = React.createClass({
             title: "Hunt",
             component: ClueList,
             passProps: {
+            	currentClue: this.currentClue,
+            	currentClueComplete: (callback) => {
+            		this.currentClueCallback = callback
+            	},
                 hunt: this.props.hunt,
             }
         });
+	},
+
+	componentDidMount: function() {
+		this.currentClue = null
+		this.currentClueCallback = null
+		this.getCurrentClue(this.props.hunt.id).then((currentClue) => {
+			this.currentClue = currentClue
+			if (this.currentClueCallback != null && typeof this.currentClueCallback == "function") {
+				this.currentClueCallback(currentClue);
+			}
+		}, (error) => {
+			console.log(error)
+		});
 	},
 
 	onExitPressed: function() {
@@ -165,6 +188,21 @@ var HuntOverview = React.createClass({
 				});
 			}, (error) => console.log(error));
 		}
+	},
+
+	getCurrentClue: function(huntid) {
+		return new Promise((fulfill, reject) => {
+			const currentUser = User.getCurrentUser();
+			const userRef = usersRef.child(currentUser.uid);
+			var currentClueRef = userRef.child('currentHunts').child(huntid).child('currentClue');
+
+			currentClueRef.once('value', (snap) => {
+				console.log(`1st instance of currentClue = ${snap.val()}`);
+				fulfill(snap.val());
+			}, (error) => {
+                reject(error);
+            });
+		});
 	},
 
 	updateShouldShowAddButton: function() {

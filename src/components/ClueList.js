@@ -115,6 +115,16 @@ var ClueList = React.createClass({
             rowHasChanged: (r1, r2) => r1.guid != r2.guid,
             sectionHeaderHasChanged: (s1, s2) => s1 !== s2
         });
+
+        if (this.props.currentClue === null) {
+            this.props.currentClueComplete((clue) => {
+                this.currentClue = clue
+                this.listenForItems()
+            });
+        }
+        this.currentClue = this.props.currentClue;
+
+
 				var nextClueId;
         return {
             dataSource: dataSource,
@@ -323,22 +333,6 @@ var ClueList = React.createClass({
 			}
 	},
 
-	// NEW
-	getCurrentClue: function(huntid) {
-		return new Promise((fulfill, reject) => {
-			const currentUser = User.getCurrentUser();
-			const userRef = usersRef.child(currentUser.uid);
-			var currentClueRef = userRef.child('currentHunts').child(huntid).child('currentClue');
-			var currentClue;
-
-			currentClueRef.on('value', (snap) => {
-				currentClue = snap.val();
-				console.log(`1st instance of currentClue = ${currentClue}`);
-				fulfill(snap.val());
-			});
-			if ('q' === 'p') {
-				reject();
-			}
 		});
 	},
 
