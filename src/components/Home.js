@@ -215,6 +215,7 @@ var Home = React.createClass({
             searching: false,
             huntsList: huntsList,
             hunts: null,
+            startingHunt: null,
             puzzle: 'current'
         };
     },
@@ -268,23 +269,29 @@ var Home = React.createClass({
         User.getCurrentUser().getHuntsList().then((huntsList) => {
             Data.getHuntObjects(huntsList).then((hunts) => {
                 if (hunts.length == 0 && this.firstLoad) {
-                    AlertIOS.alert(
-                        "Welcome!",
-                        "Welcome to Treasurehunt. Would you like to start with the Activities Fair hunt?",
-                        [
-                            {text: "Close", onPress: ()=>{}, style: "cancel"},
-                            {text: "Let's go!", onPress: ()=>{
-                                User.currentUser.addStartingHunt().then(() => {
-                                    this.firstLoad = true;
-                                    this.setState({
-                                        hunts: null
-                                    })
+                    User.setStartingHuntCallback((hunt) => {
+                        this.setState({
+                            startingHunt: hunt
+                        })
 
-                                    this.listenForItems();
-                                });
-                            }}
-                        ]
-                    );
+                        AlertIOS.alert(
+                            "Welcome!",
+                            "Welcome to Treasurehunt. Would you like to start with the " + hunt.name + " hunt?",
+                            [
+                                {text: "Close", onPress: ()=>{}, style: "cancel"},
+                                {text: "Let's go!", onPress: ()=>{
+                                    User.currentUser.addStartingHunt().then(() => {
+                                        this.firstLoad = true;
+                                        this.setState({
+                                            hunts: null
+                                        })
+
+                                        this.listenForItems();
+                                    });
+                                }}
+                            ]
+                        );
+                    });
                 }
 
             //    var newDataSource = this.state.dataSource.clonewithRowsAndSections({current: hunts}, ['current']);
@@ -395,7 +402,7 @@ var Home = React.createClass({
 
         var noHunts = <View style={noHuntsStyle.noHuntsView}>
                         <Text style={[noHuntsStyle.noHuntsText, {}]}>You have no hunts yet</Text>
-                        <TouchableHighlight
+                        {this.state.startingHunt != null ? <TouchableHighlight
                             style={styles.startingHuntButton}
                             underlayColor="#fef48f"
                             onPress={() => {
@@ -406,7 +413,7 @@ var Home = React.createClass({
 
                                     this.listenForItems();
                                 });
-                            }}><Text style={styles.startingHuntButtonText}>Start the Activity Fair Hunt</Text></TouchableHighlight>
+                            }}><Text style={styles.startingHuntButtonText}>Start the {this.state.startingHunt.name} hunt</Text></TouchableHighlight> : null}
                     </View>
 
         var internalView;

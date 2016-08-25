@@ -26,6 +26,9 @@ var treasurehunt = React.createClass ({
     getInitialState: function() {
         var user = User.getCurrentUser();
 
+        // This is so we know what the starting hunt is
+        User.getStartingHuntID()
+
         User.loadUserFromStore().then((user) => {
             if (this.state.user == null) {
                 this.setState({

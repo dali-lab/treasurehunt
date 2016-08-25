@@ -13,7 +13,6 @@ const cluesRef = rootRef.ref('clues');
 
 // const USER_EMAIL_KEY = '@TreasureHunt:email';
 const USER_DATA_KEY = 'user_data';
-const startingHuntID = 'hgieyty6';
 
 var {
 	AsyncStorage,
@@ -22,6 +21,8 @@ var {
 
 class User {
 	static currentUser = null;
+	static startingHunt = null;
+	static startingHuntCallback = null;
 
 	/**
 	 * This constructs a user object
@@ -278,7 +279,7 @@ class User {
 	}
 
 	addStartingHunt() {
-		return this.addHunt({id: startingHuntID});
+		return this.addHunt(User.startingHunt);
 	}
 
 	removeHunt(hunt) {
@@ -343,6 +344,28 @@ class User {
 		});
 	}
 	// end of function 7/21/16 AES
+
+	static getStartingHuntID() {
+		rootRef.ref('startingHunt').once('value', (snap) => {
+			Data.getHuntWithID(snap.val()).then((hunt) => {
+				User.startingHunt = hunt
+				if (User.startingHuntCallback != null && typeof User.startingHuntCallback == 'function') {
+					User.startingHuntCallback(hunt);
+				}
+				User.startingHuntCallback = null;
+			}, (error) => {
+				console.log("--- Encountered error getting starting hunt! " + error);
+			})
+		})
+	}
+
+	static setStartingHuntCallback(callback) {
+		if (User.startingHunt != null) {
+			callback(User.startingHuntCallback);
+		}else{
+			User.startingHuntCallback = callback
+		}
+	}
 }
 
 export default User;
