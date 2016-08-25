@@ -70,6 +70,29 @@ class User {
 		});
 	}
 
+	// Each passed function MUST implment the snap system of firebase
+	setUpListeners(userHuntDataUpdated, userDataUpdated) {
+		if (userHuntDataUpdated !== null) {
+			this.currentHunts.on('value', userHuntDataUpdated, () => {});
+			this.userHuntDataUpdated = userHuntDataUpdated;
+		}else if (this.userHuntDataUpdated !== null && this.userHuntDataUpdated !== undefined) {
+			this.currentHunts.off('value', this.userHuntDataUpdated);
+			this.userHuntDataUpdated = null;
+		}
+
+		if (userDataUpdated !== null) {
+			this.dataRef.on('value', userDataUpdated, () => {});
+			this.userDataUpdated = userDataUpdated;
+		}else if (this.userDataUpdated !== null && this.userDataUpdated !== undefined) {
+			this.currentHunts.off('value', this.userDataUpdated);
+			this.userDataUpdated = null;
+		}
+	}
+
+	cancelListeners() {
+		setUpListeners(null, null);
+	}
+
 	isFacebook() {
 		return this.firebaseUser == null;
 	}

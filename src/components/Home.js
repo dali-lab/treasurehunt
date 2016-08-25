@@ -197,6 +197,11 @@ var Home = React.createClass({
 
         this.firstLoad = true;
 
+        User.getCurrentUser().setUpListeners(() => {
+            // the user hunt data function
+            this.listenForItems();
+        }, null /* The user data function */)
+
         return {
             dataSource: dataSource,
             huntsList: huntsList,
