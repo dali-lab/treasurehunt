@@ -225,115 +225,112 @@ var ClueList = React.createClass({
         }
     },
 
-		// 	NEW
-		populateArray2: function(huntid, currentClue) {
-			// DONE get the array of clues
-			// DONE get the current clue
-			// find the position of the current Clue in the array. Make that in progress
-			// store the id of the clue next to that one. if there isn't one, make it null
-			// all before are completed
-			// all after are incomplete
+	// 	NEW
+	populateArray2: function(huntid, currentClue) {
+		// DONE get the array of clues
+		// DONE get the current clue
+		// find the position of the current Clue in the array. Make that in progress
+		// store the id of the clue next to that one. if there isn't one, make it null
+		// all before are completed
+		// all after are incomplete
 
-			// setting the next clue:
-			// grab the index of the current clue
-			// if the index is -1, the next index is null
-			// if it's the last clue, the next index is null
-			// if it's anything before the last clue, the next index is current index + 1
+		// setting the next clue:
+		// grab the index of the current clue
+		// if the index is -1, the next index is null
+		// if it's the last clue, the next index is null
+		// if it's anything before the last clue, the next index is current index + 1
 
-			// determining whether hunt is completed--
-
-
-			var cluesArray = this.props.hunt.clues;
-			var clues = [];
-			var nextClueId;
-
-			// if item isn't found (ex null), result will be -1
-			var indexCurrentClue = cluesArray.indexOf(currentClue);
-
-			console.log(`indexCurrentClue in populate array is: ${indexCurrentClue}`);
-			if (indexCurrentClue === -1 || cluesArray.indexOf(currentClue) === (cluesArray.length - 1)) {
-				nextClueId = null;
-			} else {
-				nextClueId = cluesArray[indexCurrentClue + 1];
-			}
-			console.log(`nextClueId is: ${nextClueId}`);
+		// determining whether hunt is completed--
 
 
+		var cluesArray = this.props.hunt.clues;
+		var clues = [];
+		var nextClueId;
 
-			//for all clues in clueArray
-			for (var j = 0; j < cluesArray.length; j++) {
+		// if item isn't found (ex null), result will be -1
+		var indexCurrentClue = cluesArray.indexOf(currentClue);
 
-					var clueRef = cluesRef.child(cluesArray[j]);
-					clueRef.on('value', (snap) => {
-						var newJ = cluesArray.indexOf(snap.key);
-						console.log(`j's value: ${j}`);
-						console.log(`newj's value: ${newJ}`);
-						console.log(`indexCurrentClue: ${indexCurrentClue}`);
-						console.log(`clue's val: ${JSON.stringify(snap.val())}`);
-						console.log(`key's val: ${snap.key}`);
-						console.log(`currentClue is: ${currentClue}`);
+		console.log(`indexCurrentClue in populate array is: ${indexCurrentClue}`);
+		if (indexCurrentClue === -1 || cluesArray.indexOf(currentClue) === (cluesArray.length - 1)) {
+			nextClueId = null;
+		} else {
+			nextClueId = cluesArray[indexCurrentClue + 1];
+		}
+		console.log(`nextClueId is: ${nextClueId}`);
 
-						let currCategory;
+
+
+		//for all clues in clueArray
+		for (var j = 0; j < cluesArray.length; j++) {
+
+				var clueRef = cluesRef.child(cluesArray[j]);
+				clueRef.once('value', (snap) => {
+					var newJ = cluesArray.indexOf(snap.key);
+					console.log(`j's value: ${j}`);
+					console.log(`newj's value: ${newJ}`);
+					console.log(`indexCurrentClue: ${indexCurrentClue}`);
+					console.log(`clue's val: ${JSON.stringify(snap.val())}`);
+					console.log(`key's val: ${snap.key}`);
+					console.log(`currentClue is: ${currentClue}`);
+
+					let currCategory;
 
 // "sghnfgt4"
-						console.log(`right before if else, indexCurrent clue is: ${indexCurrentClue}`);
-						console.log(`right before if else, indexCurrent clue is: ${typeof indexCurrentClue}`);
-						if (indexCurrentClue == -1 || indexCurrentClue == 'null') {
-							console.log('currcategory = completed');
-							currCategory = 'completed';
-							clues.push({
-								title:snap.val().creator,
-								description: snap.val().description,
-								category: currCategory,
-								clueId: snap.key
-							});
+					console.log(`right before if else, indexCurrent clue is: ${indexCurrentClue}`);
+					console.log(`right before if else, indexCurrent clue is: ${typeof indexCurrentClue}`);
+					if (indexCurrentClue == -1 || indexCurrentClue == 'null') {
+						console.log('currcategory = completed');
+						currCategory = 'completed';
+						clues.push({
+							title:snap.val().creator,
+							description: snap.val().description,
+							category: currCategory,
+							clueId: snap.key
+						});
+					} else {
+						if (indexCurrentClue === newJ) {
+					//		console.log('currcategory = inprogress');
+							currCategory = 'inProgress';
+						} else if (newJ > indexCurrentClue) {
+					//		console.log('currcategory = incomplete');
+							currCategory = 'incomplete'
 						} else {
-							if (indexCurrentClue === newJ) {
-						//		console.log('currcategory = inprogress');
-								currCategory = 'inProgress';
-							} else if (newJ > indexCurrentClue) {
-						//		console.log('currcategory = incomplete');
-								currCategory = 'incomplete'
-							} else {
-						//		console.log('currcategory = completed2');
-								currCategory = 'completed';
-							}
-								console.log(`currCategory is: ${currCategory}`);
-							clues.push({
-								title:snap.val().creator,
-								description: snap.val().description,
-								category: currCategory,
-								clueId: snap.key
-							});
-						}  // else
+					//		console.log('currcategory = completed2');
+							currCategory = 'completed';
+						}
+							console.log(`currCategory is: ${currCategory}`);
+						clues.push({
+							title:snap.val().creator,
+							description: snap.val().description,
+							category: currCategory,
+							clueId: snap.key
+						});
+					}  // else
 
-				//	console.log(`currCategory is: ${currCategory}`);
+			//	console.log(`currCategory is: ${currCategory}`);
 
 
 
-							this.setState({
-									dataSource: this.state.dataSource.cloneWithRowsAndSections(this.convertCluesArrayToMap(clues)),
-									nextClueId: nextClueId
-							});
-					});
-			}
+						this.setState({
+								dataSource: this.state.dataSource.cloneWithRowsAndSections(this.convertCluesArrayToMap(clues)),
+								nextClueId: nextClueId
+						});
+				});
+		}
 
 /*
-			this.setState({nextClueId: nextClueId}).then(() => {
-					console.log(`in populate array, nextClueId is: ${this.state.nextClueId}`);
-			});
-			*/
-
-
-			if (indexCurrentClue === -1 || indexCurrentClue === undefined || indexCurrentClue == null) {
-				Alert.alert(
-						'HUNT COMPLETE',
-						"You did it!!!!"
-				);
-			}
-	},
-
+		this.setState({nextClueId: nextClueId}).then(() => {
+				console.log(`in populate array, nextClueId is: ${this.state.nextClueId}`);
 		});
+		*/
+
+
+		if (indexCurrentClue === -1 || indexCurrentClue === undefined || indexCurrentClue == null) {
+			Alert.alert(
+					'HUNT COMPLETE',
+					"You did it!!!!"
+			);
+		}
 	},
 
 	// NEW
