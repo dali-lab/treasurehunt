@@ -4,6 +4,7 @@ const config = require('../../config')
 import rootRef from '../../newfirebase.js';
 const usersRef = rootRef.ref('users');
 const huntsRef = rootRef.ref('hunts');
+const cluesRef = rootRef.ref('clues');
 
 const SEARCH_WITH_SERVER = true;
 
@@ -29,14 +30,30 @@ export function getHuntWithID(id) {
 	return new Promise((fulfill, reject) => {
 		ref.once('value', function(snapshot) {
 			if (snapshot.val() == null) {
-				reject()
+				reject();
 			}
 
 			fulfill(snapshot.val());
 		}, function (errorObject) {
 			reject(errorObject);
-		})
-	})
+		});
+	});
+}
+
+export function getClueWithID(id) {
+	var ref = cluesRef.child(id);
+
+	return new Promise((fulfill, reject) => {
+		ref.once('value', function(snapshot) {
+			if (snapshot.val() == null) {
+				reject();
+			}
+
+			fulfill(snapshot.val());
+		}, function(error) {
+			reject(error);
+		});
+	});
 }
 
 // Returns a promise the gives all the hunt objects as an array

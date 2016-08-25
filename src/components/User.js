@@ -8,6 +8,7 @@ const usersRef = rootRef.ref('users');
 const React = require('react-native');
 const {FBLoginManager} = require('react-native-facebook-login');
 const Data = require('./Data');
+const cluesRef = rootRef.ref('clues');
 
 
 // const USER_EMAIL_KEY = '@TreasureHunt:email';
@@ -214,13 +215,33 @@ class User {
 		return new Promise((fulfill, reject) => {
 			this.hasHuntCurrent(hunt).then((flag) => {
 				if (!flag) {
-					Data.getHuntWithID(hunt.id).then((hunt2) => {
-						var firstClue = hunt2.clues[0];
+					Data.getHuntWithID(hunt.id).then((huntData) => {
+						var firstClue = huntData.clues[0];
 						this.currentHunts.child(hunt.id).set({
 							cluesCompleted: 0,
 							currentClue: firstClue
 						});
-						fulfill();
+
+						var promises = []
+						for (index in huntData.clues) {
+							var clueID = huntData.clues[index];
+							var ref = cluesRef.child(clueID).child("submissions").child(hunt.id + "|" + this.uid);
+							promises.push(new Promise((success, failure) => {
+								console.log("REMOVING... ref " + ref);
+								ref.remove((error) => {
+									console.log("Done removing", error);
+									success();
+								})
+							}));
+						}
+
+						Promise.all(promises).then(() => {
+							console.log("Done removing all of them!");
+							fulfill();
+						}, (error) => {
+							console.log("Encountered error when clearing submissions: ", error);
+							fulfill();
+						});
 					}, (error) => {
 						reject(error);
 					});
