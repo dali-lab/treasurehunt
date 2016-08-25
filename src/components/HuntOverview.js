@@ -69,6 +69,7 @@ var styles = StyleSheet.create({
 		marginLeft: 25,
 		marginRight: 25,
 		height: 70,
+		width: screenWidth - 50,
 		flexDirection: 'column',
 		justifyContent: 'center',
 		alignItems: 'center',
@@ -78,21 +79,23 @@ var styles = StyleSheet.create({
 	},
 	buttonImage:{
 		height: 70,
+		width: screenWidth - 50,
 		resizeMode: "contain"
 	},
 	buttonAdd: {
 		marginLeft: 25,
 		marginRight: 25,
+		width: Math.min(screenWidth - 50, 325),
 		height: 36,
 		flexDirection: 'column',
-		backgroundColor: '#cadb66',
-		borderColor: '#cadb66',
+		backgroundColor: '#c8e7a6',
+		borderColor: '#c8e7a6',
 		justifyContent: 'center',
 		alignItems: 'center',
 		borderWidth: 1,
 		borderRadius: 8,
 		marginBottom: 10,
-		alignSelf: 'stretch',
+		alignSelf: 'center',
 		padding:20,
 	},
 	actionBarView: {
@@ -131,11 +134,13 @@ var HuntOverview = React.createClass({
 	getInitialState: function() {
 		return {
 			shouldShowAddButton: null,
+			processingAddHunt: false,
 			stars: 4
 		}
 	},
 
 	onStartPressed: function() {
+
 		this.props.navigator.push({
             title: "Hunt",
             component: ClueList,
@@ -168,13 +173,18 @@ var HuntOverview = React.createClass({
 
 	onAddHuntPressed: function() {
 		console.log("Doing something with hunt: " + this.props.hunt.id);
+
+		this.setState({
+			processingAddHunt: true
+		});
 		if (this.state.shouldShowAddButton) {
 			User.getCurrentUser().addHunt(this.props.hunt).then(() => {
 				if (typeof this.props.huntAdded == "function") {
 					this.props.huntAdded();
 				}
 				this.setState({
-					shouldShowAddButton: false
+					shouldShowAddButton: false,
+					processingAddHunt: false
 				});
 			}, (error) => console.log(error));
 		}else{
@@ -184,7 +194,8 @@ var HuntOverview = React.createClass({
 				}
 
 				this.setState({
-					shouldShowAddButton: true
+					shouldShowAddButton: true,
+					processingAddHunt: false
 				});
 			}, (error) => console.log(error));
 		}
@@ -292,9 +303,10 @@ var HuntOverview = React.createClass({
 						underlayColor='#FFFFF'>
 						<Image style={styles.buttonImage} source={require("./viewCluseButton.png")}/>
 				</TouchableHighlight>
-				<TouchableHighlight style = {styles.buttonAdd}
+				<TouchableHighlight style = {[styles.buttonAdd, this.state.processingAddHunt ? {backgroundColor: '#bccfa8'} : null]}
+						disabled={this.state.processingAddHunt}
 						onPress={this.onAddHuntPressed}
-						underlayColor='#99d9f4'>
+						underlayColor='#bccfa8'>
 						<Text style = {styles.buttonText}>{ this.state.shouldShowAddButton ? "ADD HUNT" : "REMOVE HUNT" }</Text>
 				</TouchableHighlight>
 			</View>
