@@ -202,29 +202,31 @@ var CurrentClueDisplay = React.createClass({
 
 	populateClue: function() {
 		console.log('populating clue....');
-			var clueRef = cluesRef.child(this.props.clueId);
-			var currentUser = User.getCurrentUser().uid;
-			console.log(`the current clueRef is ${clueRef}`);
-			clueRef.on('value', (snap) => {
-			 console.log(`CurrentClueDisplay clueRef val ${JSON.stringify(snap.val())}`);
 
-			 	// this isn't right.....
-//			 var submission1 = clueRef.child('submissions');
-	//		 var submission2 = submission1.child(currentUser);
 
-				var submission1 = snap.val().submissions;
-				 var submission2 = submission1[currentUser];
+		var clueRef = cluesRef.child(this.props.clueId);
+		var currentUser = User.getCurrentUser().uid;
+		console.log(`the current clueRef is ${clueRef}`);
 
-/*
-				var clue = {
-				 title: snap.val().creator,
-				 description: snap.val().description,
-				 type: snap.val().type,
-				 data: snap.val().data,
-				 solutions: snap.val().solutions,
-				 submission: submission2
-			 };
-			*/
+
+		clueRef.on('value', (snap) => {
+			console.log(`CurrentClueDisplay clueRef val ${JSON.stringify(snap.val())}`);
+
+
+
+
+			var submission1 = snap.val().submissions;
+			console.log(typeof submission1);
+			console.log(submission1);
+			console.log('typeof and submission????');
+
+			var submission2 = null
+			if (submission1 !== undefined ) {
+				submission2 = submission1[this.state.huntId + "|" + User.getCurrentUser().uid];
+			}
+
+
+
 			var clueTitle = snap.val().creator;
 			var clueDescription = snap.val().description;
 			var clueType = snap.val().type;
@@ -273,6 +275,7 @@ var CurrentClueDisplay = React.createClass({
 				this.clueIsCompleted();
 				
 			} else {
+				console.log('this clue is wrong!!!');
 				this.solutionIsWrong();
 			}
 		});  // then
@@ -318,6 +321,7 @@ var CurrentClueDisplay = React.createClass({
 
 
 			var newCluesCompleted = snap.val().cluesCompleted + 1 ;
+			console.log("newCluesCompleted = " + newCluesCompleted);
 
 			userHunt.child('cluesCompleted').set(newCluesCompleted).then(() => {
 				console.log('success! updated cluesCompleted')
@@ -391,6 +395,7 @@ var CurrentClueDisplay = React.createClass({
 				}
 				console.log(`found is: ${found}`);
 				if (found == false) {
+					console.log('the answer is false');
 					fulfill(false);
 				}
 			}  // else
@@ -433,10 +438,10 @@ var CurrentClueDisplay = React.createClass({
 		const clueRef = cluesRef.child(this.props.clueId);
 		const currentUser = User.getCurrentUser().uid;
 
-		clueRef.on('value', (snap) => {
+		clueRef.once('value', (snap) => {
 		 console.log(`CurrentClueDisplay clueRef val ${JSON.stringify(snap.val())}`);
 
-		 var submissionRef = clueRef.child('submissions').child(currentUser);
+		 var submissionRef = clueRef.child('submissions').child(this.state.huntId + "|" + currentUser);
 
 		submissionRef.set(this.state.clueSubmission)
 		.then(() => {
