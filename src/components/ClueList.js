@@ -346,9 +346,9 @@ var ClueList = React.createClass({
 			console.log(`the hunt rn is: ${JSON.stringify(this.props.hunt)}`);
 		*/
 
-		this.getCurrentClue(huntID).then((currentClue) => {
-			this.populateArray2(huntID, currentClue);
-		});
+        if (this.currentClue != null) {
+            this.populateArray2(huntID, this.currentClue);
+        }
 	},
 
 /*
