@@ -17,7 +17,10 @@ var {
     Text,
     Component,
     AlertIOS,
+    Dimensions
 } = React;
+
+var screenWidth = Dimensions.get('window').width;
 
 var styles = StyleSheet.create({
     thumb: {
@@ -132,8 +135,12 @@ var styles = StyleSheet.create({
         justifyContent: 'center',
         flexDirection: 'row',
         flex: 1,
+    },
+    progressBar: {
+        marginLeft: 5,
+        marginBottom: 5,
+        flex: 1
     }
-
 });
 
 var noHuntsStyle = StyleSheet.create({
@@ -216,7 +223,7 @@ var Home = React.createClass({
         var userRef = usersRef.child(currentUser.uid);
         var huntsListRef = userRef.child("hunts_list");
         var huntsList;
-        huntsListRef.on('value', (snap) => {
+        huntsListRef.once('value', (snap) => {
             huntsList = snap.val();
             return huntsList;
         });
@@ -228,7 +235,7 @@ var Home = React.createClass({
         var userRef = usersRef.child(currentUser.uid);
         var huntsListRef = userRef.child("hunts_list");
         var huntsList;
-        huntsListRef.on('value', (snap) => {
+        huntsListRef.once('value', (snap) => {
             huntsList = snap.val();
             return huntsList;
         });
@@ -259,7 +266,7 @@ var Home = React.createClass({
 
         User.getCurrentUser().getHuntsList().then((huntsList) => {
             Data.getHuntObjects(huntsList).then((hunts) => {
-                if (hunts.length == 1) {
+                if (hunts.length == 1 && this.firstLoad) {
                     this.rowPressed(hunts[0]);
                 }else if (hunts.length == 0 && this.firstLoad) {
                     AlertIOS.alert(
@@ -269,6 +276,7 @@ var Home = React.createClass({
                             {text: "Close", onPress: ()=>{}, style: "cancel"},
                             {text: "Let's go!", onPress: ()=>{
                                 User.currentUser.addStartingHunt().then(() => {
+                                    this.firstLoad = true;
                                     this.setState({
                                         hunts: null
                                     })
@@ -326,6 +334,8 @@ var Home = React.createClass({
 
     renderRow: function(hunt, SectionID, rowID) {
         var huntimage = hunt.image;
+
+
         return (
             <TouchableHighlight onPress={() => this.rowPressed(hunt)}
                 underlayColor='#dddddd'>
@@ -342,7 +352,7 @@ var Home = React.createClass({
                           </View>
                           <View>
                             <Progress.Bar style={styles.progressBar}
-                                progress={hunt.progress} width={200} borderRadius={0} border={0} height={10} color='#ffd900' backgroundColor='white'/>
+                                progress={hunt.progress} width={screenWidth - 160} borderRadius={0} border={0} height={10} color='#ffd900' backgroundColor='white'/>
                           </View>
                         </View>
                     </View>
@@ -438,23 +448,27 @@ var Home = React.createClass({
                     <View style={styles.headerButtons}>
                     {this.isSearching() ? null : <View style={styles.headerButtons}>
                     <TouchableHighlight underlayColor='#dddddd' onPress={() => {
+                        var newDataSource = this.state.dataSource.cloneWithRows([]);
                         this.setState({
+                            dataSource: newDataSource,
                             puzzle: "current"
                         });
                         this.listenForItems();
                     }}>
-                      <Text style={this.state.puzzle == 'current' ? styles.headerTextSelected : styles.headerTextUnselected}> Current Puzzles</Text>
+                      <Text style={this.state.puzzle == 'current' ? styles.headerTextSelected : styles.headerTextUnselected}>Current Puzzles</Text>
                     </TouchableHighlight>
                     </View>}
 
                     {this.isSearching() ? null : <View style={styles.headerButtons}>
                     <TouchableHighlight underlayColor='#dddddd' onPress={() => {
+                        var newDataSource = this.state.dataSource.cloneWithRows([]);
                         this.setState({
+                            dataSource: newDataSource,
                             puzzle: "past"
                         });
                         this.listenForCompletedItems();
                     }}>
-                      <Text style={this.state.puzzle == 'past' ? styles.headerTextSelected : styles.headerTextUnselected}> Past Puzzles </Text>
+                      <Text style={this.state.puzzle == 'past' ? styles.headerTextSelected : styles.headerTextUnselected}> Past Puzzles</Text>
                     </TouchableHighlight>
                     </View>}
 
