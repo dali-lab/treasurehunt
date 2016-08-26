@@ -57,17 +57,15 @@ class User {
 		this.dataRef = usersRef.child(this.uid);
 		this.currentHunts = this.dataRef.child("currentHunts");
 		this.completedHunts = this.dataRef.child("completedHunts");
+
+		console.log("My user id: " + this.uid);
 	}
 
 	// A function for when a user has just been created. It fills the user with empty data tables
 	initializeNewUser() {
 		this.dataRef.set({
 			email: this.email,
-			currentHunts: [],
-			completedHunts: [],
 			name: this.name || "",
-			Feed: [],
-			friends: [],
 		});
 	}
 
@@ -120,10 +118,8 @@ class User {
 			name: "",
 		});
 
-		user.dataRef.on("value", (snapshot) => {
-			if (!snapshot.hasChild("currentHunts")) {
-				user.initializeNewUser();
-			}
+		user.dataRef.once("value", (snapshot) => {
+			user.initializeNewUser();
 		});
 
 		User.currentUser = user;
@@ -228,7 +224,7 @@ class User {
 	hasHuntCurrent(hunt) {
 		return new Promise((fulfill, reject) => {
 			this.getHuntsList().then((huntsList) => {
-				fulfill(huntsList != null && huntsList[hunt.id] != undefined);
+				fulfill(huntsList != null && huntsList[hunt.id] != null);
 			}, (error) => {
 				reject(error);
 			});
@@ -239,13 +235,19 @@ class User {
 		return new Promise((fulfill, reject) => {
 			this.hasHuntCurrent(hunt).then((flag) => {
 				if (!flag) {
+					console.log("-> The user doesn't have the hunt at the moment");
 					Data.getHuntWithID(hunt.id).then((huntData) => {
+
+						console.log("-> Got the hunt");
 						var firstClue = huntData.clues[0];
 						this.currentHunts.child(hunt.id).set({
 							cluesCompleted: 0,
 							currentClue: firstClue
 						});
+						console.log("-> ... And added it");
 
+
+						console.log("-> Compiling submission clearing promises");
 						var promises = []
 						for (index in huntData.clues) {
 							var clueID = huntData.clues[index];
@@ -259,6 +261,7 @@ class User {
 							}));
 						}
 
+						console.log("-> Performing submission clearing promises");
 						Promise.all(promises).then(() => {
 							console.log("Done removing all of them!");
 							fulfill();
@@ -279,6 +282,7 @@ class User {
 	}
 
 	addStartingHunt() {
+		console.log("Adding starting hunt...");
 		return this.addHunt(User.startingHunt);
 	}
 
@@ -347,13 +351,14 @@ class User {
 
 	static getStartingHuntID() {
 		rootRef.ref('startingHunt').once('value', (snap) => {
-			Data.getHuntWithID(snap.val()).then((hunt) => {
+			Data.getHuntWithID(snap.val()).then(function (key, hunt) {
+				hunt.id = key
 				User.startingHunt = hunt
 				if (User.startingHuntCallback != null && typeof User.startingHuntCallback == 'function') {
 					User.startingHuntCallback(hunt);
 				}
 				User.startingHuntCallback = null;
-			}, (error) => {
+			}.bind(undefined, snap.val()), (error) => {
 				console.log("--- Encountered error getting starting hunt! " + error);
 			})
 		})

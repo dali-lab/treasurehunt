@@ -2,6 +2,7 @@
 var React = require('react-native');
 var ClueList = require('./ClueList');
 import User from './User';
+import ClueController from './ClueController';
 
 
 const Firebase = require('firebase')
@@ -39,7 +40,7 @@ var styles = StyleSheet.create({
 	image: {
 		height: 180,
 		width: screenWidth - 25,
-		marginBottom: 10,
+		marginBottom: 20,
 		resizeMode: "contain",
 	},
 	description: {
@@ -132,9 +133,12 @@ var HuntOverview = React.createClass({
 	huntAdded: React.PropTypes.func,
 
 	getInitialState: function() {
+		this.controller = null
+
 		return {
 			shouldShowAddButton: null,
 			processingAddHunt: false,
+			hasHunt: null,
 			stars: 4
 		}
 	},
@@ -145,25 +149,29 @@ var HuntOverview = React.createClass({
             title: "Hunt",
             component: ClueList,
             passProps: {
-            	currentClue: this.currentClue,
-            	currentClueComplete: (callback) => {
-            		this.currentClueCallback = callback
-            	},
-                hunt: this.props.hunt,
+            	controller: this.controller
             }
         });
 	},
 
-	componentDidMount: function() {
+	componentWillMount: function() {
 		this.currentClue = null
 		this.currentClueCallback = null
-		this.getCurrentClue(this.props.hunt.id).then((currentClue) => {
-			this.currentClue = currentClue
-			if (this.currentClueCallback != null && typeof this.currentClueCallback == "function") {
-				this.currentClueCallback(currentClue);
+
+
+		User.getCurrentUser().hasHuntCurrent(this.props.hunt).then((flag) => {
+			this.setState({
+				hasHunt: flag,
+				shouldShowAddButton: flag
+			});
+
+			if (flag) { // Meaning that the user has the hunt
+				// Now I am going to load the clue controller
+				this.controller = new ClueController(this.props.hunt)
+				this.controller.loadData().then(() => {
+					// Do something :)
+				})
 			}
-		}, (error) => {
-			console.log(error)
 		});
 	},
 
@@ -177,50 +185,44 @@ var HuntOverview = React.createClass({
 		this.setState({
 			processingAddHunt: true
 		});
-		if (this.state.shouldShowAddButton) {
-			User.getCurrentUser().addHunt(this.props.hunt).then(() => {
+		if (!this.state.shouldShowAddButton) {
+			User.currentUser.addHunt(this.props.hunt).then(() => {
 				if (typeof this.props.huntAdded == "function") {
 					this.props.huntAdded();
 				}
+
+				this.controller = new ClueController(this.props.hunt)
+				this.controller.loadData().then(() => {
+
+				});
+
 				this.setState({
 					shouldShowAddButton: false,
 					processingAddHunt: false
 				});
-			}, (error) => console.log(error));
+			}, (error) => {
+				AlertIOS.alert("Error", error);
+				this.setState({
+					processingAddHunt: false
+				});
+			});
 		}else{
-			User.getCurrentUser().removeHunt(this.props.hunt).then(() => {
+			User.currentUser.removeHunt(this.props.hunt).then(() => {
 				if (typeof this.props.huntAdded == "function") {
 					this.props.huntAdded();
 				}
+
+				this.controller = null
 
 				this.setState({
 					shouldShowAddButton: true,
 					processingAddHunt: false
 				});
-			}, (error) => console.log(error));
-		}
-	},
-
-	getCurrentClue: function(huntid) {
-		return new Promise((fulfill, reject) => {
-			const currentUser = User.getCurrentUser();
-			const userRef = usersRef.child(currentUser.uid);
-			var currentClueRef = userRef.child('currentHunts').child(huntid).child('currentClue');
-
-			currentClueRef.once('value', (snap) => {
-				console.log(`1st instance of currentClue = ${snap.val()}`);
-				fulfill(snap.val());
+				this.props.navigator.pop();
 			}, (error) => {
-                reject(error);
-            });
-		});
-	},
-
-	updateShouldShowAddButton: function() {
-		if (this.state.shouldShowAddButton == null) {
-			User.getCurrentUser().hasHuntCurrent(this.props.hunt).then((flag) => {
+				AlertIOS.alert("Error", error);
 				this.setState({
-					shouldShowAddButton: !flag
+					processingAddHunt: false
 				});
 			});
 		}
@@ -287,8 +289,6 @@ var HuntOverview = React.createClass({
 		</View>
 
 
-//		console.log(hunt.category);
-		this.updateShouldShowAddButton();
 		return (
 			<View style={styles.container}>
 				<View>
@@ -300,14 +300,14 @@ var HuntOverview = React.createClass({
 				<View style={{flex: 1}}/>
 				<TouchableHighlight style = {styles.button}
 						onPress={this.onStartPressed}
-						underlayColor='#FFFFF'>
+						underlayColor='#FFFFFF'>
 						<Image style={styles.buttonImage} source={require("./viewCluseButton.png")}/>
 				</TouchableHighlight>
 				<TouchableHighlight style = {[styles.buttonAdd, this.state.processingAddHunt ? {backgroundColor: '#bccfa8'} : null]}
 						disabled={this.state.processingAddHunt}
 						onPress={this.onAddHuntPressed}
 						underlayColor='#bccfa8'>
-						<Text style = {styles.buttonText}>{ this.state.shouldShowAddButton ? "ADD HUNT" : "REMOVE HUNT" }</Text>
+						<Text style = {styles.buttonText}>{ !this.state.shouldShowAddButton ? "ADD HUNT" : "REMOVE HUNT" }</Text>
 				</TouchableHighlight>
 			</View>
 		);

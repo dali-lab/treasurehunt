@@ -248,23 +248,32 @@ var Home = React.createClass({
     listenForCompletedItems: function() {
       User.getCurrentUser().getCompletedHuntsList().then((huntsList) => {
         Data.getHuntObjects(huntsList).then((hunts) => {
-            console.log("Loaded completed hunts: " + JSON.stringify(hunts) );
             var newDataSource = this.state.dataSource.cloneWithRows(hunts);
             this.setState({
                 hunts: hunts,
                 dataSource: newDataSource,
               })
-
           });
       }, () => {
         // ERROR: TODO deal with it
       });
     },
 
+    addStartingHunt: function() {
+        User.currentUser.addStartingHunt().then(() => {
+            this.firstLoad = true;
+            this.setState({
+                hunts: null
+            })
+
+            this.listenForItems();
+        }, (error) => {
+            AlertIOS.alert("Error!", error)
+        });
+    },
+
     // Will load all the things!
     listenForItems: function() {
-        console.log("running listenForItems");
-        console.log(this.state);
 
         User.getCurrentUser().getHuntsList().then((huntsList) => {
             Data.getHuntObjects(huntsList).then((hunts) => {
@@ -276,18 +285,11 @@ var Home = React.createClass({
 
                         AlertIOS.alert(
                             "Welcome!",
-                            "Welcome to Treasurehunt. Would you like to start with the " + hunt.name + " hunt?",
+                            "Welcome to Treasurehunt. Would you like to start with the " + hunt.name + (hunt.name.toLowerCase().indexOf("hunt") === -1 ? " hunt" : "") + "?",
                             [
                                 {text: "Close", onPress: ()=>{}, style: "cancel"},
                                 {text: "Let's go!", onPress: ()=>{
-                                    User.currentUser.addStartingHunt().then(() => {
-                                        this.firstLoad = true;
-                                        this.setState({
-                                            hunts: null
-                                        })
-
-                                        this.listenForItems();
-                                    });
+                                    this.addStartingHunt();
                                 }}
                             ]
                         );
@@ -325,7 +327,6 @@ var Home = React.createClass({
     rowPressed: function(hunt) {
 
         console.log("GOING -> ----->")
-        console.log(`row pressed! hunt is: ${JSON.stringify(hunt)}`)
         this.props.navigator.push({
             title: "Hunt",
             component: HuntOverview,
@@ -400,20 +401,20 @@ var Home = React.createClass({
                         automaticallyAdjustContentInsets={false}
                         renderRow={this.renderRow}/>
 
+        var startingHunt = null
+        if (User.startingHunt !== null) {
+            startingHunt = User.startingHunt
+        }else{
+            startingHunt = this.state.startingHunt
+        }
         var noHunts = <View style={noHuntsStyle.noHuntsView}>
                         <Text style={[noHuntsStyle.noHuntsText, {}]}>You have no hunts yet</Text>
-                        {this.state.startingHunt != null ? <TouchableHighlight
+                        {startingHunt !== null ? <TouchableHighlight
                             style={styles.startingHuntButton}
                             underlayColor="#fef48f"
                             onPress={() => {
-                                User.currentUser.addStartingHunt().then(() => {
-                                    this.setState({
-                                        hunts: null
-                                    })
-
-                                    this.listenForItems();
-                                });
-                            }}><Text style={styles.startingHuntButtonText}>Start the {this.state.startingHunt.name} hunt</Text></TouchableHighlight> : null}
+                                this.addStartingHunt();
+                            }}><Text style={styles.startingHuntButtonText}>Start the {startingHunt.name + (startingHunt.name.toLowerCase().indexOf("hunt") === -1 ? " hunt" : "")}</Text></TouchableHighlight> : null}
                     </View>
 
         var internalView;
@@ -470,7 +471,7 @@ var Home = React.createClass({
                         });
                         this.listenForItems();
                     }}>
-                      <Text style={this.state.puzzle == 'current' ? styles.headerTextSelected : styles.headerTextUnselected}>Current Puzzles</Text>
+                      <Text style={this.state.puzzle == 'current' ? styles.headerTextSelected : styles.headerTextUnselected}>Current Hunts</Text>
                     </TouchableHighlight>
                     </View>}
 
@@ -483,7 +484,7 @@ var Home = React.createClass({
                         });
                         this.listenForCompletedItems();
                     }}>
-                      <Text style={this.state.puzzle == 'past' ? styles.headerTextSelected : styles.headerTextUnselected}> Past Puzzles</Text>
+                      <Text style={this.state.puzzle == 'past' ? styles.headerTextSelected : styles.headerTextUnselected}> Past Hunts</Text>
                     </TouchableHighlight>
                     </View>}
 

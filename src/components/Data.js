@@ -59,12 +59,10 @@ export function getClueWithID(id) {
 // Returns a promise the gives all the hunt objects as an array
 export function getHuntObjects(hunt_ids) {
 
-	console.log("Starting to load hunt objects");
 	return new Promise((fulfill, reject) => {
 		var hunts = [];
 
 		if (hunt_ids == null) {
-			console.log("No hunts");
 			fulfill(hunts);
 			return;
 		}
@@ -79,14 +77,10 @@ export function getHuntObjects(hunt_ids) {
 
 	        getHuntWithID(key).then((function(contents, key, hunt) {
 	        	// We have a hunt
-	        	console.log(key, hunt);
-
 	        	// Now lets get the total clues
 	        	var totalCluesInHunt = hunt.clues.length;
 	        	console.log(contents);
 	        	var totalCluesCompleted = contents.cluesCompleted;
-
-	        	console.log("Calculating progress: " + totalCluesCompleted + " / " + totalCluesInHunt);
 
 	        	hunts.push({
 	                id: key,
@@ -97,8 +91,6 @@ export function getHuntObjects(hunt_ids) {
 	                clues: hunt.clues,
 	                hunt: hunt
 	            });
-
-				console.log(hunt.name);
 
 	        	complete += 1;
 
@@ -148,16 +140,11 @@ function serverSearch(query) {
 		}
 	*/
 
-	console.log("Using server search...");
 	return new Promise((success, failure) => {
-		console.log("Entered promise");
 		var ref = rootRef.ref(SEARCH_PATH);
-		console.log("Now pushing...");
 		var key = ref.child('request').push({ index: 'firebase', type: 'hunt', query: "*" + query + "*" }).key;
 
-		console.log('Searching', key, { index: 'firebase', type: 'hunt', query: query.toLowerCase() });
 		ref.child('response/'+key).on('value', (snap) => {
-			console.log("Got response: " + JSON.stringify(snap.val()));
 			if ( snap.val() == null || snap.val().total == null) {
 				return;
 			}
@@ -175,12 +162,10 @@ function serverSearch(query) {
 				console.log(key);
 
 				getHuntWithID(key).then((function (key, hunt) {
-					console.log("Got hunt: ", hunt);
 					hunt_ids.push({ key: key, hunt: hunt });
 					complete += 1;
 
 					if (complete >= total) {
-						console.log("Finished search!", hunt_ids);
 						success(hunt_ids);
 					}
 				}).bind(undefined, key), function (error) {
