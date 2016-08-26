@@ -89,11 +89,12 @@ var styles = StyleSheet.create({
 
         backgroundColor: 'white',
         flexDirection: 'column',
+        marginBottom: 10,
     },
     headerButtons: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: "center"
+        alignItems: "center",
     },
     headerTextSelected: {
         fontSize: 25,
@@ -366,10 +367,11 @@ var Home = React.createClass({
                             <Text style={styles.description}
                                 numberOfLines={2}>{hunt.description}</Text>
                           </View>
+                          {this.state.puzzle === 'current' ? 
                           <View>
                             <Progress.Bar style={styles.progressBar}
                                 progress={hunt.progress} width={screenWidth - 160} borderRadius={0} border={0} height={10} color='#ffd900' backgroundColor='white'/>
-                          </View>
+                          </View> : null}
                         </View>
                     </View>
                     <View style={styles.separator}/>

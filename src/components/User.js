@@ -119,7 +119,9 @@ class User {
 		});
 
 		user.dataRef.once("value", (snapshot) => {
-			user.initializeNewUser();
+			if (!snapshot.hasChild("email")) {
+				user.initializeNewUser();
+			}
 		});
 
 		User.currentUser = user;
@@ -174,6 +176,15 @@ class User {
 			// 	reject("Failed to login! There is already a user!!!!");
 			//	return;
 			// }
+			if (email == "") {
+				reject({message: "You need to input an email"});
+				return;
+			}
+			if (password == "") {
+				reject({message: "You need to input your password"});
+				return;
+			}
+
 
 			Firebase.auth().signInWithEmailAndPassword(email, password).then((user) => {
 				// We have lift off!
@@ -218,7 +229,9 @@ class User {
 	}
 
 	static logout() {
-		return User.currentUser.logout();
+		if (User.currentUser)
+			return User.currentUser.logout();
+		return null
 	}
 
 	hasHuntCurrent(hunt) {

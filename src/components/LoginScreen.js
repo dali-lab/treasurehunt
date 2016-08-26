@@ -205,9 +205,7 @@ class LoginScreen extends Component {
 		this.setState({
 			processingLogin: true,
 		});
-		console.log('i can get this far at least');
 		User.login(this.state.email.toLowerCase(), this.state.password).then((user) => {
-			console.log("LOGGINGIGNIGIG");
 			this.didLogIn(user);
 		}, (error) => {
 			console.log(error);

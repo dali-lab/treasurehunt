@@ -161,8 +161,7 @@ var HuntOverview = React.createClass({
 
 		User.getCurrentUser().hasHuntCurrent(this.props.hunt).then((flag) => {
 			this.setState({
-				hasHunt: flag,
-				shouldShowAddButton: flag
+				hasHunt: flag
 			});
 
 			if (flag) { // Meaning that the user has the hunt
@@ -185,7 +184,7 @@ var HuntOverview = React.createClass({
 		this.setState({
 			processingAddHunt: true
 		});
-		if (!this.state.shouldShowAddButton) {
+		if (!this.state.hasHunt) {
 			User.currentUser.addHunt(this.props.hunt).then(() => {
 				if (typeof this.props.huntAdded == "function") {
 					this.props.huntAdded();
@@ -197,7 +196,7 @@ var HuntOverview = React.createClass({
 				});
 
 				this.setState({
-					shouldShowAddButton: false,
+					hasHunt: true,
 					processingAddHunt: false
 				});
 			}, (error) => {
@@ -215,7 +214,7 @@ var HuntOverview = React.createClass({
 				this.controller = null
 
 				this.setState({
-					shouldShowAddButton: true,
+					hasHunt: false,
 					processingAddHunt: false
 				});
 				this.props.navigator.pop();
@@ -298,16 +297,17 @@ var HuntOverview = React.createClass({
 					source={{uri: hunt.image}} />
 				<Text style={styles.description}>{hunt.description}</Text>
 				<View style={{flex: 1}}/>
+				{this.state.hasHunt != null && this.state.hasHunt ?
 				<TouchableHighlight style = {styles.button}
 						onPress={this.onStartPressed}
 						underlayColor='#FFFFFF'>
 						<Image style={styles.buttonImage} source={require("./viewCluseButton.png")}/>
-				</TouchableHighlight>
+				</TouchableHighlight> : null }
 				<TouchableHighlight style = {[styles.buttonAdd, this.state.processingAddHunt ? {backgroundColor: '#bccfa8'} : null]}
 						disabled={this.state.processingAddHunt}
 						onPress={this.onAddHuntPressed}
 						underlayColor='#bccfa8'>
-						<Text style = {styles.buttonText}>{ !this.state.shouldShowAddButton ? "ADD HUNT" : "REMOVE HUNT" }</Text>
+						<Text style = {styles.buttonText}>{ !this.state.hasHunt ? "REDO HUNT" : "REMOVE HUNT" }</Text>
 				</TouchableHighlight>
 			</View>
 		);

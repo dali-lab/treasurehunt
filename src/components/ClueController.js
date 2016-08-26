@@ -294,10 +294,15 @@ class ClueController {
 			this.userHuntRef.remove(() => {
 				console.log("===> Done")
 				console.log("===> Adding hunt to completed...")
-				User.currentUser.completedHunts.child(this.hunt.id).once('value', (snap) => {
-					if (snap.val() == null) {
-						
-					}
+				User.currentUser.completedHunts.child(this.hunt.id).child("timesCompleted").once('value', (snap) => {
+					var times = snap.val() || 1;
+					console.log("\t\tSetting to " + 1 + "...");
+
+					User.currentUser.completedHunts.child(this.hunt.id).child("timesCompleted").set(times).then(() => {
+						console.log("\t\tDone");
+						console.log("=> Complete")
+						fullfill();
+					})
 				})
 			});
 		});
