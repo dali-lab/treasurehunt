@@ -1,4 +1,8 @@
-var React = require('react-native');
+var ReactNative = require('react-native');
+var React = require('react');
+var {
+  Component
+} = React;
 var Create = require('./Create');
   var Feed = require('./Feed');
 //  var Search = require('./Search');
@@ -24,7 +28,7 @@ var {
   NavigatorIOS,
   Navigator,
   AlertIOS,
-} = React;
+} = ReactNative;
 
 var TABS = {
 /*
@@ -78,9 +82,9 @@ var styles = StyleSheet.create({
   },
 });
 
-var HomePage = React.createClass({
+var HomePage = ReactNative.createClass({
   propTypes: {
-    onLogout: React.PropTypes.func,
+    onLogout: ReactNative.PropTypes.func,
   },
 
   componentWillMount: function() {

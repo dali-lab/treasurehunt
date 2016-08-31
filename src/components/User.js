@@ -5,7 +5,7 @@ const config = require('../../config')
 
 const usersRef = rootRef.ref('users');
 // const usersRef = new Firebase("https://treasurehuntdali.firebaseio.com/users")
-const React = require('react-native');
+const ReactNative = require('react-native');
 const {FBLoginManager} = require('react-native-facebook-login');
 const Data = require('./Data');
 const cluesRef = rootRef.ref('clues');
@@ -16,7 +16,7 @@ const USER_DATA_KEY = 'user_data';
 
 var {
 	AsyncStorage,
-} = React;
+} = ReactNative;
 
 
 class User {

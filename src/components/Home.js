@@ -1,6 +1,7 @@
 'use strict';
 
-var React = require('react-native');
+var ReactNative = require('react-native');
+var React = require('react');
 var Progress = require('react-native-progress');
 var HuntOverview = require('./HuntOverview');
 var User = require('./User').default;
@@ -15,9 +16,12 @@ var {
     ListView,
     TextInput,
     Text,
-    Component,
     AlertIOS,
     Dimensions
+} = ReactNative;
+
+var {
+    Component,
 } = React;
 
 var screenWidth = Dimensions.get('window').width;

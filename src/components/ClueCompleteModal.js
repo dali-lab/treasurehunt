@@ -1,4 +1,5 @@
-const React = require('react-native');
+const ReactNative = require('react-native');
+const React = require('react');
 const IMAGE = require('./success.png')
 const CONFETI_IMAGE = require('./congratsSparkler.png');
 const WRONG_IMAGE = require('./failX.png');
@@ -8,8 +9,10 @@ const {
 	Image,
 	View,
 	Text,
-	Component,
 	TouchableHighlight,
+} = ReactNative;
+var {
+    Component,
 } = React;
 
 const BACKGROUND_COLOR = "#e5ecbc";

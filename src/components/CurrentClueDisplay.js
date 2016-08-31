@@ -1,4 +1,5 @@
-var React = require('react-native');
+var ReactNative = require('react-native');
+var React = require('react');
 var ClueCompleteModal = require('./ClueCompleteModal');
 var User = require('./User').default
 
@@ -7,12 +8,14 @@ var {
 	Image,
 	View,
 	Text,
-	Component,
 	TouchableHighlight,
 	Alert,
 	TextInput,
 	Dimensions,
 	Modal
+} = ReactNative;
+var {
+    Component,
 } = React;
 
 var screenWidth = Dimensions.get('window').width;

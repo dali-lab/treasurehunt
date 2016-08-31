@@ -1,5 +1,6 @@
 
-var React = require('react-native');
+var ReactNative = require('react-native');
+var React = require('react');
 var ClueList = require('./ClueList');
 import User from './User';
 import ClueController from './ClueController';
@@ -15,10 +16,13 @@ var {
 	Image,
 	View,
 	Text,
-	Component,
 	Dimensions,
   	AlertIOS,
 	TouchableHighlight
+} = ReactNative;
+
+var {
+    Component,
 } = React;
 
 var screenWidth = Dimensions.get('window').width;

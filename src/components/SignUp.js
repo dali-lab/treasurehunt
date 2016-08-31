@@ -1,6 +1,7 @@
 'use strict';
  
-var React = require('react-native');
+var ReactNative = require('react-native');
+var React = require('react');
 import User from './User';
 var dismissKeyboard = require('dismissKeyboard');
 
@@ -12,10 +13,12 @@ var {
   TouchableHighlight,
   ActivityIndicatorIOS,
   Image,
-  Component,
   Dimensions,
   Modal,
   AlertIOS,
+} = ReactNative;
+var {
+    Component,
 } = React;
 
 var width = Dimensions.get('window').width;
@@ -143,8 +146,8 @@ var styles = StyleSheet.create({
 
 class SignUp extends Component {
 	propTypes: {
-		hideModal: React.PropTypes.func,
-		didSignUp: React.PropTypes.func,
+		hideModal: ReactNative.PropTypes.func,
+		didSignUp: ReactNative.PropTypes.func,
     }
 
     constructor() {

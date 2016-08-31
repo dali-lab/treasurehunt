@@ -1,6 +1,7 @@
 'use strict';
 
-var React = require('react-native');
+var ReactNative = require('react-native');
+var React = require('react');
 const SignUp = require('./SignUp');
 const ForgotPassword = require('./ForgotPassword');
 import User from './User';
@@ -15,10 +16,13 @@ var {
   TouchableHighlight,
   ActivityIndicatorIOS,
   Image,
-  Component,
   Dimensions,
   Modal,
   AlertIOS,
+} = ReactNative;
+
+var {
+	Component,
 } = React;
 
 var screenPadding = 10;
@@ -185,8 +189,8 @@ var signUpStyles = StyleSheet.create({
 
 class LoginScreen extends Component {
 	propTypes: {
-		onLogin: React.PropTypes.func,
-		onSkipLogin: React.PropTypes.func,
+		onLogin: ReactNative.PropTypes.func,
+		onSkipLogin: ReactNative.PropTypes.func,
     }
 
 	constructor(props) {

@@ -1,4 +1,5 @@
-var React = require('react-native');
+var ReactNative = require('react-native');
+var React = require('react');
 var CurrentClueDisplay = require('./CurrentClueDisplay');
 var CompletedClueDisplay = require('./CompletedClueDisplay');
 var User = require('./User').default
@@ -10,10 +11,14 @@ var {
 	Image,
 	View,
 	Text,
-	Component,
 	TouchableHighlight,
 	ListView,
     Alert
+} = ReactNative;
+
+
+var {
+    Component,
 } = React;
 
 var styles = StyleSheet.create({

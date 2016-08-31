@@ -1,10 +1,13 @@
-var React = require('react-native');
+var ReactNative = require('react-native');
+var React = require('react');
+var {
+  Component
+} = React;
 var {
     StyleSheet,
     View,
     Text,
-    Component
-} = React;
+} = ReactNative;
 
 var styles = StyleSheet.create({
     description: {
