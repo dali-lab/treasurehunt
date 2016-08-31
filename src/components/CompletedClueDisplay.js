@@ -69,7 +69,7 @@ var styles = StyleSheet.create({
 	  borderRadius: 8,
 	  marginBottom: 10,
 	  alignSelf: 'stretch',
-	  padding:20
+	  padding: 20
 	}
 });
 

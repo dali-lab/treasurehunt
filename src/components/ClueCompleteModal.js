@@ -69,6 +69,7 @@ var styles = StyleSheet.create({
 	confetiImage: {
 		flex: 1,
 		marginBottom: CONFETI_CIRCLE_WIDTH / 15,
+		height: CONFETI_CIRCLE_WIDTH / 4,
 		resizeMode: "contain",
 		justifyContent: "center"
 	},
@@ -76,6 +77,7 @@ var styles = StyleSheet.create({
 		flex: 1,
 		marginTop: CONFETI_CIRCLE_WIDTH / 15,
 		marginBottom: CONFETI_CIRCLE_WIDTH / 15,
+		height: CONFETI_CIRCLE_WIDTH / 4,
 		resizeMode: "contain",
 		justifyContent: "center"
 	},
@@ -83,6 +85,7 @@ var styles = StyleSheet.create({
 		flex: 1,
 		marginTop: CONFETI_CIRCLE_WIDTH / 15,
 		marginBottom: CONFETI_CIRCLE_WIDTH / 15,
+		height: CONFETI_CIRCLE_WIDTH / 4,
 		resizeMode: "contain",
 		justifyContent: "center"
 	},

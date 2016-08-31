@@ -211,6 +211,12 @@ var Home = React.createClass({
 
         User.getCurrentUser().setUpListeners(() => {
             // the user hunt data function
+            console.log("> Reseting home view due to updating data...");
+            var newDataSource = this.state.dataSource.cloneWithRows([]);
+            this.setState({
+                dataSource: newDataSource,
+                puzzle: "current"
+            });
             this.listenForItems();
         }, null /* The user data function */)
 
