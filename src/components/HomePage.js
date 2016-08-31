@@ -82,9 +82,9 @@ var styles = StyleSheet.create({
   },
 });
 
-var HomePage = ReactNative.createClass({
+var HomePage = React.createClass({
   propTypes: {
-    onLogout: ReactNative.PropTypes.func,
+    onLogout: React.PropTypes.func,
   },
 
   componentWillMount: function() {
