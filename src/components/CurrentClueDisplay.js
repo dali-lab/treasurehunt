@@ -1,7 +1,9 @@
 var ReactNative = require('react-native');
 var React = require('react');
+var PageControl = require('react-native-page-control');
 var ClueCompleteModal = require('./ClueCompleteModal');
 var User = require('./User').default
+var dismissKeyboard = require('dismissKeyboard');
 
 var {
 	StyleSheet,
@@ -12,6 +14,7 @@ var {
 	Alert,
 	TextInput,
 	Dimensions,
+	ScrollView,
 	Modal
 } = ReactNative;
 var {
@@ -19,12 +22,15 @@ var {
 } = React;
 
 var screenWidth = Dimensions.get('window').width;
+var screenHeight = Dimensions.get('window').height;
+
 
 var styles = StyleSheet.create({
 	container: {
 		marginTop: 65,
 		paddingRight:30,
 		paddingLeft: 30,
+		marginBottom: 60,
 		flex: 1,
 	},
 	huntTitle: {
@@ -40,9 +46,6 @@ var styles = StyleSheet.create({
     },
 	separatorSmall: {
 		height: 16,
-	},
-	separatorLarge: {
-		height: 26,
 	},
 	separator: {
         height: 1,
@@ -84,6 +87,7 @@ var styles = StyleSheet.create({
 	},
 	button: {
 	  height: 36,
+	  marginTop: 26,
 	  flexDirection: 'column',
 	  backgroundColor: '#5da990',
 	  borderColor: '#5da990',
@@ -93,12 +97,22 @@ var styles = StyleSheet.create({
 	  marginBottom: 10,
 	  alignSelf: 'stretch',
 	  padding:20,
+	  marginLeft: 5,
+	  marginRight: 5,
 	  paddingTop:20,
 	},
 	hint: {
 		textAlign: 'left',
 		color: "gray",
 		alignSelf: "flex-start",
+	},
+	imageContainer: {
+		flexDirection: "column",
+		flex: 1
+	},
+	pageControl: {
+		alignSelf: 'center',
+		bottom: 0
 	},
 });
 
@@ -131,11 +145,13 @@ var CurrentClueDisplay = React.createClass({
 	clue: React.PropTypes.object.isRequired,
 
 	getInitialState: function() {
+
         return {
         	clueSubmission: this.props.controller.getSubmission(this.props.clue),
   			showModal: false,
   			solutionCorrect: false,
-  			waitingForSolutions: false
+  			waitingForSolutions: false,
+  			page: 0,
         };
 
     },
@@ -186,8 +202,89 @@ var CurrentClueDisplay = React.createClass({
 		);
 	},
 
+	onScroll: function(event) {
+		var offsetX = event.nativeEvent.contentOffset.x,
+		pageWidth = screenWidth - 60;
+
+		dismissKeyboard();
+		this.setState({
+			page: Math.floor((offsetX - pageWidth / 2) / pageWidth) + 1
+		})
+	},
+
+	onPagePressed: function(index) {
+
+		pageWidth = screenWidth - 60;
+		this.refs.scrollView.scrollTo(0, index * pageWidth)
+	},
+
+	renderPages: function() {
+		let items = this.props.clue.images.map((r, i) => {
+			
+
+			return <View key={i} style={{width: screenWidth-60}}>
+					<Image style={{resizeMode: "contain", height: (screenWidth-60) * 1.4, width: screenWidth-60}}
+					source={{uri: r}}/>
+				</View>
+		})
+
+		return <View style={{flexDirection: "row"}}>
+					{items}
+				</View>
+	},
+
+	renderPager: function() {
+		var numImages = this.props.clue.images.length
+
+		return <View style={styles.imageContainer}>
+			<View style={{flex: 1}}>
+				<ScrollView ref='scrollView'
+				pagingEnabled={true}
+				horizontal={true}
+				showsHorizontalScrollIndicator={false}
+				automaticallyAdjustContentInsets={false}
+				bounces={false}
+				directionalLockEnabled={true}
+				onScroll={this.onScroll}
+				scrollEventThrottle={16}>
+					{this.renderPages()}
+					<View style={{width: screenWidth-60, backgroundColor: "white"}}>
+						<TextInput
+		    				style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+		    				onChangeText={(submission) => this.setState({clueSubmission: submission})}
+		    				value={this.state.clueSubmission}/>
+						<TouchableHighlight style = {styles.button}
+								onPress={this.onSubmitPressed}
+								underlayColor='#99d9f4'>
+								<Text style = {styles.buttonText}>Submit</Text>
+						</TouchableHighlight>
+					</View>
+				</ScrollView>
+			</View>
+			<PageControl style={styles.pageControl}
+				numberOfPages = {numImages + 1}
+				currentPage = {this.state.page}
+            	pageIndicatorTintColor='gray'
+            	currentPageIndicatorTintColor='black'
+            	onPageIndicatorPress={this.onPagePressed}/>
+		</View>
+	},
+
 	render: function() {
 		var hunt = this.props.controller.hunt;
+		var hasImages = this.props.clue.images != null
+
+		const inputSubmitView = <View><TextInput
+				    				style={{height: 40, borderColor: 'gray', borderWidth: 1, marginLeft: 5, marginRight: 5}}
+				    				onChangeText={(submission) => this.setState({clueSubmission: submission})}
+				    				value={this.state.clueSubmission}/>
+								<TouchableHighlight style = {styles.button}
+										onPress={this.onSubmitPressed}
+										underlayColor='#99d9f4'>
+										<Text style = {styles.buttonText}>Submit</Text>
+								</TouchableHighlight></View>
+
+		var internalView = hasImages ? this.renderPager() : inputSubmitView
 
 		var modalView = <ClueCompleteModal
 			wrong={!this.state.solutionCorrect}
@@ -202,7 +299,6 @@ var CurrentClueDisplay = React.createClass({
 			return (
 				<View style={styles.container}>
 					<Modal
-						animated={true}
 						animationType='fade'
 						transparent={true}
 						visible={this.state.showModal}
@@ -213,22 +309,15 @@ var CurrentClueDisplay = React.createClass({
 						>
 						{modalView}
 					</Modal>
+
+
 					<View style={styles.separatorSmall}/>
 					<Text style={styles.huntTitle}>{hunt.title.toUpperCase()}</Text>
                     <View style={styles.topSeparator}/>
                     <View style={styles.separatorSmall}/>
 					<Text style={styles.description}>{this.props.clue.description}</Text>
-					<TextInput
-	    				style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-	    				onChangeText={(submission) => this.setState({clueSubmission: submission})}
-	    				value={this.state.clueSubmission}/>
-	    			<View style={styles.separatorLarge}/>
-					<TouchableHighlight style = {styles.button}
-							onPress={this.onSubmitPressed}
-							underlayColor='#99d9f4'>
-							<Text style = {styles.buttonText}>Submit</Text>
-					</TouchableHighlight>
 					
+					{internalView}
 				</View>
 			);
 	},

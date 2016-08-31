@@ -91,7 +91,7 @@ var styles = StyleSheet.create({
 	},
 	titleText: {
 		marginTop: 20,
-		fontSize: 28,
+		fontSize: 25,
 		fontWeight: "bold"
 	},
 	descriptionText: {
