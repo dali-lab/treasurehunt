@@ -108,12 +108,16 @@ var styles = StyleSheet.create({
 	},
 	imageContainer: {
 		flexDirection: "column",
-		flex: 1
+		flex: 1,
 	},
 	pageControl: {
 		alignSelf: 'center',
 		bottom: 0
 	},
+	scrollView: {
+		flex: 1,
+		marginBottom: 5
+	}
 });
 
 const Firebase = require('firebase')
@@ -152,6 +156,7 @@ var CurrentClueDisplay = React.createClass({
   			solutionCorrect: false,
   			waitingForSolutions: false,
   			page: 0,
+  			scrollViewHeight: null
         };
 
     },
@@ -220,10 +225,8 @@ var CurrentClueDisplay = React.createClass({
 
 	renderPages: function() {
 		let items = this.props.clue.images.map((r, i) => {
-			
-
 			return <View key={i} style={{width: screenWidth-60}}>
-					<Image style={{resizeMode: "contain", height: (screenWidth-60) * 1.4, width: screenWidth-60}}
+					<Image style={{resizeMode: "contain", height: this.state.scrollViewHeight || (screenWidth-60) * 1.4, width: screenWidth-60}}
 					source={{uri: r}}/>
 				</View>
 		})
@@ -237,7 +240,7 @@ var CurrentClueDisplay = React.createClass({
 		var numImages = this.props.clue.images.length
 
 		return <View style={styles.imageContainer}>
-			<View style={{flex: 1}}>
+			<View style={styles.scrollView}>
 				<ScrollView ref='scrollView'
 				pagingEnabled={true}
 				horizontal={true}
@@ -246,7 +249,18 @@ var CurrentClueDisplay = React.createClass({
 				bounces={false}
 				directionalLockEnabled={true}
 				onScroll={this.onScroll}
-				scrollEventThrottle={16}>
+				scrollEventThrottle={16}
+				onLayout={(event) => {
+					var {x, y, width, height} = event.nativeEvent.layout;
+					var shouldReload = this.state.scrollViewHeight == null
+
+					this.setState({
+						scrollViewHeight: height
+					})
+
+					if (shouldReload)
+						this.forceUpdate();
+				}}>
 					{this.renderPages()}
 					<View style={{width: screenWidth-60, backgroundColor: "white"}}>
 						<TextInput
@@ -292,6 +306,7 @@ var CurrentClueDisplay = React.createClass({
 			done={() => {
 				this.setState({  showModal: false  });
 				if (this.state.solutionCorrect) {
+					dismissKeyboard();
 					this.returnToClueList();
 				}
 			}}/>

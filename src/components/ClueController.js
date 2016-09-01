@@ -228,6 +228,9 @@ class ClueController {
 
 		var solutions = clue.solutions;
 		var mySubmission = this.getSubmission(clue);
+		if (mySubmission == null || mySubmission == undefined)
+			return false;
+
 		for (solution in solutions) {
 			if (solution.toLowerCase().trim() == mySubmission.toLowerCase().trim()) {
 				return true;
