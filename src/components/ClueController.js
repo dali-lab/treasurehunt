@@ -10,6 +10,7 @@ class ClueController {
 	static COMPLETE = "completed"
 	static IN_PROGRESS = "in_progress"
 	static LOCKED = "locked"
+	static SKIPPED = "skipped"
 
 
 	// Hunt object must have id!
@@ -109,7 +110,10 @@ class ClueController {
 				}
 
 				if (this.clues != null)
-					this.processClues();
+					if (this.huntIsProcedural())
+						this.processCluesProcedural();
+					else
+						this.processCluesUnprocedural();
 
 				// This is for processes waiting for a single response
 				ClueController.performCallbacks(this.userHuntCallbacks, snap.val());
@@ -178,7 +182,10 @@ class ClueController {
 				console.log("\tDone");
 				this.clues = clues;
 				console.log("\tProcessing...");
-				this.processClues()
+				if (this.huntIsProcedural())
+					this.processCluesProcedural();
+				else
+					this.processCluesUnprocedural();
 				console.log("\tComplete");
 				fullfill();
 			})
@@ -278,6 +285,10 @@ class ClueController {
 		});
 	}
 
+	huntIsProcedural() {
+		return this.hunt.procedural
+	}
+
 	huntIsComplete() {
 		for (index in this.clues) {
 			var clue = this.clues[index];
@@ -311,7 +322,34 @@ class ClueController {
 		});
 	}
 
-	processClues() {
+	processCluesUnprocedural() {
+		console.log("\t\tProcessing clues...")
+		var cluesDict = this.userHuntInfo.clues
+
+		for (index in this.clues) {
+			var clue = this.clues[index];
+
+			console.log("\t\tProcessing " + clue.id + "...")
+			if (cluesDict[clue.id] == "current") {
+				// Then this is the current clue.
+				clue.updateNeeded = clue.status != ClueController.IN_PROGRESS
+				clue.status = ClueController.IN_PROGRESS
+
+			}else if (cluesDict[clue.id] == "completed") {
+				clue.updateNeeded = clue.status != ClueController.COMPLETE
+				clue.status = ClueController.COMPLETE
+
+			}else{
+				clue.updateNeeded = clue.status != ClueController.SKIPPED
+				clue.status = ClueController.SKIPPED
+
+			}
+
+			console.log("\t\tMarking " + clue.status)
+		}
+	}
+
+	processCluesProcedural() {
 		console.log("\t\tProcessing clues...")
 		var currentClueID = this.userHuntInfo.currentClue
 		console.log("\t\tCurrent clue is: " + currentClueID)

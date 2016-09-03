@@ -252,11 +252,26 @@ class User {
 					Data.getHuntWithID(hunt.id).then((huntData) => {
 
 						console.log("-> Got the hunt");
-						var firstClue = huntData.clues[0];
-						this.currentHunts.child(hunt.id).set({
-							cluesCompleted: 0,
-							currentClue: firstClue
-						});
+						if (huntData.procedural) {
+							var firstClue = huntData.clues[0];
+							this.currentHunts.child(hunt.id).set({
+								cluesCompleted: 0,
+								currentClue: firstClue
+							});
+						}else{
+							var dict = {};
+
+							for (index in huntData.clues) {
+								var clue = huntData.clues[index];
+
+								dict[clue] = 'current'
+							}
+
+							this.currentHunts.child(hunt.id).set({
+								skipped: 0,
+								clues: dict
+							});
+						}
 						console.log("-> ... And added it");
 
 

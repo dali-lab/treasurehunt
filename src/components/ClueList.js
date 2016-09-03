@@ -184,7 +184,7 @@ var ClueList = React.createClass({
             </TouchableHighlight>
 	      	);
     	}
-        else if (rowData.status === ClueController.IN_PROGRESS) {
+        else if (rowData.status === ClueController.IN_PROGRESS || rowData.status === ClueController.SKIPPED) {
             return (
                 <TouchableHighlight onPress={() => this.rowPressed(rowData)}
                 underlayColor='#dddddd'>
@@ -192,7 +192,7 @@ var ClueList = React.createClass({
                     <View style={styles.rowContainer}>
                         <View style={styles.inProgressTextContainer}>
                             <Text style={styles.statusDescription}
-                                >- IN PROGRESS -</Text>
+                                >- {rowData.status === ClueController.SKIPPED ? "SKIPPED" : "IN PROGRESS"} -</Text>
                         </View>
                     </View>
                     <View style={styles.separator}/>
