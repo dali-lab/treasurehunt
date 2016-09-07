@@ -82,15 +82,10 @@ export function getHuntObjects(hunt_ids) {
 	        	console.log(contents);
 	        	var totalCluesCompleted = contents.cluesCompleted;
 
-	        	hunts.push({
-	                id: key,
-	                title: hunt.name,
-	                description: hunt.desc,
-	                image: hunt.image,
-	                progress: totalCluesCompleted/totalCluesInHunt,
-	                clues: hunt.clues,
-	                hunt: hunt
-	            });
+	        	hunt.progress = totalCluesCompleted/totalCluesInHunt
+	        	hunt.id = key
+
+	        	hunts.push(hunt);
 
 	        	complete += 1;
 

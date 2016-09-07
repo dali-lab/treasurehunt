@@ -1,5 +1,5 @@
 PODS:
-  - Crashlytics (3.7.3):
+  - Crashlytics (3.8.0):
     - Fabric (~> 1.6.3)
   - Fabric (1.6.8)
   - Firebase (3.2.1):
@@ -26,7 +26,7 @@ DEPENDENCIES:
   - Firebase
 
 SPEC CHECKSUMS:
-  Crashlytics: 76f6beaff70acf226139582c09c78461597c2b98
+  Crashlytics: 8601d9c74a4c4d28f3e7f408bf4c0e490c70e8b4
   Fabric: 5755268d0171435ab167e3d0878a28a777deaf10
   Firebase: 6c80ac28d59d06bfd9152a7b6ea17625ca93183d
   FirebaseAnalytics: 6f75b04e6bfb8e0b6e9ef298e04c24eea3b13863

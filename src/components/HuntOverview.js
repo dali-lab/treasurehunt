@@ -162,6 +162,7 @@ var HuntOverview = React.createClass({
 		this.currentClue = null
 		this.currentClueCallback = null
 
+		console.log(this.props.hunt.procedural)
 
 		User.getCurrentUser().hasHuntCurrent(this.props.hunt).then((flag) => {
 			this.setState({
@@ -295,11 +296,11 @@ var HuntOverview = React.createClass({
 		return (
 			<View style={styles.container}>
 				<View>
-					<Text style={styles.title}>{hunt.title}</Text>
+					<Text style={styles.title}>{hunt.name}</Text>
 				</View>
 				<Image style={styles.image}
 					source={{uri: hunt.image}} />
-				<Text style={styles.description}>{hunt.description}</Text>
+				<Text style={styles.description}>{hunt.desc}</Text>
 				<View style={{flex: 1}}/>
 				{this.state.hasHunt != null && this.state.hasHunt ?
 				<TouchableHighlight style = {styles.button}

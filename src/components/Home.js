@@ -373,9 +373,9 @@ var Home = React.createClass({
 
                         <View style={styles.textContainer}>
                           <View>
-                            <Text style={styles.title} numberOfLines={1}>{hunt.title.toUpperCase()}</Text>
+                            <Text style={styles.title} numberOfLines={1}>{hunt.name.toUpperCase()}</Text>
                             <Text style={styles.description}
-                                numberOfLines={2}>{hunt.description}</Text>
+                                numberOfLines={2}>{hunt.desc}</Text>
                           </View>
                           {this.state.puzzle === 'current' ? 
                           <View>

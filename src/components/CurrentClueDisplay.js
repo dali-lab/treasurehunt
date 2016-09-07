@@ -327,7 +327,7 @@ var CurrentClueDisplay = React.createClass({
 
 
 					<View style={styles.separatorSmall}/>
-					<Text style={styles.huntTitle}>{hunt.title.toUpperCase()}</Text>
+					<Text style={styles.huntTitle}>{hunt.name.toUpperCase()}</Text>
                     <View style={styles.topSeparator}/>
                     <View style={styles.separatorSmall}/>
 					<Text style={styles.description}>{this.props.clue.description}</Text>

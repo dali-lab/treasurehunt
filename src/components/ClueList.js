@@ -223,7 +223,7 @@ var ClueList = React.createClass({
 		return (
 			<View style={styles.container}>
 				<View>
-					<Text style={styles.huntTitle}>{hunt.title.toUpperCase()}</Text>
+					<Text style={styles.huntTitle}>{hunt.name.toUpperCase()}</Text>
                     <View style={styles.topSeparator}/>
 				</View>
 				<View style={styles.separatorSmall}/>

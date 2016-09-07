@@ -350,7 +350,7 @@ class ClueController {
 	}
 
 	processCluesProcedural() {
-		console.log("\t\tProcessing clues...")
+		console.log("\t\tProcessing clues... procedural")
 		var currentClueID = this.userHuntInfo.currentClue
 		console.log("\t\tCurrent clue is: " + currentClueID)
 		var foundCurrent = false
