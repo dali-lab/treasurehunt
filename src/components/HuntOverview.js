@@ -2,6 +2,7 @@
 var ReactNative = require('react-native');
 var React = require('react');
 var ClueList = require('./ClueList');
+var RewardModal = require('./RewardModal');
 import User from './User';
 import ClueController from './ClueController';
 
@@ -18,7 +19,8 @@ var {
 	Text,
 	Dimensions,
   	AlertIOS,
-	TouchableHighlight
+	TouchableHighlight,
+	Modal
 } = ReactNative;
 
 var {
@@ -27,6 +29,9 @@ var {
 
 var screenWidth = Dimensions.get('window').width;
 const margin = 30
+const BUTTON_COLOR = "#c8e7a6";
+const BUTTON_UNDERLAY_COLOR = "#abba56"
+const FONT = "Verlag-Book";
 
 var styles = StyleSheet.create({
 	container: {
@@ -129,6 +134,29 @@ var styles = StyleSheet.create({
       borderTopWidth: 3,
       borderColor: '#23B090'
     },
+
+    rewardButtonView: {
+        marginLeft: 25,
+		marginRight: 25,
+		width: Math.min(screenWidth - 50, 325),
+		height: 36,
+		flexDirection: 'column',
+		backgroundColor: '#c8e7a6',
+		borderColor: '#c8e7a6',
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderWidth: 1,
+		borderRadius: 8,
+		marginBottom: 10,
+		alignSelf: 'center',
+		padding:20,
+    },
+    rewardButtonText: {
+		fontSize: 20,
+		color: 'white',
+		fontWeight: 'bold',
+		fontFamily: 'Verlag-Book'
+    },
 });
 
 
@@ -139,11 +167,19 @@ var HuntOverview = React.createClass({
 	getInitialState: function() {
 		this.controller = null
 
+		User.getCurrentUser().completedHunt(this.props.hunt).then((flag) => {
+			this.setState({
+				hadCompleted: flag
+			})
+		})
+
 		return {
 			shouldShowAddButton: null,
 			processingAddHunt: false,
 			hasHunt: null,
-			stars: 4
+			stars: 4,
+			showReward: false,
+			hadCompleted: false
 		}
 	},
 
@@ -295,6 +331,17 @@ var HuntOverview = React.createClass({
 
 		return (
 			<View style={styles.container}>
+				<Modal
+                    animationType='fade'
+                    transparent={true}
+                    visible={this.state.showReward}
+                    onRequestClose={() => {
+                        this.setState({  showReward: false  });
+                    }}>
+                    <RewardModal
+                        done={() => this.setState({showReward: false})}
+                        hunt={hunt}/>
+                </Modal>
 				<View>
 					<Text style={styles.title}>{hunt.name}</Text>
 				</View>
@@ -302,12 +349,21 @@ var HuntOverview = React.createClass({
 					source={{uri: hunt.image}} />
 				<Text style={styles.description}>{hunt.desc}</Text>
 				<View style={{flex: 1}}/>
+
+				{this.state.hadCompleted ?
+					<TouchableHighlight style = {styles.rewardButtonView}
+						onPress={() => this.setState({ showReward: true })}
+						underlayColor='#bccfa8'>
+						<Text style = {styles.rewardButtonText}>Collect Prize</Text>
+					</TouchableHighlight> : null }
+
+
 				{this.state.hasHunt != null && this.state.hasHunt ?
 				<TouchableHighlight style = {styles.button}
 						onPress={this.onStartPressed}
 						underlayColor='#FFFFFF'>
 						<Image style={styles.buttonImage} source={require("./viewCluseButton.png")}/>
-				</TouchableHighlight> : null }
+				</TouchableHighlight> : null}
 				<TouchableHighlight style = {[styles.buttonAdd, this.state.processingAddHunt ? {backgroundColor: '#bccfa8'} : null]}
 						disabled={this.state.processingAddHunt}
 						onPress={this.onAddHuntPressed}

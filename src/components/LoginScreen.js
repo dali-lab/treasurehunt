@@ -271,7 +271,7 @@ class LoginScreen extends Component {
 			>
 			<View style={styles.container}>
 				<Modal
-					animationType='fade'
+					animationType='slide'
 					transparent={true}
 					visible={this.state.signingUp || this.state.recoveringPassword}
 					onRequestClose={() => {this.hideModal}}

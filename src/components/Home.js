@@ -203,7 +203,7 @@ var Home = React.createClass({
         var huntsList;
 
         var dataSource = new ListView.DataSource({
-            rowHasChanged: (r1, r2) => r1 !== r2,
+            rowHasChanged: (r1, r2) => true,
             sectionHeaderHasChanged: (s1, s2) => s1 !== s2
         });
 
@@ -219,6 +219,11 @@ var Home = React.createClass({
             });
             this.listenForItems();
         }, null /* The user data function */)
+
+
+        User.getCurrentUser().dataRef.on('value', (snap) => {
+            this.listenForItems()
+        })
 
         return {
             dataSource: dataSource,

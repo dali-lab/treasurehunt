@@ -2,9 +2,13 @@ var ReactNative = require('react-native');
 var React = require('react');
 var CurrentClueDisplay = require('./CurrentClueDisplay');
 var CompletedClueDisplay = require('./CompletedClueDisplay');
+var RewardModal = require('./RewardModal');
 var User = require('./User').default
 
 import ClueController from "./ClueController";
+const BUTTON_COLOR = "#c8e7a6";
+const BUTTON_UNDERLAY_COLOR = "#abba56"
+const FONT = "Verlag-Book";
 
 var {
 	StyleSheet,
@@ -13,7 +17,8 @@ var {
 	Text,
 	TouchableHighlight,
 	ListView,
-    Alert
+    Alert,
+    Modal
 } = ReactNative;
 
 
@@ -26,6 +31,7 @@ var styles = StyleSheet.create({
 		marginTop: 65,
 		paddingRight:30,
 		paddingLeft: 30,
+        marginBottom: 40,
 		flex: 1,
 	},
 	separatorSmall: {
@@ -94,7 +100,23 @@ var styles = StyleSheet.create({
 	    flex: 1,
 	    backgroundColor: '#f6d1d0',
 			borderRadius: 3,
-    }
+    },
+    buttonView: {
+        marginTop: 20,
+        marginBottom: 20,
+        borderRadius: 3,
+        backgroundColor: BUTTON_COLOR,
+        padding: 7,
+        width: 250,
+        alignItems: "center",
+        alignSelf: "center",
+        justifyContent: "center"
+    },
+    buttonText: {
+        color: "white",
+        fontSize: 20,
+        fontWeight: "bold"
+    },
 });
 
 const Firebase = require('firebase')
@@ -128,7 +150,8 @@ var ClueList = React.createClass({
         });
 
         return {
-            dataSource: dataSource
+            dataSource: dataSource,
+            showReward: false
         }
     },
 
@@ -160,6 +183,7 @@ var ClueList = React.createClass({
                 title: "Hunt",
                 component: CurrentClueDisplay,
                 passProps: {
+                    rewardRequested: this.rewardRequested,
                     controller: this.props.controller,
                     clue: clue
                 }
@@ -217,11 +241,29 @@ var ClueList = React.createClass({
     	}
 	},
 
+    rewardRequested: function() {
+        this.setState({
+            showReward: true
+        })
+    },
+
 	render: function() {
 		var hunt = this.hunt;
 
 		return (
 			<View style={styles.container}>
+                <Modal
+                    animationType='fade'
+                    transparent={true}
+                    visible={this.state.showReward}
+                    onRequestClose={() => {
+                        this.setState({  showReward: false  });
+                    }}
+                    >
+                    <RewardModal
+                        done={() => this.setState({showReward: false})}
+                        hunt={this.props.controller.hunt}/>
+                </Modal>
 				<View>
 					<Text style={styles.huntTitle}>{hunt.name.toUpperCase()}</Text>
                     <View style={styles.topSeparator}/>
@@ -231,6 +273,14 @@ var ClueList = React.createClass({
                     dataSource={this.state.dataSource}
                     automaticallyAdjustContentInsets={false}
                     renderRow={this.renderRow}/>
+                {this.props.controller.elegableForReward() ?
+                    <TouchableHighlight
+                        style={styles.buttonView}
+                        underlayColor={BUTTON_UNDERLAY_COLOR}
+                        onPress={this.rewardRequested}>
+                            <Text style={[{fontFamily: FONT}, styles.buttonText]}>Collect Prize</Text>
+                    </TouchableHighlight>
+                : null}
 			</View>
 		);
 	},

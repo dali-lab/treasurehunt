@@ -2,6 +2,7 @@ var ReactNative = require('react-native');
 var React = require('react');
 var PageControl = require('react-native-page-control');
 var ClueCompleteModal = require('./ClueCompleteModal');
+var RewardModal = require('./RewardModal');
 var User = require('./User').default
 var dismissKeyboard = require('dismissKeyboard');
 
@@ -155,6 +156,7 @@ const clueSolutionsRef = new Firebase(`${ config.FIREBASE_ROOT }/clue_solutions`
 var CurrentClueDisplay = React.createClass({
 	controller: React.PropTypes.object.isRequired,
 	clue: React.PropTypes.object.isRequired,
+	rewardRequested: React.PropTypes.func.isRequired,
 
 	getInitialState: function() {
 
@@ -164,7 +166,8 @@ var CurrentClueDisplay = React.createClass({
   			solutionCorrect: false,
   			waitingForSolutions: false,
   			page: 0,
-  			scrollViewHeight: null
+  			scrollViewHeight: null,
+            showReward: false
         };
 
     },
@@ -301,11 +304,10 @@ var CurrentClueDisplay = React.createClass({
 		if (this.props.controller.canSkipClue()) {
 			AlertIOS.alert(
 				"Skip this clue?",
-				"Do you want to skip this clue? Now: " + this.props.controller.returnNumOfSkips(),
+				"Do you want to skip this clue?",
 				[
 					{text: "Cancel", onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
 					{text: 'Skip', onPress: () => {
-						AlertIOS.alert("Now " + this.props.controller.returnNumOfSkips());
 						this.props.controller.handleSkip(this.props.clue);
 						this.props.navigator.pop();
 					}}
@@ -348,30 +350,49 @@ var CurrentClueDisplay = React.createClass({
 		var internalView = hasImages ? this.renderPager(showSkip) : inputSubmitView
 
 		var modalView = <ClueCompleteModal
-			wrong={!this.state.solutionCorrect}
-			huntDone={this.props.controller.huntIsComplete()}
-			done={() => {
-				this.setState({  showModal: false  });
-				if (this.state.solutionCorrect) {
-					dismissKeyboard();
-					this.returnToClueList();
-				}
-			}}/>
+				wrong={!this.state.solutionCorrect}
+				huntDone={this.props.controller.huntIsComplete()}
+				controller={this.props.controller}
+				rewardRequested={() => {
+					this.setState({ showModal: false, showReward: true })
+				}}
+				done={() => {
+					this.setState({  showModal: false  });
+					if (this.state.solutionCorrect) {
+						dismissKeyboard();
+						this.returnToClueList();
+					}
+				}}/>
 
 			return (
 				<View style={styles.container}>
 					<Modal
-						animationType='fade'
+						animationType='slide'
 						transparent={true}
 						visible={this.state.showModal}
 						onRequestClose={() => {
 							this.setState({  showModal: false  });
 							this.returnToClueList();
-						}}
-						>
+						}}>
 						{modalView}
 					</Modal>
 
+					<Modal
+	                    animationType='fade'
+	                    transparent={true}
+	                    visible={this.state.showReward}
+	                    onRequestClose={() => {
+	                        this.setState({  showReward: false, showModal: false  });
+							this.returnToClueList();
+	                    }}
+	                    >
+	                    <RewardModal
+	                        done={() => {
+	                        	this.setState({ showReward: false, showModal: false })
+								this.returnToClueList();
+	                        }}
+	                        hunt={this.props.controller.hunt}/>
+	                </Modal>
 
 					<View style={styles.separatorSmall}/>
 					<Text style={styles.huntTitle}>{hunt.name.toUpperCase()}</Text>

@@ -42,6 +42,15 @@ var styles = StyleSheet.create({
 	    alignItems: 'center',
 	    backgroundColor: BACKGROUND_COLOR
 	},
+	prizeButtonView: {
+		marginTop: 20,
+		borderRadius: 3,
+		backgroundColor: BUTTON_COLOR,
+		padding: 7,
+		width: 250,
+		alignItems: "center",
+		justifyContent: "center"
+	},
 	buttonView: {
 		marginTop: 20,
 		marginBottom: 20,
@@ -110,6 +119,8 @@ var ClueCompleteModal = React.createClass({
 	done: React.PropTypes.func.isRequired,
 	wrong: React.PropTypes.bool.isRequired,
 	huntDone: React.PropTypes.bool.isRequired,
+	controller: React.PropTypes.object.isRequired,
+	rewardRequested: React.PropTypes.func.isRequired,
 
 	render: function() {
 		const wrong = this.props.wrong;
@@ -129,6 +140,15 @@ var ClueCompleteModal = React.createClass({
 						style={imageStyle}
 						source={image}/>
 				</View>
+
+				{this.props.controller.elegableForReward() || (this.props.huntDone && this.props.controller.hunt.reward != null) && !wrong ?
+					<TouchableHighlight
+						style={styles.prizeButtonView}
+						underlayColor={BUTTON_UNDERLAY_COLOR}
+						onPress={this.props.rewardRequested}>
+							<Text style={[{fontFamily: FONT}, styles.buttonText]}>Collect Prize</Text>
+					</TouchableHighlight>
+				: null}
 
 				<TouchableHighlight
 					style={[styles.buttonView, wrong ? {backgroundColor: WRONG_BUTTON_COLOR} : null]}

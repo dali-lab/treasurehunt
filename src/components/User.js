@@ -244,6 +244,23 @@ class User {
 		});
 	}
 
+	completedHunt(hunt) {
+		return new Promise((fulfill, reject) => {
+			this.getCompletedHuntsList().then((list) => {
+				for (index in list) {
+					if (index == hunt.id) {
+						fulfill(true);
+						return;
+					}
+				}
+				fulfill(false);
+				return;
+			}, (error) => {
+				reject(error);
+			})
+		})
+	}
+
 	addHunt(hunt) {
 		return new Promise((fulfill, reject) => {
 			this.hasHuntCurrent(hunt).then((flag) => {

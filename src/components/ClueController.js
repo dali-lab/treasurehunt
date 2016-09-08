@@ -352,6 +352,8 @@ class ClueController {
 					User.currentUser.completedHunts.child(this.hunt.id).child("timesCompleted").set(times).then(() => {
 						console.log("\t\tDone");
 						console.log("=> Complete")
+
+						ClueController.performCallbacks(this.userHuntListeners, null)
 						fullfill();
 					})
 				})
@@ -412,7 +414,18 @@ class ClueController {
 		}
 	}
 
+	elegableForRewardUnprocedural() {
+		for (index in this.clues) {
+			if (this.clues[index].status != ClueController.COMPLETE && this.clues[index].status != ClueController.SKIPPED)
+				return false
+		}
 
+		return this.userHuntInfo.skipped <= this.hunt.skipsAllowed
+	}
+
+	elegableForReward() {
+		return this.hunt.reward != null && (this.huntIsComplete() || this.hunt.procedural ? false : this.elegableForRewardUnprocedural())
+	}
 
 	// Returns number of already skipped questions for current hunt
 	returnNumOfSkips() {
