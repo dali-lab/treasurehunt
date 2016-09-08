@@ -55,6 +55,17 @@ export function getClueWithID(id) {
 		});
 	});
 }
+function getNumberCompleted(clues) {
+	var number = 0;
+
+	for (index in clues) {
+		if (clues[index] == "completed") {
+			number += 1;
+		}
+	}
+
+	return number;
+}
 
 // Returns a promise the gives all the hunt objects as an array
 export function getHuntObjects(hunt_ids) {
@@ -80,7 +91,7 @@ export function getHuntObjects(hunt_ids) {
 	        	// Now lets get the total clues
 	        	var totalCluesInHunt = hunt.clues.length;
 	        	console.log(contents);
-	        	var totalCluesCompleted = contents.cluesCompleted;
+	        	var totalCluesCompleted = hunt.procedural ? contents.cluesCompleted : getNumberCompleted(contents.clues);
 
 	        	hunt.progress = totalCluesCompleted/totalCluesInHunt
 	        	hunt.id = key

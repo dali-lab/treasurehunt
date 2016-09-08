@@ -155,7 +155,7 @@ var ClueList = React.createClass({
     },
 
     rowPressed: function(clue) {
-        if (clue.status == ClueController.IN_PROGRESS) {
+        if (clue.status == ClueController.IN_PROGRESS || clue.status == ClueController.SKIPPED) {
             this.props.navigator.push({
                 title: "Hunt",
                 component: CurrentClueDisplay,

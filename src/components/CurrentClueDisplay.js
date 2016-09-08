@@ -15,7 +15,8 @@ var {
 	TextInput,
 	Dimensions,
 	ScrollView,
-	Modal
+	Modal,
+	AlertIOS
 } = ReactNative;
 var {
     Component,
@@ -117,6 +118,13 @@ var styles = StyleSheet.create({
 	scrollView: {
 		flex: 1,
 		marginBottom: 5
+	},
+	skipButton: {
+		marginTop: 5,
+		alignSelf: "flex-end",
+	},
+	skipButtonText: {
+		color: "gray"
 	}
 });
 
@@ -236,7 +244,7 @@ var CurrentClueDisplay = React.createClass({
 				</View>
 	},
 
-	renderPager: function() {
+	renderPager: function(showSkip) {
 		var numImages = this.props.clue.images.length
 
 		return <View style={styles.imageContainer}>
@@ -267,6 +275,11 @@ var CurrentClueDisplay = React.createClass({
 		    				style={{height: 40, borderColor: 'gray', borderWidth: 1}}
 		    				onChangeText={(submission) => this.setState({clueSubmission: submission})}
 		    				value={this.state.clueSubmission}/>
+	    				{showSkip ? <TouchableHighlight style = {styles.skipButton}
+		    					onPress = {this.onSkipPressed}
+		    					underlayColor = "gray">
+		    					<Text style = {styles.skipButtonText}>Stuck?</Text>
+		    			</TouchableHighlight> : null}
 						<TouchableHighlight style = {styles.button}
 								onPress={this.onSubmitPressed}
 								underlayColor='#99d9f4'>
@@ -284,21 +297,55 @@ var CurrentClueDisplay = React.createClass({
 		</View>
 	},
 
+	onSkipPressed: function() {
+		if (this.props.controller.canSkipClue()) {
+			AlertIOS.alert(
+				"Skip this clue?",
+				"Do you want to skip this clue? Now: " + this.props.controller.returnNumOfSkips(),
+				[
+					{text: "Cancel", onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+					{text: 'Skip', onPress: () => {
+						AlertIOS.alert("Now " + this.props.controller.returnNumOfSkips());
+						this.props.controller.handleSkip(this.props.clue);
+						this.props.navigator.pop();
+					}}
+				]
+			)
+		}else{
+			if (this.props.controller.hunt.skipsAllowed == 0)
+				AlertIOS.alert(
+					"Skipping not enabled",
+					"This hunt doesn't have skipping enabled"
+				)
+			else
+				AlertIOS.alert(
+					"No more skipping",
+					"You have reached the maximum number of skips you are allowed. Complete a skipped clue to be able to skip this one"
+				)
+		}
+	},
+
 	render: function() {
 		var hunt = this.props.controller.hunt;
 		var hasImages = this.props.clue.images != null
+		var showSkip = !this.props.controller.hunt.procedural && this.props.clue.status != ClueController.SKIPPED
 
 		const inputSubmitView = <View><TextInput
 				    				style={{height: 40, borderColor: 'gray', borderWidth: 1, marginLeft: 5, marginRight: 5}}
 				    				onChangeText={(submission) => this.setState({clueSubmission: submission})}
 				    				value={this.state.clueSubmission}/>
+				    			{showSkip ? <TouchableHighlight style = {styles.skipButton}
+			    					onPress = {this.onSkipPressed}
+			    					underlayColor = "gray">
+			    					<Text style = {styles.skipButtonText}>Stuck?</Text>
+				    			</TouchableHighlight> : null}
 								<TouchableHighlight style = {styles.button}
 										onPress={this.onSubmitPressed}
 										underlayColor='#99d9f4'>
 										<Text style = {styles.buttonText}>Submit</Text>
 								</TouchableHighlight></View>
 
-		var internalView = hasImages ? this.renderPager() : inputSubmitView
+		var internalView = hasImages ? this.renderPager(showSkip) : inputSubmitView
 
 		var modalView = <ClueCompleteModal
 			wrong={!this.state.solutionCorrect}

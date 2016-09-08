@@ -115,13 +115,13 @@ class ClueController {
 					else
 						this.processCluesUnprocedural();
 
+
+				console.log("Performing Callbacks...");
 				// This is for processes waiting for a single response
 				ClueController.performCallbacks(this.userHuntCallbacks, snap.val());
 				this.userHuntCallbacks = []
 
-				console.log("Performing Callbacks...");
 				ClueController.performCallbacks(this.userHuntListeners, snap.val());
-
 
 				fullfill();
 			})
@@ -249,6 +249,13 @@ class ClueController {
 
 	// Returns a boolean that states whether it was the last clue or not
 	completeClue(clueObj) {
+		if (this.huntIsProcedural())
+			return this.completeClueProcedural(clueObj);
+		else
+			return this.completeClueUnprocedural(clueObj);
+	}
+
+	completeClueProcedural(clueObj) {
 		var clue = this.clues[clueObj.index]
 
 
@@ -264,7 +271,7 @@ class ClueController {
 			// Now I need to update the database
 			var cluesCompleted = index + 1;
 
-			if (index + 1 >= this.clues.length){
+			if (this.huntIsComplete()) {
 				this.completeHunt().then(() => {
 					fullfill(true);
 				});
@@ -281,6 +288,36 @@ class ClueController {
 				}, (error) => {
 					console.log(error);
 				})
+			}
+		});
+	}
+
+	completeClueUnprocedural(clueObj) {
+		var clue = this.clues[clueObj.index];
+
+		return new Promise((fullfill, reject) => {
+			if (!this.checkSolutions(clue))
+				reject("The submission isn't correct!");
+
+			if (clue.status == ClueController.SKIPPED) {
+				this.userHuntInfo.skipped = this.userHuntInfo.skipped - 1;
+				this.userHuntRef.child("skipped").set(this.userHuntInfo.skipped);
+			}
+
+			clue.status = ClueController.COMPLETE;
+			clue.updateNeeded = true;
+
+			if (this.huntIsComplete()) {
+				this.completeHunt().then(() => {
+					fullfill(true);
+				});
+			}else{
+				this.userHuntRef.child("clues").child(clueObj.id).set(ClueController.COMPLETE).then(() => {
+					fullfill(false);
+				}, (error) => {
+					console.log(error);
+					reject(error);
+				});
 			}
 		});
 	}
@@ -373,6 +410,31 @@ class ClueController {
 			}
 			console.log("\t\tMarking " + clue.status)
 		}
+	}
+
+
+
+	// Returns number of already skipped questions for current hunt
+	returnNumOfSkips() {
+		return this.userHuntInfo.skipped;
+	}
+	// Called when skip button is pressed in CurrentClueDisplay modal after pressing "Stuck"
+	// return true if skip is allowed; false if limit has been reached
+	canSkipClue(numSkips) {
+		return !this.hunt.procedural && this.userHuntInfo.skipped < this.hunt.skipsAllowed;
+		// Modal display/options should depend on the value this returns
+	}
+	// Called when user has selected to skip question from modal
+	// Assuming skipClue()has already been called so user should be allowed to skip
+ 	handleSkip(clueObj) {
+ 		if (!this.hunt.procedural) {
+			// Change state of question to skipped
+			clueObj.status = ClueController.SKIPPED;
+			this.clues[clueObj.index].status = ClueController.SKIPPED
+			// Add one to total skips for the hunt
+			this.userHuntRef.child("clues").child(clueObj.id).set(ClueController.SKIPPED)
+			this.userHuntRef.child("skipped").set(this.userHuntInfo.skipped + 1)
+ 		}
 	}
 
 
