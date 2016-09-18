@@ -7,6 +7,8 @@ target 'treasurehunt' do
 
   # Pods for treasurehunt
   pod 'Firebase'
+  pod 'Fabric'
+  pod 'Crashlytics'
 
   target 'treasurehuntTests' do
     inherit! :search_paths

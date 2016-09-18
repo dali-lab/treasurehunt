@@ -1,6 +1,7 @@
 'use strict';
 
-var React = require('react-native');
+var ReactNative = require('react-native');
+var React = require('react');
 var Progress = require('react-native-progress');
 var HuntOverview = require('./HuntOverview');
 var User = require('./User').default;
@@ -15,9 +16,15 @@ var {
     ListView,
     TextInput,
     Text,
-    Component,
     AlertIOS,
+    Dimensions
+} = ReactNative;
+
+var {
+    Component,
 } = React;
+
+var screenWidth = Dimensions.get('window').width;
 
 var styles = StyleSheet.create({
     thumb: {
@@ -86,11 +93,12 @@ var styles = StyleSheet.create({
 
         backgroundColor: 'white',
         flexDirection: 'column',
+        marginBottom: 10,
     },
     headerButtons: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: "center"
+        alignItems: "center",
     },
     headerTextSelected: {
         fontSize: 25,
@@ -101,6 +109,18 @@ var styles = StyleSheet.create({
         fontSize: 25,
         fontFamily: 'Verlag-Book',
         color: 'grey',
+    },
+    startingHuntButton: {
+        backgroundColor: "#FEF7C0",
+        padding: 10,
+        borderRadius: 8,
+        marginTop: 10
+    },
+    startingHuntButtonText: {
+        alignSelf: 'center',
+        fontFamily: 'Verlag-Book',
+        fontSize: 20,
+        justifyContent: 'center'
     },
     extraInfoContainer: {
       marginLeft: 20,
@@ -120,20 +140,25 @@ var styles = StyleSheet.create({
         justifyContent: 'center',
         flexDirection: 'row',
         flex: 1,
+    },
+    progressBar: {
+        marginLeft: 5,
+        marginBottom: 5,
+        flex: 1
     }
-
 });
 
 var noHuntsStyle = StyleSheet.create({
     noHuntsView: {
         alignItems: 'center',
         justifyContent: 'center',
-        flexDirection: 'row',
+        flexDirection: 'column',
         flex: 1,
     },
     noHuntsText:{
         fontSize: 20,
         textAlign: 'center',
+        fontFamily: 'Verlag-Book',
         width: 330
     }
 });
@@ -178,16 +203,35 @@ var Home = React.createClass({
         var huntsList;
 
         var dataSource = new ListView.DataSource({
-            rowHasChanged: (r1, r2) => r1 !== r2,
+            rowHasChanged: (r1, r2) => true,
             sectionHeaderHasChanged: (s1, s2) => s1 !== s2
         });
+
+        this.firstLoad = true;
+
+        User.getCurrentUser().setUpListeners(() => {
+            // the user hunt data function
+            console.log("> Reseting home view due to updating data...");
+            var newDataSource = this.state.dataSource.cloneWithRows([]);
+            this.setState({
+                dataSource: newDataSource,
+                puzzle: "current"
+            });
+            this.listenForItems();
+        }, null /* The user data function */)
+
+
+        User.getCurrentUser().dataRef.on('value', (snap) => {
+            this.listenForItems()
+        })
 
         return {
             dataSource: dataSource,
             huntsList: huntsList,
             searching: false,
-            shouldReload: false,
             huntsList: huntsList,
+            hunts: null,
+            startingHunt: null,
             puzzle: 'current'
         };
     },
@@ -197,7 +241,7 @@ var Home = React.createClass({
         var userRef = usersRef.child(currentUser.uid);
         var huntsListRef = userRef.child("hunts_list");
         var huntsList;
-        huntsListRef.on('value', (snap) => {
+        huntsListRef.once('value', (snap) => {
             huntsList = snap.val();
             return huntsList;
         });
@@ -209,7 +253,7 @@ var Home = React.createClass({
         var userRef = usersRef.child(currentUser.uid);
         var huntsListRef = userRef.child("hunts_list");
         var huntsList;
-        huntsListRef.on('value', (snap) => {
+        huntsListRef.once('value', (snap) => {
             huntsList = snap.val();
             return huntsList;
         });
@@ -220,24 +264,53 @@ var Home = React.createClass({
     listenForCompletedItems: function() {
       User.getCurrentUser().getCompletedHuntsList().then((huntsList) => {
         Data.getHuntObjects(huntsList).then((hunts) => {
-            console.log("Loaded completed hunts: " + JSON.stringify(hunts) );
             var newDataSource = this.state.dataSource.cloneWithRows(hunts);
             this.setState({
                 hunts: hunts,
                 dataSource: newDataSource,
               })
-
           });
+      }, () => {
+        // ERROR: TODO deal with it
       });
+    },
+
+    addStartingHunt: function() {
+        User.currentUser.addStartingHunt().then(() => {
+            this.firstLoad = true;
+            this.setState({
+                hunts: null
+            })
+
+            this.listenForItems();
+        }, (error) => {
+            AlertIOS.alert("Error!", error)
+        });
     },
 
     // Will load all the things!
     listenForItems: function() {
-        console.log("running listenForItems");
-        console.log(this.state);
 
         User.getCurrentUser().getHuntsList().then((huntsList) => {
             Data.getHuntObjects(huntsList).then((hunts) => {
+                if (hunts.length == 0 && this.firstLoad) {
+                    User.setStartingHuntCallback((hunt) => {
+                        this.setState({
+                            startingHunt: hunt
+                        })
+
+                        AlertIOS.alert(
+                            "Welcome!",
+                            "Welcome to Treasurehunt. Would you like to start with the " + hunt.name + (hunt.name.toLowerCase().indexOf("hunt") === -1 ? " hunt" : "") + "?",
+                            [
+                                {text: "Close", onPress: ()=>{}, style: "cancel"},
+                                {text: "Let's go!", onPress: ()=>{
+                                    this.addStartingHunt();
+                                }}
+                            ]
+                        );
+                    });
+                }
 
             //    var newDataSource = this.state.dataSource.clonewithRowsAndSections({current: hunts}, ['current']);
                 var newDataSource = this.state.dataSource.cloneWithRows(hunts);
@@ -249,18 +322,27 @@ var Home = React.createClass({
         });
     },
 
-    componentDidMount: function() {
-      if (this.state.puzzle === 'current'){
-        this.listenForItems();
-      } else if (this.state.puzzle == 'past'){
-        console.log('what the hell is the state rn....');
-        this.listenForCompletedItems();
-      }
+    componentDidUpdate: function(nextProps, nextState) {
 
+        if (nextState.hunts != null) {
+            if (nextState.hunts.length == 1 && this.firstLoad) {
+                this.firstLoad = false
+                this.rowPressed(nextState.hunts[0]);
+            }
+        }
+    },
+
+    componentWillMount: function() {
+        if (this.state.puzzle === 'current'){
+            this.listenForItems();
+        } else if (this.state.puzzle == 'past'){
+            this.listenForCompletedItems();
+        }
     },
 
     rowPressed: function(hunt) {
-      console.log(`row pressed! hunt is: ${JSON.stringify(hunt)}`)
+
+        console.log("GOING -> ----->")
         this.props.navigator.push({
             title: "Hunt",
             component: HuntOverview,
@@ -284,6 +366,8 @@ var Home = React.createClass({
 
     renderRow: function(hunt, SectionID, rowID) {
         var huntimage = hunt.image;
+
+
         return (
             <TouchableHighlight onPress={() => this.rowPressed(hunt)}
                 underlayColor='#dddddd'>
@@ -294,14 +378,15 @@ var Home = React.createClass({
 
                         <View style={styles.textContainer}>
                           <View>
-                            <Text style={styles.title} numberOfLines={1}>{hunt.title.toUpperCase()}</Text>
+                            <Text style={styles.title} numberOfLines={1}>{hunt.name.toUpperCase()}</Text>
                             <Text style={styles.description}
-                                numberOfLines={2}>{hunt.description}</Text>
+                                numberOfLines={2}>{hunt.desc}</Text>
                           </View>
+                          {this.state.puzzle === 'current' ? 
                           <View>
                             <Progress.Bar style={styles.progressBar}
-                                progress={hunt.progress} width={200} borderRadius={0} border={0} height={10} color='#ffd900' backgroundColor='white'/>
-                          </View>
+                                progress={hunt.progress} width={screenWidth - 160} borderRadius={0} border={0} height={10} color='#ffd900' backgroundColor='white'/>
+                          </View> : null}
                         </View>
                     </View>
                     <View style={styles.separator}/>
@@ -333,8 +418,20 @@ var Home = React.createClass({
                         automaticallyAdjustContentInsets={false}
                         renderRow={this.renderRow}/>
 
+        var startingHunt = null
+        if (User.startingHunt !== null) {
+            startingHunt = User.startingHunt
+        }else{
+            startingHunt = this.state.startingHunt
+        }
         var noHunts = <View style={noHuntsStyle.noHuntsView}>
-                        <Text style={noHuntsStyle.noHuntsText}>You have no hunts yet. Try searching for some above</Text>
+                        <Text style={[noHuntsStyle.noHuntsText, {}]}>You have no hunts yet</Text>
+                        {startingHunt !== null ? <TouchableHighlight
+                            style={styles.startingHuntButton}
+                            underlayColor="#fef48f"
+                            onPress={() => {
+                                this.addStartingHunt();
+                            }}><Text style={styles.startingHuntButtonText}>Start the {startingHunt.name + (startingHunt.name.toLowerCase().indexOf("hunt") === -1 ? " hunt" : "")}</Text></TouchableHighlight> : null}
                     </View>
 
         var internalView;
@@ -376,8 +473,6 @@ var Home = React.createClass({
                 <View style={styles.emptyContainerTop}>
                 </View>
 
-
-                {searchController}
                 <View style={styles.extraInfoContainer}>
                 <View style={styles.separator}>
                 </View>
@@ -386,23 +481,27 @@ var Home = React.createClass({
                     <View style={styles.headerButtons}>
                     {this.isSearching() ? null : <View style={styles.headerButtons}>
                     <TouchableHighlight underlayColor='#dddddd' onPress={() => {
+                        var newDataSource = this.state.dataSource.cloneWithRows([]);
                         this.setState({
+                            dataSource: newDataSource,
                             puzzle: "current"
                         });
                         this.listenForItems();
                     }}>
-                      <Text style={this.state.puzzle == 'current' ? styles.headerTextSelected : styles.headerTextUnselected}> Current Puzzles</Text>
+                      <Text style={this.state.puzzle == 'current' ? styles.headerTextSelected : styles.headerTextUnselected}>Current Hunts</Text>
                     </TouchableHighlight>
                     </View>}
 
                     {this.isSearching() ? null : <View style={styles.headerButtons}>
                     <TouchableHighlight underlayColor='#dddddd' onPress={() => {
+                        var newDataSource = this.state.dataSource.cloneWithRows([]);
                         this.setState({
+                            dataSource: newDataSource,
                             puzzle: "past"
                         });
                         this.listenForCompletedItems();
                     }}>
-                      <Text style={this.state.puzzle == 'past' ? styles.headerTextSelected : styles.headerTextUnselected}> Past Puzzles </Text>
+                      <Text style={this.state.puzzle == 'past' ? styles.headerTextSelected : styles.headerTextUnselected}> Past Hunts</Text>
                     </TouchableHighlight>
                     </View>}
 
@@ -413,9 +512,7 @@ var Home = React.createClass({
                 </View>
 
                 {internalView}
-
-                <View style={styles.emptyContainerBottom}>
-                </View>
+                <View style={styles.emptyContainerBottom}/>
             </View>
         );
     },

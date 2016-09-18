@@ -5,11 +5,12 @@
 
 import React, {
   AppRegistry,
-  Component,
   StyleSheet,
   Text,
   View
 } from 'react-native';
+
+import React, { Component } from 'react';
 
 class treasurehunt extends Component {
   render() {

@@ -1,4 +1,8 @@
-var React = require('react-native');
+var ReactNative = require('react-native');
+var React = require('react');
+var {
+    Component
+} = React;
 var Data = require('./Data');
 
 var dismissKeyboard = require('dismissKeyboard');
@@ -10,10 +14,9 @@ var {
     ListView,
     Text,
     TextInput,
-    Component,
     AlertIOS,
     Image,
-} = React;
+} = ReactNative;
 
 const DEBUG = false;
 

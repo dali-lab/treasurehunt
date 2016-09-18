@@ -1,17 +1,29 @@
-var React = require('react-native');
+var ReactNative = require('react-native');
+var React = require('react');
 var CurrentClueDisplay = require('./CurrentClueDisplay');
 var CompletedClueDisplay = require('./CompletedClueDisplay');
+var RewardModal = require('./RewardModal');
 var User = require('./User').default
+
+import ClueController from "./ClueController";
+const BUTTON_COLOR = "#c8e7a6";
+const BUTTON_UNDERLAY_COLOR = "#abba56"
+const FONT = "Verlag-Book";
 
 var {
 	StyleSheet,
 	Image,
 	View,
 	Text,
-	Component,
 	TouchableHighlight,
 	ListView,
-    Alert
+    Alert,
+    Modal
+} = ReactNative;
+
+
+var {
+    Component,
 } = React;
 
 var styles = StyleSheet.create({
@@ -19,6 +31,7 @@ var styles = StyleSheet.create({
 		marginTop: 65,
 		paddingRight:30,
 		paddingLeft: 30,
+        marginBottom: 40,
 		flex: 1,
 	},
 	separatorSmall: {
@@ -52,9 +65,10 @@ var styles = StyleSheet.create({
 				color: '#242021',
     },
     statusDescription: {
+        marginTop: 15,
     	alignSelf: 'center',
-			fontSize: 16,
-			color: '#242021',
+		fontSize: 16,
+		color: '#242021',
     },
     lockedDescription: {
     	textAlign: 'center',
@@ -82,12 +96,27 @@ var styles = StyleSheet.create({
 				borderRadius: 3
     },
     incompleteTextContainer: {
-      paddingTop: 10,
+        paddingTop: 10,
 	    flex: 1,
 	    backgroundColor: '#f6d1d0',
 			borderRadius: 3,
-			justifyContent: 'center',
-    }
+    },
+    buttonView: {
+        marginTop: 20,
+        marginBottom: 20,
+        borderRadius: 3,
+        backgroundColor: BUTTON_COLOR,
+        padding: 7,
+        width: 250,
+        alignItems: "center",
+        alignSelf: "center",
+        justifyContent: "center"
+    },
+    buttonText: {
+        color: "white",
+        fontSize: 20,
+        fontWeight: "bold"
+    },
 });
 
 const Firebase = require('firebase')
@@ -109,348 +138,67 @@ const userSolutionsRef = new Firebase(`${ config.FIREBASE_ROOT }/user_solutions`
 */
 
 var ClueList = React.createClass({
+    controller: React.PropTypes.object.isRequired,
 
 	getInitialState: function() {
+        this.hunt = this.props.controller.hunt;
         var dataSource = new ListView.DataSource({
-            rowHasChanged: (r1, r2) => r1.guid != r2.guid,
+            rowHasChanged: (r1, r2) => {
+                return true;
+            },
             sectionHeaderHasChanged: (s1, s2) => s1 !== s2
         });
-				var nextClueId;
+
         return {
             dataSource: dataSource,
-						nextClueId: nextClueId
-        };
+            showReward: false
+        }
     },
 
-    convertCluesArrayToMap: function(clues) {
-        var cluesCategoryMap = {};
+    componentWillMount: function() {
+        this.props.controller.dataLoadAddCallback((controller) => {
+            // Now we know we have to have data!
+            this.updateDataSource();
 
-        for (var i =0; i < clues.length; i++ ) {
-            if (!cluesCategoryMap[clues[i].category]) {
-                cluesCategoryMap[clues[i].category] = [];
-            }
-            cluesCategoryMap[clues[i].category].push(clues[i]);
-        }
-        return cluesCategoryMap;
-    },
-
-		// OLD
-    populateArray: function(solutionsForThisHunt) {
-			console.log(`hunt is: ${JSON.stringify(this.props.hunt)}`);
-        var cluesArray = this.props.hunt.clues;
-        var clues = [];
-        var solutionsToClues = [];
-        var userCompletedClues = [];
-        var inProgress = -1;
-        var toStart;
-
-        // specify which of user's clues are in progress versus completed
-        for (var i = 0; i < solutionsForThisHunt.length; i++ ) {
-            if (solutionsForThisHunt[i].completed == 0) {
-                inProgress = solutionsForThisHunt[i].clue_id;
-            }
-            else {
-                userCompletedClues.push(solutionsForThisHunt[i].clue_id);
-            }
-        }
-
-        if (solutionsForThisHunt.length == 0) {
-            inProgress = cluesArray[0];
-        }
-
-        //TODO: fix this calculation since clues won't always have chronological id's
-        if (inProgress == -1) {
-            inProgress = solutionsForThisHunt[solutionsForThisHunt.length -1].clue_id + 1;
-        }
-
-
-        //for all clues in clueArray
-        for (var j = 0; j < cluesArray.length; j++) {
-            var clueRef = cluesRef.child(cluesArray[j]);
-            clueRef.on('value', (snap) => {
-							console.log(`clue's val: ${JSON.stringify(snap.val())}`);
-							console.log(`key's val: ${snap.key}`);
-
-                // if a clue is in progress
-                if (snap.val().id == inProgress) {
-                    clues.push({
-                        title:snap.val().title,
-                        description: snap.val().description,
-                        category: "inProgress",
-                        clueId: snap.val().id
-                    });
-                }
-
-                // completed clue
-                else if (userCompletedClues.indexOf(snap.val().id) > -1) {
-                    clues.push({
-                        title:snap.val().title,
-                        description: snap.val().description,
-                        category: "complete",
-                        clueId: snap.val().id
-                    });
-                }
-
-                //incomplete clue
-                else {
-                    clues.push({
-                        title:snap.val().title,
-                        description: snap.val().description,
-                        category: "incomplete",
-                        clueId: snap.val().id
-                    });
-										console.log(`length of clues array rn is: ${clues.length}`);
-                }
-                this.setState({
-                    dataSource: this.state.dataSource.cloneWithRowsAndSections(this.convertCluesArrayToMap(clues))
-                });
+            // This will force the list to reload when the user hunt state changes
+            controller.userHuntAddListener((val) => {
+                console.log("Got a callback!");
+                this.updateDataSource();
             });
-        }
-				console.log(`solutionsForThisHunt array is: ${solutionsForThisHunt.length} ${solutionsForThisHunt}`);
-        if (solutionsForThisHunt.length == cluesArray.length && solutionsForThisHunt[solutionsForThisHunt.length-1].completed ==1) {
-            Alert.alert(
-                'HUNT COMPLETE',
-                "You did it!!!!"
-            );
-        }
+        })
     },
 
-		// 	NEW
-		populateArray2: function(huntid, currentClue) {
-			// DONE get the array of clues
-			// DONE get the current clue
-			// find the position of the current Clue in the array. Make that in progress
-			// store the id of the clue next to that one. if there isn't one, make it null
-			// all before are completed
-			// all after are incomplete
+    updateDataSource: function() {
+        var clues = this.props.controller.clues
+        var newDataSource = this.state.dataSource.cloneWithRows(clues);
 
-			// setting the next clue:
-			// grab the index of the current clue
-			// if the index is -1, the next index is null
-			// if it's the last clue, the next index is null
-			// if it's anything before the last clue, the next index is current index + 1
-
-			// determining whether hunt is completed--
-
-
-			var cluesArray = this.props.hunt.clues;
-			var clues = [];
-			var nextClueId;
-
-			// if item isn't found (ex null), result will be -1
-			var indexCurrentClue = cluesArray.indexOf(currentClue);
-
-			console.log(`indexCurrentClue in populate array is: ${indexCurrentClue}`);
-			if (indexCurrentClue === -1 || cluesArray.indexOf(currentClue) === (cluesArray.length - 1)) {
-				nextClueId = null;
-			} else {
-				nextClueId = cluesArray[indexCurrentClue + 1];
-			}
-			console.log(`nextClueId is: ${nextClueId}`);
-
-
-
-			//for all clues in clueArray
-			for (var j = 0; j < cluesArray.length; j++) {
-
-					var clueRef = cluesRef.child(cluesArray[j]);
-					clueRef.on('value', (snap) => {
-						var newJ = cluesArray.indexOf(snap.key);
-						console.log(`j's value: ${j}`);
-						console.log(`newj's value: ${newJ}`);
-						console.log(`indexCurrentClue: ${indexCurrentClue}`);
-						console.log(`clue's val: ${JSON.stringify(snap.val())}`);
-						console.log(`key's val: ${snap.key}`);
-						console.log(`currentClue is: ${currentClue}`);
-
-						let currCategory;
-
-// "sghnfgt4"
-						console.log(`right before if else, indexCurrent clue is: ${indexCurrentClue}`);
-						console.log(`right before if else, indexCurrent clue is: ${typeof indexCurrentClue}`);
-						if (indexCurrentClue == -1 || indexCurrentClue == 'null') {
-							console.log('currcategory = completed');
-							currCategory = 'completed';
-							clues.push({
-								title:snap.val().creator,
-								description: snap.val().description,
-								category: currCategory,
-								clueId: snap.key
-							});
-						} else {
-							if (indexCurrentClue === newJ) {
-						//		console.log('currcategory = inprogress');
-								currCategory = 'inProgress';
-							} else if (newJ > indexCurrentClue) {
-						//		console.log('currcategory = incomplete');
-								currCategory = 'incomplete'
-							} else {
-						//		console.log('currcategory = completed2');
-								currCategory = 'completed';
-							}
-								console.log(`currCategory is: ${currCategory}`);
-							clues.push({
-								title:snap.val().creator,
-								description: snap.val().description,
-								category: currCategory,
-								clueId: snap.key
-							});
-						}  // else
-
-				//	console.log(`currCategory is: ${currCategory}`);
-
-
-
-							this.setState({
-									dataSource: this.state.dataSource.cloneWithRowsAndSections(this.convertCluesArrayToMap(clues)),
-									nextClueId: nextClueId
-							});
-					});
-			}
-
-/*
-			this.setState({nextClueId: nextClueId}).then(() => {
-					console.log(`in populate array, nextClueId is: ${this.state.nextClueId}`);
-			});
-			*/
-
-
-			if (indexCurrentClue === -1 || indexCurrentClue === undefined || indexCurrentClue == null) {
-				Alert.alert(
-						'HUNT COMPLETE',
-						"You did it!!!!"
-				);
-			}
-	},
-
-	// NEW
-	getCurrentClue: function(huntid) {
-		return new Promise((fulfill, reject) => {
-			const currentUser = User.getCurrentUser();
-			const userRef = usersRef.child(currentUser.uid);
-			var currentClueRef = userRef.child('currentHunts').child(huntid).child('currentClue');
-			var currentClue;
-
-			currentClueRef.on('value', (snap) => {
-				currentClue = snap.val();
-				console.log(`1st instance of currentClue = ${currentClue}`);
-				fulfill(snap.val());
-			});
-			if ('q' === 'p') {
-				reject();
-			}
-		});
-	},
-
-	// NEW
-	listenForItems: function(cluesRef) {
-
-			//get all clues for user in hunt, add them to array
-		//  var huntID = this.props.hunt.id;
-		var huntID = this.props.hunt.id;
-
-/*
-			console.log(`the hunt id rn is: ${huntID}`);
-			console.log('dsfbjibgbsbibbnakpabpbaknabnpabpbaknpbanabjnl');
-			console.log(`the hunt rn is: ${JSON.stringify(this.props.hunt)}`);
-		*/
-
-		this.getCurrentClue(huntID).then((currentClue) => {
-			this.populateArray2(huntID, currentClue);
-		});
-	},
-
-/*
-		// NEW-ISH
-    listenForItems: function(cluesRef) {
-
-        //get all clues for user in hunt, add them to array
-      //  var huntID = this.props.hunt.id;
-			var huntID = this.props.hunt.id;
-
-				console.log(`the hunt id rn is: ${huntID}`);
-				console.log('dsfbjibgbsbibbnakpabpbaknabnpabpbaknpbanabjnl');
-				console.log(`the hunt rn is: ${JSON.stringify(this.props.hunt)}`);
-
-				// for now. just call populate array
-
-
-        var solutionsForThisHunt = [];
-        var currentUser = User.getCurrentUser();
-        //TODO: for now there is only user 0 but we don't want this hard-coded for all users
-        userSolutionsRef.orderByChild('user_id').startAt(currentUser.uid).endAt(currentUser.uid).once('value', (snap) => {
-            var solution = snap.val();
-            if (solution) {
-                var array = Object.keys(solution).map(key =>({ ...solution[key], id:key}));
-                for (var i = 0; i < array.length; i++) {
-                    if (array[i].hunt_id == Number(huntID)) {
-                        solutionsForThisHunt.push(array[i]);
-
-												console.log(`solutions for this hunt11111 is: ${solutionsForThisHunt}`);
-												console.log(`solutions for this hunt1111 is: ${typeof solutionsForThisHunt}`);
-                    }
-                }
-            }
-					});  // snap
-
-
-				//		console.log(`solutions for this hunt is: ${solutionsForThisHunt}`);
-				//		console.log(`solutions for this hunt is: ${typeof solutionsForThisHunt}`);
-        //    this.populateArray(solutionsForThisHunt);
-			//	this.populateArray2(solutionsForThisHunt, huntID);
-
-			this.getCurrentClue(huntID).then((currentClue) => {
-				this.populateArray2(solutionsForThisHunt, huntID, currentClue);
-
-			});
-
-    },
-		*/
-
-    componentDidMount: function() {
-        this.listenForItems(cluesRef);
+        this.setState({
+            dataSource: newDataSource
+        })
     },
 
-    rowPressed: function(clueInfo) {
-			console.log(`in rowPressed, clueinfo is: ${clueInfo}`);
-        //if clue is in progress, load current progress
-        if (clueInfo.category === "completed") {
-            this.props.navigator.push({
-                title: "Hunt",
-                component: CompletedClueDisplay,
-                passProps: {
-                    hunt: this.props.hunt,
-                    clueId: clueInfo.clueId,
-										nextClueId: this.state.nextClueId
-                }
-            });
-        }
-        else {
+    rowPressed: function(clue) {
+        if (clue.status == ClueController.IN_PROGRESS || clue.status == ClueController.SKIPPED) {
             this.props.navigator.push({
                 title: "Hunt",
                 component: CurrentClueDisplay,
                 passProps: {
-                    hunt: this.props.hunt,
-                    clueId: clueInfo.clueId,
-										nextClueId: this.state.nextClueId,
-                    callback: this.listenForItems
+                    rewardRequested: this.rewardRequested,
+                    controller: this.props.controller,
+                    clue: clue
                 }
             });
         }
     },
 
     renderRow: function(rowData, sectionID, rowID) {
-			console.log(`rowData is: ${JSON.stringify(rowData)}`);
-			//	console.log(`in rowPressed, clueinfo is: ${clueInfo}`);
-			console.log(`next Clue id is: ${this.state.nextClueId}`);
-    	if (rowData.category === "completed") {
+    	if (rowData.status === ClueController.COMPLETE) {
 	      	return (
-	      		<TouchableHighlight onPress={() => this.rowPressed(rowData)}
+	      		<TouchableHighlight
                 underlayColor='#dddddd'>
                 <View>
                     <View style={styles.rowContainer}>
                         <View style={styles.completeTextContainer}>
-                            <Text style={styles.title}>{rowData.title}</Text>
                             <Text style={styles.statusDescription}
                                 >- COMPLETED -</Text>
                         </View>
@@ -460,16 +208,15 @@ var ClueList = React.createClass({
             </TouchableHighlight>
 	      	);
     	}
-        else if (rowData.category === "inProgress") {
+        else if (rowData.status === ClueController.IN_PROGRESS || rowData.status === ClueController.SKIPPED) {
             return (
                 <TouchableHighlight onPress={() => this.rowPressed(rowData)}
                 underlayColor='#dddddd'>
                 <View>
                     <View style={styles.rowContainer}>
                         <View style={styles.inProgressTextContainer}>
-                            <Text style={styles.title}>{rowData.title}</Text>
                             <Text style={styles.statusDescription}
-                                >- IN PROGRESS -</Text>
+                                >- {rowData.status === ClueController.SKIPPED ? "SKIPPED" : "IN PROGRESS"} -</Text>
                         </View>
                     </View>
                     <View style={styles.separator}/>
@@ -484,10 +231,7 @@ var ClueList = React.createClass({
                 <View>
                     <View style={styles.rowContainer}>
                         <View style={styles.incompleteTextContainer}>
-                            <Text style={styles.lockedDescription}
-                                > Clue Name </Text>
-																<Text style={styles.statusDescription}
-		                                > Locked </Text>
+							<Text style={styles.statusDescription}>- LOCKED -</Text>
                         </View>
                     </View>
                     <View style={styles.separator}/>
@@ -497,13 +241,31 @@ var ClueList = React.createClass({
     	}
 	},
 
+    rewardRequested: function() {
+        this.setState({
+            showReward: true
+        })
+    },
+
 	render: function() {
-		var hunt = this.props.hunt;
+		var hunt = this.hunt;
 
 		return (
 			<View style={styles.container}>
+                <Modal
+                    animationType='fade'
+                    transparent={true}
+                    visible={this.state.showReward}
+                    onRequestClose={() => {
+                        this.setState({  showReward: false  });
+                    }}
+                    >
+                    <RewardModal
+                        done={() => this.setState({showReward: false})}
+                        hunt={this.props.controller.hunt}/>
+                </Modal>
 				<View>
-					<Text style={styles.huntTitle}>{hunt.title.toUpperCase()}</Text>
+					<Text style={styles.huntTitle}>{hunt.name.toUpperCase()}</Text>
                     <View style={styles.topSeparator}/>
 				</View>
 				<View style={styles.separatorSmall}/>
@@ -511,6 +273,14 @@ var ClueList = React.createClass({
                     dataSource={this.state.dataSource}
                     automaticallyAdjustContentInsets={false}
                     renderRow={this.renderRow}/>
+                {this.props.controller.elegableForReward() ?
+                    <TouchableHighlight
+                        style={styles.buttonView}
+                        underlayColor={BUTTON_UNDERLAY_COLOR}
+                        onPress={this.rewardRequested}>
+                            <Text style={[{fontFamily: FONT}, styles.buttonText]}>Collect Prize</Text>
+                    </TouchableHighlight>
+                : null}
 			</View>
 		);
 	},

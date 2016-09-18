@@ -1,6 +1,7 @@
 'use strict';
  
-var React = require('react-native');
+var ReactNative = require('react-native');
+var React = require('react');
 import User from './User';
 var dismissKeyboard = require('dismissKeyboard');
 
@@ -12,10 +13,12 @@ var {
   TouchableHighlight,
   ActivityIndicatorIOS,
   Image,
-  Component,
   Dimensions,
   Modal,
   AlertIOS,
+} = ReactNative;
+var {
+    Component,
 } = React;
 
 var width = Dimensions.get('window').width;
@@ -38,6 +41,7 @@ var styles = StyleSheet.create({
 		marginLeft: 5,
 		marginRight: 5,
 		padding: 40,
+
 		borderRadius: 10
 	},
 	description: {
@@ -54,7 +58,7 @@ var styles = StyleSheet.create({
 		marginLeft: 0,
 		flexDirection: 'row',
 		alignSelf: 'stretch',
-		backgroundColor: '#72b7a3',
+		backgroundColor: '#22B08F',
 	},
 	buttonText: {
 		fontSize: 18,
@@ -66,7 +70,7 @@ var styles = StyleSheet.create({
 		height: 40,
 		flexDirection: 'column',
 		alignSelf: 'stretch',
-		backgroundColor: '#72b7a3',
+		backgroundColor: '#22B08F',
 	},
 	inputContainerView: {
 		marginLeft: 50,
@@ -77,6 +81,7 @@ var styles = StyleSheet.create({
 		backgroundColor: "#f0f8f5",
 		flexDirection: 'column',
 		alignSelf: 'stretch',
+		marginBottom: 10
 	},
 	textField: {
 		height: 40,
@@ -89,27 +94,37 @@ var styles = StyleSheet.create({
 	},
 	button: {
 		height: 36,
-		marginTop: 20,
 		flexDirection: 'row',
-		backgroundColor: '#bfcf60',
-		borderColor: '#bfcf60',
+		backgroundColor: '#BAC928',
+		borderColor: '#BAC928',
 		borderWidth: 1,
 		borderRadius: 5,
-		marginBottom: 10,
+		marginTop: 5,
+		marginRight: 50,
+		marginLeft: 50,
 		alignSelf: 'stretch',
 		justifyContent: 'center'
 	},
-	icons: {
-		top: 10,
-		left: 10,
-		height: 20,
+	loginIconsEmail: {
+		top: 13,
+		left: 15,
+		height: 15,
+		marginRight: 3,
 		width: 20,
+		flexDirection: 'row',
+	},
+	loginIconsPassword: {
+		top: 10,
+		left: 16,
+		marginRight: 4,
+		height: 20,
+		width: 17,
 		flexDirection: 'row',
 	},
 	titleStyle: {
 		marginBottom: 20,
 		fontSize: 35,
-		color: "#59aa91",
+		color: "#22B08F",
 		alignSelf: "center",
 	},
 	cancel: {
@@ -121,7 +136,7 @@ var styles = StyleSheet.create({
 	},
 	separationBar: {
 		backgroundColor: "#1d8377",
-		height: 1,
+		height: 0.7,
 		marginLeft: 5,
 		marginRight: 5,
 		flexDirection: 'row',
@@ -131,8 +146,8 @@ var styles = StyleSheet.create({
 
 class SignUp extends Component {
 	propTypes: {
-		hideModal: React.PropTypes.func,
-		didSignUp: React.PropTypes.func,
+		hideModal: ReactNative.PropTypes.func,
+		didSignUp: ReactNative.PropTypes.func,
     }
 
     constructor() {
@@ -160,8 +175,11 @@ class SignUp extends Component {
     		);
     		this.refs.passwordInput.focus()
     	}else if (this.state.passwordConfirm == this.state.password) {
-    		User.signUp(this.state.username.toLowerCase(), this.state.password).then(() => {
-    			if (!error && user) {
+    		this.setState({loading: true})
+    		User.signUp(this.state.username.toLowerCase(), this.state.password).then((user) => {
+
+
+    			if (user) {
     				if (typeof this.props.hideModal == 'function') {
     					this.props.didSignUp(user);
     				}
@@ -171,10 +189,19 @@ class SignUp extends Component {
     			}else{
     				AlertIOS.alert(
 						"Sign Up problem",
-						"That email is already registered"
+						"Something went wrong signing up!"
 					);
 					this.refs.emailInput.focus()
     			}
+
+
+    			this.setState({loading: false})
+    		}, (error) => {
+    			AlertIOS.alert(
+					"Sign Up problem",
+					error.message
+				);
+				this.setState({loading: false})
     		});
     	}else{
     		AlertIOS.alert(
@@ -197,7 +224,7 @@ class SignUp extends Component {
 				<View style={styles.inputContainerView}>
 					<View style={{flexDirection: 'row'}}>
 						<Image
-							style={styles.icons}
+							style={styles.loginIconsEmail}
 							source={require('../../user.png')}/>
 						<TextInput style= {styles.textField}
 							onChangeText={(text) => this.setState({username: text})}
@@ -214,7 +241,7 @@ class SignUp extends Component {
 					<View style={styles.separationBar}></View>
 					<View style={{flexDirection: 'row'}}>
 						<Image
-							style={styles.icons}
+							style={styles.loginIconsPassword}
 							source={require('../../password.png')}/>
 						<TextInput style={styles.textField}
 							disabled={this.state.loading}
@@ -232,7 +259,7 @@ class SignUp extends Component {
 					<View style={styles.separationBar}></View>
 					<View style={{flexDirection: 'row'}}>
 						<Image
-							style={styles.icons}
+							style={styles.loginIconsPassword}
 							source={require('../../password.png')}/>
 						<TextInput style={styles.textField}
 							disabled={this.state.loading}
@@ -245,14 +272,18 @@ class SignUp extends Component {
 							secureTextEntry={true}
 							placeholder="confirm password"/>
 					</View>
+				</View>
 
-					<TouchableHighlight style={styles.button}
+					<ActivityIndicatorIOS
+						animating={this.state.loading}
+						hidesWhenStopped={true}
+						size="small"/>
+					<TouchableHighlight style={[styles.button, this.state.loading ? {backgroundColor: "#cadb66"} : null]}
 						onPress={this.signUp.bind(this)}
 						disabled={this.state.loading}
 						underlayColor='#cadb66'>
 			    		<Text style={styles.buttonText}>Sign up</Text>
 			  		</TouchableHighlight>
-				</View>
 				</View>
 
 				<Text style={styles.cancel} onPress={this.props.hideModal}>Cancel</Text>

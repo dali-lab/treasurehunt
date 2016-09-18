@@ -1,14 +1,17 @@
-var React = require('react-native');
+var ReactNative = require('react-native');
+var React = require('react');
+var {
+	Component
+} = React;
 
 var {
 	StyleSheet,
 	Image,
 	View,
 	Text,
-	Component,
 	TouchableHighlight,
 	Alert
-} = React;
+} = ReactNative;
 
 var styles = StyleSheet.create({
 	container: {
@@ -66,7 +69,7 @@ var styles = StyleSheet.create({
 	  borderRadius: 8,
 	  marginBottom: 10,
 	  alignSelf: 'stretch',
-	  padding:20
+	  padding: 20
 	}
 });
 

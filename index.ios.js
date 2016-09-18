@@ -1,4 +1,5 @@
-var React = require('react-native');
+var ReactNative = require('react-native');
+var React = require('react');
 var LoginScreen = require('./src/components/LoginScreen');
 var HomePage = require('./src/components/HomePage');
 var User = require('./src/components/User').default;
@@ -6,9 +7,9 @@ var User = require('./src/components/User').default;
 var {
     Navigator,
     View
-} = React;
+} = ReactNative;
 
-var styles = React.StyleSheet.create({
+var styles = ReactNative.StyleSheet.create({
   text: {
     color: 'black',
     backgroundColor: 'white',
@@ -26,11 +27,16 @@ var treasurehunt = React.createClass ({
     getInitialState: function() {
         var user = User.getCurrentUser();
 
+        // This is so we know what the starting hunt is
+        User.getStartingHuntID()
+
         User.loadUserFromStore().then((user) => {
-            this.setState({
-                user: user,
-                loggingIn: user === null,
-            });
+            if (this.state.user == null) {
+                this.setState({
+                    user: user,
+                    loggingIn: user === null,
+                });
+            }
         });
 
         console.log(user);
@@ -93,4 +99,4 @@ var treasurehunt = React.createClass ({
     },
 });
 
-React.AppRegistry.registerComponent('treasurehunt', function() { return treasurehunt });
+ReactNative.AppRegistry.registerComponent('treasurehunt', function() { return treasurehunt });

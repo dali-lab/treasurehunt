@@ -1,21 +1,37 @@
 
-var React = require('react-native');
+var ReactNative = require('react-native');
+var React = require('react');
 var ClueList = require('./ClueList');
+var RewardModal = require('./RewardModal');
 import User from './User';
+import ClueController from './ClueController';
+
+
+const Firebase = require('firebase')
+const config = require('../../config')
+import rootRef from '../../newfirebase.js'
+const usersRef = rootRef.ref('users');
 
 var {
 	StyleSheet,
 	Image,
 	View,
 	Text,
-	Component,
 	Dimensions,
   	AlertIOS,
-	TouchableHighlight
+	TouchableHighlight,
+	Modal
+} = ReactNative;
+
+var {
+    Component,
 } = React;
 
 var screenWidth = Dimensions.get('window').width;
 const margin = 30
+const BUTTON_COLOR = "#c8e7a6";
+const BUTTON_UNDERLAY_COLOR = "#abba56"
+const FONT = "Verlag-Book";
 
 var styles = StyleSheet.create({
 	container: {
@@ -33,7 +49,7 @@ var styles = StyleSheet.create({
 	image: {
 		height: 180,
 		width: screenWidth - 25,
-		marginBottom: 10,
+		marginBottom: 20,
 		resizeMode: "contain",
 	},
 	description: {
@@ -63,6 +79,7 @@ var styles = StyleSheet.create({
 		marginLeft: 25,
 		marginRight: 25,
 		height: 70,
+		width: screenWidth - 50,
 		flexDirection: 'column',
 		justifyContent: 'center',
 		alignItems: 'center',
@@ -72,21 +89,23 @@ var styles = StyleSheet.create({
 	},
 	buttonImage:{
 		height: 70,
+		width: screenWidth - 50,
 		resizeMode: "contain"
 	},
 	buttonAdd: {
 		marginLeft: 25,
 		marginRight: 25,
+		width: Math.min(screenWidth - 50, 325),
 		height: 36,
 		flexDirection: 'column',
-		backgroundColor: '#cadb66',
-		borderColor: '#cadb66',
+		backgroundColor: '#c8e7a6',
+		borderColor: '#c8e7a6',
 		justifyContent: 'center',
 		alignItems: 'center',
 		borderWidth: 1,
 		borderRadius: 8,
 		marginBottom: 10,
-		alignSelf: 'stretch',
+		alignSelf: 'center',
 		padding:20,
 	},
 	actionBarView: {
@@ -107,7 +126,37 @@ var styles = StyleSheet.create({
 		resizeMode: "contain",
 		width: 20,
 		height: 20,
-	}
+	},
+    emptyContainerBottom: {
+      backgroundColor: 'white',
+      flexDirection: 'column',
+      height: 52,
+      borderTopWidth: 3,
+      borderColor: '#23B090'
+    },
+
+    rewardButtonView: {
+        marginLeft: 25,
+		marginRight: 25,
+		width: Math.min(screenWidth - 50, 325),
+		height: 36,
+		flexDirection: 'column',
+		backgroundColor: '#c8e7a6',
+		borderColor: '#c8e7a6',
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderWidth: 1,
+		borderRadius: 8,
+		marginBottom: 10,
+		alignSelf: 'center',
+		padding:20,
+    },
+    rewardButtonText: {
+		fontSize: 20,
+		color: 'white',
+		fontWeight: 'bold',
+		fontFamily: 'Verlag-Book'
+    },
 });
 
 
@@ -116,20 +165,54 @@ var HuntOverview = React.createClass({
 	huntAdded: React.PropTypes.func,
 
 	getInitialState: function() {
+		this.controller = null
+
+		User.getCurrentUser().completedHunt(this.props.hunt).then((flag) => {
+			this.setState({
+				hadCompleted: flag
+			})
+		})
+
 		return {
 			shouldShowAddButton: null,
-			stars: 4
+			processingAddHunt: false,
+			hasHunt: null,
+			stars: 4,
+			showReward: false,
+			hadCompleted: false
 		}
 	},
 
 	onStartPressed: function() {
+
 		this.props.navigator.push({
             title: "Hunt",
             component: ClueList,
             passProps: {
-                hunt: this.props.hunt,
+            	controller: this.controller
             }
         });
+	},
+
+	componentWillMount: function() {
+		this.currentClue = null
+		this.currentClueCallback = null
+
+		console.log(this.props.hunt.procedural)
+
+		User.getCurrentUser().hasHuntCurrent(this.props.hunt).then((flag) => {
+			this.setState({
+				hasHunt: flag
+			});
+
+			if (flag) { // Meaning that the user has the hunt
+				// Now I am going to load the clue controller
+				this.controller = new ClueController(this.props.hunt)
+				this.controller.loadData().then(() => {
+					// Do something :)
+				})
+			}
+		});
 	},
 
 	onExitPressed: function() {
@@ -138,33 +221,48 @@ var HuntOverview = React.createClass({
 
 	onAddHuntPressed: function() {
 		console.log("Doing something with hunt: " + this.props.hunt.id);
-		if (this.state.shouldShowAddButton) {
-			User.getCurrentUser().addHunt(this.props.hunt).then(() => {
+
+		this.setState({
+			processingAddHunt: true
+		});
+		if (!this.state.hasHunt) {
+			User.currentUser.addHunt(this.props.hunt).then(() => {
 				if (typeof this.props.huntAdded == "function") {
 					this.props.huntAdded();
 				}
-				this.setState({
-					shouldShowAddButton: false
+
+				this.controller = new ClueController(this.props.hunt)
+				this.controller.loadData().then(() => {
+
 				});
-			}, (error) => console.log(error));
+
+				this.setState({
+					hasHunt: true,
+					processingAddHunt: false
+				});
+			}, (error) => {
+				AlertIOS.alert("Error", error);
+				this.setState({
+					processingAddHunt: false
+				});
+			});
 		}else{
-			User.getCurrentUser().removeHunt(this.props.hunt).then(() => {
+			User.currentUser.removeHunt(this.props.hunt).then(() => {
 				if (typeof this.props.huntAdded == "function") {
 					this.props.huntAdded();
 				}
 
-				this.setState({
-					shouldShowAddButton: true
-				});
-			}, (error) => console.log(error));
-		}
-	},
+				this.controller = null
 
-	updateShouldShowAddButton: function() {
-		if (this.state.shouldShowAddButton == null) {
-			User.getCurrentUser().hasHuntCurrent(this.props.hunt).then((flag) => {
 				this.setState({
-					shouldShowAddButton: !flag
+					hasHunt: false,
+					processingAddHunt: false
+				});
+				this.props.navigator.pop();
+			}, (error) => {
+				AlertIOS.alert("Error", error);
+				this.setState({
+					processingAddHunt: false
 				});
 			});
 		}
@@ -231,27 +329,46 @@ var HuntOverview = React.createClass({
 		</View>
 
 
-//		console.log(hunt.category);
-		this.updateShouldShowAddButton();
 		return (
 			<View style={styles.container}>
+				<Modal
+                    animationType='fade'
+                    transparent={true}
+                    visible={this.state.showReward}
+                    onRequestClose={() => {
+                        this.setState({  showReward: false  });
+                    }}>
+                    <RewardModal
+                        done={() => this.setState({showReward: false})}
+                        hunt={hunt}/>
+                </Modal>
 				<View>
-					<Text style={styles.title}>{hunt.title}</Text>
+					<Text style={styles.title}>{hunt.name}</Text>
 				</View>
 				<Image style={styles.image}
 					source={{uri: hunt.image}} />
-				{actionBar}
-				<Text style={styles.description}>{hunt.description}</Text>
+				<Text style={styles.description}>{hunt.desc}</Text>
 				<View style={{flex: 1}}/>
+
+				{this.state.hadCompleted ?
+					<TouchableHighlight style = {styles.rewardButtonView}
+						onPress={() => this.setState({ showReward: true })}
+						underlayColor='#bccfa8'>
+						<Text style = {styles.rewardButtonText}>Collect Prize</Text>
+					</TouchableHighlight> : null }
+
+
+				{this.state.hasHunt != null && this.state.hasHunt ?
 				<TouchableHighlight style = {styles.button}
 						onPress={this.onStartPressed}
-						underlayColor='#FFFFF'>
+						underlayColor='#FFFFFF'>
 						<Image style={styles.buttonImage} source={require("./viewCluseButton.png")}/>
-				</TouchableHighlight>
-				<TouchableHighlight style = {styles.buttonAdd}
+				</TouchableHighlight> : null}
+				<TouchableHighlight style = {[styles.buttonAdd, this.state.processingAddHunt ? {backgroundColor: '#bccfa8'} : null]}
+						disabled={this.state.processingAddHunt}
 						onPress={this.onAddHuntPressed}
-						underlayColor='#99d9f4'>
-						<Text style = {styles.buttonText}>{ this.state.shouldShowAddButton ? "ADD HUNT" : "REMOVE HUNT" }</Text>
+						underlayColor='#bccfa8'>
+						<Text style = {styles.buttonText}>{ !this.state.hasHunt ? "REDO HUNT" : "REMOVE HUNT" }</Text>
 				</TouchableHighlight>
 			</View>
 		);

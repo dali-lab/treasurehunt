@@ -1,6 +1,7 @@
 'use strict';
 
-var React = require('react-native');
+var ReactNative = require('react-native');
+var React = require('react');
 import User from './User';
 
 var {
@@ -11,10 +12,12 @@ var {
   TouchableHighlight,
   ActivityIndicatorIOS,
   Image,
-  Component,
   Dimensions,
   Modal,
   AlertIOS,
+} = ReactNative;
+var {
+    Component,
 } = React;
 
 var styles = StyleSheet.create({
@@ -51,7 +54,7 @@ var styles = StyleSheet.create({
 
 class ForgotPassword extends Component {
 	propTypes: {
-		hideModal: React.PropTypes.func,
+		hideModal: ReactNative.PropTypes.func,
     }
 
 	render() {

@@ -5,9 +5,10 @@ const config = require('../../config')
 
 const usersRef = rootRef.ref('users');
 // const usersRef = new Firebase("https://treasurehuntdali.firebaseio.com/users")
-const React = require('react-native');
+const ReactNative = require('react-native');
 const {FBLoginManager} = require('react-native-facebook-login');
 const Data = require('./Data');
+const cluesRef = rootRef.ref('clues');
 
 
 // const USER_EMAIL_KEY = '@TreasureHunt:email';
@@ -15,11 +16,13 @@ const USER_DATA_KEY = 'user_data';
 
 var {
 	AsyncStorage,
-} = React;
+} = ReactNative;
 
 
 class User {
 	static currentUser = null;
+	static startingHunt = null;
+	static startingHuntCallback = null;
 
 	/**
 	 * This constructs a user object
@@ -54,18 +57,39 @@ class User {
 		this.dataRef = usersRef.child(this.uid);
 		this.currentHunts = this.dataRef.child("currentHunts");
 		this.completedHunts = this.dataRef.child("completedHunts");
+
+		console.log("My user id: " + this.uid);
 	}
 
 	// A function for when a user has just been created. It fills the user with empty data tables
 	initializeNewUser() {
 		this.dataRef.set({
 			email: this.email,
-			currentHunts: [],
-			completedHunts: [],
 			name: this.name || "",
-			Feed: [],
-			friends: [],
 		});
+	}
+
+	// Each passed function MUST implment the snap system of firebase
+	setUpListeners(userHuntDataUpdated, userDataUpdated) {
+		if (userHuntDataUpdated !== null) {
+			this.currentHunts.on('value', userHuntDataUpdated, () => {});
+			this.userHuntDataUpdated = userHuntDataUpdated;
+		}else if (this.userHuntDataUpdated !== null && this.userHuntDataUpdated !== undefined) {
+			this.currentHunts.off('value', this.userHuntDataUpdated);
+			this.userHuntDataUpdated = null;
+		}
+
+		if (userDataUpdated !== null) {
+			this.dataRef.on('value', userDataUpdated, () => {});
+			this.userDataUpdated = userDataUpdated;
+		}else if (this.userDataUpdated !== null && this.userDataUpdated !== undefined) {
+			this.currentHunts.off('value', this.userDataUpdated);
+			this.userDataUpdated = null;
+		}
+	}
+
+	cancelListeners() {
+		setUpListeners(null, null);
 	}
 
 	isFacebook() {
@@ -77,18 +101,15 @@ class User {
 			return User.currentUser;
 		}
 
-		console.log(Firebase.auth().currentUser);
-
 		if (Firebase.auth().currentUser) {
 			return new User(Firebase.auth().currentUser);
 		}
-
+		
 		return null;
 	}
 
 	static FBonLogin(data) {
 		var id = data.credentials.userId;
-		console.log(data);
 
 		var user = new User(null, {
 			id: id,
@@ -97,9 +118,8 @@ class User {
 			name: "",
 		});
 
-		user.dataRef.on("value", (snapshot) => {
-			if (!snapshot.hasChild("currentHunts")) {
-				console.log("initializing new user");
+		user.dataRef.once("value", (snapshot) => {
+			if (!snapshot.hasChild("email")) {
 				user.initializeNewUser();
 			}
 		});
@@ -110,7 +130,6 @@ class User {
 	}
 
 	static loadUserFromStore() {
-		console.log("Loading user...");
 		return new Promise(async (success, failure) => {
 			try {
 				const user_data_json = await AsyncStorage.getItem(USER_DATA_KEY);
@@ -120,10 +139,8 @@ class User {
 					var myUser = new User(JSON.parse(user_data_json), null);
 					Firebase.auth().currentUser = JSON.parse(user_data_json);
 					User.currentUser = myUser
-					console.log("Loaded user!");
 					success(myUser);
 				}else{
-					console.log("Loaded null!");
 					User.currentUser = null;
 					success(null);
 				}
@@ -135,7 +152,6 @@ class User {
 	}
 
 	static saveUser(user_data) {
-		console.log("Saving user...");
 		return new Promise(async (success, failure) => {	
 			if (this.currentUser.isFacebook()) {
 				failure("Type is facebook. Cannot save!");
@@ -144,7 +160,6 @@ class User {
 
 			try {
 				await AsyncStorage.setItem(USER_DATA_KEY, JSON.stringify(user_data));
-				console.log("Saved user!");
 				success();
 			} catch(error) {
 				failure("Error saving user: " + error);
@@ -156,18 +171,25 @@ class User {
 	 * Returns a promise with a non-null User
 	 */
 	static login(email, password) {
-		console.log("Attempting to log in");
 		return new Promise((fulfill, reject) => {
 			// if (Firebase.auth().currentUser) {
 			// 	reject("Failed to login! There is already a user!!!!");
 			//	return;
 			// }
+			if (email == "") {
+				reject({message: "You need to input an email"});
+				return;
+			}
+			if (password == "") {
+				reject({message: "You need to input your password"});
+				return;
+			}
+
 
 			Firebase.auth().signInWithEmailAndPassword(email, password).then((user) => {
 				// We have lift off!
 				var myUser = new User(user, null);
 				// The Eagle has landed!
-				console.log("Logged in with user: " + myUser);
 
 				User.currentUser = myUser;
 				User.saveUser(user);
@@ -190,8 +212,8 @@ class User {
 				// We have lift off!
 				var myUser = new User(user, null);
 				// The Eagle has landed!
-				console.log("Signing up!");
 
+				User.currentUser = myUser;
 				myUser.initializeNewUser();
 				User.saveUser(user);
 				fulfill(myUser);
@@ -207,31 +229,91 @@ class User {
 	}
 
 	static logout() {
-		return User.currentUser.logout();
+		if (User.currentUser)
+			return User.currentUser.logout();
+		return null
 	}
 
 	hasHuntCurrent(hunt) {
 		return new Promise((fulfill, reject) => {
 			this.getHuntsList().then((huntsList) => {
-				console.log(huntsList, hunt.id, huntsList[hunt.id]);
-				fulfill(huntsList[hunt.id] != undefined);
+				fulfill(huntsList != null && huntsList[hunt.id] != null);
 			}, (error) => {
 				reject(error);
 			});
 		});
 	}
 
+	completedHunt(hunt) {
+		return new Promise((fulfill, reject) => {
+			this.getCompletedHuntsList().then((list) => {
+				for (index in list) {
+					if (index == hunt.id) {
+						fulfill(true);
+						return;
+					}
+				}
+				fulfill(false);
+				return;
+			}, (error) => {
+				reject(error);
+			})
+		})
+	}
+
 	addHunt(hunt) {
 		return new Promise((fulfill, reject) => {
 			this.hasHuntCurrent(hunt).then((flag) => {
 				if (!flag) {
-					Data.getHuntWithID(hunt.id).then((hunt2) => {
-						var firstClue = hunt2.clues[0];
-						this.currentHunts.child(hunt.id).set({
-							cluesCompleted: 0,
-							currentClue: firstClue
+					console.log("-> The user doesn't have the hunt at the moment");
+					Data.getHuntWithID(hunt.id).then((huntData) => {
+
+						console.log("-> Got the hunt");
+						if (huntData.procedural) {
+							var firstClue = huntData.clues[0];
+							this.currentHunts.child(hunt.id).set({
+								cluesCompleted: 0,
+								currentClue: firstClue
+							});
+						}else{
+							var dict = {};
+
+							for (index in huntData.clues) {
+								var clue = huntData.clues[index];
+
+								dict[clue] = 'current'
+							}
+
+							this.currentHunts.child(hunt.id).set({
+								skipped: 0,
+								clues: dict
+							});
+						}
+						console.log("-> ... And added it");
+
+
+						console.log("-> Compiling submission clearing promises");
+						var promises = []
+						for (index in huntData.clues) {
+							var clueID = huntData.clues[index];
+							var ref = cluesRef.child(clueID).child("submissions").child(hunt.id + "|" + this.uid);
+							promises.push(new Promise((success, failure) => {
+								console.log("REMOVING... ref " + ref);
+								ref.remove((error) => {
+									console.log("Done removing", error);
+									success();
+								})
+							}));
+						}
+
+						console.log("-> Performing submission clearing promises");
+						Promise.all(promises).then(() => {
+							console.log("Done removing all of them!");
+							fulfill();
+						}, (error) => {
+							console.log("Encountered error when clearing submissions: ", error);
+							fulfill();
 						});
-						fulfill();
 					}, (error) => {
 						reject(error);
 					});
@@ -244,8 +326,12 @@ class User {
 		});
 	}
 
+	addStartingHunt() {
+		console.log("Adding starting hunt...");
+		return this.addHunt(User.startingHunt);
+	}
+
 	removeHunt(hunt) {
-		console.log("Removing Hunt!");
 		return new Promise((fulfill, reject) => {
 			this.hasHuntCurrent(hunt).then((flag) => {
 				if (flag) {
@@ -265,21 +351,17 @@ class User {
 			if (this.isFacebook()) {
 				FBLoginManager.logout((error, data) => {
 					if (!error) {
-						console.log("Logged out!");
 						success();
 					}else{
-						console.log("Failed to logout!");
 						failure();
 					}
 				});
 			}else{
 				Firebase.auth().signOut().then(() => {
 					// Completed!
-					console.log("Logged out!");
 					AsyncStorage.removeItem(USER_DATA_KEY);
 					success();
 				}, (error) => {
-					console.log("Failed to log out!");
 					failure(error);
 				});
 			}
@@ -301,7 +383,7 @@ class User {
 		return new Promise((fulfill, reject) => {
 			this.completedHunts.once('value', function(snap) {
 				if (snap.val() == null) {
-					reject(NSNull);
+					reject();
 				}else{
 					fulfill(snap.exportVal());
 				}
@@ -311,6 +393,29 @@ class User {
 		});
 	}
 	// end of function 7/21/16 AES
+
+	static getStartingHuntID() {
+		rootRef.ref('startingHunt').once('value', (snap) => {
+			Data.getHuntWithID(snap.val()).then(function (key, hunt) {
+				hunt.id = key
+				User.startingHunt = hunt
+				if (User.startingHuntCallback != null && typeof User.startingHuntCallback == 'function') {
+					User.startingHuntCallback(hunt);
+				}
+				User.startingHuntCallback = null;
+			}.bind(undefined, snap.val()), (error) => {
+				console.log("--- Encountered error getting starting hunt! " + error);
+			})
+		})
+	}
+
+	static setStartingHuntCallback(callback) {
+		if (User.startingHunt != null) {
+			callback(User.startingHuntCallback);
+		}else{
+			User.startingHuntCallback = callback
+		}
+	}
 }
 
 export default User;

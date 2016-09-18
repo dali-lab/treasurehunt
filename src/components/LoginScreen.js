@@ -1,6 +1,7 @@
 'use strict';
 
-var React = require('react-native');
+var ReactNative = require('react-native');
+var React = require('react');
 const SignUp = require('./SignUp');
 const ForgotPassword = require('./ForgotPassword');
 import User from './User';
@@ -15,10 +16,13 @@ var {
   TouchableHighlight,
   ActivityIndicatorIOS,
   Image,
-  Component,
   Dimensions,
   Modal,
   AlertIOS,
+} = ReactNative;
+
+var {
+	Component,
 } = React;
 
 var screenPadding = 10;
@@ -111,8 +115,8 @@ var styles = StyleSheet.create({
 	},
 	loginIconsPassword: {
 		top: 10,
-		left: 17,
-		marginRight: 5,
+		left: 16,
+		marginRight: 4,
 		height: 20,
 		width: 17,
 		flexDirection: 'row',
@@ -185,8 +189,8 @@ var signUpStyles = StyleSheet.create({
 
 class LoginScreen extends Component {
 	propTypes: {
-		onLogin: React.PropTypes.func,
-		onSkipLogin: React.PropTypes.func,
+		onLogin: ReactNative.PropTypes.func,
+		onSkipLogin: ReactNative.PropTypes.func,
     }
 
 	constructor(props) {
@@ -205,9 +209,7 @@ class LoginScreen extends Component {
 		this.setState({
 			processingLogin: true,
 		});
-		console.log('i can get this far at least');
 		User.login(this.state.email.toLowerCase(), this.state.password).then((user) => {
-			console.log("LOGGINGIGNIGIG");
 			this.didLogIn(user);
 		}, (error) => {
 			console.log(error);
@@ -269,8 +271,7 @@ class LoginScreen extends Component {
 			>
 			<View style={styles.container}>
 				<Modal
-					animated={true}
-					animationType='fade'
+					animationType='slide'
 					transparent={true}
 					visible={this.state.signingUp || this.state.recoveringPassword}
 					onRequestClose={() => {this.hideModal}}
