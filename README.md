@@ -1,6 +1,6 @@
 # TREASUREHUNT
 
-> Abby Starr, Devina Kumar, Jenny Seong, John Kotz, Seb Lim
+> Abby Starr, Devina Kumar, Jenny Seong, John Kotz, Seb Lim, Henry Wilson
 
 ## Description
 
