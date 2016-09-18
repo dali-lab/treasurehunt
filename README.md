@@ -1,6 +1,6 @@
 # TREASUREHUNT
 
-> John Kotz, Abby Starr, Yixuan He, Shouqi Chen
+> Abby Starr, Devina Kumar, Jenny Seong, John Kotz, Seb Lim
 
 ## Description
 
