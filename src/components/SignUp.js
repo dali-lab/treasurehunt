@@ -225,7 +225,7 @@ class SignUp extends Component {
 					<View style={{flexDirection: 'row'}}>
 						<Image
 							style={styles.loginIconsEmail}
-							source={require('../../user.png')}/>
+							source={require('../img/user.png')}/>
 						<TextInput style= {styles.textField}
 							onChangeText={(text) => this.setState({username: text})}
 							value={this.state.username}
@@ -242,7 +242,7 @@ class SignUp extends Component {
 					<View style={{flexDirection: 'row'}}>
 						<Image
 							style={styles.loginIconsPassword}
-							source={require('../../password.png')}/>
+							source={require('../img/password.png')}/>
 						<TextInput style={styles.textField}
 							disabled={this.state.loading}
 							onChangeText={(text) => this.setState({password: text})}
@@ -260,7 +260,7 @@ class SignUp extends Component {
 					<View style={{flexDirection: 'row'}}>
 						<Image
 							style={styles.loginIconsPassword}
-							source={require('../../password.png')}/>
+							source={require('../img/password.png')}/>
 						<TextInput style={styles.textField}
 							disabled={this.state.loading}
 							onChangeText={(text) => this.setState({passwordConfirm: text})}

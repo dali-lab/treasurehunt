@@ -172,7 +172,7 @@ import rootRef from '../../newfirebase.js'
 const usersRef = rootRef.ref('users');
 const huntsRef = rootRef.ref('hunts');
 
-const storage = firebase.storage();
+const storage = Firebase.storage();
 const storageRef = storage.ref();
 
 var teletubbies = storageRef.child('teletubbies.jpg');

@@ -79,7 +79,7 @@ var RewardModal = React.createClass({
 			<View style={styles.innerContainer}>
 				<Image
 					style={styles.iconImage}
-					source={require("./rewardHeadPeice.png")}/>
+					source={require("../img/rewardHeadPeice.png")}/>
 
 				<Text style={styles.rewardText}>{this.props.hunt.reward}</Text>
 

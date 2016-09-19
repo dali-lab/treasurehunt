@@ -284,7 +284,7 @@ class LoginScreen extends Component {
 					<View style={styles.innerContainer}>
 						<Image
 							style={styles.icon}
-							source={require('../../loginLogo.png')}/>
+							source={require('../img/loginLogo.png')}/>
 
 						<Text style={styles.titleStyle}>
 							{"TREASURE HUNT"}
@@ -293,7 +293,7 @@ class LoginScreen extends Component {
 						<View style={styles.loginTextInputMainView}>
 							<View style={styles.loginTextInputViews}><Image
 								style={styles.loginIconsEmail}
-								source={require('../../user.png')}/>
+								source={require('../img/user.png')}/>
 							<TextInput style= {styles.textField}
 								ref="emailTextField"
 								returnKeyType='next'
@@ -308,7 +308,7 @@ class LoginScreen extends Component {
 							<View style={styles.loginTextInputViews}>
 							<Image
 								style={styles.loginIconsPassword}
-								source={require('../../password.png')}/>
+								source={require('../img/password.png')}/>
 							<TextInput style={styles.textField}
 								ref="passwordTextField"
 								returnKeyType='go'

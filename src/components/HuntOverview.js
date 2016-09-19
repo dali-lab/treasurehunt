@@ -289,42 +289,42 @@ var HuntOverview = React.createClass({
 				style={styles.shareAction}
 				onPress={this.showUnimplemented}
 				underlayColor='white'>
-				<Image source={require("./shareIcon.png")} style={styles.actionBarIcons}/>
+				<Image source={require("../img/shareIcon.png")} style={styles.actionBarIcons}/>
 			</TouchableHighlight>
 			<TouchableHighlight
 				onPress={() => {
 					this.ratingButtonPressed(1)
 				}}
 				underlayColor='white'>
-				<Image source={this.state.stars >= 1 ? require("./star.png") : require("./star_empty.png")} style={styles.actionBarIcons}/>
+				<Image source={this.state.stars >= 1 ? require("../img/star.png") : require("../img/star_empty.png")} style={styles.actionBarIcons}/>
 			</TouchableHighlight>
 			<TouchableHighlight
 				onPress={() => {
 					this.ratingButtonPressed(2)
 				}}
 				underlayColor='white'>
-				<Image source={this.state.stars >= 2 ? require("./star.png") : require("./star_empty.png")} style={styles.actionBarIcons}/>
+				<Image source={this.state.stars >= 2 ? require("../img/star.png") : require("../img/star_empty.png")} style={styles.actionBarIcons}/>
 			</TouchableHighlight>
 			<TouchableHighlight
 				onPress={() => {
 					this.ratingButtonPressed(3)
 				}}
 				underlayColor='white'>
-				<Image source={this.state.stars >= 3 ? require("./star.png") : require("./star_empty.png")} style={styles.actionBarIcons}/>
+				<Image source={this.state.stars >= 3 ? require("../img/star.png") : require("../img/star_empty.png")} style={styles.actionBarIcons}/>
 			</TouchableHighlight>
 			<TouchableHighlight
 				onPress={() => {
 					this.ratingButtonPressed(4)
 				}}
 				underlayColor='white'>
-				<Image source={this.state.stars >= 4 ? require("./star.png") : require("./star_empty.png")} style={styles.actionBarIcons}/>
+				<Image source={this.state.stars >= 4 ? require("../img/star.png") : require("../img/star_empty.png")} style={styles.actionBarIcons}/>
 			</TouchableHighlight>
 			<TouchableHighlight
 				onPress={() => {
 					this.ratingButtonPressed(5)
 				}}
 				underlayColor='white'>
-				<Image source={this.state.stars >= 5 ? require("./star.png") : require("./star_empty.png")} style={styles.actionBarIcons}/>
+				<Image source={this.state.stars >= 5 ? require("../img/star.png") : require("../img/star_empty.png")} style={styles.actionBarIcons}/>
 			</TouchableHighlight>
 		</View>
 
@@ -362,7 +362,7 @@ var HuntOverview = React.createClass({
 				<TouchableHighlight style = {styles.button}
 						onPress={this.onStartPressed}
 						underlayColor='#FFFFFF'>
-						<Image style={styles.buttonImage} source={require("./viewCluseButton.png")}/>
+						<Image style={styles.buttonImage} source={require("../img/viewCluseButton.png")}/>
 				</TouchableHighlight> : null}
 				<TouchableHighlight style = {[styles.buttonAdd, this.state.processingAddHunt ? {backgroundColor: '#bccfa8'} : null]}
 						disabled={this.state.processingAddHunt}

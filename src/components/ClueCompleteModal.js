@@ -1,8 +1,8 @@
 const ReactNative = require('react-native');
 const React = require('react');
-const IMAGE = require('./success.png')
-const CONFETI_IMAGE = require('./congratsSparkler.png');
-const WRONG_IMAGE = require('./failX.png');
+const IMAGE = require('../img/success.png')
+const CONFETI_IMAGE = require('../img/congratsSparkler.png');
+const WRONG_IMAGE = require('../img/failX.png');
 
 const {
 	StyleSheet,

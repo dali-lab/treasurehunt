@@ -99,4 +99,4 @@ var treasurehunt = React.createClass ({
     },
 });
 
-ReactNative.AppRegistry.registerComponent('treasurehunt', function() { return treasurehunt });
+ReactNative.AppRegistry.registerComponent('Treasure Hunt', function() { return treasurehunt });

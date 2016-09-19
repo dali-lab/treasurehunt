@@ -120,7 +120,7 @@ var HomePage = React.createClass({
         titleTextColor='white'
         initialRoute={{
           title: 'TREASUREHUNT',
-          rightButtonImage: <Image source={'./home.png'} /> ,
+          rightButtonImage: <Image source={'../img/home.png'} /> ,
           component: Home,
           rightButtonTitle: "Logout",
           onRightButtonPress: this.onLogout,
@@ -157,8 +157,8 @@ var HomePage = React.createClass({
 
         <Icon.TabBarItemIOS
 
-         icon={require('./28reminder.png')}
-         selectedIcon={require('./w28reminder.png')}
+         icon={require('../img/28reminder.png')}
+         selectedIcon={require('../img/w28reminder.png')}
          selected={this.state.selectedTab === TABS.feed}
          onPress={() => {
            AlertIOS.alert(
@@ -173,8 +173,8 @@ var HomePage = React.createClass({
         <Icon.TabBarItemIOS
 
           selected={this.state.selectedTab === TABS.home}
-          icon={require('./home.png')}
-          selectedIcon={require('./w28home.png')}
+          icon={require('../img/home.png')}
+          selectedIcon={require('../img/w28home.png')}
           onPress={() => {
             if (this.state.selectedTab !== TABS.home) {
                 this.setState({
@@ -194,8 +194,8 @@ var HomePage = React.createClass({
        <Icon.TabBarItemIOS
 
          selected={this.state.selectedTab === TABS.create}
-         icon={require('./28pencil.png')}
-         selectedIcon={require('./w28pencil.png')}
+         icon={require('../img/28pencil.png')}
+         selectedIcon={require('../img/w28pencil.png')}
          onPress={() => {
            AlertIOS.alert(
               "Unsupported",

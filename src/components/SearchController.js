@@ -241,7 +241,7 @@ var SearchController = React.createClass({
 
 		return (<View style={this.state.searching ? styles.container : {}}>
             <View style={styles.searchBar}>
-                <Image source={require('./28magnifier.png')} style={styles.searchIcon} />
+                <Image source={require('../img/28magnifier.png')} style={styles.searchIcon} />
                 <TextInput style={styles.textInput}
                     ref="searchBarTextInput"
                     returnKeyType='done'
