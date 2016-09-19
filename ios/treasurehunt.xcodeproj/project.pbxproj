@@ -16,12 +16,13 @@
 		139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
 		139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		2F4BB8A81D803C5A873BF8A4 /* libPods-TreasureHunt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B7C0C590C0050E4EAE575B9 /* libPods-TreasureHunt.a */; };
+		526ACA5F1D8F7EB300251431 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 526ACA5A1D8F7EB300251431 /* AppDelegate.m */; };
+		526ACA601D8F7EB300251431 /* Base.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 526ACA5B1D8F7EB300251431 /* Base.lproj */; };
+		526ACA611D8F7EB300251431 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 526ACA5C1D8F7EB300251431 /* Images.xcassets */; };
+		526ACA621D8F7EB300251431 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 526ACA5D1D8F7EB300251431 /* Info.plist */; };
+		526ACA631D8F7EB300251431 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 526ACA5E1D8F7EB300251431 /* main.m */; };
 		52A227C81D8F325B0066FD73 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52A227C71D8F325B0066FD73 /* Bolts.framework */; };
-		52A836641D8F3C7C00AD7143 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 52A8365F1D8F3C7C00AD7143 /* AppDelegate.m */; };
-		52A836651D8F3C7C00AD7143 /* Base.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 52A836601D8F3C7C00AD7143 /* Base.lproj */; };
-		52A836661D8F3C7C00AD7143 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52A836611D8F3C7C00AD7143 /* Images.xcassets */; };
-		52A836671D8F3C7C00AD7143 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 52A836621D8F3C7C00AD7143 /* Info.plist */; };
-		52A836681D8F3C7C00AD7143 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 52A836631D8F3C7C00AD7143 /* main.m */; };
 		52CC17F11D8F415600BAB55C /* MuseoSlab.otf in Resources */ = {isa = PBXBuildFile; fileRef = 52D2D0A11D8F27A500F294B8 /* MuseoSlab.otf */; };
 		52CC17F21D8F415600BAB55C /* Verlag-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52D2D0841D8F275700F294B8 /* Verlag-Black.ttf */; };
 		52CC17F31D8F415600BAB55C /* Verlag-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52D2D0851D8F275700F294B8 /* Verlag-BlackItalic.ttf */; };
@@ -50,7 +51,6 @@
 		52D2D0D21D8F311E00F294B8 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D2D0CF1D8F311E00F294B8 /* FBSDKLoginKit.framework */; };
 		52D2D0D31D8F311E00F294B8 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D2D0D01D8F311E00F294B8 /* FBSDKShareKit.framework */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
-		FD0B44B8E8A33E099B2110AF /* libPods-Treasure Hunt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AF841C81CB44B253915A0F90 /* libPods-Treasure Hunt.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -141,19 +141,20 @@
 		00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTVibration.xcodeproj; path = "../node_modules/react-native/Libraries/Vibration/RCTVibration.xcodeproj"; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* Treasure Hunt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Treasure Hunt.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* TreasureHunt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TreasureHunt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		16AD41EE5CD870C17BFE39EA /* Pods-treasurehuntTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-treasurehuntTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-treasurehuntTests/Pods-treasurehuntTests.debug.xcconfig"; sourceTree = "<group>"; };
+		2B7C0C590C0050E4EAE575B9 /* libPods-TreasureHunt.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TreasureHunt.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2DFC0693F465DFD0ADE87517 /* libPods-treasurehuntTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-treasurehuntTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		346C8F9411A7C8F317AA5D47 /* Pods-Treasure Hunt.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Treasure Hunt.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Treasure Hunt/Pods-Treasure Hunt.debug.xcconfig"; sourceTree = "<group>"; };
 		3D6C3100C37A517A86F79AAA /* Pods-treasurehunt.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-treasurehunt.release.xcconfig"; path = "Pods/Target Support Files/Pods-treasurehunt/Pods-treasurehunt.release.xcconfig"; sourceTree = "<group>"; };
+		526ACA591D8F7EB300251431 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = TreasureHunt/AppDelegate.h; sourceTree = "<group>"; };
+		526ACA5A1D8F7EB300251431 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = TreasureHunt/AppDelegate.m; sourceTree = "<group>"; };
+		526ACA5B1D8F7EB300251431 /* Base.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Base.lproj; path = TreasureHunt/Base.lproj; sourceTree = "<group>"; };
+		526ACA5C1D8F7EB300251431 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = TreasureHunt/Images.xcassets; sourceTree = "<group>"; };
+		526ACA5D1D8F7EB300251431 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = TreasureHunt/Info.plist; sourceTree = "<group>"; };
+		526ACA5E1D8F7EB300251431 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = TreasureHunt/main.m; sourceTree = "<group>"; };
 		52A227C71D8F325B0066FD73 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
-		52A8365E1D8F3C7C00AD7143 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = "Treasure Hunt/AppDelegate.h"; sourceTree = "<group>"; };
-		52A8365F1D8F3C7C00AD7143 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = "Treasure Hunt/AppDelegate.m"; sourceTree = "<group>"; };
-		52A836601D8F3C7C00AD7143 /* Base.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Base.lproj; path = "Treasure Hunt/Base.lproj"; sourceTree = "<group>"; };
-		52A836611D8F3C7C00AD7143 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "Treasure Hunt/Images.xcassets"; sourceTree = "<group>"; };
-		52A836621D8F3C7C00AD7143 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Treasure Hunt/Info.plist"; sourceTree = "<group>"; };
-		52A836631D8F3C7C00AD7143 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = "Treasure Hunt/main.m"; sourceTree = "<group>"; };
 		52D2D06C1D8F241400F294B8 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		52D2D06D1D8F241400F294B8 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		52D2D0841D8F275700F294B8 /* Verlag-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Verlag-Black.ttf"; sourceTree = "<group>"; };
@@ -184,7 +185,9 @@
 		52D2D0CE1D8F311E00F294B8 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		52D2D0CF1D8F311E00F294B8 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		52D2D0D01D8F311E00F294B8 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
+		5C33BCC4A4F435F262048F3A /* Pods-TreasureHunt.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TreasureHunt.release.xcconfig"; path = "Pods/Target Support Files/Pods-TreasureHunt/Pods-TreasureHunt.release.xcconfig"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
+		7C6E0C1147EF57A8002E05A8 /* Pods-TreasureHunt.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TreasureHunt.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TreasureHunt/Pods-TreasureHunt.debug.xcconfig"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		9427220E81B1FE3EF95113E6 /* Pods-treasurehuntTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-treasurehuntTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-treasurehuntTests/Pods-treasurehuntTests.release.xcconfig"; sourceTree = "<group>"; };
 		AF841C81CB44B253915A0F90 /* libPods-Treasure Hunt.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Treasure Hunt.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -215,7 +218,7 @@
 				52D2D06E1D8F241400F294B8 /* Fabric.framework in Frameworks */,
 				52A227C81D8F325B0066FD73 /* Bolts.framework in Frameworks */,
 				52D2D0D21D8F311E00F294B8 /* FBSDKLoginKit.framework in Frameworks */,
-				FD0B44B8E8A33E099B2110AF /* libPods-Treasure Hunt.a in Frameworks */,
+				2F4BB8A81D803C5A873BF8A4 /* libPods-TreasureHunt.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -295,21 +298,23 @@
 				9427220E81B1FE3EF95113E6 /* Pods-treasurehuntTests.release.xcconfig */,
 				346C8F9411A7C8F317AA5D47 /* Pods-Treasure Hunt.debug.xcconfig */,
 				B77390DD881267AA933D1FB7 /* Pods-Treasure Hunt.release.xcconfig */,
+				7C6E0C1147EF57A8002E05A8 /* Pods-TreasureHunt.debug.xcconfig */,
+				5C33BCC4A4F435F262048F3A /* Pods-TreasureHunt.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		52A8365D1D8F3C7300AD7143 /* Treasure Hunt */ = {
+		52A8365D1D8F3C7300AD7143 /* TreasureHunt */ = {
 			isa = PBXGroup;
 			children = (
-				52A8365E1D8F3C7C00AD7143 /* AppDelegate.h */,
-				52A8365F1D8F3C7C00AD7143 /* AppDelegate.m */,
-				52A836601D8F3C7C00AD7143 /* Base.lproj */,
-				52A836611D8F3C7C00AD7143 /* Images.xcassets */,
-				52A836621D8F3C7C00AD7143 /* Info.plist */,
-				52A836631D8F3C7C00AD7143 /* main.m */,
+				526ACA591D8F7EB300251431 /* AppDelegate.h */,
+				526ACA5A1D8F7EB300251431 /* AppDelegate.m */,
+				526ACA5B1D8F7EB300251431 /* Base.lproj */,
+				526ACA5C1D8F7EB300251431 /* Images.xcassets */,
+				526ACA5D1D8F7EB300251431 /* Info.plist */,
+				526ACA5E1D8F7EB300251431 /* main.m */,
 			);
-			name = "Treasure Hunt";
+			name = TreasureHunt;
 			sourceTree = "<group>";
 		};
 		52D2D0AC1D8F27AA00F294B8 /* Fonts */ = {
@@ -356,6 +361,7 @@
 				F3B3D51944045AE374ED37D4 /* libPods-treasurehunt.a */,
 				2DFC0693F465DFD0ADE87517 /* libPods-treasurehuntTests.a */,
 				AF841C81CB44B253915A0F90 /* libPods-Treasure Hunt.a */,
+				2B7C0C590C0050E4EAE575B9 /* libPods-TreasureHunt.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -401,7 +407,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				52A8365D1D8F3C7300AD7143 /* Treasure Hunt */,
+				52A8365D1D8F3C7300AD7143 /* TreasureHunt */,
 				52D2D0AD1D8F27D500F294B8 /* GoogleService-Info.plist */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				52D2D0AC1D8F27AA00F294B8 /* Fonts */,
@@ -418,7 +424,7 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* Treasure Hunt.app */,
+				13B07F961A680F5B00A75B9A /* TreasureHunt.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -426,9 +432,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		13B07F861A680F5B00A75B9A /* Treasure Hunt */ = {
+		13B07F861A680F5B00A75B9A /* TreasureHunt */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Treasure Hunt" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "TreasureHunt" */;
 			buildPhases = (
 				008F95C4385EC1BDD85C432F /* [CP] Check Pods Manifest.lock */,
 				13B07F871A680F5B00A75B9A /* Sources */,
@@ -443,9 +449,9 @@
 			);
 			dependencies = (
 			);
-			name = "Treasure Hunt";
+			name = TreasureHunt;
 			productName = "Hello World";
-			productReference = 13B07F961A680F5B00A75B9A /* Treasure Hunt.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* TreasureHunt.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -457,7 +463,7 @@
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = Facebook;
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Treasure Hunt" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "TreasureHunt" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -516,7 +522,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* Treasure Hunt */,
+				13B07F861A680F5B00A75B9A /* TreasureHunt */,
 			);
 		};
 /* End PBXProject section */
@@ -609,10 +615,12 @@
 				52CC17F11D8F415600BAB55C /* MuseoSlab.otf in Resources */,
 				52CC17F21D8F415600BAB55C /* Verlag-Black.ttf in Resources */,
 				52CC17F31D8F415600BAB55C /* Verlag-BlackItalic.ttf in Resources */,
+				526ACA611D8F7EB300251431 /* Images.xcassets in Resources */,
 				52CC17F41D8F415600BAB55C /* Verlag-Bold.ttf in Resources */,
 				52CC17F51D8F415600BAB55C /* Verlag-BoldItalic.ttf in Resources */,
 				52CC17F61D8F415600BAB55C /* Verlag-Book.ttf in Resources */,
 				52CC17F71D8F415600BAB55C /* Verlag-BookItalic.ttf in Resources */,
+				526ACA601D8F7EB300251431 /* Base.lproj in Resources */,
 				52CC17F81D8F415600BAB55C /* Verlag-Light.ttf in Resources */,
 				52CC17F91D8F415600BAB55C /* Verlag-LightItalic.ttf in Resources */,
 				52CC17FA1D8F415600BAB55C /* Verlag-XLight.ttf in Resources */,
@@ -624,12 +632,10 @@
 				52CC18001D8F415600BAB55C /* VerlagCondensed-Book.ttf in Resources */,
 				52CC18011D8F415600BAB55C /* VerlagCondensed-BookItalic.ttf in Resources */,
 				52CC18021D8F415600BAB55C /* VerlagCondensed-Light.ttf in Resources */,
+				526ACA621D8F7EB300251431 /* Info.plist in Resources */,
 				52CC18031D8F415600BAB55C /* VerlagCondensed-LightItalic.ttf in Resources */,
 				52CC18041D8F415600BAB55C /* VerlagCondensed-XLight.ttf in Resources */,
 				52D2D0AE1D8F27D500F294B8 /* GoogleService-Info.plist in Resources */,
-				52A836661D8F3C7C00AD7143 /* Images.xcassets in Resources */,
-				52A836651D8F3C7C00AD7143 /* Base.lproj in Resources */,
-				52A836671D8F3C7C00AD7143 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -690,7 +696,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Treasure Hunt/Pods-Treasure Hunt-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TreasureHunt/Pods-TreasureHunt-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		949506FDFF9912414BEDBD2F /* [CP] Embed Pods Frameworks */ = {
@@ -705,7 +711,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Treasure Hunt/Pods-Treasure Hunt-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TreasureHunt/Pods-TreasureHunt-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -715,8 +721,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				52A836681D8F3C7C00AD7143 /* main.m in Sources */,
-				52A836641D8F3C7C00AD7143 /* AppDelegate.m in Sources */,
+				526ACA631D8F7EB300251431 /* main.m in Sources */,
+				526ACA5F1D8F7EB300251431 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -725,7 +731,7 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 346C8F9411A7C8F317AA5D47 /* Pods-Treasure Hunt.debug.xcconfig */;
+			baseConfigurationReference = 7C6E0C1147EF57A8002E05A8 /* Pods-TreasureHunt.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEAD_CODE_STRIPPING = NO;
@@ -738,20 +744,20 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
 				);
-				INFOPLIST_FILE = "$(SRCROOT)/Treasure Hunt/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/TreasureHunt/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_NAME = "Treasure Hunt";
+				PRODUCT_NAME = TreasureHunt;
 			};
 			name = Debug;
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B77390DD881267AA933D1FB7 /* Pods-Treasure Hunt.release.xcconfig */;
+			baseConfigurationReference = 5C33BCC4A4F435F262048F3A /* Pods-TreasureHunt.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -763,14 +769,14 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
 				);
-				INFOPLIST_FILE = "$(SRCROOT)/Treasure Hunt/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/TreasureHunt/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_NAME = "Treasure Hunt";
+				PRODUCT_NAME = TreasureHunt;
 			};
 			name = Release;
 		};
@@ -863,7 +869,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Treasure Hunt" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "TreasureHunt" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -872,7 +878,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Treasure Hunt" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "TreasureHunt" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,

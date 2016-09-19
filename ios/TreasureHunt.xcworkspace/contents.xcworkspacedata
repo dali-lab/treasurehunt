@@ -2,9 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:Treasure Hunt.xcodeproj">
+      location = "group:/Users/john/Programing/Testing/treasurehunt/ios/TreasureHunt.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:TreasureHunt.xcodeproj">
    </FileRef>
 </Workspace>

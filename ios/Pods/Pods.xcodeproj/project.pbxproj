@@ -10,10 +10,10 @@
 	<string>46</string>
 	<key>objects</key>
 	<dict>
-		<key>0508B897F5B151A876640E31A8550AD4</key>
+		<key>01D01A156BC9527F4B2B0F451BE7987D</key>
 		<dict>
 			<key>fileRef</key>
-			<string>F0D5ADD744B8261443CA7191FCEEB7BB</string>
+			<string>53A29B7FCD763E272E12800E5DAB6E0A</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
@@ -27,6 +27,19 @@
 			<string>PBXGroup</string>
 			<key>name</key>
 			<string>Frameworks</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>0ACBC88BD6F8D4E02EB6C02C9ECD6B33</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>path</key>
+			<string>Pods-TreasureHunt.debug.xcconfig</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -48,61 +61,6 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>0D5778EFF9CF239852F7D6B69F200B22</key>
-		<dict>
-			<key>baseConfigurationReference</key>
-			<string>CB2A23BE0DB3E568FCA3EBAE9116DBC9</string>
-			<key>buildSettings</key>
-			<dict>
-				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
-				<string>iPhone Developer</string>
-				<key>DEBUG_INFORMATION_FORMAT</key>
-				<string>dwarf</string>
-				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
-				<string>YES</string>
-				<key>GCC_NO_COMMON_BLOCKS</key>
-				<string>YES</string>
-				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
-				<string>7.0</string>
-				<key>MACH_O_TYPE</key>
-				<string>staticlib</string>
-				<key>MTL_ENABLE_DEBUG_INFO</key>
-				<string>YES</string>
-				<key>OTHER_LDFLAGS</key>
-				<string></string>
-				<key>OTHER_LIBTOOLFLAGS</key>
-				<string></string>
-				<key>PODS_ROOT</key>
-				<string>$(SRCROOT)</string>
-				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
-				<string>org.cocoapods.${PRODUCT_NAME:rfc1034identifier}</string>
-				<key>PRODUCT_NAME</key>
-				<string>$(TARGET_NAME)</string>
-				<key>SDKROOT</key>
-				<string>iphoneos</string>
-				<key>SKIP_INSTALL</key>
-				<string>YES</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Debug</string>
-		</dict>
-		<key>10D82A03FE6BA5F2027CD87C2FBB816C</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>archive.ar</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>name</key>
-			<string>libPods-Treasure Hunt.a</string>
-			<key>path</key>
-			<string>libPods-Treasure Hunt.a</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
 		<key>122442F85AC0EEF686F286D9DE35D0A1</key>
 		<dict>
 			<key>children</key>
@@ -116,18 +74,19 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>158532A7FE8888D80E3F1C492FB0984E</key>
+		<key>16AF470C003CC80221D52826243B4AD1</key>
 		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
+			<key>buildConfigurations</key>
+			<array>
+				<string>8A83B14AF3BE44A594EC2FE1070DAEDF</string>
+				<string>60A716513266A381D1B4DD83FA659F6C</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
 			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text</string>
-			<key>path</key>
-			<string>Pods-Treasure Hunt-acknowledgements.markdown</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
+			<string>XCConfigurationList</string>
 		</dict>
 		<key>17E963AC9EA7E429C37DA8FEEA72526B</key>
 		<dict>
@@ -172,33 +131,6 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>252AF609256A0FD752C8B4EC86DD4238</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>path</key>
-			<string>Pods-Treasure Hunt.release.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>2C6D24CB4ED3AB22E21F88148F6D3C5D</key>
-		<dict>
-			<key>buildConfigurations</key>
-			<array>
-				<string>0D5778EFF9CF239852F7D6B69F200B22</string>
-				<string>D0746F4D8663DCB01E2A032D2D4B9AD4</string>
-			</array>
-			<key>defaultConfigurationIsVisible</key>
-			<string>0</string>
-			<key>defaultConfigurationName</key>
-			<string>Release</string>
-			<key>isa</key>
-			<string>XCConfigurationList</string>
-		</dict>
 		<key>2D8E8EC45A3A1A1D94AE762CB5028504</key>
 		<dict>
 			<key>buildConfigurations</key>
@@ -213,18 +145,31 @@
 			<key>isa</key>
 			<string>XCConfigurationList</string>
 		</dict>
-		<key>2FE4A4F2B437810D66D6AD0618FAAFF4</key>
+		<key>2DE1474134E82FC2EAC80C103CB0D440</key>
 		<dict>
 			<key>buildActionMask</key>
 			<string>2147483647</string>
 			<key>files</key>
 			<array>
-				<string>0508B897F5B151A876640E31A8550AD4</string>
+				<string>01D01A156BC9527F4B2B0F451BE7987D</string>
 			</array>
 			<key>isa</key>
 			<string>PBXSourcesBuildPhase</string>
 			<key>runOnlyForDeploymentPostprocessing</key>
 			<string>0</string>
+		</dict>
+		<key>36EA08ADF93CE0F9404DECA48D11D190</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>54F69D15242468C6CBF0EB129A18C747</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Products</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>3A09B82FC34DC854CBB4A7D6B7C35C65</key>
 		<dict>
@@ -236,19 +181,6 @@
 			<string>PBXGroup</string>
 			<key>name</key>
 			<string>Frameworks</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>3A6B87E431CBC8E3F8C88F3FC7B19734</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.script.sh</string>
-			<key>path</key>
-			<string>Pods-Treasure Hunt-resources.sh</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -343,27 +275,6 @@
 			<key>name</key>
 			<string>Debug</string>
 		</dict>
-		<key>4B4F08EA793ADA6E553480D23BB62BAD</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>158532A7FE8888D80E3F1C492FB0984E</string>
-				<string>BF19C9D41A0E1872DDE44C2F61F1C9EF</string>
-				<string>F0D5ADD744B8261443CA7191FCEEB7BB</string>
-				<string>D79A2B747C7AE2468FBF0B13C3B1D32B</string>
-				<string>3A6B87E431CBC8E3F8C88F3FC7B19734</string>
-				<string>CB2A23BE0DB3E568FCA3EBAE9116DBC9</string>
-				<string>252AF609256A0FD752C8B4EC86DD4238</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Pods-Treasure Hunt</string>
-			<key>path</key>
-			<string>Target Support Files/Pods-Treasure Hunt</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
 		<key>4D85ED2A288CF61E21019F9720657924</key>
 		<dict>
 			<key>includeInIndex</key>
@@ -379,36 +290,84 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>55CE74A5AE63471E1916C2028F66370A</key>
+		<key>53A29B7FCD763E272E12800E5DAB6E0A</key>
 		<dict>
-			<key>fileRef</key>
-			<string>CEC22C73C1608DFA5D5D78BDCB218219</string>
+			<key>includeInIndex</key>
+			<string>1</string>
 			<key>isa</key>
-			<string>PBXBuildFile</string>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>Pods-TreasureHunt-dummy.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
-		<key>578042106E3F7169E152815827B868EE</key>
+		<key>54F69D15242468C6CBF0EB129A18C747</key>
 		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>55CE74A5AE63471E1916C2028F66370A</string>
-			</array>
-			<key>isa</key>
-			<string>PBXFrameworksBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
+			<key>explicitFileType</key>
+			<string>archive.ar</string>
+			<key>includeInIndex</key>
 			<string>0</string>
-		</dict>
-		<key>62CFAE9221181B3F1E22422F64E33606</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>10D82A03FE6BA5F2027CD87C2FBB816C</string>
-			</array>
 			<key>isa</key>
-			<string>PBXGroup</string>
+			<string>PBXFileReference</string>
 			<key>name</key>
-			<string>Products</string>
+			<string>libPods-TreasureHunt.a</string>
+			<key>path</key>
+			<string>libPods-TreasureHunt.a</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>60A716513266A381D1B4DD83FA659F6C</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>62C2927FE034A8179F95EE61FB21B65D</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Developer</string>
+				<key>DEBUG_INFORMATION_FORMAT</key>
+				<string>dwarf-with-dsym</string>
+				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
+				<string>YES</string>
+				<key>GCC_NO_COMMON_BLOCKS</key>
+				<string>YES</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>7.0</string>
+				<key>MACH_O_TYPE</key>
+				<string>staticlib</string>
+				<key>MTL_ENABLE_DEBUG_INFO</key>
+				<string>NO</string>
+				<key>OTHER_LDFLAGS</key>
+				<string></string>
+				<key>OTHER_LIBTOOLFLAGS</key>
+				<string></string>
+				<key>PODS_ROOT</key>
+				<string>$(SRCROOT)</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>org.cocoapods.${PRODUCT_NAME:rfc1034identifier}</string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>SDKROOT</key>
+				<string>iphoneos</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>62C2927FE034A8179F95EE61FB21B65D</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>path</key>
+			<string>Pods-TreasureHunt.release.xcconfig</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -454,6 +413,19 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>7803B22590B76C94CD1C12E2E739AF94</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.script.sh</string>
+			<key>path</key>
+			<string>Pods-TreasureHunt-frameworks.sh</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>78AA5DF552E6422D8F195E1E35FDF1B5</key>
 		<dict>
 			<key>isa</key>
@@ -467,6 +439,13 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>79D31EBC49F2B767F48BACF79E052415</key>
+		<dict>
+			<key>fileRef</key>
+			<string>CEC22C73C1608DFA5D5D78BDCB218219</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>7DB346D0F39D3F0E887471402A8071AB</key>
 		<dict>
 			<key>children</key>
@@ -474,26 +453,66 @@
 				<string>93A4A3777CF96A4AAC1D13BA6DCCEA73</string>
 				<string>BC3CA7F9E30CC8F7E2DD044DD34432FC</string>
 				<string>0B8CEF19337FA4DFF56EC7EF36B16C09</string>
-				<string>62CFAE9221181B3F1E22422F64E33606</string>
-				<string>8A7FF36F7219049F20017BBA548E1F19</string>
+				<string>36EA08ADF93CE0F9404DECA48D11D190</string>
+				<string>B6882AE4F4240B001A46BCD460D6559F</string>
 			</array>
 			<key>isa</key>
 			<string>PBXGroup</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>8A7FF36F7219049F20017BBA548E1F19</key>
+		<key>8078252117F7D87BD4E49D611F33821E</key>
 		<dict>
-			<key>children</key>
-			<array>
-				<string>4B4F08EA793ADA6E553480D23BB62BAD</string>
-			</array>
+			<key>includeInIndex</key>
+			<string>1</string>
 			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Targets Support Files</string>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Pods-TreasureHunt-acknowledgements.plist</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
+		</dict>
+		<key>8A83B14AF3BE44A594EC2FE1070DAEDF</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>0ACBC88BD6F8D4E02EB6C02C9ECD6B33</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Developer</string>
+				<key>DEBUG_INFORMATION_FORMAT</key>
+				<string>dwarf</string>
+				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
+				<string>YES</string>
+				<key>GCC_NO_COMMON_BLOCKS</key>
+				<string>YES</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>7.0</string>
+				<key>MACH_O_TYPE</key>
+				<string>staticlib</string>
+				<key>MTL_ENABLE_DEBUG_INFO</key>
+				<string>YES</string>
+				<key>OTHER_LDFLAGS</key>
+				<string></string>
+				<key>OTHER_LIBTOOLFLAGS</key>
+				<string></string>
+				<key>PODS_ROOT</key>
+				<string>$(SRCROOT)</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>org.cocoapods.${PRODUCT_NAME:rfc1034identifier}</string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>SDKROOT</key>
+				<string>iphoneos</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
 		</dict>
 		<key>93A4A3777CF96A4AAC1D13BA6DCCEA73</key>
 		<dict>
@@ -514,6 +533,51 @@
 			<key>xcLanguageSpecificationIdentifier</key>
 			<string>xcode.lang.ruby</string>
 		</dict>
+		<key>98D884DA533AD5EDA39FC2560A96593E</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>F7D501A2462548139181E3904BB4FD8D</string>
+				<string>8078252117F7D87BD4E49D611F33821E</string>
+				<string>53A29B7FCD763E272E12800E5DAB6E0A</string>
+				<string>7803B22590B76C94CD1C12E2E739AF94</string>
+				<string>D1ACEC0659304268A21B4E96B7719012</string>
+				<string>0ACBC88BD6F8D4E02EB6C02C9ECD6B33</string>
+				<string>62C2927FE034A8179F95EE61FB21B65D</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Pods-TreasureHunt</string>
+			<key>path</key>
+			<string>Target Support Files/Pods-TreasureHunt</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>A4A01A9E07AC488B6D7B0E72A1991B7B</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>16AF470C003CC80221D52826243B4AD1</string>
+			<key>buildPhases</key>
+			<array>
+				<string>2DE1474134E82FC2EAC80C103CB0D440</string>
+				<string>FAE651D033383C471B093C920F47EA3A</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>Pods-TreasureHunt</string>
+			<key>productName</key>
+			<string>Pods-TreasureHunt</string>
+			<key>productReference</key>
+			<string>54F69D15242468C6CBF0EB129A18C747</string>
+			<key>productType</key>
+			<string>com.apple.product-type.library.static</string>
+		</dict>
 		<key>AEFF8F1B6621E9AFD02CAB76FC73388F</key>
 		<dict>
 			<key>children</key>
@@ -529,29 +593,18 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>B4B8D2D7A414DCEC9DF611BE84E8F2C1</key>
+		<key>B6882AE4F4240B001A46BCD460D6559F</key>
 		<dict>
-			<key>buildConfigurationList</key>
-			<string>2C6D24CB4ED3AB22E21F88148F6D3C5D</string>
-			<key>buildPhases</key>
+			<key>children</key>
 			<array>
-				<string>2FE4A4F2B437810D66D6AD0618FAAFF4</string>
-				<string>578042106E3F7169E152815827B868EE</string>
+				<string>98D884DA533AD5EDA39FC2560A96593E</string>
 			</array>
-			<key>buildRules</key>
-			<array/>
-			<key>dependencies</key>
-			<array/>
 			<key>isa</key>
-			<string>PBXNativeTarget</string>
+			<string>PBXGroup</string>
 			<key>name</key>
-			<string>Pods-Treasure Hunt</string>
-			<key>productName</key>
-			<string>Pods-Treasure Hunt</string>
-			<key>productReference</key>
-			<string>10D82A03FE6BA5F2027CD87C2FBB816C</string>
-			<key>productType</key>
-			<string>com.apple.product-type.library.static</string>
+			<string>Targets Support Files</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>B8D7BED4C9EDECD6BE78312FC6D65A02</key>
 		<dict>
@@ -579,32 +632,6 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>BF19C9D41A0E1872DDE44C2F61F1C9EF</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.plist.xml</string>
-			<key>path</key>
-			<string>Pods-Treasure Hunt-acknowledgements.plist</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>CB2A23BE0DB3E568FCA3EBAE9116DBC9</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>path</key>
-			<string>Pods-Treasure Hunt.debug.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
 		<key>CEC22C73C1608DFA5D5D78BDCB218219</key>
 		<dict>
 			<key>isa</key>
@@ -618,45 +645,18 @@
 			<key>sourceTree</key>
 			<string>DEVELOPER_DIR</string>
 		</dict>
-		<key>D0746F4D8663DCB01E2A032D2D4B9AD4</key>
+		<key>D1ACEC0659304268A21B4E96B7719012</key>
 		<dict>
-			<key>baseConfigurationReference</key>
-			<string>252AF609256A0FD752C8B4EC86DD4238</string>
-			<key>buildSettings</key>
-			<dict>
-				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
-				<string>iPhone Developer</string>
-				<key>DEBUG_INFORMATION_FORMAT</key>
-				<string>dwarf-with-dsym</string>
-				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
-				<string>YES</string>
-				<key>GCC_NO_COMMON_BLOCKS</key>
-				<string>YES</string>
-				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
-				<string>7.0</string>
-				<key>MACH_O_TYPE</key>
-				<string>staticlib</string>
-				<key>MTL_ENABLE_DEBUG_INFO</key>
-				<string>NO</string>
-				<key>OTHER_LDFLAGS</key>
-				<string></string>
-				<key>OTHER_LIBTOOLFLAGS</key>
-				<string></string>
-				<key>PODS_ROOT</key>
-				<string>$(SRCROOT)</string>
-				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
-				<string>org.cocoapods.${PRODUCT_NAME:rfc1034identifier}</string>
-				<key>PRODUCT_NAME</key>
-				<string>$(TARGET_NAME)</string>
-				<key>SDKROOT</key>
-				<string>iphoneos</string>
-				<key>SKIP_INSTALL</key>
-				<string>YES</string>
-			</dict>
+			<key>includeInIndex</key>
+			<string>1</string>
 			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Release</string>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.script.sh</string>
+			<key>path</key>
+			<string>Pods-TreasureHunt-resources.sh</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>D227E2B6883501EB56EEE7DB33608B01</key>
 		<dict>
@@ -699,7 +699,7 @@
 			<key>mainGroup</key>
 			<string>7DB346D0F39D3F0E887471402A8071AB</string>
 			<key>productRefGroup</key>
-			<string>62CFAE9221181B3F1E22422F64E33606</string>
+			<string>36EA08ADF93CE0F9404DECA48D11D190</string>
 			<key>projectDirPath</key>
 			<string></string>
 			<key>projectReferences</key>
@@ -708,21 +708,8 @@
 			<string></string>
 			<key>targets</key>
 			<array>
-				<string>B4B8D2D7A414DCEC9DF611BE84E8F2C1</string>
+				<string>A4A01A9E07AC488B6D7B0E72A1991B7B</string>
 			</array>
-		</dict>
-		<key>D79A2B747C7AE2468FBF0B13C3B1D32B</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.script.sh</string>
-			<key>path</key>
-			<string>Pods-Treasure Hunt-frameworks.sh</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
 		</dict>
 		<key>DF275361F137FFFAC95E10B9F0BAE4E5</key>
 		<dict>
@@ -764,19 +751,6 @@
 			<string>FIRInstanceID.h</string>
 			<key>path</key>
 			<string>Sources/FIRInstanceID.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>F0D5ADD744B8261443CA7191FCEEB7BB</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>Pods-Treasure Hunt-dummy.m</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -863,6 +837,32 @@
 			<string>Frameworks</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
+		</dict>
+		<key>F7D501A2462548139181E3904BB4FD8D</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text</string>
+			<key>path</key>
+			<string>Pods-TreasureHunt-acknowledgements.markdown</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>FAE651D033383C471B093C920F47EA3A</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>79D31EBC49F2B767F48BACF79E052415</string>
+			</array>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
 		</dict>
 		<key>FAF822D2C02C424982832435D7291DB1</key>
 		<dict>
