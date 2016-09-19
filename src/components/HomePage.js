@@ -161,10 +161,9 @@ var HomePage = React.createClass({
          selectedIcon={require('../img/w28reminder.png')}
          selected={this.state.selectedTab === TABS.feed}
          onPress={() => {
-           AlertIOS.alert(
-              "Unsupported",
-              "Functionality for reading the feed is unsupported in version 1 of TreasureHunt. Check back soon!"
-            )
+           this.setState({
+             selectedTab: TABS.feed,
+           });
         }}>
         {this._renderFeed()}
        </Icon.TabBarItemIOS>
@@ -197,10 +196,9 @@ var HomePage = React.createClass({
          icon={require('../img/28pencil.png')}
          selectedIcon={require('../img/w28pencil.png')}
          onPress={() => {
-           AlertIOS.alert(
-              "Unsupported",
-              "Functionality for creating events is unsupported in version 1 of TreasureHunt. Check back soon!"
-            )
+           this.setState({
+             selectedTab: TABS.create,
+           });
          }}>
         {this._renderCreate()}
        </Icon.TabBarItemIOS>

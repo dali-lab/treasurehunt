@@ -347,6 +347,7 @@ var HuntOverview = React.createClass({
 				</View>
 				<Image style={styles.image}
 					source={{uri: hunt.image}} />
+				{actionBar}
 				<Text style={styles.description}>{hunt.desc}</Text>
 				<View style={{flex: 1}}/>
 
