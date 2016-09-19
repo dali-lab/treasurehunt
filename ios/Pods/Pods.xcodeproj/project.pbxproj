@@ -10,13 +10,6 @@
 	<string>46</string>
 	<key>objects</key>
 	<dict>
-		<key>01D01A156BC9527F4B2B0F451BE7987D</key>
-		<dict>
-			<key>fileRef</key>
-			<string>53A29B7FCD763E272E12800E5DAB6E0A</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
 		<key>056B7FB4565C8F6CFBC262FDCD790C0C</key>
 		<dict>
 			<key>children</key>
@@ -27,19 +20,6 @@
 			<string>PBXGroup</string>
 			<key>name</key>
 			<string>Frameworks</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>0ACBC88BD6F8D4E02EB6C02C9ECD6B33</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>path</key>
-			<string>Pods-TreasureHunt.debug.xcconfig</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -61,6 +41,19 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>0BC7FDA234A791582D42B359DAED6F8B</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>path</key>
+			<string>Pods-treasurehunt.debug.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>122442F85AC0EEF686F286D9DE35D0A1</key>
 		<dict>
 			<key>children</key>
@@ -73,20 +66,6 @@
 			<string>Frameworks</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
-		</dict>
-		<key>16AF470C003CC80221D52826243B4AD1</key>
-		<dict>
-			<key>buildConfigurations</key>
-			<array>
-				<string>8A83B14AF3BE44A594EC2FE1070DAEDF</string>
-				<string>60A716513266A381D1B4DD83FA659F6C</string>
-			</array>
-			<key>defaultConfigurationIsVisible</key>
-			<string>0</string>
-			<key>defaultConfigurationName</key>
-			<string>Release</string>
-			<key>isa</key>
-			<string>XCConfigurationList</string>
 		</dict>
 		<key>17E963AC9EA7E429C37DA8FEEA72526B</key>
 		<dict>
@@ -102,6 +81,13 @@
 			<string>FirebaseAnalytics</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
+		</dict>
+		<key>1D03A1B01D8A12107CE247E1DDD66935</key>
+		<dict>
+			<key>fileRef</key>
+			<string>CEC22C73C1608DFA5D5D78BDCB218219</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
 		</dict>
 		<key>1FE7E728519B8C441DC0979AF90877D4</key>
 		<dict>
@@ -131,6 +117,43 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>22F7C5F94441D4DBAE4FF07DE4541043</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>FDE2ED9207F54F6EAF873BE7BC4559BE</string>
+			<key>buildPhases</key>
+			<array>
+				<string>267913934EC1F54DA383A558048B27E6</string>
+				<string>6B7D2C2E9D917721CFAF5840665BEECE</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>Pods-treasurehunt</string>
+			<key>productName</key>
+			<string>Pods-treasurehunt</string>
+			<key>productReference</key>
+			<string>F954BF0F3CFD852FBE07738EE8C23462</string>
+			<key>productType</key>
+			<string>com.apple.product-type.library.static</string>
+		</dict>
+		<key>267913934EC1F54DA383A558048B27E6</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>FB2DD096F47391E4755D294431F52597</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
 		<key>2D8E8EC45A3A1A1D94AE762CB5028504</key>
 		<dict>
 			<key>buildConfigurations</key>
@@ -144,32 +167,6 @@
 			<string>Release</string>
 			<key>isa</key>
 			<string>XCConfigurationList</string>
-		</dict>
-		<key>2DE1474134E82FC2EAC80C103CB0D440</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>01D01A156BC9527F4B2B0F451BE7987D</string>
-			</array>
-			<key>isa</key>
-			<string>PBXSourcesBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>36EA08ADF93CE0F9404DECA48D11D190</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>54F69D15242468C6CBF0EB129A18C747</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Products</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
 		</dict>
 		<key>3A09B82FC34DC854CBB4A7D6B7C35C65</key>
 		<dict>
@@ -275,6 +272,19 @@
 			<key>name</key>
 			<string>Debug</string>
 		</dict>
+		<key>4167B082A030833977FFED36EE534189</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.script.sh</string>
+			<key>path</key>
+			<string>Pods-treasurehunt-resources.sh</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>4D85ED2A288CF61E21019F9720657924</key>
 		<dict>
 			<key>includeInIndex</key>
@@ -290,86 +300,39 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>53A29B7FCD763E272E12800E5DAB6E0A</key>
+		<key>609140BCEBA6EE180DE43EBC0B6C583E</key>
 		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
+			<key>children</key>
+			<array>
+				<string>BF30956AC73BD145A8EBF36BD61320E6</string>
+				<string>BF230174F685017C9A3F3DA8C32100A1</string>
+				<string>D23C691D3CD4F9F238802ECA75A0BDEC</string>
+				<string>A3D1B0C87BE75AD3FE23D9FE4A25795B</string>
+				<string>4167B082A030833977FFED36EE534189</string>
+				<string>0BC7FDA234A791582D42B359DAED6F8B</string>
+				<string>E18F29B9C2DF781E41A37811F9C93CAC</string>
+			</array>
 			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Pods-treasurehunt</string>
 			<key>path</key>
-			<string>Pods-TreasureHunt-dummy.m</string>
+			<string>Target Support Files/Pods-treasurehunt</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>54F69D15242468C6CBF0EB129A18C747</key>
+		<key>6B7D2C2E9D917721CFAF5840665BEECE</key>
 		<dict>
-			<key>explicitFileType</key>
-			<string>archive.ar</string>
-			<key>includeInIndex</key>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>1D03A1B01D8A12107CE247E1DDD66935</string>
+			</array>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
 			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>name</key>
-			<string>libPods-TreasureHunt.a</string>
-			<key>path</key>
-			<string>libPods-TreasureHunt.a</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
-		<key>60A716513266A381D1B4DD83FA659F6C</key>
-		<dict>
-			<key>baseConfigurationReference</key>
-			<string>62C2927FE034A8179F95EE61FB21B65D</string>
-			<key>buildSettings</key>
-			<dict>
-				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
-				<string>iPhone Developer</string>
-				<key>DEBUG_INFORMATION_FORMAT</key>
-				<string>dwarf-with-dsym</string>
-				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
-				<string>YES</string>
-				<key>GCC_NO_COMMON_BLOCKS</key>
-				<string>YES</string>
-				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
-				<string>7.0</string>
-				<key>MACH_O_TYPE</key>
-				<string>staticlib</string>
-				<key>MTL_ENABLE_DEBUG_INFO</key>
-				<string>NO</string>
-				<key>OTHER_LDFLAGS</key>
-				<string></string>
-				<key>OTHER_LIBTOOLFLAGS</key>
-				<string></string>
-				<key>PODS_ROOT</key>
-				<string>$(SRCROOT)</string>
-				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
-				<string>org.cocoapods.${PRODUCT_NAME:rfc1034identifier}</string>
-				<key>PRODUCT_NAME</key>
-				<string>$(TARGET_NAME)</string>
-				<key>SDKROOT</key>
-				<string>iphoneos</string>
-				<key>SKIP_INSTALL</key>
-				<string>YES</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Release</string>
-		</dict>
-		<key>62C2927FE034A8179F95EE61FB21B65D</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>path</key>
-			<string>Pods-TreasureHunt.release.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
 		</dict>
 		<key>6E1E5C624A451F2216F2E980FA66DEE5</key>
 		<dict>
@@ -397,87 +360,10 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>76CC1C8D9CD798D689BCD05C98FE3EAD</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>E902D6A1780C90DA8D9775A9551AE680</string>
-				<string>6FF8BEBD4B336F1556D0507DDD7AE186</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>FirebaseInstanceID</string>
-			<key>path</key>
-			<string>FirebaseInstanceID</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>7803B22590B76C94CD1C12E2E739AF94</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.script.sh</string>
-			<key>path</key>
-			<string>Pods-TreasureHunt-frameworks.sh</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>78AA5DF552E6422D8F195E1E35FDF1B5</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.framework</string>
-			<key>name</key>
-			<string>GoogleSymbolUtilities.framework</string>
-			<key>path</key>
-			<string>Frameworks/GoogleSymbolUtilities.framework</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>79D31EBC49F2B767F48BACF79E052415</key>
-		<dict>
-			<key>fileRef</key>
-			<string>CEC22C73C1608DFA5D5D78BDCB218219</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>7DB346D0F39D3F0E887471402A8071AB</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>93A4A3777CF96A4AAC1D13BA6DCCEA73</string>
-				<string>BC3CA7F9E30CC8F7E2DD044DD34432FC</string>
-				<string>0B8CEF19337FA4DFF56EC7EF36B16C09</string>
-				<string>36EA08ADF93CE0F9404DECA48D11D190</string>
-				<string>B6882AE4F4240B001A46BCD460D6559F</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>8078252117F7D87BD4E49D611F33821E</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.plist.xml</string>
-			<key>path</key>
-			<string>Pods-TreasureHunt-acknowledgements.plist</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>8A83B14AF3BE44A594EC2FE1070DAEDF</key>
+		<key>72D589BA94D2B0E02C7028BA1C44A7BA</key>
 		<dict>
 			<key>baseConfigurationReference</key>
-			<string>0ACBC88BD6F8D4E02EB6C02C9ECD6B33</string>
+			<string>0BC7FDA234A791582D42B359DAED6F8B</string>
 			<key>buildSettings</key>
 			<dict>
 				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
@@ -514,6 +400,50 @@
 			<key>name</key>
 			<string>Debug</string>
 		</dict>
+		<key>76CC1C8D9CD798D689BCD05C98FE3EAD</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>E902D6A1780C90DA8D9775A9551AE680</string>
+				<string>6FF8BEBD4B336F1556D0507DDD7AE186</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>FirebaseInstanceID</string>
+			<key>path</key>
+			<string>FirebaseInstanceID</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>78AA5DF552E6422D8F195E1E35FDF1B5</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.framework</string>
+			<key>name</key>
+			<string>GoogleSymbolUtilities.framework</string>
+			<key>path</key>
+			<string>Frameworks/GoogleSymbolUtilities.framework</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>7DB346D0F39D3F0E887471402A8071AB</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>93A4A3777CF96A4AAC1D13BA6DCCEA73</string>
+				<string>BC3CA7F9E30CC8F7E2DD044DD34432FC</string>
+				<string>0B8CEF19337FA4DFF56EC7EF36B16C09</string>
+				<string>D1423C73028C7B51FB73E863C6056138</string>
+				<string>9D472F396D03ECD1A24E1B1C8CC8E917</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>93A4A3777CF96A4AAC1D13BA6DCCEA73</key>
 		<dict>
 			<key>explicitFileType</key>
@@ -533,50 +463,31 @@
 			<key>xcLanguageSpecificationIdentifier</key>
 			<string>xcode.lang.ruby</string>
 		</dict>
-		<key>98D884DA533AD5EDA39FC2560A96593E</key>
+		<key>9D472F396D03ECD1A24E1B1C8CC8E917</key>
 		<dict>
 			<key>children</key>
 			<array>
-				<string>F7D501A2462548139181E3904BB4FD8D</string>
-				<string>8078252117F7D87BD4E49D611F33821E</string>
-				<string>53A29B7FCD763E272E12800E5DAB6E0A</string>
-				<string>7803B22590B76C94CD1C12E2E739AF94</string>
-				<string>D1ACEC0659304268A21B4E96B7719012</string>
-				<string>0ACBC88BD6F8D4E02EB6C02C9ECD6B33</string>
-				<string>62C2927FE034A8179F95EE61FB21B65D</string>
+				<string>609140BCEBA6EE180DE43EBC0B6C583E</string>
 			</array>
 			<key>isa</key>
 			<string>PBXGroup</string>
 			<key>name</key>
-			<string>Pods-TreasureHunt</string>
-			<key>path</key>
-			<string>Target Support Files/Pods-TreasureHunt</string>
+			<string>Targets Support Files</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>A4A01A9E07AC488B6D7B0E72A1991B7B</key>
+		<key>A3D1B0C87BE75AD3FE23D9FE4A25795B</key>
 		<dict>
-			<key>buildConfigurationList</key>
-			<string>16AF470C003CC80221D52826243B4AD1</string>
-			<key>buildPhases</key>
-			<array>
-				<string>2DE1474134E82FC2EAC80C103CB0D440</string>
-				<string>FAE651D033383C471B093C920F47EA3A</string>
-			</array>
-			<key>buildRules</key>
-			<array/>
-			<key>dependencies</key>
-			<array/>
+			<key>includeInIndex</key>
+			<string>1</string>
 			<key>isa</key>
-			<string>PBXNativeTarget</string>
-			<key>name</key>
-			<string>Pods-TreasureHunt</string>
-			<key>productName</key>
-			<string>Pods-TreasureHunt</string>
-			<key>productReference</key>
-			<string>54F69D15242468C6CBF0EB129A18C747</string>
-			<key>productType</key>
-			<string>com.apple.product-type.library.static</string>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.script.sh</string>
+			<key>path</key>
+			<string>Pods-treasurehunt-frameworks.sh</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>AEFF8F1B6621E9AFD02CAB76FC73388F</key>
 		<dict>
@@ -590,19 +501,6 @@
 			<string>GoogleInterchangeUtilities</string>
 			<key>path</key>
 			<string>GoogleInterchangeUtilities</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>B6882AE4F4240B001A46BCD460D6559F</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>98D884DA533AD5EDA39FC2560A96593E</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Targets Support Files</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -632,6 +530,32 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>BF230174F685017C9A3F3DA8C32100A1</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Pods-treasurehunt-acknowledgements.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BF30956AC73BD145A8EBF36BD61320E6</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text</string>
+			<key>path</key>
+			<string>Pods-treasurehunt-acknowledgements.markdown</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>CEC22C73C1608DFA5D5D78BDCB218219</key>
 		<dict>
 			<key>isa</key>
@@ -645,16 +569,16 @@
 			<key>sourceTree</key>
 			<string>DEVELOPER_DIR</string>
 		</dict>
-		<key>D1ACEC0659304268A21B4E96B7719012</key>
+		<key>D1423C73028C7B51FB73E863C6056138</key>
 		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
+			<key>children</key>
+			<array>
+				<string>F954BF0F3CFD852FBE07738EE8C23462</string>
+			</array>
 			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.script.sh</string>
-			<key>path</key>
-			<string>Pods-TreasureHunt-resources.sh</string>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Products</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -672,6 +596,59 @@
 			<string>GoogleSymbolUtilities</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
+		</dict>
+		<key>D23C691D3CD4F9F238802ECA75A0BDEC</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>Pods-treasurehunt-dummy.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>D34CE09033EB364C96514BFFEBE7B117</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>E18F29B9C2DF781E41A37811F9C93CAC</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Developer</string>
+				<key>DEBUG_INFORMATION_FORMAT</key>
+				<string>dwarf-with-dsym</string>
+				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
+				<string>YES</string>
+				<key>GCC_NO_COMMON_BLOCKS</key>
+				<string>YES</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>7.0</string>
+				<key>MACH_O_TYPE</key>
+				<string>staticlib</string>
+				<key>MTL_ENABLE_DEBUG_INFO</key>
+				<string>NO</string>
+				<key>OTHER_LDFLAGS</key>
+				<string></string>
+				<key>OTHER_LIBTOOLFLAGS</key>
+				<string></string>
+				<key>PODS_ROOT</key>
+				<string>$(SRCROOT)</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>org.cocoapods.${PRODUCT_NAME:rfc1034identifier}</string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>SDKROOT</key>
+				<string>iphoneos</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
 		</dict>
 		<key>D41D8CD98F00B204E9800998ECF8427E</key>
 		<dict>
@@ -699,7 +676,7 @@
 			<key>mainGroup</key>
 			<string>7DB346D0F39D3F0E887471402A8071AB</string>
 			<key>productRefGroup</key>
-			<string>36EA08ADF93CE0F9404DECA48D11D190</string>
+			<string>D1423C73028C7B51FB73E863C6056138</string>
 			<key>projectDirPath</key>
 			<string></string>
 			<key>projectReferences</key>
@@ -708,7 +685,7 @@
 			<string></string>
 			<key>targets</key>
 			<array>
-				<string>A4A01A9E07AC488B6D7B0E72A1991B7B</string>
+				<string>22F7C5F94441D4DBAE4FF07DE4541043</string>
 			</array>
 		</dict>
 		<key>DF275361F137FFFAC95E10B9F0BAE4E5</key>
@@ -721,6 +698,19 @@
 			<string>GoogleUtilities.framework</string>
 			<key>path</key>
 			<string>Frameworks/GoogleUtilities.framework</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>E18F29B9C2DF781E41A37811F9C93CAC</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>path</key>
+			<string>Pods-treasurehunt.release.xcconfig</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -838,31 +828,20 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>F7D501A2462548139181E3904BB4FD8D</key>
+		<key>F954BF0F3CFD852FBE07738EE8C23462</key>
 		<dict>
+			<key>explicitFileType</key>
+			<string>archive.ar</string>
 			<key>includeInIndex</key>
-			<string>1</string>
+			<string>0</string>
 			<key>isa</key>
 			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text</string>
+			<key>name</key>
+			<string>libPods-treasurehunt.a</string>
 			<key>path</key>
-			<string>Pods-TreasureHunt-acknowledgements.markdown</string>
+			<string>libPods-treasurehunt.a</string>
 			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>FAE651D033383C471B093C920F47EA3A</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>79D31EBC49F2B767F48BACF79E052415</string>
-			</array>
-			<key>isa</key>
-			<string>PBXFrameworksBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
+			<string>BUILT_PRODUCTS_DIR</string>
 		</dict>
 		<key>FAF822D2C02C424982832435D7291DB1</key>
 		<dict>
@@ -876,6 +855,27 @@
 			<string>Frameworks/frameworks/FirebaseAnalytics.framework</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
+		</dict>
+		<key>FB2DD096F47391E4755D294431F52597</key>
+		<dict>
+			<key>fileRef</key>
+			<string>D23C691D3CD4F9F238802ECA75A0BDEC</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>FDE2ED9207F54F6EAF873BE7BC4559BE</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>72D589BA94D2B0E02C7028BA1C44A7BA</string>
+				<string>D34CE09033EB364C96514BFFEBE7B117</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
 		</dict>
 	</dict>
 	<key>rootObject</key>

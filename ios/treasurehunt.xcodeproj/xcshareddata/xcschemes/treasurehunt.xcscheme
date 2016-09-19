@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0620"
+   LastUpgradeVersion = "0800"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -15,23 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "Treasure Hunt.app"
-               BlueprintName = "Treasure Hunt"
-               ReferencedContainer = "container:Treasure Hunt.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "treasurehuntTests.xctest"
-               BlueprintName = "treasurehuntTests"
-               ReferencedContainer = "container:Treasure Hunt.xcodeproj">
+               BuildableName = "TreasureHunt.app"
+               BlueprintName = "treasurehunt"
+               ReferencedContainer = "container:treasurehunt.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -42,24 +28,14 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "treasurehuntTests.xctest"
-               BlueprintName = "treasurehuntTests"
-               ReferencedContainer = "container:Treasure Hunt.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "Treasure Hunt.app"
-            BlueprintName = "Treasure Hunt"
-            ReferencedContainer = "container:Treasure Hunt.xcodeproj">
+            BuildableName = "TreasureHunt.app"
+            BlueprintName = "treasurehunt"
+            ReferencedContainer = "container:treasurehunt.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -80,9 +56,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "Treasure Hunt.app"
-            BlueprintName = "Treasure Hunt"
-            ReferencedContainer = "container:Treasure Hunt.xcodeproj">
+            BuildableName = "TreasureHunt.app"
+            BlueprintName = "treasurehunt"
+            ReferencedContainer = "container:treasurehunt.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -99,9 +75,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "Treasure Hunt.app"
-            BlueprintName = "Treasure Hunt"
-            ReferencedContainer = "container:Treasure Hunt.xcodeproj">
+            BuildableName = "TreasureHunt.app"
+            BlueprintName = "treasurehunt"
+            ReferencedContainer = "container:treasurehunt.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
