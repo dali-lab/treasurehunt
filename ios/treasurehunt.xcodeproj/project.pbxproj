@@ -549,7 +549,7 @@ fi
 				<string>52D2D06E1D8F241400F294B8</string>
 				<string>52A227C81D8F325B0066FD73</string>
 				<string>52D2D0D21D8F311E00F294B8</string>
-				<string>717E21C4BC8ADF112344077C</string>
+				<string>57B31C1A3853699FCA2926C3</string>
 			</array>
 			<key>isa</key>
 			<string>PBXFrameworksBuildPhase</string>
@@ -609,7 +609,7 @@ fi
 		<key>13B07F941A680F5B00A75B9A</key>
 		<dict>
 			<key>baseConfigurationReference</key>
-			<string>92AEA11A3E7AD14DDA0275A5</string>
+			<string>2105CCFB9F7988E57C85517A</string>
 			<key>buildSettings</key>
 			<dict>
 				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
@@ -649,7 +649,7 @@ fi
 		<key>13B07F951A680F5B00A75B9A</key>
 		<dict>
 			<key>baseConfigurationReference</key>
-			<string>4D6057ACEF782FC92C89BF94</string>
+			<string>6780B0C9060E53028AA9B1FC</string>
 			<key>buildSettings</key>
 			<dict>
 				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
@@ -756,21 +756,7 @@ fi
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
-		<key>4550C42A90F7D185D39E1BF3</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>92AEA11A3E7AD14DDA0275A5</string>
-				<string>4D6057ACEF782FC92C89BF94</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Pods</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>4D6057ACEF782FC92C89BF94</key>
+		<key>2105CCFB9F7988E57C85517A</key>
 		<dict>
 			<key>includeInIndex</key>
 			<string>1</string>
@@ -779,9 +765,23 @@ fi
 			<key>lastKnownFileType</key>
 			<string>text.xcconfig</string>
 			<key>name</key>
-			<string>Pods-treasurehunt.release.xcconfig</string>
+			<string>Pods-treasurehunt.debug.xcconfig</string>
 			<key>path</key>
-			<string>Pods/Target Support Files/Pods-treasurehunt/Pods-treasurehunt.release.xcconfig</string>
+			<string>Pods/Target Support Files/Pods-treasurehunt/Pods-treasurehunt.debug.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>3173411AA748B588CDCA8B56</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>2105CCFB9F7988E57C85517A</string>
+				<string>6780B0C9060E53028AA9B1FC</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Pods</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -1561,6 +1561,13 @@ fi
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>57B31C1A3853699FCA2926C3</key>
+		<dict>
+			<key>fileRef</key>
+			<string>911B6BDA91B2229916709AA6</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>5A4C6B7DAF2EAA8408DDF0A4</key>
 		<dict>
 			<key>children</key>
@@ -1568,7 +1575,7 @@ fi
 				<string>52D2D0C21D8F2F5300F294B8</string>
 				<string>52D2D0C31D8F2F5300F294B8</string>
 				<string>52D2D0C41D8F2F5300F294B8</string>
-				<string>A252B4137353A60995262D58</string>
+				<string>911B6BDA91B2229916709AA6</string>
 			</array>
 			<key>isa</key>
 			<string>PBXGroup</string>
@@ -1577,12 +1584,20 @@ fi
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>717E21C4BC8ADF112344077C</key>
+		<key>6780B0C9060E53028AA9B1FC</key>
 		<dict>
-			<key>fileRef</key>
-			<string>A252B4137353A60995262D58</string>
+			<key>includeInIndex</key>
+			<string>1</string>
 			<key>isa</key>
-			<string>PBXBuildFile</string>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods-treasurehunt.release.xcconfig</string>
+			<key>path</key>
+			<string>Pods/Target Support Files/Pods-treasurehunt/Pods-treasurehunt.release.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>78C398B01ACF4ADC00677621</key>
 		<dict>
@@ -1734,7 +1749,7 @@ fi
 				<string>52D2D06C1D8F241400F294B8</string>
 				<string>52D2D06D1D8F241400F294B8</string>
 				<string>5A4C6B7DAF2EAA8408DDF0A4</string>
-				<string>4550C42A90F7D185D39E1BF3</string>
+				<string>3173411AA748B588CDCA8B56</string>
 			</array>
 			<key>indentWidth</key>
 			<string>2</string>
@@ -2059,20 +2074,18 @@ fi
 			<key>showEnvVarsInLog</key>
 			<string>0</string>
 		</dict>
-		<key>92AEA11A3E7AD14DDA0275A5</key>
+		<key>911B6BDA91B2229916709AA6</key>
 		<dict>
+			<key>explicitFileType</key>
+			<string>archive.ar</string>
 			<key>includeInIndex</key>
-			<string>1</string>
+			<string>0</string>
 			<key>isa</key>
 			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>name</key>
-			<string>Pods-treasurehunt.debug.xcconfig</string>
 			<key>path</key>
-			<string>Pods/Target Support Files/Pods-treasurehunt/Pods-treasurehunt.debug.xcconfig</string>
+			<string>libPods-treasurehunt.a</string>
 			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
+			<string>BUILT_PRODUCTS_DIR</string>
 		</dict>
 		<key>949506FDFF9912414BEDBD2F</key>
 		<dict>
@@ -2097,19 +2110,6 @@ fi
 </string>
 			<key>showEnvVarsInLog</key>
 			<string>0</string>
-		</dict>
-		<key>A252B4137353A60995262D58</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>archive.ar</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>path</key>
-			<string>libPods-treasurehunt.a</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
 		</dict>
 	</dict>
 	<key>rootObject</key>
