@@ -4,13 +4,13 @@
 REDIRECT=/dev/null
 
 while getopts ":v" opt; do
-    case $opt in
+    case "$opt" in
         v)
             REDIRECT=/dev/stdout
-        \?)
-            echo "Invalid option: -$OPTARG"
-            exit 5
             ;;
+        *)
+            echo "Invalid option: -$OPTARG"
+            exit 5
     esac
 done
 
@@ -25,7 +25,7 @@ echo "This is just to make sure your /usr/local and /Library/Caches/Homebrew are
 echo "Press Y and ENTER if you want to continue, or anything else and ENTER to exit the program"
 read feedback
 
-if [[ $feedback != "Y" ]]; then
+if [[ "$(echo $feedback | tr '[:upper:]' '[:lower:]')" != "y" ]]; then
     exit 1
 fi
 
@@ -35,7 +35,8 @@ sudo chown -R "$USER":admin /usr/local &> $REDIRECT
 
 
 if [[ $? != 0 ]]; then
-    echo "Encountered an error!"
+    echo "ERROR: Encountered an error! Make sure you typed in your password and that you have administrator privalages"
+    exit $?
 fi
 
 echo Checking brew...
@@ -67,10 +68,6 @@ fi
 # Making sure we own the homebrew
 echo "Chown-ing the /Library/Caches/Homebrew"
 sudo chown -R "$USER":admin /Library/Caches/Homebrew &> $REDIRECT
-
-if [[ $? != 0 ]]; then
-    echo "Encountered an error!"
-fi
 
 echo Checking npm...
 npm -v &> $REDIRECT
