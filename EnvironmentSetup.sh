@@ -102,6 +102,19 @@ else
     brew upgrade cocoapods &> $REDIRECT
 fi
 
+echo "Checking Watchman..."
+watchman -v &> $REDIRECT
+
+if [[ $? != 0 ]]; then
+    echo Installing...
+    brew install watchman
+    if [[ $? != 0 ]]; then
+        echo "ERROR: Failed to install watchman!"
+        exit $?
+    fi
+    echo Installed
+fi
+
 git clone https://github.com/dali-lab/treasurehunt.git ./treasurehunt && cd ./treasurehunt
 
 if [[ $? != 0 ]]; then
