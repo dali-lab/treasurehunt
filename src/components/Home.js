@@ -332,7 +332,7 @@ var Home = React.createClass({
         }
     },
 
-    componentWillMount: function() {
+    componentDidMount: function() {
         if (this.state.puzzle === 'current'){
             this.listenForItems();
         } else if (this.state.puzzle == 'past'){
