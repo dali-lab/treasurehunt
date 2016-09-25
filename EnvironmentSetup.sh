@@ -131,7 +131,7 @@ if [[ $? != 0 ]]; then
     echo "ERROR: Failed to install node packages!"
 fi
 
-patch ./node_modules/react-native/React/Views/RCTTabBarItem.m ./installResources/tabBarPatch
+patch node_modules/react-native/React/Views/RCTTabBarItem.m installResources/tabBarPatch
 cd ios
 # I'm deintegrating and deleting the workspace because the pod files may be out of date. I just want to be certain they are in sync with the rest of the project
 pod deintegrate &> $REDIRECT
