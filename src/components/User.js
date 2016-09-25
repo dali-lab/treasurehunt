@@ -23,6 +23,7 @@ class User {
 	static currentUser = null;
 	static startingHunt = null;
 	static startingHuntCallback = null;
+	static listeners = []
 
 	/**
 	 * This constructs a user object
@@ -59,6 +60,8 @@ class User {
 		this.completedHunts = this.dataRef.child("completedHunts");
 
 		console.log("My user id: " + this.uid);
+
+		// We have now found a user, from whatever source. I want update my listeners
 	}
 
 	// A function for when a user has just been created. It fills the user with empty data tables
@@ -94,6 +97,16 @@ class User {
 
 	isFacebook() {
 		return this.firebaseUser == null;
+	}
+
+	static addListener(listener) {
+		if (listener == null)
+			return;
+
+		if (typeof listener != "function")
+			return;
+
+		User.listeners.push(listener);
 	}
 
 	static getCurrentUser() {
@@ -414,6 +427,12 @@ class User {
 			callback(User.startingHuntCallback);
 		}else{
 			User.startingHuntCallback = callback
+		}
+	}
+
+	static performCallbacks(callbacks) {
+		for (var callback in callbacks) {
+			callback(User.currentUser);
 		}
 	}
 }

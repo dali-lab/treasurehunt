@@ -14,7 +14,7 @@ var {
   TextInput,
   View,
   TouchableHighlight,
-  ActivityIndicatorIOS,
+  ActivityIndicator,
   Image,
   Dimensions,
   Modal,
@@ -320,7 +320,7 @@ class LoginScreen extends Component {
 							</View>
 						</View>
 
-						<ActivityIndicatorIOS
+						<ActivityIndicator
 							animating={this.state.processingLogin}
 							hidesWhenStopped={true}
 							size="small"/>

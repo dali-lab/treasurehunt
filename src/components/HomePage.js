@@ -87,10 +87,6 @@ var HomePage = React.createClass({
     onLogout: React.PropTypes.func,
   },
 
-  componentWillMount: function() {
-    Icon.getImageSource('android-arrow-back', 30).then((source) => this.setState({ backIcon: source }));
-  },
-
   getInitialState: function() {
     return {
       selectedTab: TABS.home,
@@ -120,7 +116,6 @@ var HomePage = React.createClass({
         titleTextColor='white'
         initialRoute={{
           title: 'TREASUREHUNT',
-          rightButtonImage: <Image source={'../img/home.png'} /> ,
           component: Home,
           rightButtonTitle: "Logout",
           onRightButtonPress: this.onLogout,
@@ -156,7 +151,6 @@ var HomePage = React.createClass({
         barTintColor="#c5ebe0">
 
         <Icon.TabBarItemIOS
-
          icon={require('../img/28reminder.png')}
          selectedIcon={require('../img/w28reminder.png')}
          selected={this.state.selectedTab === TABS.feed}
@@ -170,7 +164,6 @@ var HomePage = React.createClass({
 
 
         <Icon.TabBarItemIOS
-
           selected={this.state.selectedTab === TABS.home}
           icon={require('../img/home.png')}
           selectedIcon={require('../img/w28home.png')}
@@ -191,7 +184,6 @@ var HomePage = React.createClass({
 
 
        <Icon.TabBarItemIOS
-
          selected={this.state.selectedTab === TABS.create}
          icon={require('../img/28pencil.png')}
          selectedIcon={require('../img/w28pencil.png')}
