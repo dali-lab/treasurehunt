@@ -1,877 +1,2118 @@
-// !$*UTF8*$!
-{
-	archiveVersion = 1;
-	classes = {
-	};
-	objectVersion = 46;
-	objects = {
-
-/* Begin PBXBuildFile section */
-		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
-		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
-		00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302C01ABCB91800DB3ED1 /* libRCTImage.a */; };
-		00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302DC1ABCB9D200DB3ED1 /* libRCTNetwork.a */; };
-		00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
-		133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
-		139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
-		139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
-		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
-		526ACA5F1D8F7EB300251431 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 526ACA5A1D8F7EB300251431 /* AppDelegate.m */; };
-		526ACA601D8F7EB300251431 /* Base.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 526ACA5B1D8F7EB300251431 /* Base.lproj */; };
-		526ACA611D8F7EB300251431 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 526ACA5C1D8F7EB300251431 /* Images.xcassets */; };
-		526ACA621D8F7EB300251431 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 526ACA5D1D8F7EB300251431 /* Info.plist */; };
-		526ACA631D8F7EB300251431 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 526ACA5E1D8F7EB300251431 /* main.m */; };
-		52A227C81D8F325B0066FD73 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52A227C71D8F325B0066FD73 /* Bolts.framework */; };
-		52CC17F11D8F415600BAB55C /* MuseoSlab.otf in Resources */ = {isa = PBXBuildFile; fileRef = 52D2D0A11D8F27A500F294B8 /* MuseoSlab.otf */; };
-		52CC17F21D8F415600BAB55C /* Verlag-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52D2D0841D8F275700F294B8 /* Verlag-Black.ttf */; };
-		52CC17F31D8F415600BAB55C /* Verlag-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52D2D0851D8F275700F294B8 /* Verlag-BlackItalic.ttf */; };
-		52CC17F41D8F415600BAB55C /* Verlag-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52D2D0861D8F275700F294B8 /* Verlag-Bold.ttf */; };
-		52CC17F51D8F415600BAB55C /* Verlag-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52D2D0871D8F275700F294B8 /* Verlag-BoldItalic.ttf */; };
-		52CC17F61D8F415600BAB55C /* Verlag-Book.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52D2D0881D8F275700F294B8 /* Verlag-Book.ttf */; };
-		52CC17F71D8F415600BAB55C /* Verlag-BookItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52D2D0891D8F275700F294B8 /* Verlag-BookItalic.ttf */; };
-		52CC17F81D8F415600BAB55C /* Verlag-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52D2D08A1D8F275700F294B8 /* Verlag-Light.ttf */; };
-		52CC17F91D8F415600BAB55C /* Verlag-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52D2D08B1D8F275700F294B8 /* Verlag-LightItalic.ttf */; };
-		52CC17FA1D8F415600BAB55C /* Verlag-XLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52D2D08C1D8F275700F294B8 /* Verlag-XLight.ttf */; };
-		52CC17FB1D8F415600BAB55C /* Verlag-XLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52D2D08D1D8F275700F294B8 /* Verlag-XLightItalic.ttf */; };
-		52CC17FC1D8F415600BAB55C /* VerlagCondensed-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52D2D08E1D8F275700F294B8 /* VerlagCondensed-Black.ttf */; };
-		52CC17FD1D8F415600BAB55C /* VerlagCondensed-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52D2D08F1D8F275700F294B8 /* VerlagCondensed-BlackItalic.ttf */; };
-		52CC17FE1D8F415600BAB55C /* VerlagCondensed-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52D2D0901D8F275700F294B8 /* VerlagCondensed-Bold.ttf */; };
-		52CC17FF1D8F415600BAB55C /* VerlagCondensed-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52D2D0911D8F275700F294B8 /* VerlagCondensed-BoldItalic.ttf */; };
-		52CC18001D8F415600BAB55C /* VerlagCondensed-Book.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52D2D0921D8F275700F294B8 /* VerlagCondensed-Book.ttf */; };
-		52CC18011D8F415600BAB55C /* VerlagCondensed-BookItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52D2D0931D8F275700F294B8 /* VerlagCondensed-BookItalic.ttf */; };
-		52CC18021D8F415600BAB55C /* VerlagCondensed-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52D2D0941D8F275700F294B8 /* VerlagCondensed-Light.ttf */; };
-		52CC18031D8F415600BAB55C /* VerlagCondensed-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52D2D0951D8F275700F294B8 /* VerlagCondensed-LightItalic.ttf */; };
-		52CC18041D8F415600BAB55C /* VerlagCondensed-XLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52D2D0961D8F275700F294B8 /* VerlagCondensed-XLight.ttf */; };
-		52D2D06E1D8F241400F294B8 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D2D06C1D8F241400F294B8 /* Fabric.framework */; };
-		52D2D06F1D8F241400F294B8 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D2D06D1D8F241400F294B8 /* Crashlytics.framework */; };
-		52D2D0AE1D8F27D500F294B8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 52D2D0AD1D8F27D500F294B8 /* GoogleService-Info.plist */; };
-		52D2D0B51D8F2E0C00F294B8 /* libRCTFBLogin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D2D0B41D8F2E0000F294B8 /* libRCTFBLogin.a */; };
-		52D2D0D11D8F311E00F294B8 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D2D0CE1D8F311E00F294B8 /* FBSDKCoreKit.framework */; };
-		52D2D0D21D8F311E00F294B8 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D2D0CF1D8F311E00F294B8 /* FBSDKLoginKit.framework */; };
-		52D2D0D31D8F311E00F294B8 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D2D0D01D8F311E00F294B8 /* FBSDKShareKit.framework */; };
-		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
-		C404BBA0AC21A180700C771A /* libPods-treasurehunt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146EB2854FEEA441116A3CDC /* libPods-treasurehunt.a */; };
-/* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		00C302AB1ABCB8CE00DB3ED1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 134814201AA4EA6300B7C361;
-			remoteInfo = RCTActionSheet;
-		};
-		00C302B91ABCB90400DB3ED1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 00C302B51ABCB90400DB3ED1 /* RCTGeolocation.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 134814201AA4EA6300B7C361;
-			remoteInfo = RCTGeolocation;
-		};
-		00C302BF1ABCB91800DB3ED1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 00C302BB1ABCB91800DB3ED1 /* RCTImage.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 58B5115D1A9E6B3D00147676;
-			remoteInfo = RCTImage;
-		};
-		00C302DB1ABCB9D200DB3ED1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 00C302D31ABCB9D200DB3ED1 /* RCTNetwork.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 58B511DB1A9E6C8500147676;
-			remoteInfo = RCTNetwork;
-		};
-		00C302E31ABCB9EE00DB3ED1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 832C81801AAF6DEF007FA2F7;
-			remoteInfo = RCTVibration;
-		};
-		139105C01AF99BAD00B5F7CC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 134814201AA4EA6300B7C361;
-			remoteInfo = RCTSettings;
-		};
-		139FDEF31B06529B00C62182 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3C86DF461ADF2C930047B81A;
-			remoteInfo = RCTWebSocket;
-		};
-		146834031AC3E56700842450 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 83CBBA2E1A601D0E00E9B192;
-			remoteInfo = React;
-		};
-		52D2D0B31D8F2E0000F294B8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 52D2D0AF1D8F2E0000F294B8 /* RCTFBLogin.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4F3A6B5B1ACFBCC500CA65F7;
-			remoteInfo = RCTFBLogin;
-		};
-		78C398B81ACF4ADC00677621 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 134814201AA4EA6300B7C361;
-			remoteInfo = RCTLinking;
-		};
-		832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
-			remoteInfo = RCTText;
-		};
-/* End PBXContainerItemProxy section */
-
-/* Begin PBXFileReference section */
-		00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTActionSheet.xcodeproj; path = "../node_modules/react-native/Libraries/ActionSheetIOS/RCTActionSheet.xcodeproj"; sourceTree = "<group>"; };
-		00C302B51ABCB90400DB3ED1 /* RCTGeolocation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTGeolocation.xcodeproj; path = "../node_modules/react-native/Libraries/Geolocation/RCTGeolocation.xcodeproj"; sourceTree = "<group>"; };
-		00C302BB1ABCB91800DB3ED1 /* RCTImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTImage.xcodeproj; path = "../node_modules/react-native/Libraries/Image/RCTImage.xcodeproj"; sourceTree = "<group>"; };
-		00C302D31ABCB9D200DB3ED1 /* RCTNetwork.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTNetwork.xcodeproj; path = "../node_modules/react-native/Libraries/Network/RCTNetwork.xcodeproj"; sourceTree = "<group>"; };
-		00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTVibration.xcodeproj; path = "../node_modules/react-native/Libraries/Vibration/RCTVibration.xcodeproj"; sourceTree = "<group>"; };
-		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
-		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* TreasureHunt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TreasureHunt.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
-		146EB2854FEEA441116A3CDC /* libPods-treasurehunt.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-treasurehunt.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		42013F068A272E88053FCF53 /* Pods-treasurehunt.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-treasurehunt.release.xcconfig"; path = "Pods/Target Support Files/Pods-treasurehunt/Pods-treasurehunt.release.xcconfig"; sourceTree = "<group>"; };
-		526ACA591D8F7EB300251431 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = TreasureHunt/AppDelegate.h; sourceTree = "<group>"; };
-		526ACA5A1D8F7EB300251431 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = TreasureHunt/AppDelegate.m; sourceTree = "<group>"; };
-		526ACA5B1D8F7EB300251431 /* Base.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Base.lproj; path = TreasureHunt/Base.lproj; sourceTree = "<group>"; };
-		526ACA5C1D8F7EB300251431 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = TreasureHunt/Images.xcassets; sourceTree = "<group>"; };
-		526ACA5D1D8F7EB300251431 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = TreasureHunt/Info.plist; sourceTree = "<group>"; };
-		526ACA5E1D8F7EB300251431 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = TreasureHunt/main.m; sourceTree = "<group>"; };
-		52A227C71D8F325B0066FD73 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
-		52D2D06C1D8F241400F294B8 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
-		52D2D06D1D8F241400F294B8 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
-		52D2D0841D8F275700F294B8 /* Verlag-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Verlag-Black.ttf"; sourceTree = "<group>"; };
-		52D2D0851D8F275700F294B8 /* Verlag-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Verlag-BlackItalic.ttf"; sourceTree = "<group>"; };
-		52D2D0861D8F275700F294B8 /* Verlag-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Verlag-Bold.ttf"; sourceTree = "<group>"; };
-		52D2D0871D8F275700F294B8 /* Verlag-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Verlag-BoldItalic.ttf"; sourceTree = "<group>"; };
-		52D2D0881D8F275700F294B8 /* Verlag-Book.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Verlag-Book.ttf"; sourceTree = "<group>"; };
-		52D2D0891D8F275700F294B8 /* Verlag-BookItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Verlag-BookItalic.ttf"; sourceTree = "<group>"; };
-		52D2D08A1D8F275700F294B8 /* Verlag-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Verlag-Light.ttf"; sourceTree = "<group>"; };
-		52D2D08B1D8F275700F294B8 /* Verlag-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Verlag-LightItalic.ttf"; sourceTree = "<group>"; };
-		52D2D08C1D8F275700F294B8 /* Verlag-XLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Verlag-XLight.ttf"; sourceTree = "<group>"; };
-		52D2D08D1D8F275700F294B8 /* Verlag-XLightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Verlag-XLightItalic.ttf"; sourceTree = "<group>"; };
-		52D2D08E1D8F275700F294B8 /* VerlagCondensed-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VerlagCondensed-Black.ttf"; sourceTree = "<group>"; };
-		52D2D08F1D8F275700F294B8 /* VerlagCondensed-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VerlagCondensed-BlackItalic.ttf"; sourceTree = "<group>"; };
-		52D2D0901D8F275700F294B8 /* VerlagCondensed-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VerlagCondensed-Bold.ttf"; sourceTree = "<group>"; };
-		52D2D0911D8F275700F294B8 /* VerlagCondensed-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VerlagCondensed-BoldItalic.ttf"; sourceTree = "<group>"; };
-		52D2D0921D8F275700F294B8 /* VerlagCondensed-Book.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VerlagCondensed-Book.ttf"; sourceTree = "<group>"; };
-		52D2D0931D8F275700F294B8 /* VerlagCondensed-BookItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VerlagCondensed-BookItalic.ttf"; sourceTree = "<group>"; };
-		52D2D0941D8F275700F294B8 /* VerlagCondensed-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VerlagCondensed-Light.ttf"; sourceTree = "<group>"; };
-		52D2D0951D8F275700F294B8 /* VerlagCondensed-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VerlagCondensed-LightItalic.ttf"; sourceTree = "<group>"; };
-		52D2D0961D8F275700F294B8 /* VerlagCondensed-XLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VerlagCondensed-XLight.ttf"; sourceTree = "<group>"; };
-		52D2D0A11D8F27A500F294B8 /* MuseoSlab.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MuseoSlab.otf; sourceTree = "<group>"; };
-		52D2D0AD1D8F27D500F294B8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		52D2D0AF1D8F2E0000F294B8 /* RCTFBLogin.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTFBLogin.xcodeproj; path = "../node_modules/react-native-facebook-login/RCTFBLogin.xcodeproj"; sourceTree = "<group>"; };
-		52D2D0C21D8F2F5300F294B8 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = "../node_modules/react-native-facebook-login/FacebookSDK/FBSDKCoreKit.framework"; sourceTree = "<group>"; };
-		52D2D0C31D8F2F5300F294B8 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = "../node_modules/react-native-facebook-login/FacebookSDK/FBSDKLoginKit.framework"; sourceTree = "<group>"; };
-		52D2D0C41D8F2F5300F294B8 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = "../node_modules/react-native-facebook-login/FacebookSDK/FBSDKShareKit.framework"; sourceTree = "<group>"; };
-		52D2D0CE1D8F311E00F294B8 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
-		52D2D0CF1D8F311E00F294B8 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
-		52D2D0D01D8F311E00F294B8 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
-		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
-		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
-		D2F7EE613C3A06E6C25DE825 /* Pods-treasurehunt.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-treasurehunt.debug.xcconfig"; path = "Pods/Target Support Files/Pods-treasurehunt/Pods-treasurehunt.debug.xcconfig"; sourceTree = "<group>"; };
-/* End PBXFileReference section */
-
-/* Begin PBXFrameworksBuildPhase section */
-		13B07F8C1A680F5B00A75B9A /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				52D2D0B51D8F2E0C00F294B8 /* libRCTFBLogin.a in Frameworks */,
-				146834051AC3E58100842450 /* libReact.a in Frameworks */,
-				52D2D0D31D8F311E00F294B8 /* FBSDKShareKit.framework in Frameworks */,
-				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
-				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
-				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
-				133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */,
-				00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */,
-				139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */,
-				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
-				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
-				52D2D0D11D8F311E00F294B8 /* FBSDKCoreKit.framework in Frameworks */,
-				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
-				52D2D06F1D8F241400F294B8 /* Crashlytics.framework in Frameworks */,
-				52D2D06E1D8F241400F294B8 /* Fabric.framework in Frameworks */,
-				52A227C81D8F325B0066FD73 /* Bolts.framework in Frameworks */,
-				52D2D0D21D8F311E00F294B8 /* FBSDKLoginKit.framework in Frameworks */,
-				C404BBA0AC21A180700C771A /* libPods-treasurehunt.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXFrameworksBuildPhase section */
-
-/* Begin PBXGroup section */
-		00C302A81ABCB8CE00DB3ED1 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		00C302B61ABCB90400DB3ED1 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		00C302BC1ABCB91800DB3ED1 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				00C302C01ABCB91800DB3ED1 /* libRCTImage.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		00C302D41ABCB9D200DB3ED1 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				00C302DC1ABCB9D200DB3ED1 /* libRCTNetwork.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		00C302E01ABCB9EE00DB3ED1 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		139105B71AF99BAD00B5F7CC /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				139105C11AF99BAD00B5F7CC /* libRCTSettings.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		139FDEE71B06529A00C62182 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				139FDEF41B06529B00C62182 /* libRCTWebSocket.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		14681396D9BAF2BAE92F9300 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				D2F7EE613C3A06E6C25DE825 /* Pods-treasurehunt.debug.xcconfig */,
-				42013F068A272E88053FCF53 /* Pods-treasurehunt.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
-		146834001AC3E56700842450 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				146834041AC3E56700842450 /* libReact.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		52A8365D1D8F3C7300AD7143 /* TreasureHunt */ = {
-			isa = PBXGroup;
-			children = (
-				526ACA591D8F7EB300251431 /* AppDelegate.h */,
-				526ACA5A1D8F7EB300251431 /* AppDelegate.m */,
-				526ACA5B1D8F7EB300251431 /* Base.lproj */,
-				526ACA5C1D8F7EB300251431 /* Images.xcassets */,
-				526ACA5D1D8F7EB300251431 /* Info.plist */,
-				526ACA5E1D8F7EB300251431 /* main.m */,
-			);
-			name = TreasureHunt;
-			sourceTree = "<group>";
-		};
-		52D2D0AC1D8F27AA00F294B8 /* Fonts */ = {
-			isa = PBXGroup;
-			children = (
-				52D2D0A11D8F27A500F294B8 /* MuseoSlab.otf */,
-				52D2D0841D8F275700F294B8 /* Verlag-Black.ttf */,
-				52D2D0851D8F275700F294B8 /* Verlag-BlackItalic.ttf */,
-				52D2D0861D8F275700F294B8 /* Verlag-Bold.ttf */,
-				52D2D0871D8F275700F294B8 /* Verlag-BoldItalic.ttf */,
-				52D2D0881D8F275700F294B8 /* Verlag-Book.ttf */,
-				52D2D0891D8F275700F294B8 /* Verlag-BookItalic.ttf */,
-				52D2D08A1D8F275700F294B8 /* Verlag-Light.ttf */,
-				52D2D08B1D8F275700F294B8 /* Verlag-LightItalic.ttf */,
-				52D2D08C1D8F275700F294B8 /* Verlag-XLight.ttf */,
-				52D2D08D1D8F275700F294B8 /* Verlag-XLightItalic.ttf */,
-				52D2D08E1D8F275700F294B8 /* VerlagCondensed-Black.ttf */,
-				52D2D08F1D8F275700F294B8 /* VerlagCondensed-BlackItalic.ttf */,
-				52D2D0901D8F275700F294B8 /* VerlagCondensed-Bold.ttf */,
-				52D2D0911D8F275700F294B8 /* VerlagCondensed-BoldItalic.ttf */,
-				52D2D0921D8F275700F294B8 /* VerlagCondensed-Book.ttf */,
-				52D2D0931D8F275700F294B8 /* VerlagCondensed-BookItalic.ttf */,
-				52D2D0941D8F275700F294B8 /* VerlagCondensed-Light.ttf */,
-				52D2D0951D8F275700F294B8 /* VerlagCondensed-LightItalic.ttf */,
-				52D2D0961D8F275700F294B8 /* VerlagCondensed-XLight.ttf */,
-			);
-			name = Fonts;
-			sourceTree = "<group>";
-		};
-		52D2D0B01D8F2E0000F294B8 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				52D2D0B41D8F2E0000F294B8 /* libRCTFBLogin.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		5A4C6B7DAF2EAA8408DDF0A4 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				52D2D0C21D8F2F5300F294B8 /* FBSDKCoreKit.framework */,
-				52D2D0C31D8F2F5300F294B8 /* FBSDKLoginKit.framework */,
-				52D2D0C41D8F2F5300F294B8 /* FBSDKShareKit.framework */,
-				146EB2854FEEA441116A3CDC /* libPods-treasurehunt.a */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		78C398B11ACF4ADC00677621 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				78C398B91ACF4ADC00677621 /* libRCTLinking.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
-			isa = PBXGroup;
-			children = (
-				52A227C71D8F325B0066FD73 /* Bolts.framework */,
-				52D2D0CE1D8F311E00F294B8 /* FBSDKCoreKit.framework */,
-				52D2D0CF1D8F311E00F294B8 /* FBSDKLoginKit.framework */,
-				52D2D0D01D8F311E00F294B8 /* FBSDKShareKit.framework */,
-				52D2D0AF1D8F2E0000F294B8 /* RCTFBLogin.xcodeproj */,
-				146833FF1AC3E56700842450 /* React.xcodeproj */,
-				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
-				00C302B51ABCB90400DB3ED1 /* RCTGeolocation.xcodeproj */,
-				00C302BB1ABCB91800DB3ED1 /* RCTImage.xcodeproj */,
-				78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */,
-				00C302D31ABCB9D200DB3ED1 /* RCTNetwork.xcodeproj */,
-				139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */,
-				832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */,
-				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
-				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
-			);
-			name = Libraries;
-			sourceTree = "<group>";
-		};
-		832341B11AAA6A8300B99B32 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				832341B51AAA6A8300B99B32 /* libRCTText.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		83CBB9F61A601CBA00E9B192 = {
-			isa = PBXGroup;
-			children = (
-				52A8365D1D8F3C7300AD7143 /* TreasureHunt */,
-				52D2D0AD1D8F27D500F294B8 /* GoogleService-Info.plist */,
-				832341AE1AAA6A7D00B99B32 /* Libraries */,
-				52D2D0AC1D8F27AA00F294B8 /* Fonts */,
-				83CBBA001A601CBA00E9B192 /* Products */,
-				52D2D06C1D8F241400F294B8 /* Fabric.framework */,
-				52D2D06D1D8F241400F294B8 /* Crashlytics.framework */,
-				5A4C6B7DAF2EAA8408DDF0A4 /* Frameworks */,
-				14681396D9BAF2BAE92F9300 /* Pods */,
-			);
-			indentWidth = 2;
-			sourceTree = "<group>";
-			tabWidth = 2;
-		};
-		83CBBA001A601CBA00E9B192 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				13B07F961A680F5B00A75B9A /* TreasureHunt.app */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-/* End PBXGroup section */
-
-/* Begin PBXNativeTarget section */
-		13B07F861A680F5B00A75B9A /* treasurehunt */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "treasurehunt" */;
-			buildPhases = (
-				008F95C4385EC1BDD85C432F /* [CP] Check Pods Manifest.lock */,
-				13B07F871A680F5B00A75B9A /* Sources */,
-				13B07F8C1A680F5B00A75B9A /* Frameworks */,
-				13B07F8E1A680F5B00A75B9A /* Resources */,
-				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				949506FDFF9912414BEDBD2F /* [CP] Embed Pods Frameworks */,
-				8784EEC74F3C90DDD5CBF24D /* [CP] Copy Pods Resources */,
-				52D2D06B1D8F23D600F294B8 /* ShellScript */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = treasurehunt;
-			productName = "Hello World";
-			productReference = 13B07F961A680F5B00A75B9A /* TreasureHunt.app */;
-			productType = "com.apple.product-type.application";
-		};
-/* End PBXNativeTarget section */
-
-/* Begin PBXProject section */
-		83CBB9F71A601CBA00E9B192 /* Project object */ = {
-			isa = PBXProject;
-			attributes = {
-				LastUpgradeCheck = 0610;
-				ORGANIZATIONNAME = Facebook;
-			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "treasurehunt" */;
-			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
-			hasScannedForEncodings = 0;
-			knownRegions = (
-				en,
-				Base,
-			);
-			mainGroup = 83CBB9F61A601CBA00E9B192;
-			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
-			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
-					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
-				},
-				{
-					ProductGroup = 52D2D0B01D8F2E0000F294B8 /* Products */;
-					ProjectRef = 52D2D0AF1D8F2E0000F294B8 /* RCTFBLogin.xcodeproj */;
-				},
-				{
-					ProductGroup = 00C302B61ABCB90400DB3ED1 /* Products */;
-					ProjectRef = 00C302B51ABCB90400DB3ED1 /* RCTGeolocation.xcodeproj */;
-				},
-				{
-					ProductGroup = 00C302BC1ABCB91800DB3ED1 /* Products */;
-					ProjectRef = 00C302BB1ABCB91800DB3ED1 /* RCTImage.xcodeproj */;
-				},
-				{
-					ProductGroup = 78C398B11ACF4ADC00677621 /* Products */;
-					ProjectRef = 78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */;
-				},
-				{
-					ProductGroup = 00C302D41ABCB9D200DB3ED1 /* Products */;
-					ProjectRef = 00C302D31ABCB9D200DB3ED1 /* RCTNetwork.xcodeproj */;
-				},
-				{
-					ProductGroup = 139105B71AF99BAD00B5F7CC /* Products */;
-					ProjectRef = 139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */;
-				},
-				{
-					ProductGroup = 832341B11AAA6A8300B99B32 /* Products */;
-					ProjectRef = 832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */;
-				},
-				{
-					ProductGroup = 00C302E01ABCB9EE00DB3ED1 /* Products */;
-					ProjectRef = 00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */;
-				},
-				{
-					ProductGroup = 139FDEE71B06529A00C62182 /* Products */;
-					ProjectRef = 139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */;
-				},
-				{
-					ProductGroup = 146834001AC3E56700842450 /* Products */;
-					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
-				},
-			);
-			projectRoot = "";
-			targets = (
-				13B07F861A680F5B00A75B9A /* treasurehunt */,
-			);
-		};
-/* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRCTActionSheet.a;
-			remoteRef = 00C302AB1ABCB8CE00DB3ED1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRCTGeolocation.a;
-			remoteRef = 00C302B91ABCB90400DB3ED1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		00C302C01ABCB91800DB3ED1 /* libRCTImage.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRCTImage.a;
-			remoteRef = 00C302BF1ABCB91800DB3ED1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		00C302DC1ABCB9D200DB3ED1 /* libRCTNetwork.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRCTNetwork.a;
-			remoteRef = 00C302DB1ABCB9D200DB3ED1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRCTVibration.a;
-			remoteRef = 00C302E31ABCB9EE00DB3ED1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		139105C11AF99BAD00B5F7CC /* libRCTSettings.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRCTSettings.a;
-			remoteRef = 139105C01AF99BAD00B5F7CC /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		139FDEF41B06529B00C62182 /* libRCTWebSocket.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRCTWebSocket.a;
-			remoteRef = 139FDEF31B06529B00C62182 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		146834041AC3E56700842450 /* libReact.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libReact.a;
-			remoteRef = 146834031AC3E56700842450 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		52D2D0B41D8F2E0000F294B8 /* libRCTFBLogin.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRCTFBLogin.a;
-			remoteRef = 52D2D0B31D8F2E0000F294B8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		78C398B91ACF4ADC00677621 /* libRCTLinking.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRCTLinking.a;
-			remoteRef = 78C398B81ACF4ADC00677621 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		832341B51AAA6A8300B99B32 /* libRCTText.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRCTText.a;
-			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
-
-/* Begin PBXResourcesBuildPhase section */
-		13B07F8E1A680F5B00A75B9A /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				52CC17F11D8F415600BAB55C /* MuseoSlab.otf in Resources */,
-				52CC17F21D8F415600BAB55C /* Verlag-Black.ttf in Resources */,
-				52CC17F31D8F415600BAB55C /* Verlag-BlackItalic.ttf in Resources */,
-				526ACA611D8F7EB300251431 /* Images.xcassets in Resources */,
-				52CC17F41D8F415600BAB55C /* Verlag-Bold.ttf in Resources */,
-				52CC17F51D8F415600BAB55C /* Verlag-BoldItalic.ttf in Resources */,
-				52CC17F61D8F415600BAB55C /* Verlag-Book.ttf in Resources */,
-				52CC17F71D8F415600BAB55C /* Verlag-BookItalic.ttf in Resources */,
-				526ACA601D8F7EB300251431 /* Base.lproj in Resources */,
-				52CC17F81D8F415600BAB55C /* Verlag-Light.ttf in Resources */,
-				52CC17F91D8F415600BAB55C /* Verlag-LightItalic.ttf in Resources */,
-				52CC17FA1D8F415600BAB55C /* Verlag-XLight.ttf in Resources */,
-				52CC17FB1D8F415600BAB55C /* Verlag-XLightItalic.ttf in Resources */,
-				52CC17FC1D8F415600BAB55C /* VerlagCondensed-Black.ttf in Resources */,
-				52CC17FD1D8F415600BAB55C /* VerlagCondensed-BlackItalic.ttf in Resources */,
-				52CC17FE1D8F415600BAB55C /* VerlagCondensed-Bold.ttf in Resources */,
-				52CC17FF1D8F415600BAB55C /* VerlagCondensed-BoldItalic.ttf in Resources */,
-				52CC18001D8F415600BAB55C /* VerlagCondensed-Book.ttf in Resources */,
-				52CC18011D8F415600BAB55C /* VerlagCondensed-BookItalic.ttf in Resources */,
-				52CC18021D8F415600BAB55C /* VerlagCondensed-Light.ttf in Resources */,
-				526ACA621D8F7EB300251431 /* Info.plist in Resources */,
-				52CC18031D8F415600BAB55C /* VerlagCondensed-LightItalic.ttf in Resources */,
-				52CC18041D8F415600BAB55C /* VerlagCondensed-XLight.ttf in Resources */,
-				52D2D0AE1D8F27D500F294B8 /* GoogleService-Info.plist in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		008F95C4385EC1BDD85C432F /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Bundle React Native code and images";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/packager/react-native-xcode.sh";
-		};
-		52D2D06B1D8F23D600F294B8 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "#./Fabric.framework/run 46ee2b2494200fc37080231a2cfd401866e5ae25 22bf5c454bec8c3bf4d7dcb6ce678e6bddc19983aa1c043f920da08ef84e068c";
-		};
-		8784EEC74F3C90DDD5CBF24D /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-treasurehunt/Pods-treasurehunt-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		949506FDFF9912414BEDBD2F /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-treasurehunt/Pods-treasurehunt-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
-
-/* Begin PBXSourcesBuildPhase section */
-		13B07F871A680F5B00A75B9A /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				526ACA631D8F7EB300251431 /* main.m in Sources */,
-				526ACA5F1D8F7EB300251431 /* AppDelegate.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXSourcesBuildPhase section */
-
-/* Begin XCBuildConfiguration section */
-		13B07F941A680F5B00A75B9A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = D2F7EE613C3A06E6C25DE825 /* Pods-treasurehunt.debug.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEAD_CODE_STRIPPING = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"$(SRCROOT)/../node_modules/react-native/React/**",
-					"$(PROJECT_DIR)/**",
-				);
-				INFOPLIST_FILE = "$(SRCROOT)/TreasureHunt/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-ObjC",
-					"-lc++",
-				);
-				PRODUCT_NAME = TreasureHunt;
-			};
-			name = Debug;
-		};
-		13B07F951A680F5B00A75B9A /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 42013F068A272E88053FCF53 /* Pods-treasurehunt.release.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"$(SRCROOT)/../node_modules/react-native/React/**",
-					"$(PROJECT_DIR)/**",
-				);
-				INFOPLIST_FILE = "$(SRCROOT)/TreasureHunt/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-ObjC",
-					"-lc++",
-				);
-				PRODUCT_NAME = TreasureHunt;
-			};
-			name = Release;
-		};
-		83CBBA201A601CBA00E9B192 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"$(SRCROOT)/../node_modules/react-native/React/**",
-				);
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
-			};
-			name = Debug;
-		};
-		83CBBA211A601CBA00E9B192 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = YES;
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"$(SRCROOT)/../node_modules/react-native/React/**",
-				);
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = iphoneos;
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-/* End XCBuildConfiguration section */
-
-/* Begin XCConfigurationList section */
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "treasurehunt" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				13B07F941A680F5B00A75B9A /* Debug */,
-				13B07F951A680F5B00A75B9A /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "treasurehunt" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				83CBBA201A601CBA00E9B192 /* Debug */,
-				83CBBA211A601CBA00E9B192 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-/* End XCConfigurationList section */
-	};
-	rootObject = 83CBB9F71A601CBA00E9B192 /* Project object */;
-}
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>archiveVersion</key>
+	<string>1</string>
+	<key>classes</key>
+	<dict/>
+	<key>objectVersion</key>
+	<string>46</string>
+	<key>objects</key>
+	<dict>
+		<key>0078A48CA4DC8EF042D58D81</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods-treasurehunt.release.xcconfig</string>
+			<key>path</key>
+			<string>Pods/Target Support Files/Pods-treasurehunt/Pods-treasurehunt.release.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>008F95C4385EC1BDD85C432F</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>[CP] Check Pods Manifest.lock</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>diff "${PODS_ROOT}/../Podfile.lock" "${PODS_ROOT}/Manifest.lock" &gt; /dev/null
+if [[ $? != 0 ]] ; then
+    cat &lt;&lt; EOM
+error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.
+EOM
+    exit 1
+fi
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+		<key>00C302A71ABCB8CE00DB3ED1</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.pb-project</string>
+			<key>name</key>
+			<string>RCTActionSheet.xcodeproj</string>
+			<key>path</key>
+			<string>../node_modules/react-native/Libraries/ActionSheetIOS/RCTActionSheet.xcodeproj</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>00C302A81ABCB8CE00DB3ED1</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>00C302AC1ABCB8CE00DB3ED1</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Products</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>00C302AB1ABCB8CE00DB3ED1</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>00C302A71ABCB8CE00DB3ED1</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>2</string>
+			<key>remoteGlobalIDString</key>
+			<string>134814201AA4EA6300B7C361</string>
+			<key>remoteInfo</key>
+			<string>RCTActionSheet</string>
+		</dict>
+		<key>00C302AC1ABCB8CE00DB3ED1</key>
+		<dict>
+			<key>fileType</key>
+			<string>archive.ar</string>
+			<key>isa</key>
+			<string>PBXReferenceProxy</string>
+			<key>path</key>
+			<string>libRCTActionSheet.a</string>
+			<key>remoteRef</key>
+			<string>00C302AB1ABCB8CE00DB3ED1</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>00C302B51ABCB90400DB3ED1</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.pb-project</string>
+			<key>name</key>
+			<string>RCTGeolocation.xcodeproj</string>
+			<key>path</key>
+			<string>../node_modules/react-native/Libraries/Geolocation/RCTGeolocation.xcodeproj</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>00C302B61ABCB90400DB3ED1</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>00C302BA1ABCB90400DB3ED1</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Products</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>00C302B91ABCB90400DB3ED1</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>00C302B51ABCB90400DB3ED1</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>2</string>
+			<key>remoteGlobalIDString</key>
+			<string>134814201AA4EA6300B7C361</string>
+			<key>remoteInfo</key>
+			<string>RCTGeolocation</string>
+		</dict>
+		<key>00C302BA1ABCB90400DB3ED1</key>
+		<dict>
+			<key>fileType</key>
+			<string>archive.ar</string>
+			<key>isa</key>
+			<string>PBXReferenceProxy</string>
+			<key>path</key>
+			<string>libRCTGeolocation.a</string>
+			<key>remoteRef</key>
+			<string>00C302B91ABCB90400DB3ED1</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>00C302BB1ABCB91800DB3ED1</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.pb-project</string>
+			<key>name</key>
+			<string>RCTImage.xcodeproj</string>
+			<key>path</key>
+			<string>../node_modules/react-native/Libraries/Image/RCTImage.xcodeproj</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>00C302BC1ABCB91800DB3ED1</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>00C302C01ABCB91800DB3ED1</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Products</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>00C302BF1ABCB91800DB3ED1</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>00C302BB1ABCB91800DB3ED1</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>2</string>
+			<key>remoteGlobalIDString</key>
+			<string>58B5115D1A9E6B3D00147676</string>
+			<key>remoteInfo</key>
+			<string>RCTImage</string>
+		</dict>
+		<key>00C302C01ABCB91800DB3ED1</key>
+		<dict>
+			<key>fileType</key>
+			<string>archive.ar</string>
+			<key>isa</key>
+			<string>PBXReferenceProxy</string>
+			<key>path</key>
+			<string>libRCTImage.a</string>
+			<key>remoteRef</key>
+			<string>00C302BF1ABCB91800DB3ED1</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>00C302D31ABCB9D200DB3ED1</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.pb-project</string>
+			<key>name</key>
+			<string>RCTNetwork.xcodeproj</string>
+			<key>path</key>
+			<string>../node_modules/react-native/Libraries/Network/RCTNetwork.xcodeproj</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>00C302D41ABCB9D200DB3ED1</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>00C302DC1ABCB9D200DB3ED1</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Products</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>00C302DB1ABCB9D200DB3ED1</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>00C302D31ABCB9D200DB3ED1</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>2</string>
+			<key>remoteGlobalIDString</key>
+			<string>58B511DB1A9E6C8500147676</string>
+			<key>remoteInfo</key>
+			<string>RCTNetwork</string>
+		</dict>
+		<key>00C302DC1ABCB9D200DB3ED1</key>
+		<dict>
+			<key>fileType</key>
+			<string>archive.ar</string>
+			<key>isa</key>
+			<string>PBXReferenceProxy</string>
+			<key>path</key>
+			<string>libRCTNetwork.a</string>
+			<key>remoteRef</key>
+			<string>00C302DB1ABCB9D200DB3ED1</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>00C302DF1ABCB9EE00DB3ED1</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.pb-project</string>
+			<key>name</key>
+			<string>RCTVibration.xcodeproj</string>
+			<key>path</key>
+			<string>../node_modules/react-native/Libraries/Vibration/RCTVibration.xcodeproj</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>00C302E01ABCB9EE00DB3ED1</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>00C302E41ABCB9EE00DB3ED1</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Products</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>00C302E31ABCB9EE00DB3ED1</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>00C302DF1ABCB9EE00DB3ED1</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>2</string>
+			<key>remoteGlobalIDString</key>
+			<string>832C81801AAF6DEF007FA2F7</string>
+			<key>remoteInfo</key>
+			<string>RCTVibration</string>
+		</dict>
+		<key>00C302E41ABCB9EE00DB3ED1</key>
+		<dict>
+			<key>fileType</key>
+			<string>archive.ar</string>
+			<key>isa</key>
+			<string>PBXReferenceProxy</string>
+			<key>path</key>
+			<string>libRCTVibration.a</string>
+			<key>remoteRef</key>
+			<string>00C302E31ABCB9EE00DB3ED1</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>00C302E51ABCBA2D00DB3ED1</key>
+		<dict>
+			<key>fileRef</key>
+			<string>00C302AC1ABCB8CE00DB3ED1</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>00C302E71ABCBA2D00DB3ED1</key>
+		<dict>
+			<key>fileRef</key>
+			<string>00C302BA1ABCB90400DB3ED1</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>00C302E81ABCBA2D00DB3ED1</key>
+		<dict>
+			<key>fileRef</key>
+			<string>00C302C01ABCB91800DB3ED1</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>00C302E91ABCBA2D00DB3ED1</key>
+		<dict>
+			<key>fileRef</key>
+			<string>00C302DC1ABCB9D200DB3ED1</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>00C302EA1ABCBA2D00DB3ED1</key>
+		<dict>
+			<key>fileRef</key>
+			<string>00C302E41ABCB9EE00DB3ED1</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>00DD1BFF1BD5951E006B06BC</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>Bundle React Native code and images</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>export NODE_BINARY=node
+../node_modules/react-native/packager/react-native-xcode.sh</string>
+		</dict>
+		<key>133E29F31AD74F7200F7D852</key>
+		<dict>
+			<key>fileRef</key>
+			<string>78C398B91ACF4ADC00677621</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>139105B61AF99BAD00B5F7CC</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.pb-project</string>
+			<key>name</key>
+			<string>RCTSettings.xcodeproj</string>
+			<key>path</key>
+			<string>../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>139105B71AF99BAD00B5F7CC</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>139105C11AF99BAD00B5F7CC</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Products</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>139105C01AF99BAD00B5F7CC</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>139105B61AF99BAD00B5F7CC</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>2</string>
+			<key>remoteGlobalIDString</key>
+			<string>134814201AA4EA6300B7C361</string>
+			<key>remoteInfo</key>
+			<string>RCTSettings</string>
+		</dict>
+		<key>139105C11AF99BAD00B5F7CC</key>
+		<dict>
+			<key>fileType</key>
+			<string>archive.ar</string>
+			<key>isa</key>
+			<string>PBXReferenceProxy</string>
+			<key>path</key>
+			<string>libRCTSettings.a</string>
+			<key>remoteRef</key>
+			<string>139105C01AF99BAD00B5F7CC</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>139105C61AF99C1200B5F7CC</key>
+		<dict>
+			<key>fileRef</key>
+			<string>139105C11AF99BAD00B5F7CC</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>139FDEE61B06529A00C62182</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.pb-project</string>
+			<key>name</key>
+			<string>RCTWebSocket.xcodeproj</string>
+			<key>path</key>
+			<string>../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>139FDEE71B06529A00C62182</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>139FDEF41B06529B00C62182</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Products</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>139FDEF31B06529B00C62182</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>139FDEE61B06529A00C62182</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>2</string>
+			<key>remoteGlobalIDString</key>
+			<string>3C86DF461ADF2C930047B81A</string>
+			<key>remoteInfo</key>
+			<string>RCTWebSocket</string>
+		</dict>
+		<key>139FDEF41B06529B00C62182</key>
+		<dict>
+			<key>fileType</key>
+			<string>archive.ar</string>
+			<key>isa</key>
+			<string>PBXReferenceProxy</string>
+			<key>path</key>
+			<string>libRCTWebSocket.a</string>
+			<key>remoteRef</key>
+			<string>139FDEF31B06529B00C62182</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>139FDEF61B0652A700C62182</key>
+		<dict>
+			<key>fileRef</key>
+			<string>139FDEF41B06529B00C62182</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>13B07F861A680F5B00A75B9A</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>13B07F931A680F5B00A75B9A</string>
+			<key>buildPhases</key>
+			<array>
+				<string>008F95C4385EC1BDD85C432F</string>
+				<string>13B07F871A680F5B00A75B9A</string>
+				<string>13B07F8C1A680F5B00A75B9A</string>
+				<string>13B07F8E1A680F5B00A75B9A</string>
+				<string>00DD1BFF1BD5951E006B06BC</string>
+				<string>949506FDFF9912414BEDBD2F</string>
+				<string>8784EEC74F3C90DDD5CBF24D</string>
+				<string>52D2D06B1D8F23D600F294B8</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>treasurehunt</string>
+			<key>productName</key>
+			<string>Hello World</string>
+			<key>productReference</key>
+			<string>13B07F961A680F5B00A75B9A</string>
+			<key>productType</key>
+			<string>com.apple.product-type.application</string>
+		</dict>
+		<key>13B07F871A680F5B00A75B9A</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>526ACA631D8F7EB300251431</string>
+				<string>526ACA5F1D8F7EB300251431</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>13B07F8C1A680F5B00A75B9A</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>52D2D0B51D8F2E0C00F294B8</string>
+				<string>146834051AC3E58100842450</string>
+				<string>52D2D0D31D8F311E00F294B8</string>
+				<string>00C302E51ABCBA2D00DB3ED1</string>
+				<string>00C302E71ABCBA2D00DB3ED1</string>
+				<string>00C302E81ABCBA2D00DB3ED1</string>
+				<string>133E29F31AD74F7200F7D852</string>
+				<string>00C302E91ABCBA2D00DB3ED1</string>
+				<string>139105C61AF99C1200B5F7CC</string>
+				<string>832341BD1AAA6AB300B99B32</string>
+				<string>00C302EA1ABCBA2D00DB3ED1</string>
+				<string>52D2D0D11D8F311E00F294B8</string>
+				<string>139FDEF61B0652A700C62182</string>
+				<string>52D2D06F1D8F241400F294B8</string>
+				<string>52D2D06E1D8F241400F294B8</string>
+				<string>52A227C81D8F325B0066FD73</string>
+				<string>52D2D0D21D8F311E00F294B8</string>
+				<string>D97B5BE39DE904CE1E623469</string>
+			</array>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>13B07F8E1A680F5B00A75B9A</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>52CC17F11D8F415600BAB55C</string>
+				<string>52CC17F21D8F415600BAB55C</string>
+				<string>52CC17F31D8F415600BAB55C</string>
+				<string>526ACA611D8F7EB300251431</string>
+				<string>52CC17F41D8F415600BAB55C</string>
+				<string>52CC17F51D8F415600BAB55C</string>
+				<string>52CC17F61D8F415600BAB55C</string>
+				<string>52CC17F71D8F415600BAB55C</string>
+				<string>526ACA601D8F7EB300251431</string>
+				<string>52CC17F81D8F415600BAB55C</string>
+				<string>52CC17F91D8F415600BAB55C</string>
+				<string>52CC17FA1D8F415600BAB55C</string>
+				<string>52CC17FB1D8F415600BAB55C</string>
+				<string>52CC17FC1D8F415600BAB55C</string>
+				<string>52CC17FD1D8F415600BAB55C</string>
+				<string>52CC17FE1D8F415600BAB55C</string>
+				<string>52CC17FF1D8F415600BAB55C</string>
+				<string>52CC18001D8F415600BAB55C</string>
+				<string>52CC18011D8F415600BAB55C</string>
+				<string>52CC18021D8F415600BAB55C</string>
+				<string>526ACA621D8F7EB300251431</string>
+				<string>52CC18031D8F415600BAB55C</string>
+				<string>52CC18041D8F415600BAB55C</string>
+				<string>52D2D0AE1D8F27D500F294B8</string>
+			</array>
+			<key>isa</key>
+			<string>PBXResourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>13B07F931A680F5B00A75B9A</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>13B07F941A680F5B00A75B9A</string>
+				<string>13B07F951A680F5B00A75B9A</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>13B07F941A680F5B00A75B9A</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>CB56F31988AAC2A09C7C7823</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
+				<string>AppIcon</string>
+				<key>DEAD_CODE_STRIPPING</key>
+				<string>NO</string>
+				<key>FRAMEWORK_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>$(PROJECT_DIR)</string>
+				</array>
+				<key>HEADER_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include</string>
+					<string>$(SRCROOT)/../node_modules/react-native/React/**</string>
+					<string>$(PROJECT_DIR)/**</string>
+				</array>
+				<key>INFOPLIST_FILE</key>
+				<string>$(SRCROOT)/TreasureHunt/Info.plist</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<string>$(inherited) @executable_path/Frameworks</string>
+				<key>OTHER_LDFLAGS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>-ObjC</string>
+					<string>-lc++</string>
+				</array>
+				<key>PRODUCT_NAME</key>
+				<string>TreasureHunt</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>13B07F951A680F5B00A75B9A</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>0078A48CA4DC8EF042D58D81</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
+				<string>AppIcon</string>
+				<key>FRAMEWORK_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>$(PROJECT_DIR)</string>
+				</array>
+				<key>HEADER_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include</string>
+					<string>$(SRCROOT)/../node_modules/react-native/React/**</string>
+					<string>$(PROJECT_DIR)/**</string>
+				</array>
+				<key>INFOPLIST_FILE</key>
+				<string>$(SRCROOT)/TreasureHunt/Info.plist</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<string>$(inherited) @executable_path/Frameworks</string>
+				<key>OTHER_LDFLAGS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>-ObjC</string>
+					<string>-lc++</string>
+				</array>
+				<key>PRODUCT_NAME</key>
+				<string>TreasureHunt</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>13B07F961A680F5B00A75B9A</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.application</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>TreasureHunt.app</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>146833FF1AC3E56700842450</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.pb-project</string>
+			<key>name</key>
+			<string>React.xcodeproj</string>
+			<key>path</key>
+			<string>../node_modules/react-native/React/React.xcodeproj</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>146834001AC3E56700842450</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>146834041AC3E56700842450</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Products</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>146834031AC3E56700842450</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>146833FF1AC3E56700842450</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>2</string>
+			<key>remoteGlobalIDString</key>
+			<string>83CBBA2E1A601D0E00E9B192</string>
+			<key>remoteInfo</key>
+			<string>React</string>
+		</dict>
+		<key>146834041AC3E56700842450</key>
+		<dict>
+			<key>fileType</key>
+			<string>archive.ar</string>
+			<key>isa</key>
+			<string>PBXReferenceProxy</string>
+			<key>path</key>
+			<string>libReact.a</string>
+			<key>remoteRef</key>
+			<string>146834031AC3E56700842450</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>146834051AC3E58100842450</key>
+		<dict>
+			<key>fileRef</key>
+			<string>146834041AC3E56700842450</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>526ACA591D8F7EB300251431</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>name</key>
+			<string>AppDelegate.h</string>
+			<key>path</key>
+			<string>TreasureHunt/AppDelegate.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>526ACA5A1D8F7EB300251431</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>name</key>
+			<string>AppDelegate.m</string>
+			<key>path</key>
+			<string>TreasureHunt/AppDelegate.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>526ACA5B1D8F7EB300251431</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>folder</string>
+			<key>name</key>
+			<string>Base.lproj</string>
+			<key>path</key>
+			<string>TreasureHunt/Base.lproj</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>526ACA5C1D8F7EB300251431</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>folder.assetcatalog</string>
+			<key>name</key>
+			<string>Images.xcassets</string>
+			<key>path</key>
+			<string>TreasureHunt/Images.xcassets</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>526ACA5D1D8F7EB300251431</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>name</key>
+			<string>Info.plist</string>
+			<key>path</key>
+			<string>TreasureHunt/Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>526ACA5E1D8F7EB300251431</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>name</key>
+			<string>main.m</string>
+			<key>path</key>
+			<string>TreasureHunt/main.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>526ACA5F1D8F7EB300251431</key>
+		<dict>
+			<key>fileRef</key>
+			<string>526ACA5A1D8F7EB300251431</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>526ACA601D8F7EB300251431</key>
+		<dict>
+			<key>fileRef</key>
+			<string>526ACA5B1D8F7EB300251431</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>526ACA611D8F7EB300251431</key>
+		<dict>
+			<key>fileRef</key>
+			<string>526ACA5C1D8F7EB300251431</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>526ACA621D8F7EB300251431</key>
+		<dict>
+			<key>fileRef</key>
+			<string>526ACA5D1D8F7EB300251431</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>526ACA631D8F7EB300251431</key>
+		<dict>
+			<key>fileRef</key>
+			<string>526ACA5E1D8F7EB300251431</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>52A227C71D8F325B0066FD73</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.framework</string>
+			<key>path</key>
+			<string>Bolts.framework</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>52A227C81D8F325B0066FD73</key>
+		<dict>
+			<key>fileRef</key>
+			<string>52A227C71D8F325B0066FD73</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>52A8365D1D8F3C7300AD7143</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>526ACA591D8F7EB300251431</string>
+				<string>526ACA5A1D8F7EB300251431</string>
+				<string>526ACA5B1D8F7EB300251431</string>
+				<string>526ACA5C1D8F7EB300251431</string>
+				<string>526ACA5D1D8F7EB300251431</string>
+				<string>526ACA5E1D8F7EB300251431</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>TreasureHunt</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>52CC17F11D8F415600BAB55C</key>
+		<dict>
+			<key>fileRef</key>
+			<string>52D2D0A11D8F27A500F294B8</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>52CC17F21D8F415600BAB55C</key>
+		<dict>
+			<key>fileRef</key>
+			<string>52D2D0841D8F275700F294B8</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>52CC17F31D8F415600BAB55C</key>
+		<dict>
+			<key>fileRef</key>
+			<string>52D2D0851D8F275700F294B8</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>52CC17F41D8F415600BAB55C</key>
+		<dict>
+			<key>fileRef</key>
+			<string>52D2D0861D8F275700F294B8</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>52CC17F51D8F415600BAB55C</key>
+		<dict>
+			<key>fileRef</key>
+			<string>52D2D0871D8F275700F294B8</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>52CC17F61D8F415600BAB55C</key>
+		<dict>
+			<key>fileRef</key>
+			<string>52D2D0881D8F275700F294B8</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>52CC17F71D8F415600BAB55C</key>
+		<dict>
+			<key>fileRef</key>
+			<string>52D2D0891D8F275700F294B8</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>52CC17F81D8F415600BAB55C</key>
+		<dict>
+			<key>fileRef</key>
+			<string>52D2D08A1D8F275700F294B8</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>52CC17F91D8F415600BAB55C</key>
+		<dict>
+			<key>fileRef</key>
+			<string>52D2D08B1D8F275700F294B8</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>52CC17FA1D8F415600BAB55C</key>
+		<dict>
+			<key>fileRef</key>
+			<string>52D2D08C1D8F275700F294B8</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>52CC17FB1D8F415600BAB55C</key>
+		<dict>
+			<key>fileRef</key>
+			<string>52D2D08D1D8F275700F294B8</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>52CC17FC1D8F415600BAB55C</key>
+		<dict>
+			<key>fileRef</key>
+			<string>52D2D08E1D8F275700F294B8</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>52CC17FD1D8F415600BAB55C</key>
+		<dict>
+			<key>fileRef</key>
+			<string>52D2D08F1D8F275700F294B8</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>52CC17FE1D8F415600BAB55C</key>
+		<dict>
+			<key>fileRef</key>
+			<string>52D2D0901D8F275700F294B8</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>52CC17FF1D8F415600BAB55C</key>
+		<dict>
+			<key>fileRef</key>
+			<string>52D2D0911D8F275700F294B8</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>52CC18001D8F415600BAB55C</key>
+		<dict>
+			<key>fileRef</key>
+			<string>52D2D0921D8F275700F294B8</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>52CC18011D8F415600BAB55C</key>
+		<dict>
+			<key>fileRef</key>
+			<string>52D2D0931D8F275700F294B8</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>52CC18021D8F415600BAB55C</key>
+		<dict>
+			<key>fileRef</key>
+			<string>52D2D0941D8F275700F294B8</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>52CC18031D8F415600BAB55C</key>
+		<dict>
+			<key>fileRef</key>
+			<string>52D2D0951D8F275700F294B8</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>52CC18041D8F415600BAB55C</key>
+		<dict>
+			<key>fileRef</key>
+			<string>52D2D0961D8F275700F294B8</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>52D2D06B1D8F23D600F294B8</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>#./Fabric.framework/run 46ee2b2494200fc37080231a2cfd401866e5ae25 22bf5c454bec8c3bf4d7dcb6ce678e6bddc19983aa1c043f920da08ef84e068c</string>
+		</dict>
+		<key>52D2D06C1D8F241400F294B8</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.framework</string>
+			<key>path</key>
+			<string>Fabric.framework</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>52D2D06D1D8F241400F294B8</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.framework</string>
+			<key>path</key>
+			<string>Crashlytics.framework</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>52D2D06E1D8F241400F294B8</key>
+		<dict>
+			<key>fileRef</key>
+			<string>52D2D06C1D8F241400F294B8</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>52D2D06F1D8F241400F294B8</key>
+		<dict>
+			<key>fileRef</key>
+			<string>52D2D06D1D8F241400F294B8</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>52D2D0841D8F275700F294B8</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>file</string>
+			<key>path</key>
+			<string>Verlag-Black.ttf</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>52D2D0851D8F275700F294B8</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>file</string>
+			<key>path</key>
+			<string>Verlag-BlackItalic.ttf</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>52D2D0861D8F275700F294B8</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>file</string>
+			<key>path</key>
+			<string>Verlag-Bold.ttf</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>52D2D0871D8F275700F294B8</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>file</string>
+			<key>path</key>
+			<string>Verlag-BoldItalic.ttf</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>52D2D0881D8F275700F294B8</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>file</string>
+			<key>path</key>
+			<string>Verlag-Book.ttf</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>52D2D0891D8F275700F294B8</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>file</string>
+			<key>path</key>
+			<string>Verlag-BookItalic.ttf</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>52D2D08A1D8F275700F294B8</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>file</string>
+			<key>path</key>
+			<string>Verlag-Light.ttf</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>52D2D08B1D8F275700F294B8</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>file</string>
+			<key>path</key>
+			<string>Verlag-LightItalic.ttf</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>52D2D08C1D8F275700F294B8</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>file</string>
+			<key>path</key>
+			<string>Verlag-XLight.ttf</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>52D2D08D1D8F275700F294B8</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>file</string>
+			<key>path</key>
+			<string>Verlag-XLightItalic.ttf</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>52D2D08E1D8F275700F294B8</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>file</string>
+			<key>path</key>
+			<string>VerlagCondensed-Black.ttf</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>52D2D08F1D8F275700F294B8</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>file</string>
+			<key>path</key>
+			<string>VerlagCondensed-BlackItalic.ttf</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>52D2D0901D8F275700F294B8</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>file</string>
+			<key>path</key>
+			<string>VerlagCondensed-Bold.ttf</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>52D2D0911D8F275700F294B8</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>file</string>
+			<key>path</key>
+			<string>VerlagCondensed-BoldItalic.ttf</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>52D2D0921D8F275700F294B8</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>file</string>
+			<key>path</key>
+			<string>VerlagCondensed-Book.ttf</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>52D2D0931D8F275700F294B8</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>file</string>
+			<key>path</key>
+			<string>VerlagCondensed-BookItalic.ttf</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>52D2D0941D8F275700F294B8</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>file</string>
+			<key>path</key>
+			<string>VerlagCondensed-Light.ttf</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>52D2D0951D8F275700F294B8</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>file</string>
+			<key>path</key>
+			<string>VerlagCondensed-LightItalic.ttf</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>52D2D0961D8F275700F294B8</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>file</string>
+			<key>path</key>
+			<string>VerlagCondensed-XLight.ttf</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>52D2D0A11D8F27A500F294B8</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>file</string>
+			<key>path</key>
+			<string>MuseoSlab.otf</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>52D2D0AC1D8F27AA00F294B8</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>52D2D0A11D8F27A500F294B8</string>
+				<string>52D2D0841D8F275700F294B8</string>
+				<string>52D2D0851D8F275700F294B8</string>
+				<string>52D2D0861D8F275700F294B8</string>
+				<string>52D2D0871D8F275700F294B8</string>
+				<string>52D2D0881D8F275700F294B8</string>
+				<string>52D2D0891D8F275700F294B8</string>
+				<string>52D2D08A1D8F275700F294B8</string>
+				<string>52D2D08B1D8F275700F294B8</string>
+				<string>52D2D08C1D8F275700F294B8</string>
+				<string>52D2D08D1D8F275700F294B8</string>
+				<string>52D2D08E1D8F275700F294B8</string>
+				<string>52D2D08F1D8F275700F294B8</string>
+				<string>52D2D0901D8F275700F294B8</string>
+				<string>52D2D0911D8F275700F294B8</string>
+				<string>52D2D0921D8F275700F294B8</string>
+				<string>52D2D0931D8F275700F294B8</string>
+				<string>52D2D0941D8F275700F294B8</string>
+				<string>52D2D0951D8F275700F294B8</string>
+				<string>52D2D0961D8F275700F294B8</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Fonts</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>52D2D0AD1D8F27D500F294B8</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>GoogleService-Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>52D2D0AE1D8F27D500F294B8</key>
+		<dict>
+			<key>fileRef</key>
+			<string>52D2D0AD1D8F27D500F294B8</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>52D2D0AF1D8F2E0000F294B8</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.pb-project</string>
+			<key>name</key>
+			<string>RCTFBLogin.xcodeproj</string>
+			<key>path</key>
+			<string>../node_modules/react-native-facebook-login/RCTFBLogin.xcodeproj</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>52D2D0B01D8F2E0000F294B8</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>52D2D0B41D8F2E0000F294B8</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Products</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>52D2D0B31D8F2E0000F294B8</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>52D2D0AF1D8F2E0000F294B8</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>2</string>
+			<key>remoteGlobalIDString</key>
+			<string>4F3A6B5B1ACFBCC500CA65F7</string>
+			<key>remoteInfo</key>
+			<string>RCTFBLogin</string>
+		</dict>
+		<key>52D2D0B41D8F2E0000F294B8</key>
+		<dict>
+			<key>fileType</key>
+			<string>archive.ar</string>
+			<key>isa</key>
+			<string>PBXReferenceProxy</string>
+			<key>path</key>
+			<string>libRCTFBLogin.a</string>
+			<key>remoteRef</key>
+			<string>52D2D0B31D8F2E0000F294B8</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>52D2D0B51D8F2E0C00F294B8</key>
+		<dict>
+			<key>fileRef</key>
+			<string>52D2D0B41D8F2E0000F294B8</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>52D2D0C21D8F2F5300F294B8</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.framework</string>
+			<key>name</key>
+			<string>FBSDKCoreKit.framework</string>
+			<key>path</key>
+			<string>../node_modules/react-native-facebook-login/FacebookSDK/FBSDKCoreKit.framework</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>52D2D0C31D8F2F5300F294B8</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.framework</string>
+			<key>name</key>
+			<string>FBSDKLoginKit.framework</string>
+			<key>path</key>
+			<string>../node_modules/react-native-facebook-login/FacebookSDK/FBSDKLoginKit.framework</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>52D2D0C41D8F2F5300F294B8</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.framework</string>
+			<key>name</key>
+			<string>FBSDKShareKit.framework</string>
+			<key>path</key>
+			<string>../node_modules/react-native-facebook-login/FacebookSDK/FBSDKShareKit.framework</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>52D2D0CE1D8F311E00F294B8</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.framework</string>
+			<key>path</key>
+			<string>FBSDKCoreKit.framework</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>52D2D0CF1D8F311E00F294B8</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.framework</string>
+			<key>path</key>
+			<string>FBSDKLoginKit.framework</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>52D2D0D01D8F311E00F294B8</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.framework</string>
+			<key>path</key>
+			<string>FBSDKShareKit.framework</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>52D2D0D11D8F311E00F294B8</key>
+		<dict>
+			<key>fileRef</key>
+			<string>52D2D0CE1D8F311E00F294B8</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>52D2D0D21D8F311E00F294B8</key>
+		<dict>
+			<key>fileRef</key>
+			<string>52D2D0CF1D8F311E00F294B8</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>52D2D0D31D8F311E00F294B8</key>
+		<dict>
+			<key>fileRef</key>
+			<string>52D2D0D01D8F311E00F294B8</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>5A4C6B7DAF2EAA8408DDF0A4</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>52D2D0C21D8F2F5300F294B8</string>
+				<string>52D2D0C31D8F2F5300F294B8</string>
+				<string>52D2D0C41D8F2F5300F294B8</string>
+				<string>612F46DB8BB3DFC84598EE80</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Frameworks</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>612F46DB8BB3DFC84598EE80</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>archive.ar</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>libPods-treasurehunt.a</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>78C398B01ACF4ADC00677621</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.pb-project</string>
+			<key>name</key>
+			<string>RCTLinking.xcodeproj</string>
+			<key>path</key>
+			<string>../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>78C398B11ACF4ADC00677621</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>78C398B91ACF4ADC00677621</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Products</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>78C398B81ACF4ADC00677621</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>78C398B01ACF4ADC00677621</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>2</string>
+			<key>remoteGlobalIDString</key>
+			<string>134814201AA4EA6300B7C361</string>
+			<key>remoteInfo</key>
+			<string>RCTLinking</string>
+		</dict>
+		<key>78C398B91ACF4ADC00677621</key>
+		<dict>
+			<key>fileType</key>
+			<string>archive.ar</string>
+			<key>isa</key>
+			<string>PBXReferenceProxy</string>
+			<key>path</key>
+			<string>libRCTLinking.a</string>
+			<key>remoteRef</key>
+			<string>78C398B81ACF4ADC00677621</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>832341AE1AAA6A7D00B99B32</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>52A227C71D8F325B0066FD73</string>
+				<string>52D2D0CE1D8F311E00F294B8</string>
+				<string>52D2D0CF1D8F311E00F294B8</string>
+				<string>52D2D0D01D8F311E00F294B8</string>
+				<string>52D2D0AF1D8F2E0000F294B8</string>
+				<string>146833FF1AC3E56700842450</string>
+				<string>00C302A71ABCB8CE00DB3ED1</string>
+				<string>00C302B51ABCB90400DB3ED1</string>
+				<string>00C302BB1ABCB91800DB3ED1</string>
+				<string>78C398B01ACF4ADC00677621</string>
+				<string>00C302D31ABCB9D200DB3ED1</string>
+				<string>139105B61AF99BAD00B5F7CC</string>
+				<string>832341B01AAA6A8300B99B32</string>
+				<string>00C302DF1ABCB9EE00DB3ED1</string>
+				<string>139FDEE61B06529A00C62182</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Libraries</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>832341B01AAA6A8300B99B32</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.pb-project</string>
+			<key>name</key>
+			<string>RCTText.xcodeproj</string>
+			<key>path</key>
+			<string>../node_modules/react-native/Libraries/Text/RCTText.xcodeproj</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>832341B11AAA6A8300B99B32</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>832341B51AAA6A8300B99B32</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Products</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>832341B41AAA6A8300B99B32</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>832341B01AAA6A8300B99B32</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>2</string>
+			<key>remoteGlobalIDString</key>
+			<string>58B5119B1A9E6C1200147676</string>
+			<key>remoteInfo</key>
+			<string>RCTText</string>
+		</dict>
+		<key>832341B51AAA6A8300B99B32</key>
+		<dict>
+			<key>fileType</key>
+			<string>archive.ar</string>
+			<key>isa</key>
+			<string>PBXReferenceProxy</string>
+			<key>path</key>
+			<string>libRCTText.a</string>
+			<key>remoteRef</key>
+			<string>832341B41AAA6A8300B99B32</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>832341BD1AAA6AB300B99B32</key>
+		<dict>
+			<key>fileRef</key>
+			<string>832341B51AAA6A8300B99B32</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>83CBB9F61A601CBA00E9B192</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>52A8365D1D8F3C7300AD7143</string>
+				<string>52D2D0AD1D8F27D500F294B8</string>
+				<string>832341AE1AAA6A7D00B99B32</string>
+				<string>52D2D0AC1D8F27AA00F294B8</string>
+				<string>83CBBA001A601CBA00E9B192</string>
+				<string>52D2D06C1D8F241400F294B8</string>
+				<string>52D2D06D1D8F241400F294B8</string>
+				<string>5A4C6B7DAF2EAA8408DDF0A4</string>
+				<string>C6CBDBEB3426852C932E37B4</string>
+			</array>
+			<key>indentWidth</key>
+			<string>2</string>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+			<key>tabWidth</key>
+			<string>2</string>
+		</dict>
+		<key>83CBB9F71A601CBA00E9B192</key>
+		<dict>
+			<key>attributes</key>
+			<dict>
+				<key>LastUpgradeCheck</key>
+				<string>0610</string>
+				<key>ORGANIZATIONNAME</key>
+				<string>Facebook</string>
+			</dict>
+			<key>buildConfigurationList</key>
+			<string>83CBB9FA1A601CBA00E9B192</string>
+			<key>compatibilityVersion</key>
+			<string>Xcode 3.2</string>
+			<key>developmentRegion</key>
+			<string>English</string>
+			<key>hasScannedForEncodings</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXProject</string>
+			<key>knownRegions</key>
+			<array>
+				<string>en</string>
+				<string>Base</string>
+			</array>
+			<key>mainGroup</key>
+			<string>83CBB9F61A601CBA00E9B192</string>
+			<key>productRefGroup</key>
+			<string>83CBBA001A601CBA00E9B192</string>
+			<key>projectDirPath</key>
+			<string></string>
+			<key>projectReferences</key>
+			<array>
+				<dict>
+					<key>ProductGroup</key>
+					<string>00C302A81ABCB8CE00DB3ED1</string>
+					<key>ProjectRef</key>
+					<string>00C302A71ABCB8CE00DB3ED1</string>
+				</dict>
+				<dict>
+					<key>ProductGroup</key>
+					<string>52D2D0B01D8F2E0000F294B8</string>
+					<key>ProjectRef</key>
+					<string>52D2D0AF1D8F2E0000F294B8</string>
+				</dict>
+				<dict>
+					<key>ProductGroup</key>
+					<string>00C302B61ABCB90400DB3ED1</string>
+					<key>ProjectRef</key>
+					<string>00C302B51ABCB90400DB3ED1</string>
+				</dict>
+				<dict>
+					<key>ProductGroup</key>
+					<string>00C302BC1ABCB91800DB3ED1</string>
+					<key>ProjectRef</key>
+					<string>00C302BB1ABCB91800DB3ED1</string>
+				</dict>
+				<dict>
+					<key>ProductGroup</key>
+					<string>78C398B11ACF4ADC00677621</string>
+					<key>ProjectRef</key>
+					<string>78C398B01ACF4ADC00677621</string>
+				</dict>
+				<dict>
+					<key>ProductGroup</key>
+					<string>00C302D41ABCB9D200DB3ED1</string>
+					<key>ProjectRef</key>
+					<string>00C302D31ABCB9D200DB3ED1</string>
+				</dict>
+				<dict>
+					<key>ProductGroup</key>
+					<string>139105B71AF99BAD00B5F7CC</string>
+					<key>ProjectRef</key>
+					<string>139105B61AF99BAD00B5F7CC</string>
+				</dict>
+				<dict>
+					<key>ProductGroup</key>
+					<string>832341B11AAA6A8300B99B32</string>
+					<key>ProjectRef</key>
+					<string>832341B01AAA6A8300B99B32</string>
+				</dict>
+				<dict>
+					<key>ProductGroup</key>
+					<string>00C302E01ABCB9EE00DB3ED1</string>
+					<key>ProjectRef</key>
+					<string>00C302DF1ABCB9EE00DB3ED1</string>
+				</dict>
+				<dict>
+					<key>ProductGroup</key>
+					<string>139FDEE71B06529A00C62182</string>
+					<key>ProjectRef</key>
+					<string>139FDEE61B06529A00C62182</string>
+				</dict>
+				<dict>
+					<key>ProductGroup</key>
+					<string>146834001AC3E56700842450</string>
+					<key>ProjectRef</key>
+					<string>146833FF1AC3E56700842450</string>
+				</dict>
+			</array>
+			<key>projectRoot</key>
+			<string></string>
+			<key>targets</key>
+			<array>
+				<string>13B07F861A680F5B00A75B9A</string>
+			</array>
+		</dict>
+		<key>83CBB9FA1A601CBA00E9B192</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>83CBBA201A601CBA00E9B192</string>
+				<string>83CBBA211A601CBA00E9B192</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>83CBBA001A601CBA00E9B192</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>13B07F961A680F5B00A75B9A</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Products</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>83CBBA201A601CBA00E9B192</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>ALWAYS_SEARCH_USER_PATHS</key>
+				<string>NO</string>
+				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
+				<string>gnu++0x</string>
+				<key>CLANG_CXX_LIBRARY</key>
+				<string>libc++</string>
+				<key>CLANG_ENABLE_MODULES</key>
+				<string>YES</string>
+				<key>CLANG_ENABLE_OBJC_ARC</key>
+				<string>YES</string>
+				<key>CLANG_WARN_BOOL_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_DIRECT_OBJC_ISA_USAGE</key>
+				<string>YES_ERROR</string>
+				<key>CLANG_WARN_EMPTY_BODY</key>
+				<string>YES</string>
+				<key>CLANG_WARN_ENUM_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_INT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_OBJC_ROOT_CLASS</key>
+				<string>YES_ERROR</string>
+				<key>CLANG_WARN_UNREACHABLE_CODE</key>
+				<string>YES</string>
+				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
+				<string>YES</string>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Developer</string>
+				<key>COPY_PHASE_STRIP</key>
+				<string>NO</string>
+				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
+				<string>YES</string>
+				<key>GCC_C_LANGUAGE_STANDARD</key>
+				<string>gnu99</string>
+				<key>GCC_DYNAMIC_NO_PIC</key>
+				<string>NO</string>
+				<key>GCC_OPTIMIZATION_LEVEL</key>
+				<string>0</string>
+				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
+				<array>
+					<string>DEBUG=1</string>
+					<string>$(inherited)</string>
+				</array>
+				<key>GCC_SYMBOLS_PRIVATE_EXTERN</key>
+				<string>NO</string>
+				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
+				<string>YES</string>
+				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
+				<string>YES_ERROR</string>
+				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
+				<string>YES_AGGRESSIVE</string>
+				<key>GCC_WARN_UNUSED_FUNCTION</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNUSED_VARIABLE</key>
+				<string>YES</string>
+				<key>HEADER_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include</string>
+					<string>$(SRCROOT)/../node_modules/react-native/React/**</string>
+				</array>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>7.0</string>
+				<key>MTL_ENABLE_DEBUG_INFO</key>
+				<string>YES</string>
+				<key>ONLY_ACTIVE_ARCH</key>
+				<string>YES</string>
+				<key>SDKROOT</key>
+				<string>iphoneos</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>83CBBA211A601CBA00E9B192</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>ALWAYS_SEARCH_USER_PATHS</key>
+				<string>NO</string>
+				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
+				<string>gnu++0x</string>
+				<key>CLANG_CXX_LIBRARY</key>
+				<string>libc++</string>
+				<key>CLANG_ENABLE_MODULES</key>
+				<string>YES</string>
+				<key>CLANG_ENABLE_OBJC_ARC</key>
+				<string>YES</string>
+				<key>CLANG_WARN_BOOL_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_DIRECT_OBJC_ISA_USAGE</key>
+				<string>YES_ERROR</string>
+				<key>CLANG_WARN_EMPTY_BODY</key>
+				<string>YES</string>
+				<key>CLANG_WARN_ENUM_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_INT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_OBJC_ROOT_CLASS</key>
+				<string>YES_ERROR</string>
+				<key>CLANG_WARN_UNREACHABLE_CODE</key>
+				<string>YES</string>
+				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
+				<string>YES</string>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Developer</string>
+				<key>COPY_PHASE_STRIP</key>
+				<string>YES</string>
+				<key>ENABLE_NS_ASSERTIONS</key>
+				<string>NO</string>
+				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
+				<string>YES</string>
+				<key>GCC_C_LANGUAGE_STANDARD</key>
+				<string>gnu99</string>
+				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
+				<string>YES</string>
+				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
+				<string>YES_ERROR</string>
+				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
+				<string>YES_AGGRESSIVE</string>
+				<key>GCC_WARN_UNUSED_FUNCTION</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNUSED_VARIABLE</key>
+				<string>YES</string>
+				<key>HEADER_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include</string>
+					<string>$(SRCROOT)/../node_modules/react-native/React/**</string>
+				</array>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>7.0</string>
+				<key>MTL_ENABLE_DEBUG_INFO</key>
+				<string>NO</string>
+				<key>SDKROOT</key>
+				<string>iphoneos</string>
+				<key>VALIDATE_PRODUCT</key>
+				<string>YES</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>8784EEC74F3C90DDD5CBF24D</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>[CP] Copy Pods Resources</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>"${SRCROOT}/Pods/Target Support Files/Pods-treasurehunt/Pods-treasurehunt-resources.sh"
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+		<key>949506FDFF9912414BEDBD2F</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>[CP] Embed Pods Frameworks</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>"${SRCROOT}/Pods/Target Support Files/Pods-treasurehunt/Pods-treasurehunt-frameworks.sh"
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+		<key>C6CBDBEB3426852C932E37B4</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>CB56F31988AAC2A09C7C7823</string>
+				<string>0078A48CA4DC8EF042D58D81</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Pods</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>CB56F31988AAC2A09C7C7823</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods-treasurehunt.debug.xcconfig</string>
+			<key>path</key>
+			<string>Pods/Target Support Files/Pods-treasurehunt/Pods-treasurehunt.debug.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>D97B5BE39DE904CE1E623469</key>
+		<dict>
+			<key>fileRef</key>
+			<string>612F46DB8BB3DFC84598EE80</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+	</dict>
+	<key>rootObject</key>
+	<string>83CBB9F71A601CBA00E9B192</string>
+</dict>
+</plist>

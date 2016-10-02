@@ -188,6 +188,20 @@ function serverSearch(query) {
 	});
 }
 
+function makeHunt(description, img, name, priv, procedural, reward, skips) {
+	var newHuntRef = huntsRef.push();
+	newHuntRef.set({
+		clues: [],
+		desc: description,
+		image: img,
+		name: name,
+		private: priv,
+		procedural: procedural,
+		reward: reward,
+		skipsAllowed: skips
+	});
+}
+
 export function search(query) {
 	return (SEARCH_WITH_SERVER ? serverSearch(query) : manualSearch(query));
 }
