@@ -6,7 +6,7 @@ const usersRef = rootRef.ref('users');
 const huntsRef = rootRef.ref('hunts');
 const cluesRef = rootRef.ref('clues');
 
-const SEARCH_WITH_SERVER = false;
+const SEARCH_WITH_SERVER = true;
 
 
 /**====== SEARCHING =====**/
