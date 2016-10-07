@@ -27,11 +27,6 @@ var {
 var screenWidth = Dimensions.get('window').width;
 
 var styles = StyleSheet.create({
-    thumb: {
-        width: 80,
-        height: 80,
-        marginRight: 10
-    },
     textContainer: {
         flex: 1,
         justifyContent: 'space-between'
@@ -70,7 +65,7 @@ var styles = StyleSheet.create({
     points: {
         fontWeight: 'bold'
     },
-    currentRowContainer: {
+    rowContainer: {
         flexDirection: 'row',
         padding: 10,
         marginLeft: 20,
@@ -78,19 +73,8 @@ var styles = StyleSheet.create({
         backgroundColor: '#FEF7C0',
         borderRadius: 3
     },
-    pastRowContainer: {
-        flexDirection: 'row',
-        padding: 10,
-        marginLeft: 20,
-        marginRight: 20,
-        backgroundColor: '#E8F3BB',
-        borderRadius: 3
-    },
-
-    header: {
+  header: {
         height: 30,
-
-
         backgroundColor: 'white',
         flexDirection: 'column',
         marginBottom: 10,
@@ -100,15 +84,10 @@ var styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: "center",
     },
-    headerTextSelected: {
-        fontSize: 25,
-        fontFamily: 'Verlag-Book',
-        color: '#242021',
-    },
-    headerTextUnselected: {
-        fontSize: 25,
-        fontFamily: 'Verlag-Book',
-        color: 'grey',
+    headerText: {
+      fontSize: 25,
+      fontFamily: 'Verlag-Book',
+      color: '#242021',
     },
     startingHuntButton: {
         backgroundColor: "#FEF7C0",
@@ -134,7 +113,6 @@ var styles = StyleSheet.create({
       alignSelf: 'center',
       marginRight: 10
     },
-
     internalView: {
         alignItems: 'center',
         justifyContent: 'center',
@@ -175,73 +153,34 @@ const huntsRef = rootRef.ref('hunts');
 const storage = Firebase.storage();
 const storageRef = storage.ref();
 
-var teletubbies = storageRef.child('teletubbies.jpg');
-
-
-/*
-const huntsRef = new Firebase(`${ config.FIREBASE_ROOT }/hunts`)
-const rootRef = new Firebase(`${ config.FIREBASE_ROOT }`)
-const usersRef = new Firebase(`${ config.FIREBASE_ROOT }/users`)
-*/
-
-
-// AES 7/28/16
-// var url = 'gs://treasurehuntdali.appspot.com'
-// const storage = new Firebase(`${url}`);
-// storageRef = storage.key();
-
-// const storage = Firebase.storage();
-// const storageRef = storage.ref();
-
-
 /**
- * The Create view for the app. It is a list of hunts
+ * The Create view for the app. It is a list of created hunts
  */
 var Create = React.createClass({
 
     getInitialState: function() {
+        console.log("running getInitialState");
         var huntsList;
 
         var dataSource = new ListView.DataSource({
-            rowHasChanged: (r1, r2) => true,
-            sectionHeaderHasChanged: (s1, s2) => s1 !== s2
+            rowHasChanged: (r1, r2) => r1.guid !== r2.guid,
+            sectionHeaderHasChanged: (s1, s2) => s1.guid !== s2.guid
         });
-
-        this.firstLoad = true;
-
-        User.getCurrentUser().setUpCreatedListeners(() => {
-            // the user hunt data function
-            console.log("> Reseting home view due to updating data...");
-            var newDataSource = this.state.dataSource.cloneWithRows([]);
-            this.setState({
-                dataSource: newDataSource,
-                puzzle: "current"
-            });
-            this.listenForItems();
-        }, null /* The user data function */)
-
-
-        User.getCurrentUser().dataRef.on('value', (snap) => {
-            this.listenForItems()
-        })
 
         return {
             dataSource: dataSource,
             huntsList: huntsList,
-            searching: false,
-            huntsList: huntsList,
-            hunts: null,
-            startingHunt: null,
-            puzzle: 'current'
         };
     },
 
     getHuntsList: function() {
+        console.log("running getHuntsList");
         var currentUser = User.getCurrentUser();
         var userRef = usersRef.child(currentUser.uid);
         var huntsListRef = userRef.child("hunts_list");
         var huntsList;
-        huntsListRef.once('value', (snap) => {
+        console.log('huntslist is' + huntsList);
+        huntsListRef.on('value', (snap) => {
             huntsList = snap.val();
             return huntsList;
         });
@@ -249,106 +188,59 @@ var Create = React.createClass({
 
     // the whole function 7/21/16 AES
     getCompletedHuntsList: function() {
+
+        console.log("running getHuntsList");
         var currentUser = User.getCurrentUser();
         var userRef = usersRef.child(currentUser.uid);
         var huntsListRef = userRef.child("hunts_list");
         var huntsList;
-        huntsListRef.once('value', (snap) => {
+        console.log('completedhuntslist is' + huntsList);
+
+        huntsListRef.on('value', (snap) => {
             huntsList = snap.val();
             return huntsList;
         });
+
     },
     // end of this function 7/21/16 AES
 
-
-    listenForCompletedItems: function() {
-      User.getCurrentUser().getCompletedHuntsList().then((huntsList) => {
-        Data.getHuntObjects(huntsList).then((hunts) => {
-            var newDataSource = this.state.dataSource.cloneWithRows(hunts);
-            this.setState({
-                hunts: hunts,
-                dataSource: newDataSource,
-              })
-          });
-      }, () => {
-        // ERROR: TODO deal with it
-      });
-    },
-
-    addStartingHunt: function() {
-        User.currentUser.addStartingHunt().then(() => {
-            this.firstLoad = true;
-            this.setState({
-                hunts: null
-            })
-
-            this.listenForItems();
-        }, (error) => {
-            AlertIOS.alert("Error!", error)
-        });
-    },
-
     // Will load all the things!
-    listenForItems: function() {
+    listenForCreatedItems: function() {
+        console.log("running listenForCreatedItems");
+        console.log(this.state);
 
-        User.getCurrentUser().getHuntsList().then((huntsList) => {
+        User.getCurrentUser().getCreatedHunts().then((huntsList) => {
             Data.getHuntObjects(huntsList).then((hunts) => {
-                if (hunts.length == 0 && this.firstLoad) {
-                    User.setStartingHuntCallback((hunt) => {
-                        this.setState({
-                            startingHunt: hunt
-                        })
+                console.log("Loaded hunts: " + hunts + "\nSetting the state");
+                console.log("State was: ");
 
-                        AlertIOS.alert(
-                            "Welcome!",
-                            "Welcome to Treasurehunt. Would you like to start with the " + hunt.name + (hunt.name.toLowerCase().indexOf("hunt") === -1 ? " hunt" : "") + "?",
-                            [
-                                {text: "Close", onPress: ()=>{}, style: "cancel"},
-                                {text: "Let's go!", onPress: ()=>{
-                                    this.addStartingHunt();
-                                }}
-                            ]
-                        );
-                    });
-                }
-
-            //    var newDataSource = this.state.dataSource.clonewithRowsAndSections({current: hunts}, ['current']);
-                var newDataSource = this.state.dataSource.cloneWithRows(hunts);
+                var thisIsNew = new ListView.DataSource({
+                    rowHasChanged: (r1, r2) => r1.guid !== r2.guid,
+                    sectionHeaderHasChanged: (s1, s2) => s1.guid !== s2.guid
+                });
+                var newDataSource = thisIsNew.cloneWithRows(hunts);
+                console.log("Now it is: ");
                 this.setState({
                     hunts: hunts,
                     dataSource: newDataSource,
                 })
+
+
             })
         });
     },
 
-    componentDidUpdate: function(nextProps, nextState) {
-
-        if (nextState.hunts != null) {
-            if (nextState.hunts.length == 1 && this.firstLoad) {
-                this.firstLoad = false
-                this.rowPressed(nextState.hunts[0]);
-            }
-        }
-    },
-
     componentDidMount: function() {
-        if (this.state.puzzle === 'current'){
-            this.listenForItems();
-        } else if (this.state.puzzle == 'past'){
-            this.listenForCompletedItems();
-        }
+      console.log('component did mount.');
+      this.listenForCreatedItems();
     },
 
     rowPressed: function(hunt) {
-
-        console.log("GOING -> ----->")
         this.props.navigator.push({
             title: "Hunt",
             component: HuntOverview,
             passProps: {
                 hunt: hunt,
-                huntAdded: this.listenForItems.bind(this)
             }
         });
     },
@@ -356,23 +248,30 @@ var Create = React.createClass({
     // AES 7/29/16. Function currently not used, but gets the download url from a hunt
     getImage: function(hunt) {
         var huntImage = storageRef.child(hunt.imagename);
+        console.log(`current hunt image is ${huntImage}`);
         let huntImageURL;
 
         huntImage.getDownloadURL().then((url) => {
           huntImageURL = url;
+
+          console.log(`laterhunt image is ${huntImage}`);
           huntsRef.child(hunt.id).update({imageURL: huntImageURL});
+          console.log(`the saved image url is ${huntImageURL}`);
+
         });
     },
 
-    renderRow: function(hunt, SectionID, rowID) {
+    renderRow: function(hunt) {
+
         var huntimage = hunt.image;
+        console.log(`current image is ${huntimage}`);
 
-
+        console.log("Rendering row for hunt " + hunt.id);
         return (
             <TouchableHighlight onPress={() => this.rowPressed(hunt)}
                 underlayColor='#dddddd'>
                 <View>
-                    <View style={styles.currentRowContainer}>
+                    <View style={styles.rowContainer}>
 
                       <Image source={{uri: huntimage}} style={styles.images} />
 
@@ -382,11 +281,10 @@ var Create = React.createClass({
                             <Text style={styles.description}
                                 numberOfLines={2}>{hunt.desc}</Text>
                           </View>
-                          {this.state.puzzle === 'current' ?
                           <View>
                             <Progress.Bar style={styles.progressBar}
-                                progress={hunt.progress} width={screenWidth - 160} borderRadius={0} border={0} height={10} color='#ffd900' backgroundColor='white'/>
-                          </View> : null}
+                                progress={hunt.progress} width={200} borderRadius={0} border={0} height={10} color='#ffd900' backgroundColor='white'/>
+                          </View>
                         </View>
                     </View>
                     <View style={styles.separator}/>
@@ -395,44 +293,49 @@ var Create = React.createClass({
         );
     },
 
-    isSearching: function() {
-        return this.state.searching;
-    },
+
+    /*
+    <View style={styles.container}>
+        <View style={styles.emptyContainerTop}>
+        </View>
+
+        <View style={styles.extraInfoContainer}>
+          <View style={styles.searchBar}>
+            <Image source={require('../img/28magnifier.png')}
+            style={styles.searchIcon} />
+          </View>
+
+        <View style={styles.separator}>
+        </View>
+        */
 
     render: function() {
-        var searchController = <SearchController
-                                    ref="searchController"
-                                    startSearching={() => {
-                                        this.setState({searching: true});
-                                    }}
-                                    endSearching={() => {
-                                        this.setState({searching: false});
-                                    }}
-                                    rowPressed={(hunt) => {
-                                        this.rowPressed(hunt)
-                                    }}/>;
+      var searchController = <SearchController
+                                  ref="searchController"
+                                  startSearching={() => {
+                                      this.setState({searching: true});
+                                  }}
+                                  endSearching={() => {
+                                      this.setState({searching: false});
+                                  }}
+                                  rowPressed={(hunt) => {
+                                      this.rowPressed(hunt)
+                                  }}/>;
 
 
+        console.log("running render ...");
         var listView = <ListView
                         dataSource={this.state.dataSource}
                         automaticallyAdjustContentInsets={false}
                         renderRow={this.renderRow}/>
 
-        var startingHunt = null
-        if (User.startingHunt !== null) {
-            startingHunt = User.startingHunt
-        }else{
-            startingHunt = this.state.startingHunt
-        }
+        console.log("listView Done");
+
         var noHunts = <View style={noHuntsStyle.noHuntsView}>
-                        <Text style={[noHuntsStyle.noHuntsText, {}]}>You have no hunts yet</Text>
-                        {startingHunt !== null ? <TouchableHighlight
-                            style={styles.startingHuntButton}
-                            underlayColor="#fef48f"
-                            onPress={() => {
-                                this.addStartingHunt();
-                            }}><Text style={styles.startingHuntButtonText}>Start the {startingHunt.name + (startingHunt.name.toLowerCase().indexOf("hunt") === -1 ? " hunt" : "")}</Text></TouchableHighlight> : null}
+                        <Text style={noHuntsStyle.noHuntsText}>You have no hunts yet</Text>
                     </View>
+
+        console.log("noHunts done");
 
         var internalView;
 
@@ -446,65 +349,24 @@ var Create = React.createClass({
             internalView = listView;
         }
 
-        var currPuzzlesText = <View style={styles.header}>
-                    <Text style={styles.headerText}> Current Puzzles </Text>
-                </View>
 
-        if (this.isSearching()) {
-            currPuzzlesText = null;
-            internalView = null;
-        }
-
-
-        /*
-        For reference:
-        <TextInput style= {styles.textField}
-            ref="emailTextField"
-            returnKeyType='next'
-            onChangeText={(text) => this.setState({email: text})}
-            onSubmitEditing={() =>
-                this.refs.passwordTextField.focus()
-            }
-            value={this.state.email}
-            disabled={this.state.processingLogin}/>*/
-
+        console.log("internalView rendered. Returning");
         return (
-            <View style={styles.container}>
-                <View style={styles.emptyContainerTop}>
-                </View>
 
-                {searchController}
-                <View style={styles.extraInfoContainer}>
-                <View style={styles.separator}>
-                </View>
+          <View style={styles.container}>
+              <View style={styles.emptyContainerTop}>
+              </View>
+
+              {searchController}
+              <View style={styles.extraInfoContainer}>
+              <View style={styles.separator}>
+              </View>
 
                   <View style={styles.header}>
                     <View style={styles.headerButtons}>
-                    {this.isSearching() ? null : <View style={styles.headerButtons}>
-                    <TouchableHighlight underlayColor='#dddddd' onPress={() => {
-                        var newDataSource = this.state.dataSource.cloneWithRows([]);
-                        this.setState({
-                            dataSource: newDataSource,
-                            puzzle: "current"
-                        });
-                        this.listenForItems();
-                    }}>
-                      <Text style={this.state.puzzle == 'current' ? styles.headerTextSelected : styles.headerTextUnselected}>Current Hunts</Text>
-                    </TouchableHighlight>
-                    </View>}
-
-                    {this.isSearching() ? null : <View style={styles.headerButtons}>
-                    <TouchableHighlight underlayColor='#dddddd' onPress={() => {
-                        var newDataSource = this.state.dataSource.cloneWithRows([]);
-                        this.setState({
-                            dataSource: newDataSource,
-                            puzzle: "past"
-                        });
-                        this.listenForCompletedItems();
-                    }}>
-                      <Text style={this.state.puzzle == 'past' ? styles.headerTextSelected : styles.headerTextUnselected}> Past Hunts</Text>
-                    </TouchableHighlight>
-                    </View>}
+                    <View>
+                      <Text style={styles.headerText}> Created Puzzles</Text>
+                    </View>
 
                     </View>
 
@@ -513,7 +375,9 @@ var Create = React.createClass({
                 </View>
 
                 {internalView}
-                <View style={styles.emptyContainerBottom}/>
+
+                <View style={styles.emptyContainerBottom}>
+                </View>
             </View>
         );
     },

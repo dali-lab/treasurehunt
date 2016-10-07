@@ -131,9 +131,29 @@ var HomePage = React.createClass({
   },
 */
   _renderCreate: function(){
+    
     return(
       <Create navigator = {this.props.navigator} />
       );
+
+
+      /*
+      return (
+
+        <NavigatorIOS
+          style={styles.container}
+          barTintColor='#23B090'
+          ref='homeRef'
+          titleTextColor='white'
+          initialRoute={{
+            title: 'TREASUREHUNT',
+            component: Home,
+            rightButtonTitle: "Logout",
+            onRightButtonPress: this.onLogout,
+          }} />
+
+        )
+        */
   },
   /*
   _renderProfile: function(){
