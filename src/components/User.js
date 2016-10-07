@@ -58,6 +58,7 @@ class User {
 		this.dataRef = usersRef.child(this.uid);
 		this.currentHunts = this.dataRef.child("currentHunts");
 		this.completedHunts = this.dataRef.child("completedHunts");
+		this.createdHunts = this.dataRef.child("createdHunts");
 
 		console.log("My user id: " + this.uid);
 
@@ -91,6 +92,24 @@ class User {
 		}
 	}
 
+	setUpCreatedListeners(userHuntDataUpdated, userDataUpdated) {
+		if (userHuntDataUpdated !== null) {
+			this.createdHunts.on('value', userHuntDataUpdated, () => {});
+			this.userHuntDataUpdated = userHuntDataUpdated;
+		}else if (this.userHuntDataUpdated !== null && this.userHuntDataUpdated !== undefined) {
+			this.createdHunts.off('value', this.userHuntDataUpdated);
+			this.userHuntDataUpdated = null;
+		}
+
+		if (userDataUpdated !== null) {
+			this.dataRef.on('value', userDataUpdated, () => {});
+			this.userDataUpdated = userDataUpdated;
+		}else if (this.userDataUpdated !== null && this.userDataUpdated !== undefined) {
+			this.createdHunts.off('value', this.userDataUpdated);
+			this.userDataUpdated = null;
+		}
+	}
+
 	cancelListeners() {
 		setUpListeners(null, null);
 	}
@@ -117,7 +136,7 @@ class User {
 		if (Firebase.auth().currentUser) {
 			return new User(Firebase.auth().currentUser);
 		}
-		
+
 		return null;
 	}
 
@@ -165,7 +184,7 @@ class User {
 	}
 
 	static saveUser(user_data) {
-		return new Promise(async (success, failure) => {	
+		return new Promise(async (success, failure) => {
 			if (this.currentUser.isFacebook()) {
 				failure("Type is facebook. Cannot save!");
 				return;
@@ -390,7 +409,15 @@ class User {
 			});
 		});
 	}
-
+	getCreatedHunts() {
+		return new Promise((fulfill, reject) => {
+			this.createdHunts.once('value', function(snap) {
+				fulfill(snap.val());
+			}, function(error) {
+				reject(error);
+			});
+		});
+	}
 	// This whole function 7/21/16 AES
 	getCompletedHuntsList() {
 		return new Promise((fulfill, reject) => {
