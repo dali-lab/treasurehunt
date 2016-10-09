@@ -143,7 +143,7 @@ var HomePage = React.createClass({
         <NavigatorIOS
           style={styles.container}
           barTintColor='#23B090'
-          ref='homeRef'
+          ref='createRef'
           titleTextColor='white'
           initialRoute={{
             title: 'TREASUREHUNT',

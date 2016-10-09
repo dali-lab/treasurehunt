@@ -7,6 +7,7 @@ var HuntOverview = require('./HuntOverview');
 var User = require('./User').default;
 var Data = require('./Data');
 var SearchController = require('./SearchController');
+var CreateHunt = require('./CreateHuntOverview');
 
 var {
     StyleSheet,
@@ -123,6 +124,12 @@ var styles = StyleSheet.create({
         marginLeft: 5,
         marginBottom: 5,
         flex: 1
+    },
+    button: {
+        justifyContent: 'center',
+        backgroundColor: '#242021',
+        width: 30,
+        height: 30   
     }
 });
 
@@ -237,10 +244,10 @@ var Create = React.createClass({
 
     rowPressed: function(hunt) {
         this.props.navigator.push({
-            title: "Hunt",
-            component: HuntOverview,
+            title: "CreateHunt",
+            component: CreateHunt,
             passProps: {
-                hunt: hunt,
+               
             }
         });
     },
@@ -375,6 +382,12 @@ var Create = React.createClass({
                 </View>
 
                 {internalView}
+                <TouchableHighlight onPress={() => this.rowPressed()}
+                underlayColor='#dddddd'>
+                    <View style={styles.button}>
+
+                    </View>
+                </TouchableHighlight>
 
                 <View style={styles.emptyContainerBottom}>
                 </View>

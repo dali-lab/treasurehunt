@@ -3,7 +3,7 @@ var React = require('react');
 var PageControl = require('react-native-page-control');
 var ClueCompleteModal = require('./ClueCompleteModal');
 var RewardModal = require('./RewardModal');
-var User = require('./User').default
+var User = require('./User');
 var dismissKeyboard = require('dismissKeyboard');
 
 var {
@@ -126,5 +126,36 @@ var styles = StyleSheet.create({
 	},
 	skipButtonText: {
 		color: "gray"
+	},
+	heading: {
+		fontSize: 20,
+		fontFamily: "Verlag-Book",
+		alignSelf: "center",
+		width: 100,
+		height: 15,
+		flex: 1
 	}
 });
+
+const Firebase = require('firebase')
+const config = require('../../config')
+
+import rootRef from '../../newfirebase.js'
+
+
+const usersRef = rootRef.ref('users');
+const huntsRef = rootRef.ref('hunts');
+
+const storage = Firebase.storage();
+const storageRef = storage.ref();
+
+/**
+ * The Create Hunt view for the app to create hunts
+ */
+var CreateHunt = React.createClass({
+		render: function(){
+			<View style={styles.heading}>
+				<Text>HUNT NAME</Text>
+			</View>
+		}
+	})
