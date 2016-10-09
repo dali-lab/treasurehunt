@@ -131,13 +131,13 @@ var HomePage = React.createClass({
   },
 */
   _renderCreate: function(){
-    
-    return(
+
+    /*return(
       <Create navigator = {this.props.navigator} />
-      );
+    );*/
 
 
-      /*
+
       return (
 
         <NavigatorIOS
@@ -147,13 +147,13 @@ var HomePage = React.createClass({
           titleTextColor='white'
           initialRoute={{
             title: 'TREASUREHUNT',
-            component: Home,
+            component: Create,
             rightButtonTitle: "Logout",
             onRightButtonPress: this.onLogout,
           }} />
 
         )
-        */
+
   },
   /*
   _renderProfile: function(){
