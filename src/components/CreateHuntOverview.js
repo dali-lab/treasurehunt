@@ -33,57 +33,87 @@ var screenHeight = Dimensions.get('window').height;
 
 
 var styles = StyleSheet.create({
+	container: {
+		marginTop: 70,
+		marginBottom: 50,
+		alignItems: 'center',
+		flex: 1,
+		flexDirection: 'column',
+		justifyContent: 'flex-start'
+	},
 	heading: {
-		marginTop: 90,
+		marginTop: 15,
 		fontSize: 28,
 		fontFamily: "Verlag-Book",
 		alignSelf: "center",
-		width: 180,
-		height: 15,
-		flex: 1
+	},
+	divider: {
+			width: 320,
+			height: 2,
+			backgroundColor: '#23B090',
+			alignSelf: "center",
+			marginBottom: 5
 	},
 	topViewStyle: {
-        flex: 1,
+        flex: 3,
         flexDirection: 'column',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
     },
     middleViewStyle: {
     	flex: 1,
     	flexDirection: 'row',
     	justifyContent: "space-between",
-
+			alignItems: 'center',
+			marginTop: 10
     },
-    addButton: {
-    	width: 100,
-    	height: 100,
-    	backgroundColor: '#22AF8E',
-    	alignSelf: "center",
-    	fontSize: 43,
-    	paddingLeft: 36,
-    	paddingTop: 19,
-    	color: "white",
-    	marginRight: 35,
-    	marginBottom: 935
-    },
-    textBoxHunt: {
-    	width: 200,
-    	height: 100,
-       	backgroundColor:'#E1EEEC',
-       	marginLeft: 30,
-       	padding: 10,
-       	fontSize: 19,
-       	fontFamily: "Verlag-Book",
-    	alignSelf: "center",
-    	marginBottom: 935,
-    	borderRadius: 10
-    },
-	divider: {
-    	width: 320,
-    	height: 2,
-    	backgroundColor: '#23B090',
-    	alignSelf: "center",
-    	marginBottom: 530
+		clueViewStyle: {
+			flex: 3,
+			marginTop: 15,
+			flexDirection: 'row',
+			justifyContent: 'flex-start',
+			width:100,
+		},
+		buttonViewBox: {
+			width: 80,
+			height: 80,
+			backgroundColor: 'black'
+		},
+		addButton: {
+			width: 100,
+			height: 100,
+			backgroundColor: '#22AF8E',
+			alignSelf: "center",
+			fontSize: 43,
+			paddingLeft: 36,
+			paddingTop: 19,
+			color: "white",
+			marginRight: 35,
+		},
+		textBoxHunt: {
+			width: 200,
+			height: 100,
+				backgroundColor:'#E1EEEC',
+				marginLeft: 30,
+				marginRight: 10,
+				padding: 10,
+				fontSize: 19,
+				fontFamily: "Verlag-Book",
+					alignSelf: 'center',
+			borderRadius: 10
+		},
+	addClueButton: {
+			width: 40,
+			height: 40,
+			borderRadius: 25,
+			backgroundColor: '#6BC9AF',
+			marginTop: 15,
 	},
+	addClueButtonText: {
+		color: "black",
+		fontSize: 20,
+		alignSelf: 'center',
+		marginTop: 5
+	}
 });
 
 
@@ -96,20 +126,29 @@ const storageRef = storage.ref();
 /**
  * The Create Hunt view for the app to create hunts
  */
-var CreateHunt = React.createClass({
-		render: function(){
-			return (
-				<View style={styles.topViewStyle}>
-					<Text style={styles.heading}>HUNT NAME</Text>
-					<View style={styles.divider}/>
-					<View style={styles.middleViewStyle}>
-						<TextInput style={styles.textBoxHunt} multiline = "true" placeholder="Hunt description..."/>
-						<Text style={styles.addButton}>+</Text>
+
+	var CreateHunt = React.createClass({
+			render: function(){
+				return (
+					<View style={styles.container}>
+						<Text style={styles.heading}>HUNT NAME</Text>
+						<View style={styles.divider}/>
+
+						<View style={styles.middleViewStyle}>
+							<TextInput style={styles.textBoxHunt} multiline = "true" placeholder="Hunt description..."/>
+							<Text style={styles.addButton}>+</Text>
+						</View>
+
+						<View style={styles.addClueButton}>
+							<Text style={styles.addClueButtonText}>+</Text>
+						</View>
+						<View style={styles.clueViewStyle}>
+
+						</View>
+
 					</View>
-				</View>
-			);
-		}
-	})
+				);
+			}
+		})
 
 module.exports = CreateHunt;
-
