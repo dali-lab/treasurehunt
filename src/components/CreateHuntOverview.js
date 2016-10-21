@@ -19,6 +19,7 @@ var {
 	TouchableHighlight,
 	Alert,
 	TextInput,
+	ListView,
 	Dimensions,
 	ScrollView,
 	Modal,
@@ -128,7 +129,18 @@ const storageRef = storage.ref();
  */
 
 	var CreateHunt = React.createClass({
+
+			newClue: function(){
+				this.props.navigator.push({
+						title: "Create Clue",
+						component: CreateClue,
+						passProps: {
+						}
+				});
+			},
+
 			render: function(){
+
 				return (
 					<View style={styles.container}>
 						<Text style={styles.heading}>HUNT NAME</Text>
@@ -139,9 +151,12 @@ const storageRef = storage.ref();
 							<Text style={styles.addButton}>+</Text>
 						</View>
 
+						<TouchableHighlight underlayColor='#dddddd' onPress={() => this.newClue}>
 						<View style={styles.addClueButton}>
 							<Text style={styles.addClueButtonText}>+</Text>
 						</View>
+						</TouchableHighlight>
+
 						<View style={styles.clueViewStyle}>
 
 						</View>
