@@ -1,3 +1,3 @@
 module.exports = {
-  FIREBASE_ROOT: 'https://treasurehuntdali.firebaseio.com/'
-}
+  FIREBASE_ROOT: 'https://treasurehuntdali.firebaseio.com/',
+};
