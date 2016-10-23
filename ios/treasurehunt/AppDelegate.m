@@ -23,7 +23,8 @@
 
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
   
-//  [Fabric with:@[[Crashlytics class]]];
+  [Fabric with:@[[Crashlytics class]]];
+  
 
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"TreasureHunt"
