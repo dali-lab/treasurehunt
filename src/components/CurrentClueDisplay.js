@@ -399,7 +399,7 @@ var CurrentClueDisplay = React.createClass({
                     <View style={styles.topSeparator}/>
                     <View style={styles.separatorSmall}/>
 					<Text style={styles.description}>{this.props.clue.description}</Text>
-
+					
 					{internalView}
 				</View>
 			);

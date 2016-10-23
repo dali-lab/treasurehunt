@@ -1,177 +1,199 @@
-
-import rootRef from '../../newfirebase';
-
-const ReactNative = require('react-native');
-const React = require('react');
-
-const {
-  Component,
+var ReactNative = require('react-native');
+var React = require('react');
+var {
+  Component
 } = React;
+var Create = require('./Create');
+  var Feed = require('./Feed');
+//  var Search = require('./Search');
+var Home = require('./Home');
+var User = require('./User').default;
+// var Profile = require('./Profile');
 
-const Create = require('./Create');
-const Feed = require('./Feed');
-const Home = require('./Home');
-const User = require('./User').default;
+const Firebase = require('firebase')
+const config = require('../../config')
 
-const Firebase = require('firebase');
-const config = require('../../config');
+import rootRef from '../../newfirebase.js';
+const itemsRef = rootRef.ref('items');
+// const itemsRef = new Firebase(`${ config.FIREBASE_ROOT }/items`)
 
-const reminder = require('../img/28reminder.png');
-const wreminder = require('../img/w28reminder.png');
-const pencil = require('../img/28pencil.png');
-const wpencil = require('../img/w28pencil.png');
-const home = require('../img/home.png');
-const whome = require('../img/w28home.png');
-
-const {
+var {
   StyleSheet,
   TabBarIOS,
+  Text,
+  View,
+  TouchableHighlight,
+  Image,
+  ListView,
   NavigatorIOS,
+  Navigator,
+  AlertIOS,
 } = ReactNative;
 
-const TABS = {
+var TABS = {
+/*
+  search: 'search',
+  create: 'create',
+  home: 'home',
+  feed: 'feed',
+  profile: 'profile'
+*/
+
+  // edit by as 7/15/16
   feed: 'feed',
   home: 'home',
-  create: 'create',
-};
+  create: 'create'
 
-const Icon = require('react-native-vector-icons/Ionicons');
+}
 
-const styles = StyleSheet.create({
+var Icon = require('react-native-vector-icons/Ionicons');
+
+var styles = StyleSheet.create({
   thumb: {
     width: 80,
     height: 80,
-    marginRight: 10,
+    marginRight: 10
   },
   textContainer: {
-    flex: 1,
+    flex: 1
   },
   separator: {
     height: 1,
-    backgroundColor: '#dddddd',
+    backgroundColor: '#dddddd'
   },
-  container: {
-    flex: 1,
+  container:{
+    flex: 1
   },
   price: {
     fontSize: 25,
     fontWeight: 'bold',
-    color: '#48BBEC',
+    color: '#48BBEC'
   },
   title: {
     fontSize: 20,
-    color: '#656565',
+    color: '#656565'
   },
   rowContainer: {
     flexDirection: 'row',
-    padding: 10,
+    padding: 10
   },
   tabBarStyle: {
 
   },
 });
 
-const HomePage = React.createClass({
+var HomePage = React.createClass({
   propTypes: {
     onLogout: React.PropTypes.func,
   },
 
-  getInitialState() {
+  getInitialState: function() {
     return {
       selectedTab: TABS.home,
     };
   },
 
-  _renderFeed() {
-    return (
-      <Feed navigator={this.props.navigator} />
+  _renderFeed: function(){
+    return(
+      <Feed navigator = {this.props.navigator} />
       );
   },
 
-  onLogout() {
+  onLogout: function() {
     User.logout();
-    if (typeof this.props.onLogout === 'function') {
+    if (typeof this.props.onLogout == 'function') {
       this.props.onLogout();
     }
   },
 
-  _renderHome() {
+  _renderHome: function() {
     return (
 
       <NavigatorIOS
         style={styles.container}
-        barTintColor="#23B090"
-        ref="homeRef"
-        titleTextColor="white"
+        barTintColor='#23B090'
+        ref='homeRef'
+        titleTextColor='white'
         initialRoute={{
           title: 'TREASUREHUNT',
           component: Home,
-          rightButtonTitle: 'Logout',
+          rightButtonTitle: "Logout",
           onRightButtonPress: this.onLogout,
-        }}
-      />
+        }} />
 
+      )
+  },
+/*
+  _renderSearch: function(){
+    return(
+      <Search navigator = {this.props.navigator}  />
+    );
+  },
+*/
+  _renderCreate: function(){
+    return(
+      <Create navigator = {this.props.navigator} />
       );
   },
-
-  _renderCreate() {
-    return (
-      <Create navigator={this.props.navigator} />
+  /*
+  _renderProfile: function(){
+    return(
+      <Profile navigator = {this.props.navigator} />
       );
   },
+  */
 
-  render() {
+  render: function() {
     return (
 
       <TabBarIOS
         tintColor="white"
-        barTintColor="#c5ebe0"
-      >
+        barTintColor="#c5ebe0">
 
         <Icon.TabBarItemIOS
-          icon={reminder}
-          selectedIcon={wreminder}
-          selected={this.state.selectedTab === TABS.feed}
-          onPress={() => {
-            this.setState({
-              selectedTab: TABS.feed,
-            });
-          }}
-        >
-          {this._renderFeed()}
-        </Icon.TabBarItemIOS>
+         icon={require('../img/28reminder.png')}
+         selectedIcon={require('../img/w28reminder.png')}
+         selected={this.state.selectedTab === TABS.feed}
+         onPress={() => {
+           this.setState({
+             selectedTab: TABS.feed,
+           });
+        }}>
+        {this._renderFeed()}
+       </Icon.TabBarItemIOS>
 
 
         <Icon.TabBarItemIOS
           selected={this.state.selectedTab === TABS.home}
-          icon={home}
-          selectedIcon={whome}
+          icon={require('../img/home.png')}
+          selectedIcon={require('../img/w28home.png')}
           onPress={() => {
             if (this.state.selectedTab !== TABS.home) {
-              this.setState({
-                selectedTab: TABS.home,
-              });
+                this.setState({
+                    selectedTab: TABS.home,
+                });
             } else if (this.state.selectedTab === TABS.home) {
-              this.refs.homeRef.popToTop();
+                this.refs.homeRef.popToTop();
             }
-          }}
-        >
-          {this._renderHome()}
+          }}>
+         {this._renderHome()}
         </Icon.TabBarItemIOS>
 
 
-        <Icon.TabBarItemIOS
-          selected={this.state.selectedTab === TABS.create}
-          icon={pencil}
-          selectedIcon={wpencil}
-          onPress={() => {
-            this.setState({
-              selectedTab: TABS.create,
-            });
-          }}
-        >
-          {this._renderCreate()}
-        </Icon.TabBarItemIOS>
+
+
+
+       <Icon.TabBarItemIOS
+         selected={this.state.selectedTab === TABS.create}
+         icon={require('../img/28pencil.png')}
+         selectedIcon={require('../img/w28pencil.png')}
+         onPress={() => {
+           this.setState({
+             selectedTab: TABS.create,
+           });
+         }}>
+        {this._renderCreate()}
+       </Icon.TabBarItemIOS>
 
       </TabBarIOS>
 
