@@ -127,9 +127,11 @@ var styles = StyleSheet.create({
     },
     button: {
         justifyContent: 'center',
-        backgroundColor: '#242021',
-        width: 30,
-        height: 30   
+        backgroundColor: '#23B090',
+        width: 90,
+        height: 20,
+        alignSelf: "center",
+        marginBottom: 170
     }
 });
 
@@ -247,7 +249,6 @@ var Create = React.createClass({
             title: "CreateHunt",
             component: CreateHunt,
             passProps: {
-               
             }
         });
     },
@@ -382,11 +383,8 @@ var Create = React.createClass({
                 </View>
 
                 {internalView}
-                <TouchableHighlight onPress={() => this.rowPressed()}
-                underlayColor='#dddddd'>
-                    <View style={styles.button}>
-
-                    </View>
+                <TouchableHighlight onPress={() => this.rowPressed()} underlayColor="white">
+                    <Text style={styles.button}>Create Hunt</Text>
                 </TouchableHighlight>
 
                 <View style={styles.emptyContainerBottom}>

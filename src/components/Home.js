@@ -432,7 +432,7 @@ var Home = React.createClass({
                             onPress={() => {
                                 this.addStartingHunt();
                             }}><Text style={styles.startingHuntButtonText}>Start the {startingHunt.name + (startingHunt.name.toLowerCase().indexOf("hunt") === -1 ? " hunt" : "")}</Text></TouchableHighlight> : null}
-                    </View>
+                      </View>
 
         var internalView;
 

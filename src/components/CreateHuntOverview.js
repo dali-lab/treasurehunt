@@ -1,10 +1,15 @@
-var ReactNative = require('react-native');
-var React = require('react');
-var PageControl = require('react-native-page-control');
-var ClueCompleteModal = require('./ClueCompleteModal');
-var RewardModal = require('./RewardModal');
-var User = require('./User');
-var dismissKeyboard = require('dismissKeyboard');
+const ReactNative = require('react-native');
+const React = require('react');
+const PageControl = require('react-native-page-control');
+const ClueCompleteModal = require('./ClueCompleteModal');
+const RewardModal = require('./RewardModal');
+const User = require('./User');
+const dismissKeyboard = require('dismissKeyboard');
+const Firebase = require('firebase');
+const config = require('../../config');
+
+import rootRef from '../../newfirebase.js'
+
 
 var {
 	StyleSheet,
@@ -14,6 +19,7 @@ var {
 	TouchableHighlight,
 	Alert,
 	TextInput,
+	ListView,
 	Dimensions,
 	ScrollView,
 	Modal,
@@ -29,118 +35,87 @@ var screenHeight = Dimensions.get('window').height;
 
 var styles = StyleSheet.create({
 	container: {
-		marginTop: 65,
-		paddingRight:30,
-		paddingLeft: 30,
-		marginBottom: 60,
+		marginTop: 70,
+		marginBottom: 50,
+		alignItems: 'center',
 		flex: 1,
-	},
-	huntTitle: {
-		fontSize: 20,
-		margin: 10,
-		color: '#656565',
-		alignSelf: 'center',
-		fontFamily: 'Verlag-Book'
-	},
-    topSeparator: {
-        height: 2,
-        backgroundColor: '#5da990'
-    },
-	separatorSmall: {
-		height: 16,
-	},
-	separator: {
-        height: 1,
-        backgroundColor: '#dddddd'
-    },
-    clueName: {
-        fontSize: 20,
-        color: '#000000',
-        fontStyle: 'italic'
-    },
-    modal: {
-	    height: 300,
-	    width: 300,
-  	},
-  	btn: {
-	    margin: 10,
-	    backgroundColor: "#3B5998",
-	    color: "white",
-	    padding: 10,
-  	},
-
-  	btnModal: {
-	    position: "absolute",
-	    top: 0,
-	    right: 0,
-	    width: 50,
-	    height: 50,
-	    backgroundColor: "transparent",
-  	},
-    description: {
-        paddingTop: 3,
-        paddingBottom: 8,
-    },
-    buttonText: {
-	  fontSize: 18,
-	  color: 'white',
-	  alignSelf: 'center',
-	  fontWeight: 'bold'
-	},
-	button: {
-	  height: 36,
-	  marginTop: 26,
-	  flexDirection: 'column',
-	  backgroundColor: '#5da990',
-	  borderColor: '#5da990',
-	  justifyContent: 'center',
-	  borderWidth: 1,
-	  borderRadius: 8,
-	  marginBottom: 10,
-	  alignSelf: 'stretch',
-	  padding:20,
-	  marginLeft: 5,
-	  marginRight: 5,
-	  paddingTop:20,
-	},
-	hint: {
-		textAlign: 'left',
-		color: "gray",
-		alignSelf: "flex-start",
-	},
-	imageContainer: {
-		flexDirection: "column",
-		flex: 1,
-	},
-	pageControl: {
-		alignSelf: 'center',
-		bottom: 0
-	},
-	scrollView: {
-		flex: 1,
-		marginBottom: 5
-	},
-	skipButton: {
-		marginTop: 5,
-		alignSelf: "flex-end",
-	},
-	skipButtonText: {
-		color: "gray"
+		flexDirection: 'column',
+		justifyContent: 'flex-start'
 	},
 	heading: {
-		fontSize: 20,
+		marginTop: 15,
+		fontSize: 28,
 		fontFamily: "Verlag-Book",
 		alignSelf: "center",
-		width: 100,
-		height: 15,
-		flex: 1
+	},
+	divider: {
+			width: 320,
+			height: 2,
+			backgroundColor: '#23B090',
+			alignSelf: "center",
+			marginBottom: 5
+	},
+	topViewStyle: {
+        flex: 3,
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+    },
+    middleViewStyle: {
+    	flex: 1,
+    	flexDirection: 'row',
+    	justifyContent: "space-between",
+			alignItems: 'center',
+			marginTop: 10
+    },
+		clueViewStyle: {
+			flex: 3,
+			marginTop: 15,
+			flexDirection: 'row',
+			justifyContent: 'flex-start',
+			width:100,
+		},
+		buttonViewBox: {
+			width: 80,
+			height: 80,
+			backgroundColor: 'black'
+		},
+		addButton: {
+			width: 100,
+			height: 100,
+			backgroundColor: '#22AF8E',
+			alignSelf: "center",
+			fontSize: 43,
+			paddingLeft: 36,
+			paddingTop: 19,
+			color: "white",
+			marginRight: 35,
+		},
+		textBoxHunt: {
+			width: 200,
+			height: 100,
+				backgroundColor:'#E1EEEC',
+				marginLeft: 30,
+				marginRight: 10,
+				padding: 10,
+				fontSize: 19,
+				fontFamily: "Verlag-Book",
+					alignSelf: 'center',
+			borderRadius: 10
+		},
+	addClueButton: {
+			width: 40,
+			height: 40,
+			borderRadius: 25,
+			backgroundColor: '#6BC9AF',
+			marginTop: 15,
+	},
+	addClueButtonText: {
+		color: "black",
+		fontSize: 20,
+		alignSelf: 'center',
+		marginTop: 5
 	}
 });
-
-const Firebase = require('firebase')
-const config = require('../../config')
-
-import rootRef from '../../newfirebase.js'
 
 
 const usersRef = rootRef.ref('users');
@@ -152,10 +127,43 @@ const storageRef = storage.ref();
 /**
  * The Create Hunt view for the app to create hunts
  */
-var CreateHunt = React.createClass({
-		render: function(){
-			<View style={styles.heading}>
-				<Text>HUNT NAME</Text>
-			</View>
-		}
-	})
+
+	var CreateHunt = React.createClass({
+
+			newClue: function(){
+				this.props.navigator.push({
+						title: "Create Clue",
+						component: CreateClue,
+						passProps: {
+						}
+				});
+			},
+
+			render: function(){
+
+				return (
+					<View style={styles.container}>
+						<Text style={styles.heading}>HUNT NAME</Text>
+						<View style={styles.divider}/>
+
+						<View style={styles.middleViewStyle}>
+							<TextInput style={styles.textBoxHunt} multiline = "true" placeholder="Hunt description..."/>
+							<Text style={styles.addButton}>+</Text>
+						</View>
+
+						<TouchableHighlight underlayColor='#dddddd' onPress={() => this.newClue}>
+						<View style={styles.addClueButton}>
+							<Text style={styles.addClueButtonText}>+</Text>
+						</View>
+						</TouchableHighlight>
+
+						<View style={styles.clueViewStyle}>
+
+						</View>
+
+					</View>
+				);
+			}
+		})
+
+module.exports = CreateHunt;

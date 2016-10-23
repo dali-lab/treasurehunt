@@ -131,10 +131,10 @@ var HomePage = React.createClass({
   },
 */
   _renderCreate: function(){
-
-    /*return(
+/*
+    return(
       <Create navigator = {this.props.navigator} />
-    );*/
+    ); */
 
 
 
@@ -153,6 +153,7 @@ var HomePage = React.createClass({
           }} />
 
         )
+
 
   },
   /*
