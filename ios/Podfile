@@ -7,4 +7,6 @@ target ‘treasurehunt' do
 
   # Pods for treasurehunt
   pod 'Firebase'
+  pod 'Fabric'
+  pod 'Crashlytics'
 end
