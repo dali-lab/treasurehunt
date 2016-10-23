@@ -7,6 +7,7 @@ const User = require('./User');
 const dismissKeyboard = require('dismissKeyboard');
 const Firebase = require('firebase');
 const config = require('../../config');
+const ClueEdit = require('./ClueEdit');
 
 import rootRef from '../../newfirebase.js'
 
@@ -139,6 +140,15 @@ const storageRef = storage.ref();
 				});
 			},
 
+			buttonPressed: function(hunt) {
+	        this.props.navigator.push({
+	            title: "ClueEdit",
+	            component: ClueEdit,
+	            passProps: {
+	            }
+	        });
+	    },
+
 			render: function(){
 
 				return (
@@ -151,7 +161,7 @@ const storageRef = storage.ref();
 							<Text style={styles.addButton}>+</Text>
 						</View>
 
-						<TouchableHighlight underlayColor='#dddddd' onPress={() => this.newClue}>
+						<TouchableHighlight underlayColor='#dddddd' onPress={() => this.buttonPressed()}>
 						<View style={styles.addClueButton}>
 							<Text style={styles.addClueButtonText}>+</Text>
 						</View>
