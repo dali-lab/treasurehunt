@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 15,
+    width: 300,
   },
   textBoxName: {
     backgroundColor: '#E1EEEC',

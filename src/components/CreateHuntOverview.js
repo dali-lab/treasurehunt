@@ -62,6 +62,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 10,
   },
+  innerViewStyle: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: 300,
+  },
   clueViewStyle: {
     flex: 3,
     marginTop: 15,
