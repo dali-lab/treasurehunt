@@ -149,6 +149,7 @@ const storageRef = storage.ref();
 /**
  * The Create Hunt view for the app to create hunts
  */
+//
 
 const CreateHunt = React.createClass({
 
@@ -161,11 +162,23 @@ const CreateHunt = React.createClass({
     });
 
     return {
-      dataSource,
+      clues: [],
+      desc: '',
+      image: '',
+      name: '',
+      private: false,
+      procedural: true,
+      reward: '',
+      skipsAllowed: 0,
+			dataSource,
     };
   },
-
-
+  _updateHuntName(title) {
+    this.setState({
+      name: title,
+    });
+    console.log(this.state.name);
+  },
   newClue() {
     this.props.navigator.push({
       title: 'Create Clue',
@@ -238,7 +251,7 @@ const CreateHunt = React.createClass({
         <Text style={styles.heading}>{huntName}</Text>
         <View style={styles.divider} />
         <View style={styles.middleViewStyle}>
-          <TextInput style={styles.textBoxHunt} multiline="true" value={huntDescription} />
+          <TextInput style={styles.textBoxHunt} onChangeText={this._updateHuntName} multiline="true" value={huntDescription} />
           <Text style={styles.addButton}>+</Text>
         </View>
 				{internalView}
