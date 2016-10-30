@@ -1,17 +1,12 @@
 const ReactNative = require('react-native');
 const React = require('react');
-const PageControl = require('react-native-page-control');
-const ClueCompleteModal = require('./ClueCompleteModal');
-const RewardModal = require('./RewardModal');
-const User = require('./User');
-const dismissKeyboard = require('dismissKeyboard');
 const Firebase = require('firebase');
-const config = require('../../config');
+const ClueEdit = require('./ClueEdit');
 
-import rootRef from '../../newfirebase.js'
+import rootRef from '../../newfirebase.js';
 
 
-var {
+let {
 	StyleSheet,
 	Image,
 	View,
@@ -23,98 +18,132 @@ var {
 	Dimensions,
 	ScrollView,
 	Modal,
-	AlertIOS
+	AlertIOS,
 } = ReactNative;
-var {
+const {
     Component,
 } = React;
 
-var screenWidth = Dimensions.get('window').width;
-var screenHeight = Dimensions.get('window').height;
+const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height;
 
 
-var styles = StyleSheet.create({
-	container: {
-		marginTop: 70,
-		marginBottom: 50,
-		alignItems: 'center',
-		flex: 1,
-		flexDirection: 'column',
-		justifyContent: 'flex-start'
-	},
-	heading: {
-		marginTop: 15,
-		fontSize: 28,
-		fontFamily: "Verlag-Book",
-		alignSelf: "center",
-	},
-	divider: {
-			width: 320,
-			height: 2,
-			backgroundColor: '#23B090',
-			alignSelf: "center",
-			marginBottom: 5
-	},
-	topViewStyle: {
-        flex: 3,
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-    },
-    middleViewStyle: {
-    	flex: 1,
-    	flexDirection: 'row',
-    	justifyContent: "space-between",
-			alignItems: 'center',
-			marginTop: 10
-    },
-		clueViewStyle: {
-			flex: 3,
-			marginTop: 15,
-			flexDirection: 'row',
-			justifyContent: 'flex-start',
-			width:100,
-		},
-		buttonViewBox: {
-			width: 80,
-			height: 80,
-			backgroundColor: 'black'
-		},
-		addButton: {
-			width: 100,
-			height: 100,
-			backgroundColor: '#22AF8E',
-			alignSelf: "center",
-			fontSize: 43,
-			paddingLeft: 36,
-			paddingTop: 19,
-			color: "white",
-			marginRight: 35,
-		},
-		textBoxHunt: {
-			width: 200,
-			height: 100,
-				backgroundColor:'#E1EEEC',
-				marginLeft: 30,
-				marginRight: 10,
-				padding: 10,
-				fontSize: 19,
-				fontFamily: "Verlag-Book",
-					alignSelf: 'center',
-			borderRadius: 10
-		},
-	addClueButton: {
-			width: 40,
-			height: 40,
-			borderRadius: 25,
-			backgroundColor: '#6BC9AF',
-			marginTop: 15,
-	},
-	addClueButtonText: {
-		color: "black",
-		fontSize: 20,
-		alignSelf: 'center',
-		marginTop: 5
-	}
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 70,
+    marginBottom: 50,
+    alignItems: 'center',
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+  },
+  heading: {
+    marginTop: 15,
+    fontSize: 28,
+    fontFamily: 'Verlag-Book',
+    alignSelf: 'center',
+  },
+  divider: {
+    width: 320,
+    height: 2,
+    backgroundColor: '#23B090',
+    alignSelf: 'center',
+    marginBottom: 5,
+  },
+  topViewStyle: {
+    flex: 3,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+  },
+  middleViewStyle: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  innerViewStyle: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: 300,
+  },
+  clueViewStyle: {
+    flex: 3,
+    marginTop: 15,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    width: 100,
+  },
+  buttonViewBox: {
+    width: 80,
+    height: 80,
+    backgroundColor: 'black',
+  },
+  addButton: {
+    width: 100,
+    height: 100,
+    backgroundColor: '#22AF8E',
+    alignSelf: 'center',
+    fontSize: 43,
+    paddingLeft: 36,
+    paddingTop: 19,
+    color: 'white',
+    marginRight: 35,
+  },
+  textBoxHunt: {
+    width: 200,
+    height: 100,
+    backgroundColor: '#E1EEEC',
+    marginLeft: 30,
+    marginRight: 10,
+    padding: 10,
+    fontSize: 19,
+    fontFamily: 'Verlag-Book',
+    alignSelf: 'center',
+    borderRadius: 10,
+  },
+  addClueButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 25,
+    backgroundColor: '#6BC9AF',
+    marginTop: 15,
+  },
+  addClueButtonText: {
+    color: 'black',
+    fontSize: 20,
+    alignSelf: 'center',
+    marginTop: 5,
+  },
+  deleteButton: {
+    width: 130,
+    height: 40,
+    borderRadius: 10,
+    backgroundColor: '#F2C6C5',
+  },
+  deleteText: {
+    color: '#EB766C',
+    fontFamily: 'Verlag-Book',
+    alignSelf: 'center',
+    marginTop: 10,
+    fontWeight: 'bold',
+    fontSize: 20,
+  },
+  saveButton: {
+    width: 130,
+    height: 40,
+    borderRadius: 10,
+    backgroundColor: '#E7EEBB',
+  },
+  saveText: {
+    color: '#BCCC5F',
+    fontFamily: 'Verlag-Book',
+    alignSelf: 'center',
+    marginTop: 10,
+    fontWeight: 'bold',
+    fontSize: 20,
+  },
 });
 
 
@@ -127,61 +156,75 @@ const storageRef = storage.ref();
 /**
  * The Create Hunt view for the app to create hunts
  */
+//
 
-	var CreateHunt = React.createClass({
-		getInitialState: function() {
-					return {
-							clues: [],
-							desc: '',
-							image: '',
-							name: '',
-							private: false,
-							procedural: true,
-							reward: '',
-							skipsAllowed: 0
-					}
-			},
-			_updateHuntName: function(title){
-				this.setState({
-						name: title
-				});
-				console.log(this.state.name);
-			},
+const CreateHunt = React.createClass({
+  getInitialState() {
+    return {
+      clues: [],
+      desc: '',
+      image: '',
+      name: '',
+      private: false,
+      procedural: true,
+      reward: '',
+      skipsAllowed: 0,
+    };
+  },
+  _updateHuntName(title) {
+    this.setState({
+      name: title,
+    });
+    console.log(this.state.name);
+  },
+  newClue() {
+    this.props.navigator.push({
+      title: 'Create Clue',
+      component: CreateClue,
+      passProps: {
+      },
+    });
+  },
 
-			newClue: function(){
-				this.props.navigator.push({
-						title: "Create Clue",
-						component: CreateClue,
-						passProps: {
-						}
-				});
-			},
+  buttonPressed(hunt) {
+    this.props.navigator.push({
+      title: 'ClueEdit',
+      component: ClueEdit,
+      passProps: {
+      },
+    });
+  },
 
-			render: function(){
-
-				return (
-					<View style={styles.container}>
-						<Text style={styles.heading}>HUNT NAME</Text>
-						<View style={styles.divider}/>
-
-						<View style={styles.middleViewStyle}>
-							<TextInput style={styles.textBoxHunt} onChangeText={this._updateHuntName} multiline = "true" placeholder="Hunt description..."/>
-							<Text style={styles.addButton}>+</Text>
-						</View>
-
-						<TouchableHighlight underlayColor='#dddddd' onPress={() => this.newClue}>
-						<View style={styles.addClueButton}>
-							<Text style={styles.addClueButtonText}>+</Text>
-						</View>
-						</TouchableHighlight>
-
-						<View style={styles.clueViewStyle}>
-
-						</View>
-
-					</View>
-				);
-			}
-		})
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.heading}>HUNT NAME</Text>
+        <View style={styles.divider} />
+        <View style={styles.middleViewStyle}>
+          <TextInput style={styles.textBoxHunt} onChangeText={this._updateHuntName} multiline="true" placeholder="Hunt description..." />
+          <Text style={styles.addButton}>+</Text>
+        </View>
+        <TouchableHighlight underlayColor="#dddddd" onPress={() => this.buttonPressed()}>
+          <View style={styles.addClueButton}>
+            <Text style={styles.addClueButtonText}>+</Text>
+          </View>
+        </TouchableHighlight>
+        <View style={styles.clueViewStyle} />
+        <View style={styles.innerViewStyle}>
+          <TouchableHighlight underlayColor="#dddddd" onPress={() => this.onPress}>
+            <View style={styles.deleteButton}>
+              <Text style={styles.deleteText}>Delete</Text>
+            </View>
+          </TouchableHighlight>
+          <TouchableHighlight underlayColor="#dddddd" onPress={() => this.onPress}>
+            <View style={styles.saveButton}>
+              <Text style={styles.saveText}>Save</Text>
+            </View>
+          </TouchableHighlight>
+        </View>
+      </View>
+    );
+  },
+});
 
 module.exports = CreateHunt;
