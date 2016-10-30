@@ -246,6 +246,7 @@ const Create = React.createClass({
       title: 'CreateHunt',
       component: CreateHunt,
       passProps: {
+        hunt: hunt,
       },
     });
   },

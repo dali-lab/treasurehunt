@@ -5,20 +5,14 @@ const ClueEdit = require('./ClueEdit');
 
 import rootRef from '../../newfirebase.js';
 
-
-let {
-	StyleSheet,
-	Image,
-	View,
-	Text,
-	TouchableHighlight,
-	Alert,
-	TextInput,
-	ListView,
-	Dimensions,
-	ScrollView,
-	Modal,
-	AlertIOS,
+const {
+StyleSheet,
+View,
+Text,
+TouchableHighlight,
+TextInput,
+ListView,
+Dimensions,
 } = ReactNative;
 const {
     Component,
@@ -26,7 +20,6 @@ const {
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
-
 
 const styles = StyleSheet.create({
   container: {
@@ -159,6 +152,20 @@ const storageRef = storage.ref();
 
 const CreateHunt = React.createClass({
 
+	getInitialState() {
+    console.log('running getInitialState');
+
+    const dataSource = new ListView.DataSource({
+      rowHasChanged: (r1, r2) => r1.guid !== r2.guid,
+      sectionHeaderHasChanged: (s1, s2) => s1.guid !== s2.guid,
+    });
+
+    return {
+      dataSource,
+    };
+  },
+
+
   newClue() {
     this.props.navigator.push({
       title: 'Create Clue',
@@ -177,15 +184,64 @@ const CreateHunt = React.createClass({
     });
   },
 
+	renderRow(hunt) {
+    return (
+      <TouchableHighlight onPress={() => this.buttonPressed(hunt)}
+        underlayColor="#dddddd"
+      >
+        <View>
+          <View style={styles.textBoxHunt}>
+
+            <View style={styles.textContainer}>
+              <View>
+                <Text> clue 1 </Text>
+                <Text style={styles.description}
+                  numberOfLines={2}
+                >{hunt.desc}</Text>
+              </View>
+            </View>
+					</View>
+				</View>
+      </TouchableHighlight>
+        );
+  },
+
   render() {
+    let huntName, huntDescription;
+    let huntImage;
+    if (this.props.hunt === undefined) {
+      huntName = 'Hunt Name';
+      huntDescription = 'Hunt description....';
+    } else {
+      huntName = this.props.hunt.name;
+      huntDescription = this.props.hunt.desc;
+    }
+
+
+    var listView = <ListView
+      dataSource={this.state.dataSource}
+      automaticallyAdjustContentInsets={false}
+      renderRow={this.renderRow}/>
+
+		let internalView;
+
+		if (this.state.hunt === undefined) {
+			internalView = (<View style={styles.textBoxHunt}>
+				<Text>Loading...</Text>
+			</View>);
+		} else {
+			internalView = listView;
+		}
+
     return (
       <View style={styles.container}>
-        <Text style={styles.heading}>HUNT NAME</Text>
+        <Text style={styles.heading}>{huntName}</Text>
         <View style={styles.divider} />
         <View style={styles.middleViewStyle}>
-          <TextInput style={styles.textBoxHunt} multiline="true" placeholder="Hunt description..." />
+          <TextInput style={styles.textBoxHunt} multiline="true" value={huntDescription} />
           <Text style={styles.addButton}>+</Text>
         </View>
+				{internalView}
         <TouchableHighlight underlayColor="#dddddd" onPress={() => this.buttonPressed()}>
           <View style={styles.addClueButton}>
             <Text style={styles.addClueButtonText}>+</Text>
