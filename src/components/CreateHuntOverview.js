@@ -129,6 +129,24 @@ const storageRef = storage.ref();
  */
 
 	var CreateHunt = React.createClass({
+		getInitialState: function() {
+					return {
+							clues: [],
+							desc: '',
+							image: '',
+							name: '',
+							private: false,
+							procedural: true,
+							reward: '',
+							skipsAllowed: 0
+					}
+			},
+			_updateHuntName: function(title){
+				this.setState({
+						name: title
+				});
+				console.log(this.state.name);
+			},
 
 			newClue: function(){
 				this.props.navigator.push({
@@ -147,7 +165,7 @@ const storageRef = storage.ref();
 						<View style={styles.divider}/>
 
 						<View style={styles.middleViewStyle}>
-							<TextInput style={styles.textBoxHunt} multiline = "true" placeholder="Hunt description..."/>
+							<TextInput style={styles.textBoxHunt} onChangeText={this._updateHuntName} multiline = "true" placeholder="Hunt description..."/>
 							<Text style={styles.addButton}>+</Text>
 						</View>
 
