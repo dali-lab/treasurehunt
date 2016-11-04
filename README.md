@@ -91,8 +91,8 @@ TODO: Update security settings
 
 __Client__: Amanda Lobel
 
-__Designers__: Yixuan He, Shouqi Chen
+__Designers__: Jenny Hyun Ji Seong
 
-__Developers__: Abby Starr, John Kotz
+__Developers__: Abby Starr, John Kotz, Seb Lim, Devina Kumar, Henry Wilson
 
-__Project Manager__: John Kotz
+__Project Manager__: Abby Starr
