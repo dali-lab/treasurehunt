@@ -2,6 +2,7 @@ const ReactNative = require('react-native');
 const React = require('react');
 const Firebase = require('firebase');
 const ClueEdit = require('./ClueEdit');
+const Data = require('./Data');
 
 import rootRef from '../../newfirebase.js';
 
@@ -96,6 +97,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     borderRadius: 10,
   },
+
   addClueButton: {
     width: 40,
     height: 40,
@@ -197,7 +199,66 @@ const CreateHunt = React.createClass({
     });
   },
 
+	saveButton() {
+		Alert.alert('saving should go here!');
+	},
+
+	listenForClues() {
+		console.log('running listenForClues');
+		if(this.props.hunt.clues.length > 0) {
+			for (let i = 0; i < this.props.hunt.clues.length; i += 1) {
+				console.log(i);
+				let c = this.props.hunt.clues[i];
+				console.log(c);
+				Data.getClueWithID(c).then((clue) => {
+					console.log('current clue retrieved is:' + JSON.stringify(clue));
+
+					const thisIsNew = new ListView.DataSource({
+						rowHasChanged: (r1, r2) => r1.guid !== r2.guid,
+						sectionHeaderHasChanged: (s1, s2) => s1.guid !== s2.guid,
+					});
+					const newDataSource = thisIsNew.cloneWithRows(clue);
+					this.setState({
+						clues: clue,
+					});
+				});
+			} // for
+		}  // if
+		console.log('finished updating state');
+		console.log('state is....' + JSON.stringify(this.state));
+
+
+
+/*
+		User.getCurrentUser().getCreatedHunts().then((huntsList) => {
+			Data.getHuntObjects(huntsList).then((hunts) => {
+				console.log(`Loaded hunts: ${hunts}\nSetting the state`);
+				console.log('State was: ');
+
+				const thisIsNew = new ListView.DataSource({
+					rowHasChanged: (r1, r2) => r1.guid !== r2.guid,
+					sectionHeaderHasChanged: (s1, s2) => s1.guid !== s2.guid,
+				});
+				const newDataSource = thisIsNew.cloneWithRows(hunts);
+				console.log('Now it is: ');
+				this.setState({
+					hunts,
+					dataSource: newDataSource,
+				});
+			});
+		});
+	},
+	*/
+},
+
+	componentDidMount() {
+    console.log('component did mount.');
+    this.listenForClues();
+  },
+
 	renderRow(hunt) {
+
+    console.log(`RENDER ROWWWWWW`);
     return (
       <TouchableHighlight onPress={() => this.buttonPressed(hunt)}
         underlayColor="#dddddd"
@@ -207,19 +268,23 @@ const CreateHunt = React.createClass({
 
             <View style={styles.textContainer}>
               <View>
-                <Text> clue 1 </Text>
+                <Text style={styles.title} numberOfLines={1}>{hunt.name.toUpperCase()}</Text>
                 <Text style={styles.description}
                   numberOfLines={2}
                 >{hunt.desc}</Text>
               </View>
+
             </View>
-					</View>
-				</View>
+          </View>
+          <View style={styles.separator} />
+        </View>
       </TouchableHighlight>
         );
   },
 
+
   render() {
+		console.log('running render....');
     let huntName, huntDescription;
     let huntImage;
     if (this.props.hunt === undefined) {
@@ -236,13 +301,20 @@ const CreateHunt = React.createClass({
       automaticallyAdjustContentInsets={false}
       renderRow={this.renderRow}/>
 
+			console.log('value of LISTOVERVIEW: ' + listView);
+
+			console.log('listView IN CREATEHUNTOVERVIEW Done');
+
 		let internalView;
 
-		if (this.state.hunt === undefined) {
+		if (this.props.hunt === undefined) {
+			console.log('this.props.hunt is undefined here');
 			internalView = (<View style={styles.textBoxHunt}>
+
 				<Text>Loading...</Text>
 			</View>);
 		} else {
+			console.log('this.props.hunt is  NOT undefined here');
 			internalView = listView;
 		}
 
@@ -251,7 +323,7 @@ const CreateHunt = React.createClass({
         <Text style={styles.heading}>{huntName}</Text>
         <View style={styles.divider} />
         <View style={styles.middleViewStyle}>
-          <TextInput style={styles.textBoxHunt} onChangeText={this._updateHuntName} multiline="true" value={huntDescription} />
+          <TextInput style={styles.textBoxHunt} onChangeText={this._updateHuntName} multiline={true} placeholder={huntDescription} />
           <Text style={styles.addButton}>+</Text>
         </View>
 				{internalView}
@@ -267,7 +339,7 @@ const CreateHunt = React.createClass({
               <Text style={styles.deleteText}>Delete</Text>
             </View>
           </TouchableHighlight>
-          <TouchableHighlight underlayColor="#dddddd" onPress={() => this.onPress}>
+          <TouchableHighlight underlayColor="#dddddd" onPress={() => this.saveButton}>
             <View style={styles.saveButton}>
               <Text style={styles.saveText}>Save</Text>
             </View>
