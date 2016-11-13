@@ -54,7 +54,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: 10,
+    marginTop: 20,
+    marginBottom: 20,
   },
   innerViewStyle: {
     flex: 1,
@@ -63,7 +64,7 @@ const styles = StyleSheet.create({
     width: 300,
   },
   clueViewStyle: {
-    flex: 3,
+    flex: 1,
     marginTop: 15,
     flexDirection: 'row',
     justifyContent: 'flex-start',
@@ -101,23 +102,27 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 25,
-    backgroundColor: '#6BC9AF',
+    backgroundColor: '#C5EAE0',
     marginTop: 15,
+    marginBottom: 15,
   },
   clueRows: {
     width: 300,
-    height: 100,
-    backgroundColor: '#6BC9AF',
+    height: 60,
+    marginTop: 10,
     borderRadius: 10,
+    backgroundColor: '#C5EAE0',
+    padding: 10,
   },
   topContainer: {
     marginBottom: 10,
   },
   addClueButtonText: {
-    color: 'black',
-    fontSize: 20,
+    color: '#6BC9AF',
+    fontSize: 25,
+    fontWeight: 'bold',
     alignSelf: 'center',
-    marginTop: 5,
+    marginTop: 3,
   },
   deleteButton: {
     width: 130,
@@ -147,6 +152,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 20,
   },
+  internalViewContainer: {
+    flex: 3,
+    marginTop: 10,
+    marginBottom: 10,
+  }
 });
 
 
@@ -263,7 +273,9 @@ const CreateHunt = React.createClass({
       <TouchableHighlight onPress={() => this.buttonPressed(clue)}
         underlayColor="#dddddd"
       >
+
         <View>
+          <View style={styles.separator} />
           <View style={styles.clueRows}>
 
             <View style={styles.textContainer}>
@@ -319,13 +331,14 @@ const CreateHunt = React.createClass({
           <TextInput style={styles.textBoxHunt} onChangeText={this._updateHuntName} multiline={true} placeholder={huntDescription} />
           <Text style={styles.addButton}>+</Text>
         </View>
-				{internalView}
+        <View style={styles.internalViewContainer}>
+          {internalView}
+        </View>
         <TouchableHighlight underlayColor="#dddddd" onPress={() => this.buttonPressed()}>
           <View style={styles.addClueButton}>
             <Text style={styles.addClueButtonText}>+</Text>
           </View>
         </TouchableHighlight>
-        <View style={styles.clueViewStyle} />
         <View style={styles.innerViewStyle}>
           <TouchableHighlight underlayColor="#dddddd" onPress={() => this.onPress}>
             <View style={styles.deleteButton}>
