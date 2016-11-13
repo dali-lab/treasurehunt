@@ -97,13 +97,21 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     borderRadius: 10,
   },
-
   addClueButton: {
     width: 40,
     height: 40,
     borderRadius: 25,
     backgroundColor: '#6BC9AF',
     marginTop: 15,
+  },
+  clueRows: {
+    width: 300,
+    height: 100,
+    backgroundColor: '#6BC9AF',
+    borderRadius: 10,
+  },
+  topContainer: {
+    marginBottom: 10,
   },
   addClueButtonText: {
     color: 'black',
@@ -159,7 +167,7 @@ const CreateHunt = React.createClass({
     console.log('running getInitialState');
 
     const dataSource = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => r1.guid !== r2.guid,
+      rowHasChanged: (r1, r2) => r1 !== r2,
       sectionHeaderHasChanged: (s1, s2) => s1.guid !== s2.guid,
     });
 
@@ -172,7 +180,7 @@ const CreateHunt = React.createClass({
       procedural: true,
       reward: '',
       skipsAllowed: 0,
-			dataSource,
+      dataSource: dataSource,
     };
   },
   _updateHuntName(title) {
@@ -206,72 +214,61 @@ const CreateHunt = React.createClass({
 	listenForClues() {
 		console.log('running listenForClues');
 		if(this.props.hunt.clues.length > 0) {
+      var promises = [];
+      var clues = [];
+
 			for (let i = 0; i < this.props.hunt.clues.length; i += 1) {
 				console.log(i);
 				let c = this.props.hunt.clues[i];
 				console.log(c);
-				Data.getClueWithID(c).then((clue) => {
-					console.log('current clue retrieved is:' + JSON.stringify(clue));
+				promises.push(new Promise((success, fail) => {
+          Data.getClueWithID(c).then((clue) => {
+  					console.log('current clue retrieved is:' + JSON.stringify(clue));
 
-					const thisIsNew = new ListView.DataSource({
-						rowHasChanged: (r1, r2) => r1.guid !== r2.guid,
-						sectionHeaderHasChanged: (s1, s2) => s1.guid !== s2.guid,
-					});
-					const newDataSource = thisIsNew.cloneWithRows(clue);
-					this.setState({
-						clues: clue,
-					});
-				});
-			} // for
+
+            clues.push(clue);
+            success();
+  				});
+        }));
+
+      } // for
+
+
+
+      Promise.all(promises).then(() => {
+        let newDataSource = this.state.dataSource.cloneWithRows(clues)
+
+        console.log("Got all the clues!: " + clues);
+        console.log(JSON.stringify(newDataSource));
+        this.setState({
+          dataSource: newDataSource,
+          clues: clues
+        });
+
+
+    		console.log('finished updating state');
+    		console.log('state is....' + JSON.stringify(this.state));
+      });
 		}  // if
-		console.log('finished updating state');
-		console.log('state is....' + JSON.stringify(this.state));
-
-
-
-/*
-		User.getCurrentUser().getCreatedHunts().then((huntsList) => {
-			Data.getHuntObjects(huntsList).then((hunts) => {
-				console.log(`Loaded hunts: ${hunts}\nSetting the state`);
-				console.log('State was: ');
-
-				const thisIsNew = new ListView.DataSource({
-					rowHasChanged: (r1, r2) => r1.guid !== r2.guid,
-					sectionHeaderHasChanged: (s1, s2) => s1.guid !== s2.guid,
-				});
-				const newDataSource = thisIsNew.cloneWithRows(hunts);
-				console.log('Now it is: ');
-				this.setState({
-					hunts,
-					dataSource: newDataSource,
-				});
-			});
-		});
-	},
-	*/
 },
 
-	componentDidMount() {
-    console.log('component did mount.');
+  componentDidMount() {
+    console.log('createHuntOverview component did mount.');
     this.listenForClues();
   },
 
-	renderRow(hunt) {
-
-    console.log(`RENDER ROWWWWWW`);
+  renderRow(clue) {
+    console.log(`Render Row with clue: ` + JSON.stringify(clue));
     return (
-      <TouchableHighlight onPress={() => this.buttonPressed(hunt)}
+      <TouchableHighlight onPress={() => this.buttonPressed(clue)}
         underlayColor="#dddddd"
       >
         <View>
-          <View style={styles.textBoxHunt}>
+          <View style={styles.clueRows}>
 
             <View style={styles.textContainer}>
               <View>
-                <Text style={styles.title} numberOfLines={1}>{hunt.name.toUpperCase()}</Text>
-                <Text style={styles.description}
-                  numberOfLines={2}
-                >{hunt.desc}</Text>
+                <Text style={styles.title} numberOfLines={1}>{clue.description.toUpperCase()}</Text>
               </View>
 
             </View>
@@ -284,9 +281,9 @@ const CreateHunt = React.createClass({
 
 
   render() {
-		console.log('running render....');
+    console.log('running render....');
     let huntName, huntDescription;
-    let huntImage;
+    let huntImage, internalView;
     if (this.props.hunt === undefined) {
       huntName = 'Hunt Name';
       huntDescription = 'Hunt description....';
@@ -295,33 +292,29 @@ const CreateHunt = React.createClass({
       huntDescription = this.props.hunt.desc;
     }
 
-
-    var listView = <ListView
+    const listView = (<ListView
       dataSource={this.state.dataSource}
       automaticallyAdjustContentInsets={false}
-      renderRow={this.renderRow}/>
+      renderRow={this.renderRow}
+    />);
 
-			console.log('value of LISTOVERVIEW: ' + listView);
+    if (this.props.hunt === undefined) {
+      console.log('this.props.hunt is undefined here');
+      internalView = (<View style={styles.textBoxHunt}>
 
-			console.log('listView IN CREATEHUNTOVERVIEW Done');
-
-		let internalView;
-
-		if (this.props.hunt === undefined) {
-			console.log('this.props.hunt is undefined here');
-			internalView = (<View style={styles.textBoxHunt}>
-
-				<Text>Loading...</Text>
-			</View>);
-		} else {
-			console.log('this.props.hunt is  NOT undefined here');
-			internalView = listView;
-		}
+        <Text>Loading...</Text>
+      </View>);
+    } else {
+      console.log('this.props.hunt is  NOT undefined here');
+      internalView = listView;
+    }
 
     return (
       <View style={styles.container}>
-        <Text style={styles.heading}>{huntName}</Text>
-        <View style={styles.divider} />
+        <View style={styles.topContainer}>
+          <Text style={styles.heading}>{huntName.toUpperCase()}</Text>
+          <View style={styles.divider} />
+        </View>
         <View style={styles.middleViewStyle}>
           <TextInput style={styles.textBoxHunt} onChangeText={this._updateHuntName} multiline={true} placeholder={huntDescription} />
           <Text style={styles.addButton}>+</Text>
