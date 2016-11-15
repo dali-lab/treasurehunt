@@ -9,6 +9,7 @@ const Data = require('./Data');
 const SearchController = require('./SearchController');
 const CreateHunt = require('./CreateHuntOverview');
 const Settings = require('./Settings');
+const Location = require('./Location');
 
 let {
     StyleSheet,
@@ -246,7 +247,16 @@ const Create = React.createClass({
       title: 'CreateHunt',
       component: CreateHunt,
       passProps: {
-        hunt: hunt,
+        hunt,
+      },
+    });
+  },
+  locationPressed(hunt) {
+    this.props.navigator.push({
+      title: 'Location',
+      component: Location,
+      passProps: {
+        hunt,
       },
     });
   },
@@ -393,7 +403,9 @@ const Create = React.createClass({
         <TouchableHighlight onPress={() => this.rowPressed()} underlayColor="white">
           <Text style={styles.button}>Create Hunt</Text>
         </TouchableHighlight>
-
+        <TouchableHighlight onPress={() => this.locationPressed()} underlayColor="white">
+          <Text style={styles.button}>Location</Text>
+        </TouchableHighlight>
         <TouchableHighlight onPress={() => this.settingsPressed()} underlayColor="white">
           <Text style={styles.button}>Settings</Text>
         </TouchableHighlight>
