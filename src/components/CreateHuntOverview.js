@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
     flex: 3,
     marginTop: 10,
     marginBottom: 10,
-  }
+  },
 });
 
 
@@ -173,7 +173,7 @@ const storageRef = storage.ref();
 
 const CreateHunt = React.createClass({
 
-	getInitialState() {
+  getInitialState() {
     console.log('running getInitialState');
 
     const dataSource = new ListView.DataSource({
@@ -190,7 +190,7 @@ const CreateHunt = React.createClass({
       procedural: true,
       reward: '',
       skipsAllowed: 0,
-      dataSource: dataSource,
+      dataSource,
     };
   },
   _updateHuntName(title) {
@@ -217,50 +217,48 @@ const CreateHunt = React.createClass({
     });
   },
 
-	saveButton() {
-		Alert.alert('saving should go here!');
-	},
+  saveButton() {
+    Alert.alert('saving should go here!');
+  },
 
-	listenForClues() {
-		console.log('running listenForClues');
-		if(this.props.hunt.clues.length > 0) {
-      var promises = [];
-      var clues = [];
+  listenForClues() {
+    console.log('running listenForClues');
+    if (this.props.hunt && this.props.hunt.clues.length > 0) {
+      const promises = [];
+      const clues = [];
 
-			for (let i = 0; i < this.props.hunt.clues.length; i += 1) {
-				console.log(i);
-				let c = this.props.hunt.clues[i];
-				console.log(c);
-				promises.push(new Promise((success, fail) => {
+      for (let i = 0; i < this.props.hunt.clues.length; i += 1) {
+        console.log(i);
+        const c = this.props.hunt.clues[i];
+        console.log(c);
+        promises.push(new Promise((success, fail) => {
           Data.getClueWithID(c).then((clue) => {
-  					console.log('current clue retrieved is:' + JSON.stringify(clue));
+  					console.log(`current clue retrieved is:${JSON.stringify(clue)}`);
 
 
             clues.push(clue);
             success();
   				});
         }));
-
       } // for
 
 
-
       Promise.all(promises).then(() => {
-        let newDataSource = this.state.dataSource.cloneWithRows(clues)
+        const newDataSource = this.state.dataSource.cloneWithRows(clues);
 
-        console.log("Got all the clues!: " + clues);
+        console.log(`Got all the clues!: ${clues}`);
         console.log(JSON.stringify(newDataSource));
         this.setState({
           dataSource: newDataSource,
-          clues: clues
+          clues,
         });
 
 
     		console.log('finished updating state');
-    		console.log('state is....' + JSON.stringify(this.state));
+    		console.log(`state is....${JSON.stringify(this.state)}`);
       });
-		}  // if
-},
+    }  // if
+  },
 
   componentDidMount() {
     console.log('createHuntOverview component did mount.');
@@ -268,7 +266,7 @@ const CreateHunt = React.createClass({
   },
 
   renderRow(clue) {
-    console.log(`Render Row with clue: ` + JSON.stringify(clue));
+    console.log(`Render Row with clue: ${JSON.stringify(clue)}`);
     return (
       <TouchableHighlight onPress={() => this.buttonPressed(clue)}
         underlayColor="#dddddd"
@@ -328,7 +326,7 @@ const CreateHunt = React.createClass({
           <View style={styles.divider} />
         </View>
         <View style={styles.middleViewStyle}>
-          <TextInput style={styles.textBoxHunt} onChangeText={this._updateHuntName} multiline={true} placeholder={huntDescription} />
+          <TextInput style={styles.textBoxHunt} onChangeText={this._updateHuntName} multiline placeholder={huntDescription} />
           <Text style={styles.addButton}>+</Text>
         </View>
         <View style={styles.internalViewContainer}>
