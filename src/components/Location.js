@@ -63,7 +63,7 @@ class Location extends React.Component {
         this.setState({ initialPosition });
       },
       error => alert(JSON.stringify(error)),
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
     );
     this.watchID = navigator.geolocation.watchPosition((position) => {
       console.log(`updaing pos: ${JSON.stringify(position)}`);
@@ -78,15 +78,14 @@ class Location extends React.Component {
 
   calculateDistanceKilometers() {
     const radiusKM = 6371;
-    const longFP = this.state.longitude;
-    const latFP = this.state.latitude;
-    const latCP = this.state.lastPosition.coords.latitude;
-    console.log(`State of lastPosition is:${JSON.stringify(this.state.lastPosition)}`);
-    const longCP = this.state.lastPosition.coords.longitude;
-    const deltaLong = (longFP - longCP) * (Math.PI / 180);
-    const deltaLat = (latFP - latCP) * (Math.PI / 180);
+    const longFP = this.state.longitude * (Math.PI / 180);
+    const latFP = this.state.latitude * (Math.PI / 180);
+    const latCP = this.state.lastPosition.coords.latitude * (Math.PI / 180);
+    const longCP = this.state.lastPosition.coords.longitude * (Math.PI / 180);
+    const deltaLong = (longFP - longCP);
+    const deltaLat = (latFP - latCP);
     const a = (Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2)) +
-        (Math.cos(latCP) * Math.cos(latFP) *
+         (Math.cos(latCP) * Math.cos(latFP) *
         Math.sin(deltaLong / 2) * Math.sin(deltaLong / 2));
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     const disKM = radiusKM * c;
@@ -96,13 +95,12 @@ class Location extends React.Component {
 
   calculateDistanceMiles() {
     const radiusMI = 3959;
-    const longFP = this.state.longitude;
-    const latFP = this.state.latitude;
-    const latCP = this.state.lastPosition.coords.latitude;
-    const longCP = this.state.lastPosition.coords.longitude;
-    console.log(`deltaLong: ${(longFP - longCP)}`);
-    const deltaLong = (longFP - longCP) * (Math.PI / 180);
-    const deltaLat = (latFP - latCP) * (Math.PI / 180);
+    const longFP = this.state.longitude * (Math.PI / 180);
+    const latFP = this.state.latitude * (Math.PI / 180);
+    const latCP = this.state.lastPosition.coords.latitude * (Math.PI / 180);
+    const longCP = this.state.lastPosition.coords.longitude * (Math.PI / 180);
+    const deltaLong = (longFP - longCP);
+    const deltaLat = (latFP - latCP);
     const a = (Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2)) +
         (Math.cos(latCP) * Math.cos(latFP) *
         Math.sin(deltaLong / 2) * Math.sin(deltaLong / 2));

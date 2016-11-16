@@ -17,7 +17,14 @@
   },
   "description": "A react-native app that provides an interface for doing treasure hunts",
   "main": "config.js",
-  "devDependencies": {},
+  "devDependencies": {
+    "babel-eslint": "^7.1.0",
+    "eslint": "^3.10.2",
+    "eslint-config-airbnb": "^13.0.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "^6.7.1"
+  },
   "author": "DALI",
   "license": "ISC",
   "bugs": {
