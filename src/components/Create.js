@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 25,
     backgroundColor: '#C5EAE0',
-    marginBottom: 250,
+    marginBottom: 150,
     alignSelf: 'center',
   },
   addClueButtonText: {

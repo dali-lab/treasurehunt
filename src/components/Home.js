@@ -382,7 +382,7 @@ var Home = React.createClass({
                             <Text style={styles.description}
                                 numberOfLines={2}>{hunt.desc}</Text>
                           </View>
-                          {this.state.puzzle === 'current' ? 
+                          {this.state.puzzle === 'current' ?
                           <View>
                             <Progress.Bar style={styles.progressBar}
                                 progress={hunt.progress} width={screenWidth - 160} borderRadius={0} border={0} height={10} color='#ffd900' backgroundColor='white'/>
