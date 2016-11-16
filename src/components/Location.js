@@ -32,6 +32,13 @@ const styles = StyleSheet.create({
     height: 18,
     backgroundColor: 'grey',
   },
+  circleRed: {
+    width: 200,
+    height: 200,
+    backgroundColor: 'red',
+    borderRadius: 100,
+    marginLeft: 10,
+  },
 });
 
 class Location extends React.Component {
@@ -110,11 +117,24 @@ class Location extends React.Component {
     return disMI;
   }
 
+  calculateBearing() {
+    const y = Math.sin(this.state.longitude - this.state.lastPosition.coords.longitude) * Math.cos(this.state.latitude);
+    const x = (Math.cos(this.state.lastPosition.coords.latitude) * Math.sin(this.state.latitude)) - (Math.sin(this.state.lastPosition.coords.latitude)
+     * Math.cos(this.state.latitude) * Math.cos(this.state.longitude - this.state.lastPosition.coords.longitude));
+    let brng = Math.atan2(y, x) * (180 / Math.PI);
+    if (brng < 0) {
+      brng += 360;
+    }
+
+    return brng;
+  }
+
   watchID: ?number = null;
 
   render() {
     const dmile = this.calculateDistanceMiles();
     const dkilo = this.calculateDistanceKilometers();
+    const bearing = this.calculateBearing();
 
     return (
       <View style={styles.container}>
@@ -139,9 +159,14 @@ class Location extends React.Component {
             <Text style={styles.title}>Latitude: </Text>
             {this.state.lastPosition.coords.latitude}
           </Text>
+          <View style={styles.circleRed} />
+          <Text>
+            <Text style={styles.title}>Current Bearing: </Text>
+            { bearing }
+          </Text>
           <Text>
             <Text style={styles.title}>Current heading: </Text>
-            {this.state.lastPosition.coords.heading}
+            { this.state.lastPosition.coords.heading }
           </Text>
           <Text>
             <Text style={styles.title}>Distance in Miles: </Text>
