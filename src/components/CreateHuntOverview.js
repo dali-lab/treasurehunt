@@ -113,6 +113,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: '#C5EAE0',
     padding: 10,
+    justifyContent: 'center',
+  },
+  clueText: {
+    alignSelf: 'center',
+    fontSize: 20,
+    fontFamily: 'Verlag-Book',
   },
   topContainer: {
     marginBottom: 10,
@@ -234,11 +240,9 @@ const CreateHunt = React.createClass({
         promises.push(new Promise((success, fail) => {
           Data.getClueWithID(c).then((clue) => {
   					console.log(`current clue retrieved is:${JSON.stringify(clue)}`);
-
-
             clues.push(clue);
             success();
-  				});
+          });
         }));
       } // for
 
@@ -278,7 +282,7 @@ const CreateHunt = React.createClass({
 
             <View style={styles.textContainer}>
               <View>
-                <Text style={styles.title} numberOfLines={1}>{clue.description.toUpperCase()}</Text>
+                <Text style={styles.clueText} numberOfLines={1}>{clue.data.toUpperCase()}</Text>
               </View>
 
             </View>
@@ -294,6 +298,26 @@ const CreateHunt = React.createClass({
     console.log('running render....');
     let huntName, huntDescription;
     let huntImage, internalView;
+
+    const noHuntsView = (<TouchableHighlight onPress={() => this.buttonPressed()}
+      underlayColor="#dddddd"
+    >
+
+      <View>
+        <View style={styles.separator} />
+        <View style={styles.clueRows}>
+
+          <View style={styles.textContainer}>
+            <View>
+              <Text style={styles.clueText}> CREATE A CLUE! </Text>
+            </View>
+
+          </View>
+        </View>
+        <View style={styles.separator} />
+      </View>
+    </TouchableHighlight>
+    );
     if (this.props.hunt === undefined) {
       huntName = 'Hunt Name';
       huntDescription = 'Hunt description....';
@@ -310,10 +334,13 @@ const CreateHunt = React.createClass({
 
     if (this.props.hunt === undefined) {
       console.log('this.props.hunt is undefined here');
+      internalView = noHuntsView;
+      /*
       internalView = (<View style={styles.textBoxHunt}>
 
-        <Text>Loading...</Text>
+        <Text>Create a clue! </Text>
       </View>);
+      */
     } else {
       console.log('this.props.hunt is  NOT undefined here');
       internalView = listView;

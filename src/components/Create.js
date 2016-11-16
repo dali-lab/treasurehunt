@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginLeft: 20,
     marginRight: 20,
-    backgroundColor: '#FEF7C0',
+    backgroundColor: '#E4EEEC',
     borderRadius: 3,
   },
   header: {
@@ -122,18 +122,46 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flex: 1,
   },
-  progressBar: {
-    marginLeft: 5,
-    marginBottom: 5,
-    flex: 1,
+  settingsBar: {
+    justifyContent: 'center',
+    alignSelf: 'center',
   },
   button: {
-    justifyContent: 'center',
     backgroundColor: '#23B090',
-    width: 90,
+    borderRadius: 10,
+    width: 80,
+    marginBottom: 10,
+    alignSelf: 'center',
+  },
+  buttonText: {
+    color: 'white',
     height: 20,
     alignSelf: 'center',
-    marginBottom: 170,
+  },
+  bottomButtons: {
+    height: 100,
+    width: 80,
+  },
+  bottomButtonsContianer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: 300,
+  },
+  addClueButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 25,
+    backgroundColor: '#C5EAE0',
+    marginBottom: 250,
+    alignSelf: 'center',
+  },
+  addClueButtonText: {
+    color: '#6BC9AF',
+    fontSize: 25,
+    fontWeight: 'bold',
+    alignSelf: 'center',
+    marginTop: 3,
   },
 });
 
@@ -305,11 +333,11 @@ const Create = React.createClass({
                   numberOfLines={2}
                 >{hunt.desc}</Text>
               </View>
-              <View>
-                <Progress.Bar style={styles.progressBar}
-                  progress={hunt.progress} width={200} borderRadius={0} border={0} height={10} color="#ffd900" backgroundColor="white"
-                />
-              </View>
+              <TouchableHighlight style={styles.settingsBar} onPress={() => this.settingsPressed()} underlayColor="white">
+                <View style={styles.button}>
+                  <Text style={styles.buttonText}>Settings</Text>
+                </View>
+              </TouchableHighlight>
             </View>
           </View>
           <View style={styles.separator} />
@@ -400,15 +428,18 @@ const Create = React.createClass({
         </View>
 
         {internalView}
-        <TouchableHighlight onPress={() => this.rowPressed()} underlayColor="white">
-          <Text style={styles.button}>Create Hunt</Text>
-        </TouchableHighlight>
-        <TouchableHighlight onPress={() => this.locationPressed()} underlayColor="white">
-          <Text style={styles.button}>Location</Text>
-        </TouchableHighlight>
-        <TouchableHighlight onPress={() => this.settingsPressed()} underlayColor="white">
-          <Text style={styles.button}>Settings</Text>
-        </TouchableHighlight>
+
+        <View style={styles.bottomButtonsContainer}>
+          <TouchableHighlight underlayColor="#dddddd" onPress={() => this.rowPressed()}>
+            <View style={styles.addClueButton}>
+              <Text style={styles.addClueButtonText}>+</Text>
+            </View>
+
+          </TouchableHighlight>
+          <TouchableHighlight style={styles.button}onPress={() => this.locationPressed()} underlayColor="white">
+            <Text style={styles.buttonText}>Location</Text>
+          </TouchableHighlight>
+        </View>
 
         <View style={styles.emptyContainerBottom} />
       </View>
