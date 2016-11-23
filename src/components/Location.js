@@ -95,7 +95,6 @@ class Location extends React.Component {
       console.log(`updaing pos: ${JSON.stringify(position)}`);
       this.setState({ lastPosition: position });
     });
-    // console.log(`what is the state?${JSON.stringify(this.state.lastPosition)}`);
   }
 
   componentWillUnmount() {
