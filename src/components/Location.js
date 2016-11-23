@@ -8,6 +8,7 @@ const {
   Text,
   View,
   TextInput,
+  Image,
 } = ReactNative;
 
 const styles = StyleSheet.create({
@@ -23,8 +24,25 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginBottom: 10,
   },
+  compass: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignSelf: 'center',
+    marginTop: 30,
+    marginBottom: 30,
+  },
   title: {
     fontWeight: '500',
+  },
+  heading: {
+    fontWeight: 'bold',
+    fontSize: 25,
+    alignSelf: 'center',
+  },
+  miles: {
+    fontSize: 25,
+    alignSelf: 'center',
   },
   inputLocation: {
     marginLeft: 10,
@@ -32,14 +50,15 @@ const styles = StyleSheet.create({
     height: 18,
     backgroundColor: 'grey',
   },
-  circleRed: {
+  circle: {
+    alignSelf: 'center',
     width: 200,
     height: 200,
-    backgroundColor: 'red',
+    backgroundColor: '#23B090',
     borderRadius: 100,
-    marginLeft: 10,
   },
 });
+
 
 class Location extends React.Component {
 
@@ -133,8 +152,17 @@ class Location extends React.Component {
 
   render() {
     const dmile = this.calculateDistanceMiles();
-    const dkilo = this.calculateDistanceKilometers();
     const bearing = this.calculateBearing();
+    const image = '../img/RedArrow.png';
+    // I tried using the variable image to replace the picture with the changing color arrows, but it gave me this error and npm install didn't work for me:
+    // Requiring unknown module "[object Object]". If you are sure the module is there, try restarting the packager or running "npm install".
+    if (dmile >= 5) {
+      const image = '../img/RedArrow.png';
+    } else if (dmile < 1) {
+      const image = '../img/GreenArrow.png';
+    } else {
+      const image = '../img/YellowArrow.png';
+    }
 
     return (
       <View style={styles.container}>
@@ -152,29 +180,24 @@ class Location extends React.Component {
         </View>
         <View>
           <Text>
-            <Text style={styles.title}>Longitude: </Text>
+            <Text style={styles.title}>Current Location: </Text>
             {this.state.lastPosition.coords.longitude}
-          </Text>
-          <Text>
-            <Text style={styles.title}>Latitude: </Text>
+            <Text style={styles.title}>, </Text>
             {this.state.lastPosition.coords.latitude}
           </Text>
-          <View style={styles.circleRed} />
-          <Text>
-            <Text style={styles.title}>Current Bearing: </Text>
-            { bearing }
-          </Text>
-          <Text>
-            <Text style={styles.title}>Current heading: </Text>
-            { this.state.lastPosition.coords.heading }
-          </Text>
-          <Text>
-            <Text style={styles.title}>Distance in Miles: </Text>
+          <View style={styles.compass}>
+            <View style={styles.circle}>
+              <Image source={require('../img/GreenArrow.png')} style={{ marginTop: 10,
+                marginLeft: 10,
+                height: 180,
+                width: 180,
+                transform: [{ rotate: `${this.state.lastPosition.coords.heading - bearing}` + 'deg' }] }}
+              />
+            </View>
+          </View>
+          <Text style={styles.miles}>
+            <Text style={styles.heading}>Distance Away (Miles): </Text>
             { dmile }
-          </Text>
-          <Text>
-            <Text style={styles.title}>Direction in Kilometers: </Text>
-            { dkilo }
           </Text>
         </View>
       </View>
