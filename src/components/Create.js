@@ -9,7 +9,7 @@ const Data = require('./Data');
 const SearchController = require('./SearchController');
 const CreateHunt = require('./CreateHuntOverview');
 const Settings = require('./Settings');
-const Location = require('./Location');
+const LocationClue = require('./LocationClue');
 
 let {
     StyleSheet,
@@ -279,10 +279,10 @@ const Create = React.createClass({
       },
     });
   },
-  locationPressed(hunt) {
+  locationCluePressed(hunt) {
     this.props.navigator.push({
-      title: 'Location',
-      component: Location,
+      title: 'LocationClue',
+      component: LocationClue,
       passProps: {
         hunt,
       },
@@ -343,7 +343,7 @@ const Create = React.createClass({
           <View style={styles.separator} />
         </View>
       </TouchableHighlight>
-        );
+    );
   },
 
 
@@ -436,14 +436,14 @@ const Create = React.createClass({
             </View>
 
           </TouchableHighlight>
-          <TouchableHighlight style={styles.button}onPress={() => this.locationPressed()} underlayColor="white">
+          <TouchableHighlight style={styles.button}onPress={() => this.locationCluePressed()} underlayColor="white">
             <Text style={styles.buttonText}>Location</Text>
           </TouchableHighlight>
         </View>
 
         <View style={styles.emptyContainerBottom} />
       </View>
-        );
+    );
   },
 });
 

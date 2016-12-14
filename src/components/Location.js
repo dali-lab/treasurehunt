@@ -7,6 +7,7 @@ const {
   StyleSheet,
   Text,
   View,
+  MapView,
   TextInput,
   Image,
 } = ReactNative;
@@ -29,7 +30,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignSelf: 'center',
-    marginTop: 30,
+    marginTop: 10,
     marginBottom: 30,
   },
   title: {
@@ -165,18 +166,10 @@ class Location extends React.Component {
 
     return (
       <View style={styles.container}>
-        <View style={styles.questionContainer}>
-          <Text>Enter Longitude You Want to Find:</Text>
-          <TextInput style={styles.inputLocation} onChangeText={longitude => this.setState({ longitude })}
-            value={this.state.longitude}
-          />
-        </View>
-        <View style={styles.questionContainer}>
-          <Text>Enter Latitude You Want to Find:</Text>
-          <TextInput style={styles.inputLocation} onChangeText={latitude => this.setState({ latitude })}
-            value={this.state.latitude}
-          />
-        </View>
+        <MapView style={{ height: 150, margin: 10 }}
+          showsUserLocation
+          followUserLocation
+        />
         <View>
           <Text>
             <Text style={styles.title}>Current Location: </Text>
